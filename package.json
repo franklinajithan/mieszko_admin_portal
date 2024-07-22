@@ -14,6 +14,10 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "apexcharts": "^3.37.0",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.0",
@@ -32,7 +36,6 @@
     "react-bootstrap": "^2.7.0",
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
-    "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.0",
     "react-perfect-scrollbar": "^1.5.8",
@@ -40,7 +43,12 @@
     "react-router-dom": "^6.7.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.0",
-    "web-vitals": "^2.1.4"
+    "typescript": "^5.5.3",
+    "web-vitals": "^2.1.4",
+    "web3": "^4.11.0"
+  },
+  "overrides": {
+    "typescript": "^5.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -67,8 +75,11 @@
     ]
   },
   "devDependencies": {
+    "@types/feather-icons": "^4.29.4",
     "@types/leaflet": "^1.9.0",
+    "@types/prismjs": "^1.26.4",
     "babel-plugin-prismjs": "^2.1.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
     "sass": "^1.77.8"
   }
 }
