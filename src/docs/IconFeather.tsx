@@ -3,13 +3,13 @@ import Prism from "prismjs";
 import { Col, Container, Row } from "react-bootstrap";
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
-const feather = require('feather-icons');
+//const feather = require('feather-icons');
 
 export default function IconFeather() {
   useEffect(() => {
     Prism.highlightAll();
 
-    feather.replace();
+    //feather.replace();
   }, []);
   return (
     <React.Fragment>

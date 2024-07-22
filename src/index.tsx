@@ -16,7 +16,7 @@ if (rootElement) {
 }
 
 function logWebVitals(metric: any) {
-  console.log(metric);
+ // console.log(metric);
 }
 
 // If you want to start measuring performance in your app, pass a function
