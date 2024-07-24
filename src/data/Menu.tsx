@@ -5,11 +5,11 @@ const dashboardMenu = [
     "link": "/dashboard/finance",
     "icon": "ri-pie-chart-2-line"
   },
-  {
-    "label": "Events Management",
-    "link": "/dashboard/events",
-    "icon": "ri-calendar-todo-line"
-  },
+  // {
+  //   "label": "Events Management",
+  //   "link": "/dashboard/events",
+  //   "icon": "ri-calendar-todo-line"
+  // },
   {
     "label": "Sales Monitoring",
     "link": "/dashboard/sales",
@@ -20,11 +20,11 @@ const dashboardMenu = [
     "link": "/dashboard/analytics",
     "icon": "ri-bar-chart-2-line"
   },
-  {
-    "label": "Cryptocurrency",
-    "link": "/dashboard/crypto",
-    "icon": "ri-coin-line"
-  },
+  // {
+  //   "label": "Cryptocurrency",
+  //   "link": "/dashboard/crypto",
+  //   "icon": "ri-coin-line"
+  // },
   {
     "label": "Helpdesk Service",
     "link": "/dashboard/helpdesk",
@@ -41,6 +41,54 @@ const dashboardMenu = [
     "icon": "ri-suitcase-2-line"
   }
 ];
+
+
+const ManagementMenu = [
+  {
+    "label": "Order Management",
+    "link": "/dashboard/finance",
+    "icon": "ri-order-play-fill"
+  },
+  {
+    "label": "Store Management",
+    "link": "/dashboard/finances",
+    "icon": "ri-pie-chart-2-line"
+  },
+  {
+    "label": "Product Mangement",
+    "link": "/product/productgrid",
+    "icon": "ri-barcode-fill"
+  },
+  {
+    "label": "Supplier Mangement",
+    "link": "/dashboard/sales",
+    "icon": "ri-truck-fill"
+  },
+  {
+    "label": "User Management",
+    "link": "/dashboard/analytics",
+    "icon": "ri-user-fill"
+  },
+  {
+    "label": "Stock Management",
+    "link": "/dashboard/crypto",
+    "icon": "ri-coin-line"
+  },
+  {
+    "label": "Waste Management",
+    "link": "/dashboard/helpdesk",
+    "icon": "ri-delete-bin-4-fill"
+  },
+  {
+    "label": "Invoice Management",
+    "link": "/dashboard/storage",
+    "icon": "ri-file-paper-2-fill"
+  },
+ 
+];
+
+
+
 
 const applicationsMenu = [
   {
@@ -428,4 +476,4 @@ const uiElementsMenu = [
   }
 ];
 
-export { dashboardMenu, applicationsMenu, pagesMenu, uiElementsMenu };
+export { dashboardMenu, applicationsMenu, pagesMenu, uiElementsMenu,ManagementMenu };

@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
 import {
-    dashboardMenu,
+    dashboardMenu,ManagementMenu,
     applicationsMenu,
     pagesMenu,
     uiElementsMenu
@@ -22,7 +22,7 @@ export default class Sidebar extends Component {
         return (
             <div className="sidebar">
                 <div className="sidebar-header">
-                    <Link to="/" className="sidebar-logo">dashbyte</Link>
+                    <Link to="/" className="sidebar-logo">MIESZKO</Link>
                 </div>
                 <PerfectScrollbar className="sidebar-body" ref={ref => this._scrollBarRef = ref}>
                     <SidebarMenu />
@@ -123,6 +123,11 @@ class SidebarMenu extends Component {
                 <div className="nav-group show">
                     <div className="nav-label" onClick={this.toggleMenu}>Dashboard</div>
                     {this.populateMenu(dashboardMenu)}
+                </div>
+
+                <div className="nav-group show">
+                    <div className="nav-label" onClick={this.toggleMenu}>Mangement</div>
+                    {this.populateMenu(ManagementMenu)}
                 </div>
                 <div className="nav-group show">
                     <div className="nav-label" onClick={this.toggleMenu}>Applications</div>

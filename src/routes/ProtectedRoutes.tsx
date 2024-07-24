@@ -10,6 +10,9 @@ import HelpdeskService from "../dashboard/HelpdeskService";
 import StorageManagement from "../dashboard/StorageManagement";
 import ProductManagement from "../dashboard/ProductManagement";
 
+//Mangement
+import ProductGrid from "..//components/productManagement/ProductGrid";
+
 // Apps
 import GalleryMusic from "../apps/GalleryMusic";
 import GalleryVideo from "../apps/GalleryVideo";
@@ -90,6 +93,10 @@ const protectedRoutes = [
   { path: "dashboard/helpdesk", element: <HelpdeskService /> },
   { path: "dashboard/storage", element: <StorageManagement /> },
   { path: "dashboard/product", element: <ProductManagement /> },
+
+  { path: "product/productgrid", element: <ProductGrid /> },
+
+
   { path: "apps/gallery-music", element: <GalleryMusic /> },
   { path: "apps/gallery-video", element: <GalleryVideo /> },
   { path: "apps/tasks", element: <Tasks /> },

@@ -7,7 +7,7 @@ export default function Signin() {
     <div className="page-sign">
       <Card className="card-sign">
         <Card.Header>
-          <Link to="/" className="header-logo mb-4">dashbyte</Link>
+          <Link to="/" className="header-logo mb-4">Mieszko</Link>
           <Card.Title>Sign In</Card.Title>
           <Card.Text>Welcome back! Please signin to continue.</Card.Text>
         </Card.Header>

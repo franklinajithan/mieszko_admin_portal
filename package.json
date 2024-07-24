@@ -1,6 +1,6 @@
 {
-  "name": "dashbyte-react",
-  "homepage": "http://dashbyte-react.themepixels.me",
+  "name": "Mieszko-react",
+  "homepage": "http://Mieszko-react.themepixels.me",
   "version": "1.0.2",
   "private": true,
   "type": "module",
@@ -12,6 +12,7 @@
     "@react-jvectormap/core": "^1.0.4",
     "@react-jvectormap/unitedstates": "^1.0.1",
     "@react-jvectormap/world": "^1.1.2",
+    "@reduxjs/toolkit": "^2.2.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -28,6 +29,7 @@
     "feather-icons": "^4.29.2",
     "gridjs": "^6.0.6",
     "gridjs-react": "^6.0.1",
+    "i18next": "^23.12.2",
     "jquery": "^3.6.3",
     "leaflet": "^1.9.3",
     "moment": "^2.29.4",
@@ -39,12 +41,14 @@
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-i18next": "^15.0.0",
     "react-leaflet": "^4.2.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.7.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.0",
+    "redux": "^5.0.1",
     "typescript": "^5.5.3",
     "web-vitals": "^2.1.4",
     "web3": "^4.11.0"
@@ -53,7 +57,7 @@
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },

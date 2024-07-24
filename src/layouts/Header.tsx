@@ -1,11 +1,13 @@
-import React from "react"
+import React ,{ useState }from "react"
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import userAvatar from "../assets/img/img1.jpg";
 import notification from "../data/Notification";
-
-export default function Header({ onSkin }: { onSkin:any }) {
-
+import { Button, Card, Container, Form, Nav } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+export default function Header({ onSkin }: { onSkin: any }) {
+  const {t, i18n} =useTranslation("global");
+  const [selectedOption, setSelectedOption] = useState("default");
 
 
   interface CustomToggleProps {
@@ -27,7 +29,7 @@ export default function Header({ onSkin }: { onSkin:any }) {
     </a>
   ));
 
-  const toggleSidebar = (e:any) => {
+  const toggleSidebar = (e: any) => {
     e.preventDefault();
     let isOffset = document.body.classList.contains("sidebar-offset");
     if (isOffset) {
@@ -61,7 +63,7 @@ export default function Header({ onSkin }: { onSkin:any }) {
     );
   }
 
-  const skinMode = (e:any) => {
+  const skinMode = (e: any) => {
     e.preventDefault();
     e.target.classList.add("active");
 
@@ -90,7 +92,38 @@ export default function Header({ onSkin }: { onSkin:any }) {
 
   };
 
-  const sidebarSkin = (e:any) => {
+
+  const handleChangeLanguge =(e:any,Lang:string)=>{
+    debugger;
+    e.preventDefault();
+    i18n.changeLanguage(Lang)
+    e.target.classList.add("active");
+
+    let node = e.target.parentNode.firstChild;
+    while (node) {
+      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE)
+        node.classList.remove("active");
+      node = node.nextElementSibling || node.nextSibling;
+    }
+
+    let lang = e.target.textContent.toLowerCase();
+  
+
+
+    if (lang !== "en") {
+      localStorage.setItem("Language", lang);
+    } else {
+      localStorage.removeItem("Language");
+    }
+    
+  }
+
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const sidebarSkin = (e: any) => {
     e.preventDefault();
     e.target.classList.add("active");
 
@@ -116,29 +149,62 @@ export default function Header({ onSkin }: { onSkin:any }) {
 
   return (
     <div className="header-main px-3 px-lg-4">
-       <a href="#" onClick={toggleSidebar} className="menu-link me-3 me-lg-4"><i className="ri-menu-2-fill"></i></a> 
-     
+      <a href="#" onClick={toggleSidebar} className="menu-link me-3 me-lg-4"><i className="ri-menu-2-fill"></i></a>
+
       <div className="form-search me-auto">
         <input type="text" className="form-control" placeholder="Search" />
         <i className="ri-search-line"></i>
       </div>
 
-      <Dropdown className="dropdown-skin" align="end">
+
+      <div className="row">
+        <div className="col-2"><i className="ri-store-line text-2xl"></i></div>
+        <div className="col-10"> <form className="max-w-sm mx-auto">
+
+          <select id="small" value={selectedOption} onChange={handleChange} className="w-full p-2 px-2 text-sm text-gray-900 border border-gray-300 rounded-lg">
+          {selectedOption === "default" && <option value="default" hidden>Choose the Store</option>}
+            <option value="headoffice">Head Office</option>
+            <option value="eastham">East Ham</option>
+            <option value="gravesend">Gravesend</option>
+            <option value="hayes">Hayes</option>
+            <option value="hounslow">Hounslow</option>
+            <option value="perivale">Perivale</option>
+            <option value="streatham">Streatham</option>
+            <option value="sudbury">Sudbury</option>
+            <option value="swindon">Swindon</option>
+            <option value="watford">Watford</option>
+          </select>
+        </form></div>
+
+      </div>
+
+      <Dropdown className="ml-3 dropdown-skin" align="end">
+
         <Dropdown.Toggle as={CustomToggle}>
           <i className="ri-settings-3-line"></i>
         </Dropdown.Toggle>
         <Dropdown.Menu className="mt-10-f">
+
+
+        <label>Language</label>
+          <nav className="nav nav-skin">
+            <a href="#" onClick={(e)=>handleChangeLanguge(e,"en")} className={localStorage.getItem("Language-mode") ? "nav-link" : "nav-link active"}>English</a>
+            <a href="#" onClick={(e)=>handleChangeLanguge(e,"pl")} className={localStorage.getItem("Language-mode") ? "nav-link active" : "nav-link"}>Polish</a>
+            <a href="#" onClick={(e)=>handleChangeLanguge(e,"ta")} className={localStorage.getItem("Language-mode") ? "nav-link active" : "nav-link"}>tamil</a>
+          </nav>
+          <hr />
+
           <label>Skin Mode</label>
           <nav className="nav nav-skin">
-          <a href="#" onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link" : "nav-link active"}>Light</a>
-          <a href="#" onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link active" : "nav-link"}>Dark</a>
+            <a href="#" onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link" : "nav-link active"}>Light</a>
+            <a href="#" onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link active" : "nav-link"}>Dark</a>
           </nav>
           <hr />
           <label>Sidebar Skin</label>
           <nav id="sidebarSkin" className="nav nav-skin">
-          <a href="#" onClick={sidebarSkin} className={!(localStorage.getItem("sidebar-skin")) ? "nav-link active" : "nav-link"}>Default</a>
-          <a href="#"onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "prime") ? "nav-link active" : "nav-link"}>Prime</a>
-          <a href="#" onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "dark") ? "nav-link active" : "nav-link"}>Dark</a>
+            <a href="#" onClick={sidebarSkin} className={!(localStorage.getItem("sidebar-skin")) ? "nav-link active" : "nav-link"}>Default</a>
+            <a href="#" onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "prime") ? "nav-link active" : "nav-link"}>Prime</a>
+            <a href="#" onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "dark") ? "nav-link active" : "nav-link"}>Dark</a>
           </nav>
         </Dropdown.Menu>
       </Dropdown>
