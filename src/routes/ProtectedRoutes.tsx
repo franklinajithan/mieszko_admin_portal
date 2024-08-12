@@ -32,6 +32,10 @@ import Activity from "../pages/Activity";
 import Events from "../pages/Events";
 import Settings from "../pages/Settings";
 
+
+import PurchasePlanning from "../components/orderManagement/PurchasePlanning";
+import NewPurchasePlanning from "../components/orderManagement/NewPurchasePlanning";
+
 // UI Elements
 import LayoutColumns from "../docs/LayoutColumns";
 import LayoutGrid from "../docs/LayoutGrid";
@@ -95,7 +99,8 @@ const protectedRoutes = [
   { path: "dashboard/product", element: <ProductManagement /> },
 
   { path: "product/productgrid", element: <ProductGrid /> },
-
+  { path: "order/purchasePlanning", element: <PurchasePlanning /> },
+ { path: "order/newpurchaseplanning", element: <NewPurchasePlanning /> },
 
   { path: "apps/gallery-music", element: <GalleryMusic /> },
   { path: "apps/gallery-video", element: <GalleryVideo /> },

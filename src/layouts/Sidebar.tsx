@@ -2,20 +2,32 @@ import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
+import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog } from 'react-icons/fa'; // Example icons
+
 import {
-    dashboardMenu,ManagementMenu,
-    applicationsMenu,
-    pagesMenu,
-    uiElementsMenu
+    dashboardMenu, ManagementMenu, OrderManagementMenu, storeManagementMenu,
+    productManagementMenu,
+    supplierManagementMenu,
+    userManagementMenu,
+    stockManagementMenu,
+    invoiceManagementMenu,
+    wasteManagementMenu,
 } from "../data/Menu";
 
 export default class Sidebar extends Component {
-    toggleFooterMenu = (e:any) => {
-        e.preventDefault();
 
-        let parent = e.target.closest(".sidebar");
-        parent.classList.toggle("footer-menu-show");
+
+
+    
+    state = {
+        footerMenuOpen: false,  // Initial state to manage footer menu toggle
+    };
+
+    toggleFooterMenu = (e: any) => {
+        e.preventDefault();
+        this.setState({ footerMenuOpen: !this.state.footerMenuOpen });  // Toggle the footer menu state
     }
+
     _scrollBarRef: any;
 
     render() {
@@ -26,7 +38,7 @@ export default class Sidebar extends Component {
                 </div>
                 <PerfectScrollbar className="sidebar-body" ref={ref => this._scrollBarRef = ref}>
                     <SidebarMenu />
-                        
+
                 </PerfectScrollbar>
                 <div className="sidebar-footer">
                     <div className="sidebar-footer-top">
@@ -39,7 +51,7 @@ export default class Sidebar extends Component {
                         </div>
                         <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
                     </div>
-                    <div className="sidebar-footer-menu">
+                    <div className={`sidebar-footer-menu ${this.state.footerMenuOpen ? 'footer-menu-show' : ''}`}>
                         <nav className="nav">
                             <Link to=""><i className="ri-edit-2-line"></i> Edit Profile</Link>
                             <Link to=""><i className="ri-profile-line"></i> View Profile</Link>
@@ -59,29 +71,45 @@ export default class Sidebar extends Component {
 }
 
 class SidebarMenu extends Component {
-    populateMenu = (m:any) => {
-        const menu = m.map((m:any, key:any) => {
+    state = {
+        menuGroups: {
+            dashboard: false,
+            orderManagement: false,
+            storeManagement: false,
+            productManagement: false,
+            supplierManagement: false,
+            stockManagement: false,
+            invoiceManagement: false,
+            wasteManagement: false,
+            userManagement: false,
+        },
+    };
+    populateMenu = (m: any) => {
+        const menu = m.map((m: any, key: any) => {
             let sm;
             if (m.submenu) {
-                sm = m.submenu.map((sm:any, key:any) => {
+                sm = m.submenu.map((sm: any, key: any) => {
                     return (
                         <NavLink to={sm.link} className="nav-sub-link" key={key}>{sm.label}</NavLink>
-                    )
-                })
+                    );
+                });
             }
-
+    
+            // Type assertion here
+            const isMenuGroupVisible = this.state.menuGroups[m.label as keyof typeof this.state.menuGroups];
+    
             return (
-                <li key={key} className="nav-item">
+                <li key={key} className={`nav-item ${isMenuGroupVisible ? 'show' : ''}`}>
                     {(!sm) ? (
                         <NavLink to={m.link} className="nav-link"><i className={m.icon}></i> <span>{m.label}</span></NavLink>
                     ) : (
-                        <div onClick={this.toggleSubMenu} className="nav-link has-sub"><i className={m.icon}></i> <span>{m.label}</span></div>
+                        <div onClick={() => this.toggleSubMenu(m.label)} className="nav-link has-sub"><i className={m.icon}></i> <span>{m.label}</span></div>
                     )}
                     {m.submenu && <nav className="nav nav-sub">{sm}</nav>}
                 </li>
-            )
+            );
         });
-
+    
         return (
             <ul className="nav nav-sidebar">
                 {menu}
@@ -89,58 +117,82 @@ class SidebarMenu extends Component {
         );
     }
 
-    // Toggle menu group
-    toggleMenu = (e:any) => {
-        e.preventDefault();
-
-        let parent = e.target.closest('.nav-group');
-        parent.classList.toggle('show');
-
-     //   this.props.onUpdateSize();
+    toggleMenu = (menuLabel: string) => {
+        this.setState(prevState => ({
+            menuGroups: {
+                ...prevState.menuGroups,
+                [menuLabel]: !prevState.menuGroups[menuLabel]
+            }
+        }));
     }
 
-    // Toggle submenu while closing siblings' submenu
-    toggleSubMenu = (e:any) => {
-        e.preventDefault();
-
-        let parent = e.target.closest('.nav-item');
-        let node = parent.parentNode.firstChild;
-
-        while (node) {
-            if (node !== parent && node.nodeType === Node.ELEMENT_NODE)
-                node.classList.remove('show');
-            node = node.nextElementSibling || node.nextSibling;
-        }
-
-        parent.classList.toggle('show');
-
-      //  this.props.onUpdateSize();
+    toggleSubMenu = (menuLabel: string) => {
+        this.setState(prevState => ({
+            menuGroups: {
+                ...prevState.menuGroups,
+                [menuLabel]: !prevState.menuGroups[menuLabel]
+            }
+        }));
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>Dashboard</div>
+                <div className={`nav-group ${this.state.menuGroups.dashboard ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('dashboard')}>
+                        <FaTachometerAlt className="nav-icon" size={20} /> Dashboard
+                    </div>
                     {this.populateMenu(dashboardMenu)}
                 </div>
-
-                <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>Mangement</div>
-                    {this.populateMenu(ManagementMenu)}
+                <div className={`nav-group ${this.state.menuGroups.orderManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('orderManagement')}>
+                        <FaBox className="nav-icon" size={20}/> Order Management
+                    </div>
+                    {this.populateMenu(OrderManagementMenu)}
                 </div>
-                <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>Applications</div>
-                    {this.populateMenu(applicationsMenu)}
+                <div className={`nav-group ${this.state.menuGroups.storeManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('storeManagement')}>
+                        <FaStore className="nav-icon" size={20}/> Store Management
+                    </div>
+                    {this.populateMenu(storeManagementMenu)}
                 </div>
-                <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>Pages</div>
-                    {this.populateMenu(pagesMenu)}
+                <div className={`nav-group ${this.state.menuGroups.productManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('productManagement')}>
+                        <FaBoxes className="nav-icon" size={20}/> Product Management
+                    </div>
+                    {this.populateMenu(productManagementMenu)}
                 </div>
-                <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>UI Elements</div>
-                    {this.populateMenu(uiElementsMenu)}
+                <div className={`nav-group ${this.state.menuGroups.supplierManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('supplierManagement')}>
+                        <FaPeopleCarry className="nav-icon" size={20}/> Supplier Management
+                    </div>
+                    {this.populateMenu(supplierManagementMenu)}
                 </div>
+                <div className={`nav-group ${this.state.menuGroups.stockManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('stockManagement')}>
+                        <FaWarehouse className="nav-icon" size={20} /> Stock Management
+                    </div>
+                    {this.populateMenu(stockManagementMenu)}
+                </div>
+                <div className={`nav-group ${this.state.menuGroups.invoiceManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('invoiceManagement')}>
+                        <FaFileInvoice className="nav-icon" size={20} /> Invoice Management
+                    </div>
+                    {this.populateMenu(invoiceManagementMenu)}
+                </div>
+                <div className={`nav-group ${this.state.menuGroups.wasteManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('wasteManagement')}>
+                        <FaTrashAlt className="nav-icon" size={20}/> Waste Management
+                    </div>
+                    {this.populateMenu(wasteManagementMenu)}
+                </div>
+                <div className={`nav-group ${this.state.menuGroups.userManagement ? 'show' : ''}`}>
+                    <div className="nav-label" onClick={() => this.toggleMenu('userManagement')}>
+                        <FaUserCog className="nav-icon" size={20}/> User Management
+                    </div>
+                    {this.populateMenu(userManagementMenu)}
+                </div>
+              
             </React.Fragment>
         )
     }
@@ -148,7 +200,7 @@ class SidebarMenu extends Component {
 
 window.addEventListener("click", function (e) {
     // Close sidebar footer menu when clicked outside of it
-    let tar = e.target as HTMLElement ;
+    let tar = e.target as HTMLElement;
     let sidebar = document.querySelector(".sidebar");
     if (!tar.closest(".sidebar-footer") && sidebar) {
         sidebar.classList.remove("footer-menu-show");

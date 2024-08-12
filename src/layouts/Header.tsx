@@ -1,14 +1,20 @@
-import React ,{ useState }from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import userAvatar from "../assets/img/img1.jpg";
 import notification from "../data/Notification";
 import { Button, Card, Container, Form, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-export default function Header({ onSkin }: { onSkin: any }) {
-  const {t, i18n} =useTranslation("global");
-  const [selectedOption, setSelectedOption] = useState("default");
 
+
+
+
+
+export default function Header({ onSkin }: { onSkin: any }) {
+  const { t, i18n } = useTranslation("english");
+  const [selectedOption, setSelectedOption] = useState("default");
+  //  const language = localStorage.getItem("Language") || 'english'; ;
+  // i18n.changeLanguage(language);
 
   interface CustomToggleProps {
     children: React.ReactNode;
@@ -93,7 +99,17 @@ export default function Header({ onSkin }: { onSkin: any }) {
   };
 
 
-  const handleChangeLanguge =(e:any,Lang:string)=>{
+
+
+  // useEffect(() => {
+  //   debugger;
+  //   i18n.changeLanguage(navigator.language)
+
+
+  // }, [])
+
+
+  const handleChangeLanguge = (e: any, Lang: string) => {
     debugger;
     e.preventDefault();
     i18n.changeLanguage(Lang)
@@ -107,15 +123,15 @@ export default function Header({ onSkin }: { onSkin: any }) {
     }
 
     let lang = e.target.textContent.toLowerCase();
-  
 
 
-    if (lang !== "en") {
-      localStorage.setItem("Language", lang);
-    } else {
-      localStorage.removeItem("Language");
-    }
-    
+
+    // if (lang !== "en") {
+    localStorage.setItem("Language", lang);
+    //  } else {
+    //  localStorage.removeItem("Language");
+    // }
+
   }
 
 
@@ -162,7 +178,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
         <div className="col-10"> <form className="max-w-sm mx-auto">
 
           <select id="small" value={selectedOption} onChange={handleChange} className="w-full p-2 px-2 text-sm text-gray-900 border border-gray-300 rounded-lg">
-          {selectedOption === "default" && <option value="default" hidden>Choose the Store</option>}
+            {selectedOption === "default" && <option value="default" hidden>Choose the Store</option>}
             <option value="headoffice">Head Office</option>
             <option value="eastham">East Ham</option>
             <option value="gravesend">Gravesend</option>
@@ -186,11 +202,11 @@ export default function Header({ onSkin }: { onSkin: any }) {
         <Dropdown.Menu className="mt-10-f">
 
 
-        <label>Language</label>
+          <label>Language</label>
           <nav className="nav nav-skin">
-            <a href="#" onClick={(e)=>handleChangeLanguge(e,"en")} className={localStorage.getItem("Language-mode") ? "nav-link" : "nav-link active"}>English</a>
-            <a href="#" onClick={(e)=>handleChangeLanguge(e,"pl")} className={localStorage.getItem("Language-mode") ? "nav-link active" : "nav-link"}>Polish</a>
-            <a href="#" onClick={(e)=>handleChangeLanguge(e,"ta")} className={localStorage.getItem("Language-mode") ? "nav-link active" : "nav-link"}>tamil</a>
+            <a href="#" id="langEn" onClick={(e) => handleChangeLanguge(e, "en")} className={(localStorage.getItem("Language") === "english") ? "nav-link" : "nav-link active"}>English</a>
+            <a href="#" id="langPl" onClick={(e) => handleChangeLanguge(e, "pl")} className={(localStorage.getItem("Language") === "polish") ? "nav-link active" : "nav-link"}>Polish</a>
+            <a href="#" id="langTa" onClick={(e) => handleChangeLanguge(e, "ta")} className={(localStorage.getItem("Language") === "tamil") ? "nav-link active" : "nav-link"}>tamil</a>
           </nav>
           <hr />
 

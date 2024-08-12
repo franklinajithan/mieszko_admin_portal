@@ -8,7 +8,7 @@ import protectedRoutes from "./routes/ProtectedRoutes";
 
 import "./assets/css/remixicon.css";
 import "./scss/style.scss";
-import "./i18n";
+
 import { useTranslation } from "react-i18next";
 
 const Login = React.lazy(() => import('./pages/Signin'))
@@ -27,15 +27,9 @@ window.addEventListener("load", function () {
 });
 
 export default function App() {
-  const {t, i18n} =useTranslation();
 
-useEffect(() => {
-  i18n.changeLanguage(navigator.language)
 
-  
-},[])
 
-  
   return (
     <React.Fragment>
       <BrowserRouter>
