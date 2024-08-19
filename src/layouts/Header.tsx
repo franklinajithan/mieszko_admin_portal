@@ -102,7 +102,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
 
   // useEffect(() => {
-  //   debugger;
+ 
   //   i18n.changeLanguage(navigator.language)
 
 
@@ -110,7 +110,6 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
 
   const handleChangeLanguge = (e: any, Lang: string) => {
-    debugger;
     e.preventDefault();
     i18n.changeLanguage(Lang)
     e.target.classList.add("active");

@@ -36,6 +36,9 @@ import Settings from "../pages/Settings";
 import PurchasePlanning from "../components/orderManagement/PurchasePlanning";
 import NewPurchasePlanning from "../components/orderManagement/NewPurchasePlanning";
 
+import UserGrid from "../components/userManagement/UserGrid";
+import RolesAndRights from "../components/userManagement/RolesAndRights";
+
 // UI Elements
 import LayoutColumns from "../docs/LayoutColumns";
 import LayoutGrid from "../docs/LayoutGrid";
@@ -87,6 +90,11 @@ import MapLeaflet from "../docs/MapLeaflet";
 import MapVector from "../docs/MapVector";
 import IconRemix from "../docs/IconRemix";
 import IconFeather from "../docs/IconFeather";
+import PurchaseOrder from "../components/orderManagement/PurchaseOrder";
+import OrderHistory from "../components/orderManagement/OrderHistory";
+import ManageStore from "../components/storeManagement/ManageStore";
+import NewStore from "../components/storeManagement/NewStore";
+
 
 const protectedRoutes = [
   { path: "dashboard/finance", element: <FinanceMonitoring /> },
@@ -98,9 +106,19 @@ const protectedRoutes = [
   { path: "dashboard/storage", element: <StorageManagement /> },
   { path: "dashboard/product", element: <ProductManagement /> },
 
-  { path: "product/productgrid", element: <ProductGrid /> },
-  { path: "order/purchasePlanning", element: <PurchasePlanning /> },
- { path: "order/newpurchaseplanning", element: <NewPurchasePlanning /> },
+  { path: "product/product-grid", element: <ProductGrid /> },
+  { path: "order/purchase-planning", element: <PurchasePlanning /> },
+  { path: "order/new-purchase-planning", element: <NewPurchasePlanning /> },
+  { path: "order/purchase-order", element: <PurchaseOrder /> },
+  { path: "order/order-history", element: <OrderHistory /> },
+
+  { path: "store/manage-store", element: <ManageStore /> },
+  { path: "store/new-store", element: <NewStore /> },
+
+  { path: "user/user-grid", element: <UserGrid /> },
+  { path: "user/roles-and-rights", element: <RolesAndRights /> },
+
+
 
   { path: "apps/gallery-music", element: <GalleryMusic /> },
   { path: "apps/gallery-video", element: <GalleryVideo /> },

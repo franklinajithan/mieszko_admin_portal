@@ -101,20 +101,45 @@ Contact: themepixels@gmail.com
 
 
 .nav-label {
-    display: flex !important   ;   
-    align-items: center !important ; 
-    cursor: pointer !important;    
-    padding: 12px 20px !important ; 
-    font-size: 12px !important ; 
-    font-family: Tahoma, sans-serif !important ; 
-    text-transform: uppercase !important ; 
-    color: #6e7985 !important ; 
-    letter-spacing: 0.7px !important ; 
-    position: relative !important ; 
-    font-weight: bold !important ; 
-    cursor: pointer !important ; 
-  }
-  
-  .nav-icon {
-    margin-right: 8px !important   /* Space between the icon and the text */
-  }
+  display: flex !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  padding: 12px 20px !important;
+  font-size: 12px !important;
+  font-family: Tahoma, sans-serif !important;
+  text-transform: uppercase !important;
+  color: rgb(63, 63, 63) !important;
+  letter-spacing: 0.7px !important;
+  position: relative !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  background-color:#f8f9fc
+}
+
+.nav-icon {
+  margin-right: 8px !important
+    /* Space between the icon and the text */
+}
+
+
+.sidebar-footer {
+
+  box-shadow: none !important;
+
+}
+
+.nav-sidebar .nav-link.active {
+  color: #b60000 !important;
+  font-weight: bold
+ 
+}
+
+.header-logo, .sidebar-logo {
+  font-size: 49px !important;
+  color: #9c0000 !important;
+}
+
+.sidebar-body .nav-label {
+  text-transform: none !important;
+}
+
