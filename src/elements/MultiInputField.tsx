@@ -3,6 +3,7 @@ import LabelField from "./LabelField";
 
 export interface MultiInputFieldProps {
     label?: string; // Main Label text
+    name?: string; 
     operationOptions?: string[]; // Options for the dropdown
     fromPlaceholder?: string; // Placeholder for the "From" input
     toPlaceholder?: string; // Placeholder for the "To" input
@@ -14,6 +15,7 @@ export interface MultiInputFieldProps {
 
 const MultiInputField: FC<MultiInputFieldProps> = ({
     label = "",
+    name= "",
     operationOptions = ["Between"],
     fromPlaceholder = "£1000",
     toPlaceholder = "£10000",

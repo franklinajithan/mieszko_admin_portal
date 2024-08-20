@@ -26,7 +26,7 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
     <I18nextProvider i18n={i18n}>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <App />
     </I18nextProvider>
   </React.StrictMode>

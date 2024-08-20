@@ -1,37 +1,66 @@
 import React from 'react';
 import LabelField from './LabelField';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+} from "@/components/ui/form";
 
-interface SelectFieldProps {
-    label: string;
-    options: { value: string; label: string }[];
-    value: string;
-    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    className?: string;
+interface SelectFieldProps<T extends FieldValues> {
+  name: FieldPath<T>;
+  control: Control<T>;
+  label: string;
+  placeholder?: string;
+  disabled?: boolean;
+  options: { value: string; label: string }[];
 }
 
-const SelectField = ({
-    label,
-    options,
-    value,
-    onChange,
-    className,
-}: SelectFieldProps) => {
-    return (
-        
-        <div className={`relative ${className}`}>
-            <LabelField label={label}/>
-          <select id={label} className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={value}
-            onChange={onChange}
-          >
-            {options.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-    );
+const SelectField = <T extends FieldValues>({
+  label,
+  name,
+  placeholder,
+  control,
+  disabled,
+  options
+}: SelectFieldProps<T>) => {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => {
+        // Ensure the value is either a string or undefined
+        const value = typeof field.value === 'string' ? field.value : undefined;
+
+        return (
+          <FormItem>
+            <LabelField label={label} />
+            <Select onValueChange={field.onChange} value={value} defaultValue={value}>
+              <FormControl>
+                <SelectTrigger disabled={disabled}>
+                  <SelectValue placeholder={placeholder || "Select an option"} />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {options.map((option, index) => (
+                  <SelectItem key={index} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormItem>
+        );
+      }}
+    />
+  );
 };
 
 export default SelectField;

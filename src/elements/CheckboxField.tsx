@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import LabelField from './LabelField';
+import React from 'react';
+import { Control, FieldPath } from "react-hook-form";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  FormField,
+  FormControl,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 
-interface CheckboxFieldProps {
+interface CheckboxFieldProps<T extends object> {
+  name: FieldPath<T>;
+  control: Control<T>;
   label: string;
   id?: any;
-  name?: string;
   checked?: boolean;
-
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
 }
 
-const CheckboxField: React.FC<CheckboxFieldProps> = ({ label, id, name, checked = false, onChange, className }) => {
-  const [isChecked, setIsChecked] = useState(checked);
-
-  // Handle the checkbox state change
-  const handleChange = (event: any) => {
-    setIsChecked(event.target.checked);
-    if (onChange) {
-      onChange(event);
-    }
-  };
+const CheckboxField = <T extends object>({ name, control, label, id, checked = false }: CheckboxFieldProps<T>) => {
   return (
-    <div className={`flex ${className}`}>
-      <input
-        type="checkbox"
-        name={name}
-        id={id}
-        checked={isChecked}
-        onChange={handleChange}
-        className="mr-2"
-      />
-      <LabelField htmlFor={id} label={label} />
-    </div>
-
-
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+          <FormControl>
+            <Checkbox
+              checked={!!field.value}
+              onCheckedChange={field.onChange}
+            />
+          </FormControl>
+          <div className="space-y-1 leading-none">
+            <FormLabel>{label}</FormLabel>
+          </div>
+        </FormItem>
+      )}
+    />
   );
 };
 

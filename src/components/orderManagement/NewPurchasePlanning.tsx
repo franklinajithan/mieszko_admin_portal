@@ -1,25 +1,33 @@
 import React, { useState } from "react";
-import { Card, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { FiShoppingCart } from "react-icons/fi";
-
 import Header from "../../layouts/Header";
 import HeaderComponents from "../../elements/HeaderSection";
 import CardTitle from "../../elements/CardTitle";
 import InputField from "../../elements/InputField";
 import SelectField from "../../elements/SelectField";
 import MultiSelectDropdown from "../../elements/MultiSelectDropdown";
-
+import { Form } from "@/components/ui/form";
 import { status, sample, groceryDepartments, Week } from "../../data/constants";
 import CheckboxField from "../../elements/CheckboxField";
 import RadioField from "../../elements/RadioField";
+import { Card, Nav } from "react-bootstrap";
+import {  CardContent, CardHeader } from "../ui/card";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { newPurchasePlanningFormSchema } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from 'lucide-react';
+import { FiPackage } from "react-icons/fi";
 
 const NewPurchasePlanning = () => {
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
 
     const [skin, setSkin] = useState(currentSkin);
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const [deliveryType, setDeliveryType] = useState("fastest");
     const [selectedOption, setSelectedOption] = useState('Select');
@@ -34,104 +42,142 @@ const NewPurchasePlanning = () => {
         filter: true
     });
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(e.target.value);
-    };
+    const form = useForm<z.infer<typeof newPurchasePlanningFormSchema>>({
+        resolver: zodResolver(newPurchasePlanningFormSchema),
+        defaultValues: {
+            documentNo: "",
+            storeNo: "",
+            WHLocation: "",
+            planType: "",
+            supplier: "",
+            addOns: "",
+            leadTimes: "",
+            expectedDeliveryDate: "",
+            brand: "",
+            status: "",
+            Comments: "",
+            period1StartDate: "",
+            period1EndDate: "",
+            period2StartDate: "",
+            period2EndDate: "",
+            currentStock: "",
+            scheduleDay: "",
+            time: "",
+            email: "",
+            currentStock1: false,
+            rtcSales: false,
+            wastage: false,
+            promoSales: false,
+            itemsBasket: false,
+            hhuItems: false,
+            considerOrder: false,
+            considerSales: false,
+            selfLife: false,
+            passToAnotherStore: "",
+            filterType: "",
+            specificDivisionPlanning: "",
+            considerAgentPrice: ""
+        },
+    });
+
+    function onSubmit(values: z.infer<typeof newPurchasePlanningFormSchema>) {
+        setIsLoading(true);
+        console.log(values);
+        setIsLoading(false);
+    }
 
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
             <div className="main main-app p-3 p-lg-4">
                 <div className="min-h-screen bg-gray-50 p-6">
-                    <HeaderComponents showList={showList} icon={FiShoppingCart} />
+
+                    <HeaderComponents showList={showList} icon={FiPackage} />
 
                     <Card className="card-one mt-2">
-                        <CardTitle title="General" />
-                        <Card.Body>
-                            <div className="grid grid-cols-4 gap-4">
-                                <InputField label="Document No" type="text"  disabled />
-                                <InputField label="Store No" type="text"  disabled />
-                                <InputField label="Related WH Location" type="text"  disabled />
+                    <CardTitle title={'Search'} />
 
-                                <SelectField label="Plan Type" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Supplier" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Plan Type" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Add Ons" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Add Ons" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Lead Times" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <InputField label="Expected Delivery Date" type="date" />
-                                <SelectField label="Lead Times" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Brand" options={sample} value={selectedOption} onChange={handleSelectChange}/>
-                                <SelectField label="Status" options={status} value={selectedOption} onChange={handleSelectChange}/>
-                                <MultiSelectDropdown label="Department" options={groceryDepartments} />
-                                <InputField label="Comments" type="text"  />
-                            </div>
-                        </Card.Body>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <CardContent>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                                        <InputField control={form.control} label="Document No" name="documentNo" type="text" placeholder='Enter your document no' disabled={true} />
+                                        <InputField control={form.control} label="Store No" name="storeNo" type="text" placeholder='Enter your Store' disabled={true} />
+                                        <InputField control={form.control} label="Related WH Location" name="WHLocation" type="text" placeholder='Enter related warehouse location' disabled={true} />
+                                        <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />
+                                        <SelectField control={form.control} label="Plan Type" name="planType" options={sample} />
+                                        <SelectField control={form.control} label="Add Ons" name="addOns" options={sample} />
+                                        <SelectField control={form.control} label="Lead Times" name="leadTimes" options={sample} />
+                                        <SelectField control={form.control} label="Pass to Another Store" name="passToAnotherStore" options={sample} />
+                                        <SelectField control={form.control} label="Filter Type" name="filterType" options={sample} />
+                                        <SelectField control={form.control} label="Specific Division Planning" name="specificDivisionPlanning" options={sample} />
+                                        <SelectField control={form.control} label="Consider Agent Price" name="considerAgentPrice" options={sample} />
+                                        <InputField control={form.control} label="Expected Delivery Date" name="expectedDeliveryDate" type="text" placeholder='Enter your expected delivery date' />
+                                        <SelectField control={form.control} label="Brand" name="brand" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <InputField control={form.control} label="Comments" name="Comments" type="text" placeholder='Enter your comments' />
+                                        {/* <MultiSelectDropdown label="Department" options={groceryDepartments} /> */}
+                                    </div>
 
-                        <hr className="border-t border-gray-300" />
+                                    <hr className="border-t border-gray-300 " />
 
-                        <CardTitle title="Sales by Date Section" />
-                        <Card.Body>
-                            <div className="flex gap-4">
-                                <div className="grid grid-cols-2 gap-4 w-1/3">
-                                    <InputField label="Period 1 Start Date" type="date"  />
-                                    <InputField label="Period 1 End Date" type="date"  />
-                                    <InputField label="Period 2 Start Date" type="date" defaultValue="2024-10-10" />
-                                    <InputField label="Period 2 End Date" type="date" defaultValue="2024-10-10" />
-                                </div>
+                                    <div className="flex gap-4">
+                                        <div className="grid grid-cols-2 gap-4 w-1/3">
+                                            <InputField control={form.control} label="Period 1 Start Date" name="period1StartDate" type="text" placeholder='Enter period 1 start date' />
+                                            <InputField control={form.control} label="Period 1 End Date" name="period1EndDate" type="text" placeholder='Enter period 1 end date' />
+                                            <InputField control={form.control} label="Period 2 Start Date" name="period2StartDate" type="text" placeholder='Enter period 2 start date' />
+                                            <InputField control={form.control} label="Period 2 End Date" name="period2EndDate" type="text" placeholder='Enter period 2 end date' />
+                                        </div>
 
-                                <div className="grid grid-cols-4 gap-4 w-2/3">
-                                    <CheckboxField id="Is Scheduled" label="Current stock" className="mt-2" />
-                                    <SelectField label="Schedule Day" options={Week} value={selectedOption} onChange={handleSelectChange}/>
-                                    <InputField label="Time" type="time" />
-                                    <InputField label="Email" type="email" />
-                                    <CheckboxField id="currentStock" label="Current stock" />
-                                    <CheckboxField id="rtcSales" label="RTC sales" />
-                                    <CheckboxField id="wastage" label="Wastage" />
-                                    <CheckboxField id="promoSales" label="Promo items sales" />
-                                    <CheckboxField id="itemsBasket" label="Items from basket" />
-                                    <CheckboxField id="hhuItems" label="HHU Items" />
-                                    <CheckboxField id="considerOrder" label="Consider On Order" />
-                                    <CheckboxField id="considerSales" label="Consider Sales" />
+                                        <div className="grid grid-cols-4 gap-4 w-2/3">
+                                        <span className="mt-14"><CheckboxField control={form.control} id="currentStock" label="Current Stock" name="currentStock1" /></span>
+                                            
+                                            <SelectField control={form.control} label="Schedule Day" name="scheduleDay" options={Week} />
+                                            <InputField control={form.control} label="Time" name="time" type="text" placeholder='Enter the time' />
+                                            <InputField control={form.control} label="Email" name="email" type="text" placeholder='Enter the email' />
+                                            <CheckboxField control={form.control} id="rtcSales" label="RTC Sales" name="rtcSales" />
+                                            <CheckboxField control={form.control} id="wastage" label="Wastage" name="wastage" />
+                                            <CheckboxField control={form.control} id="promoSales" label="Promo Items Sales" name="promoSales" />
+                                            <CheckboxField control={form.control} id="itemsBasket" label="Items from Basket" name="itemsBasket" />
+                                            <CheckboxField control={form.control} id="hhuItems" label="HHU Items" name="hhuItems" />
+                                            <CheckboxField control={form.control} id="considerOrder" label="Consider On Order" name="considerOrder" />
+                                            <CheckboxField control={form.control} id="considerSales" label="Consider Sales" name="considerSales" />
+                                            <CheckboxField control={form.control} id="selfLife" label="Self Life" name="selfLife" />
+                                        </div>
+                                    </div>
 
-                                    <RadioField id="fastestDelivery" name="deliveryType" value="fastest" checked={deliveryType === "fastest"} onChange={() => setDeliveryType("fastest")} label="Fastest Delivery" />
-                                    <RadioField id="cheapestDelivery" name="deliveryType" value="cheapest" checked={deliveryType === "cheapest"} onChange={() => setDeliveryType("cheapest")} label="Cheapest Delivery" />
-
-                                    <RadioField id="caseBased" name="quantityType" label="Case based" />
-                                    <RadioField id="qtyBased" name="quantityType" label="Qty Based" defaultChecked />
-                                    <CheckboxField id="selfLife" label="Self Life" />
-
-                                </div>
-
-                            </div>
-                          
-
-                            <div className="flex justify-end space-x-4 mt-6">
-                                <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
-                                    Save
-                                </button>
-                                <button className="bg-custom-red text-white px-4 py-2 rounded-md">
-                                    Submit
-                                </button>
-                            </div>
-                        </Card.Body>
+                                    <div className="flex justify-end space-x-4  mt-2 pb-4 pr-4">
+                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                            Save
+                                        </button>
+                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                                                </>)
+                                                : "Submit"}
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                            </form>
+                        </Form>
                     </Card>
 
                     <Card className="card-one mt-2">
-                        <Card.Header>
-                            <Card.Title as="h6">Purchase Plan List</Card.Title>
+                        <CardHeader>
+                            <h1>Purchase Plan List</h1>
                             <Nav as="nav" className="nav-icon nav-icon-sm ms-auto">
                                 <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
                                 <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
                             </Nav>
-                        </Card.Header>
-                        <Card.Body>
+                        </CardHeader>
+                        <CardContent>
                             <div className="space-y-6">
                                 <div className="grid grid-cols-4 gap-4 pb-2">
-                                    <InputField type="text" label="Supplier Code" placeholder="Supplier Code" />
+                                    {/* <InputField type="text" label="Supplier Code" placeholder="Supplier Code" />
                                     <InputField type="text" label="Item Code" placeholder="Item Code" />
                                     <InputField type="text" label="Item Name" placeholder="Item Name" />
-                                    <InputField type="text" label="EAN / PLU" placeholder="EAN / PLU" />
+                                    <InputField type="text" label="EAN / PLU" placeholder="EAN / PLU" /> */}
                                 </div>
                             </div>
                             <table className="w-full border-collapse">
@@ -170,15 +216,12 @@ const NewPurchasePlanning = () => {
                                 <div className="text-sm">Page 1 of 10</div>
                                 <button className="p-2 bg-gray-200 rounded-md">Next</button>
                             </div>
-                        </Card.Body>
+                        </CardContent>
                     </Card>
                 </div>
             </div>
         </React.Fragment>
     );
 };
-
-
-
 
 export default NewPurchasePlanning;

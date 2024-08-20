@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
-import { FiShoppingCart } from "react-icons/fi";
+import { FiPackage, FiShoppingCart } from "react-icons/fi";
 import { Card, Nav } from "react-bootstrap";
 import HeaderComponents from "../../elements/HeaderSection";
 import SelectField from "../../elements/SelectField";
 import InputField from "../../elements/InputField";
 import MultiInputField from "../../elements/MultiInputField";
-
 import MultiSelectDropdown from "../../elements/MultiSelectDropdown";
 import { groceryDepartments, OrderQty, sample, YesOrNO } from "../../data/constants";
 import CardTitle from "../../elements/CardTitle";
+import { Form } from "../ui/form";
+import { CardContent } from "../ui/card";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { purchasePlanningFormSchema } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 
 export default function PurchasePlanning() {
     const { t } = useTranslation("global");
     const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
     const [textValue, setTextValue] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false)
     const [showList, setShowList] = useState({
         title: 'Purchase Planning',
         search: true,
@@ -33,89 +41,97 @@ export default function PurchasePlanning() {
 
 
     const handleRetailValueChange = (values: { operation: string; from: string; to: string }) => {
-        console.log(values);
+        // console.log(values);
     };
+
+
+
+    const form = useForm<z.infer<typeof purchasePlanningFormSchema>>({
+        resolver: zodResolver(purchasePlanningFormSchema),
+        defaultValues: {
+          
+        },
+    });
+
+    function onSubmit(values: z.infer<typeof purchasePlanningFormSchema>) {
+        setIsLoading(true);
+        console.log(values);
+        setIsLoading(false);
+    }
 
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
             <div className="main main-app p-3 p-lg-4">
                 <div className="min-h-screen bg-gray-50 p-6">
-                    {/* Header */}
-                    <HeaderComponents showList={showList} icon={FiShoppingCart} />
 
-                    {/* Search Filters */}
+                    <HeaderComponents showList={showList} icon={FiPackage} />
+
+
                     <Card className="card-one mt-2">
                         <CardTitle title={'Search'} />
-                        <Card.Body>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
+                                <CardContent>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                                        <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />
+                                        <InputField control={form.control} label="Order Date" type="date" name="orderDate" />
+                                        <SelectField control={form.control} label="Plan Type" name="planType" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <SelectField control={form.control} label="Store" name="store" options={sample} />
+                                        <InputField control={form.control} label="Total Line Items" type="number" name="totalLineItems" />
+                                        <InputField control={form.control} label="Expected Delivery Date" type="date" name="expectedDeliveryDate" />
+                                        {/* <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} /> */}
+                                        <SelectField control={form.control} label="Order Quantity" name="orderQuantity" options={OrderQty} />
+                                        <SelectField control={form.control} label="Promo Items" name="promoItems" options={sample} />
+                                        <SelectField control={form.control} label="HHU & Basket Item" name="hhuBasketItem" options={YesOrNO} />
+                                        <SelectField control={form.control} label="Customer Special Request Item" name="customerSpecialRequestItem" options={YesOrNO}/>
+                                        <SelectField control={form.control} label="Price Marked Item Included" name="priceMarkedItemIncluded" options={YesOrNO}/>
+                                        <SelectField control={form.control} label="Cheapest Plan" name="cheapestPlan" options={YesOrNO}/>
+                                        <SelectField control={form.control} label="Fastest Delivery" name="fastestDelivery" options={YesOrNO} />
+                                    </div>
 
 
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+                                        <MultiInputField
+                                            label="Total Margin"
+                                            operationOptions={["Between", "Greater than", "Less than"]}
+                                            fromPlaceholder="£500"
+                                            toPlaceholder="£15000"
+                                            onChange={handleRetailValueChange}
+                                        />
+
+                                        <MultiInputField
+                                            label="Retail Value"
+                                            operationOptions={["Between", "Greater than", "Less than"]}
+                                            fromPlaceholder="£500"
+                                            toPlaceholder="£15000"
+                                            onChange={handleRetailValueChange}
+                                        />
+                                    </div>
+              
+
+                                    <div className="flex justify-end space-x-4 mt-6 pb-4 pr-4">
+                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                            Save
+                                        </button>
+                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                                                </>)
+                                                : "Submit"}
+
+                                        </Button>
+                                    </div>
+                                </CardContent>
 
 
-                                <SelectField label="Supplier" options={sample} value={selectedOption} onChange={handleSelectChange} />
+                            </form>
+                        </Form>
 
-                                <InputField label="Order Date" type="date" defaultValue="2024-10-10" onChange={(e) => setTextValue(e.target.value)} />
-
-
-                                <SelectField label="Plan Type" options={sample} value={selectedOption} onChange={handleSelectChange} />
-
-                                <SelectField label="Status" options={sample} value={selectedOption} onChange={handleSelectChange} />
-
-
-                                <SelectField label="Store" options={sample} value={selectedOption} onChange={handleSelectChange} />
-
-                                <InputField label="Total Line Items" type="number" value={"1010"} onChange={(e) => setTextValue(e.target.value)} />
-
-                                <InputField label="Expected Delivery Date" type="date" defaultValue="2024-10-10" onChange={(e) => setTextValue(e.target.value)} />
-
-
-                                <MultiSelectDropdown label="Department" options={groceryDepartments} />
-
-                                <SelectField label="Store" options={OrderQty} value={selectedOption} onChange={handleSelectChange} />
-
-
-                                <SelectField label="Promo Items" options={sample} value={selectedOption} onChange={handleSelectChange} />
-                                <SelectField label="HHU & Basket Item" options={YesOrNO} value={selectedOption} onChange={handleSelectChange} />
-
-                                <SelectField label="Customer Special Request Item" options={YesOrNO} value={selectedOption} onChange={handleSelectChange} />
-                                <SelectField label="Price Marked Item Included" options={YesOrNO} value={selectedOption} onChange={handleSelectChange} />
-
-                                <SelectField label="Cheapest Plan" options={YesOrNO} value={selectedOption} onChange={handleSelectChange} />
-                                <SelectField label="Fastest Delivery" options={YesOrNO} value={selectedOption} onChange={handleSelectChange} />
-
-
-
-
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-                                <MultiInputField
-                                    label="Total Margin"
-                                    operationOptions={["Between", "Greater than", "Less than"]}
-                                    fromPlaceholder="£500"
-                                    toPlaceholder="£15000"
-                                    onChange={handleRetailValueChange}
-                                />
-
-                                <MultiInputField
-                                    label="Retail Value"
-                                    operationOptions={["Between", "Greater than", "Less than"]}
-                                    fromPlaceholder="£500"
-                                    toPlaceholder="£15000"
-                                    onChange={handleRetailValueChange}
-                                />
-                            </div>
-                            <div className="flex justify-end space-x-4 mt-6">
-
-                                <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md flex items-center">
-                                    <i className="ri-close-circle-line mr-2"></i> Cancel
-                                </button>
-
-                                <button className="bg-custom-red text-white px-4 py-2 rounded-md flex items-center">
-                                    <i className="ri-search-line mr-2"></i> Search
-                                </button>
-                            </div>
-                        </Card.Body>
                     </Card>
 
                     {/* Purchase Plan List */}

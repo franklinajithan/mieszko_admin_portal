@@ -1,3 +1,4 @@
+import { Label } from '@/components/ui/label';
 import React from 'react';
 
 interface LabelFieldProps {
@@ -7,9 +8,11 @@ interface LabelFieldProps {
 
 const LabelField: React.FC<LabelFieldProps> = ({ label,htmlFor }) => {
   return (
-    <div className="flex items-center">
-     <label htmlFor={htmlFor} className='form-label'>{label}</label>
-    </div>
+   
+      <Label htmlFor={htmlFor} className='form-label flex items-center'>{label}</Label>
+
+  
+  
   );
 };
 
