@@ -12,7 +12,7 @@ import { status, sample, groceryDepartments, Week } from "../../data/constants";
 import CheckboxField from "../../elements/CheckboxField";
 import RadioField from "../../elements/RadioField";
 import { Card, Nav } from "react-bootstrap";
-import {  CardContent, CardHeader } from "../ui/card";
+import { CardContent, CardHeader } from "../ui/card";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,16 +31,6 @@ const NewPurchasePlanning = () => {
 
     const [deliveryType, setDeliveryType] = useState("fastest");
     const [selectedOption, setSelectedOption] = useState('Select');
-    const [showList, setShowList] = useState({
-        title: 'New Purchase Planning',
-        search: true,
-        new: true,
-        delete: true,
-        download: true,
-        bookmark: true,
-        setting: true,
-        filter: true
-    });
 
     const form = useForm<z.infer<typeof newPurchasePlanningFormSchema>>({
         resolver: zodResolver(newPurchasePlanningFormSchema),
@@ -89,18 +79,18 @@ const NewPurchasePlanning = () => {
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
-            <div className="main main-app p-3 p-lg-4">
-                <div className="min-h-screen bg-gray-50 p-6">
+            <div className="main main-app p-lg-1">
+                <div className="min-h-screen bg-gray-50">
 
-                    <HeaderComponents showList={showList} icon={FiPackage} />
+                    <HeaderComponents title='New Purchase Planning' icon={FiPackage} />
 
                     <Card className="card-one mt-2">
-                    <CardTitle title={'Search'} />
+                        <CardTitle title={'Search'} />
 
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                                 <CardContent>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
                                         <InputField control={form.control} label="Document No" name="documentNo" type="text" placeholder='Enter your document no' disabled={true} />
                                         <InputField control={form.control} label="Store No" name="storeNo" type="text" placeholder='Enter your Store' disabled={true} />
                                         <InputField control={form.control} label="Related WH Location" name="WHLocation" type="text" placeholder='Enter related warehouse location' disabled={true} />
@@ -128,10 +118,12 @@ const NewPurchasePlanning = () => {
                                             <InputField control={form.control} label="Period 2 Start Date" name="period2StartDate" type="text" placeholder='Enter period 2 start date' />
                                             <InputField control={form.control} label="Period 2 End Date" name="period2EndDate" type="text" placeholder='Enter period 2 end date' />
                                         </div>
-
+                                        <div className="inline-block min-h-[1em] w-0.5 self-stretch bg-neutral-100 dark:bg-white/10"></div>
                                         <div className="grid grid-cols-4 gap-4 w-2/3">
-                                        <span className="mt-14"><CheckboxField control={form.control} id="currentStock" label="Current Stock" name="currentStock1" /></span>
-                                            
+
+
+                                            <span className="mt-14"><CheckboxField control={form.control} id="currentStock" label="Current Stock" name="currentStock1" /></span>
+
                                             <SelectField control={form.control} label="Schedule Day" name="scheduleDay" options={Week} />
                                             <InputField control={form.control} label="Time" name="time" type="text" placeholder='Enter the time' />
                                             <InputField control={form.control} label="Email" name="email" type="text" placeholder='Enter the email' />
@@ -145,8 +137,8 @@ const NewPurchasePlanning = () => {
                                             <CheckboxField control={form.control} id="selfLife" label="Self Life" name="selfLife" />
                                         </div>
                                     </div>
-
-                                    <div className="flex justify-end space-x-4  mt-2 pb-4 pr-4">
+                                    <hr className="border-t border-gray-300 " />
+                                    <div className="flex justify-end space-x-4  mt-2 pr-4">
                                         <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
                                             Save
                                         </button>

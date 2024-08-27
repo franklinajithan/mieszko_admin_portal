@@ -32,68 +32,78 @@ import Activity from "../pages/Activity";
 import Events from "../pages/Events";
 import Settings from "../pages/Settings";
 
-
-import PurchasePlanning from "../components/orderManagement/PurchasePlanning";
-import NewPurchasePlanning from "../components/orderManagement/NewPurchasePlanning";
-
-import UserGrid from "../components/userManagement/UserGrid";
-import RolesAndRights from "../components/userManagement/RolesAndRights";
-
-// UI Elements
-import LayoutColumns from "../docs/LayoutColumns";
-import LayoutGrid from "../docs/LayoutGrid";
-import LayoutGutters from "../docs/LayoutGutters";
-import Accordions from "../docs/Accordions";
-import Alerts from "../docs/Alerts";
-import Avatars from "../docs/Avatars";
-import Badges from "../docs/Badges";
-import Breadcrumbs from "../docs/Breadcrumbs";
-import Buttons from "../docs/Buttons";
-import Cards from "../docs/Cards";
-import Carousels from "../docs/Carousels";
-import Dropdowns from "../docs/Dropdowns";
-import Images from "../docs/Images";
-import Listgroup from "../docs/Listgroup";
-import Markers from "../docs/Markers";
-import Modals from "../docs/Modals";
-import NavTabs from "../docs/NavTabs";
-import OffCanvas from "../docs/OffCanvas";
-import Paginations from "../docs/Paginations";
-import Placeholders from "../docs/Placeholders";
-import Popovers from "../docs/Popovers";
-import Progress from "../docs/Progress";
-import Spinners from "../docs/Spinners";
-import Toasts from "../docs/Toasts";
-import Tooltips from "../docs/Tooltips";
-import Tables from "../docs/Tables";
-import FormElements from "../docs/FormElements";
-import FormSelects from "../docs/FormSelects";
-import FormChecksRadios from "../docs/FormChecksRadios";
-import FormRange from "../docs/FormRange";
-import FormPickers from "../docs/FormPickers";
-import FormLayouts from "../docs/FormLayouts";
-import UtilBackground from "../docs/UtilBackground";
-import UtilBorder from "../docs/UtilBorder";
-import UtilColors from "../docs/UtilColors";
-import UtilDivider from "../docs/UtilDivider";
-import UtilFlex from "../docs/UtilFlex";
-import UtilSizing from "../docs/UtilSizing";
-import UtilSpacing from "../docs/UtilSpacing";
-import UtilOpacity from "../docs/UtilOpacity";
-import UtilPosition from "../docs/UtilPosition";
-import UtilTypography from "../docs/UtilTypography";
-import UtilShadows from "../docs/UtilShadows";
-import UtilExtras from "../docs/UtilExtras";
-import ApexCharts from "../docs/ApexCharts";
-import ChartJs from "../docs/ChartJs";
-import MapLeaflet from "../docs/MapLeaflet";
-import MapVector from "../docs/MapVector";
-import IconRemix from "../docs/IconRemix";
-import IconFeather from "../docs/IconFeather";
 import PurchaseOrder from "../components/orderManagement/PurchaseOrder";
 import OrderHistory from "../components/orderManagement/OrderHistory";
 import ManageStore from "../components/storeManagement/ManageStore";
 import NewStore from "../components/storeManagement/NewStore";
+
+import PurchasePlanning from "../components/orderManagement/PurchasePlanning";
+import NewPurchasePlanning from "../components/orderManagement/NewPurchasePlanning";
+
+import Category from "../components/productManagement/Category";
+
+
+
+
+import UserGrid from "../components/userManagement/UserGrid";
+import AddEditUser from "../components/userManagement/AddEditUser";
+import RolesAndRights from "../components/userManagement/RolesAndRights";
+
+
+
+
+// UI Elements
+// import LayoutColumns from "../docs/LayoutColumns";
+// import LayoutGrid from "../docs/LayoutGrid";
+// import LayoutGutters from "../docs/LayoutGutters";
+// import Accordions from "../docs/Accordions";
+// import Alerts from "../docs/Alerts";
+// import Avatars from "../docs/Avatars";
+// import Badges from "../docs/Badges";
+// import Breadcrumbs from "../docs/Breadcrumbs";
+// import Buttons from "../docs/Buttons";
+// import Cards from "../docs/Cards";
+// import Carousels from "../docs/Carousels";
+// import Dropdowns from "../docs/Dropdowns";
+// import Images from "../docs/Images";
+// import Listgroup from "../docs/Listgroup";
+// import Markers from "../docs/Markers";
+// import Modals from "../docs/Modals";
+// import NavTabs from "../docs/NavTabs";
+// import OffCanvas from "../docs/OffCanvas";
+// import Paginations from "../docs/Paginations";
+// import Placeholders from "../docs/Placeholders";
+// import Popovers from "../docs/Popovers";
+// import Progress from "../docs/Progress";
+// import Spinners from "../docs/Spinners";
+// import Toasts from "../docs/Toasts";
+// import Tooltips from "../docs/Tooltips";
+// import Tables from "../docs/Tables";
+// import FormElements from "../docs/FormElements";
+// import FormSelects from "../docs/FormSelects";
+// import FormChecksRadios from "../docs/FormChecksRadios";
+// import FormRange from "../docs/FormRange";
+// import FormPickers from "../docs/FormPickers";
+// import FormLayouts from "../docs/FormLayouts";
+// import UtilBackground from "../docs/UtilBackground";
+// import UtilBorder from "../docs/UtilBorder";
+// import UtilColors from "../docs/UtilColors";
+// import UtilDivider from "../docs/UtilDivider";
+// import UtilFlex from "../docs/UtilFlex";
+// import UtilSizing from "../docs/UtilSizing";
+// import UtilSpacing from "../docs/UtilSpacing";
+// import UtilOpacity from "../docs/UtilOpacity";
+// import UtilPosition from "../docs/UtilPosition";
+// import UtilTypography from "../docs/UtilTypography";
+// import UtilShadows from "../docs/UtilShadows";
+// import UtilExtras from "../docs/UtilExtras";
+// import ApexCharts from "../docs/ApexCharts";
+// import ChartJs from "../docs/ChartJs";
+// import MapLeaflet from "../docs/MapLeaflet";
+// import MapVector from "../docs/MapVector";
+// import IconRemix from "../docs/IconRemix";
+// import IconFeather from "../docs/IconFeather";
+
 
 
 const protectedRoutes = [
@@ -115,7 +125,10 @@ const protectedRoutes = [
   { path: "store/manage-store", element: <ManageStore /> },
   { path: "store/new-store", element: <NewStore /> },
 
+  { path: "product/category", element: <Category /> },
+
   { path: "user/user-grid", element: <UserGrid /> },
+  { path: "user/new-user", element: <AddEditUser /> },
   { path: "user/roles-and-rights", element: <RolesAndRights /> },
 
 

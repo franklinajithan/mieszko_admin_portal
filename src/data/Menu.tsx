@@ -140,6 +140,12 @@ const userManagementMenu = [
     "link": "/user/user-grid",
     "icon": "ri-group-fill"
   },
+
+  {
+    "label": "New User",
+    "link": "/user/new-user",
+    "icon": "ri-user-add-fill"
+  },
   {
     "label": "Roles And Rights",
     "link": "/user/roles-and-rights",

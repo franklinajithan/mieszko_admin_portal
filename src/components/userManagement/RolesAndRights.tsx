@@ -186,8 +186,8 @@ const RolesAndRights: React.FC = () => {
   return (
     <React.Fragment>
       <Header onSkin={setSkin} />
-      <div className="main main-app p-3 p-lg-4">
-        <div className="min-h-screen bg-gray-50 p-6">
+      <div className="main main-app p-lg-1">
+        <div className="min-h-screen bg-gray-50">
           <HeaderComponents showList={showList} icon={FiShield} />
 
           <Card className="card-one mt-2">

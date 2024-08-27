@@ -377,7 +377,7 @@ export default function StorageManagement() {
   return (
     <React.Fragment>
       <Header onSkin={setSkin} />
-      <div className="main main-app p-3 p-lg-4">
+      <div className="main main-app p-lg-1">
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
           <div>
             <ol className="breadcrumb fs-sm mb-1">

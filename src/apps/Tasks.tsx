@@ -29,7 +29,7 @@ export default function Tasks() {
   return (
     <React.Fragment>
       {/* <Header /> */}
-      <div className="main main-app p-3 p-lg-4 p-xxl-5">
+      <div className="main main-app p-lg-1 p-xxl-5">
         <Row className="row-cols-auto g-4 g-xxl-5">
           <Col xl>
             <h2 className="main-title fs-4 mb-1">Welcome back!</h2>

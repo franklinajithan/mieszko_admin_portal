@@ -107,5 +107,65 @@ export const orderHistoryFormSchema = z.object({
   filterByStatus: z.string().optional(),
 });
 
+export const authFormSchema = z.object({
+  email: z.string().optional(),
+  password: z.string().optional(),
+});
+
+
+export const userSearchSchema = z.object({
+  role: z.string().optional(), // Assuming these are optional fields
+  type: z.string().optional(),
+  reporting: z.string().optional(),
+  status: z.string().optional(),
+  usersAccessToPOS: z.boolean().optional(), // Assuming checkboxes are booleans
+  userAccessToMobile: z.boolean().optional(),
+});
+
+export const manageStoreFormSchema = z.object({
+  storeName: z.string(),         // Required string
+  storeCode: z.string(),         // Required string
+  status: z.string(),                // Required string
+  ownershipType: z.string(), // Required string
+  postcode: z.string(),            // Required string
+  city: z.string(),                    // Required string
+  licenseType: z.string(),     // Required string
+  expiry:  z.string(),                              // Optional date field
+  company: z.string(),              // Required string
+  storeType: z.string(),         // Required string
+});
+
+export const NewUserSchema = z
+  .object({
+    Id: z.string().nonempty("Id is required"),
+    lastName: z.string().nonempty("Last name is required"),
+    email: z.string().email("Invalid email address").nonempty("Email is required"),
+    phone: z.string().nonempty("Phone number is required"),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    postalCode: z.string().optional(),
+    country: z.string().optional(),
+    username: z.string().nonempty("Username is required"),
+    password: z.string()
+      .min(6, "Password must be at least 6 characters")
+      .nonempty("Password is required"),
+    confirmPassword: z.string().nonempty("Confirm Password is required"),
+    role: z.string().optional(),
+    assignStore: z.string().optional(),
+    visaNumber: z.string().optional(),
+    visaType: z.string().optional(),
+    issueDate: z.string().optional(),
+    expiryDate: z.string().optional(),
+    visaIssuedBy: z.string().optional(),
+    visaStatus: z.string().optional(),
+    mobileAccess: z.string().optional(),
+    desktopAccess: z.string().optional(),
+    posAccess: z.string().optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"], // Set the path of the error to 'confirmPassword'
+    message: "Passwords don't match",
+  });
 
 

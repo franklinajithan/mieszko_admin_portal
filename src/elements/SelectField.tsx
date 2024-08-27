@@ -40,6 +40,7 @@ const SelectField = <T extends FieldValues>({
         const value = typeof field.value === 'string' ? field.value : undefined;
 
         return (
+          <div className='w-full'>
           <FormItem>
             <LabelField label={label} />
             <Select onValueChange={field.onChange} value={value} defaultValue={value}>
@@ -57,6 +58,7 @@ const SelectField = <T extends FieldValues>({
               </SelectContent>
             </Select>
           </FormItem>
+          </div>
         );
       }}
     />

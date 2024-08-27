@@ -24,16 +24,7 @@ export default function PurchasePlanning() {
     const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
     const [textValue, setTextValue] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false)
-    const [showList, setShowList] = useState({
-        title: 'Purchase Planning',
-        search: true,
-        new: true,
-        delete: true,
-        download: true,
-        bookmark: true,
-        setting: true,
-        filter: true
-    });
+  
     const [selectedOption, setSelectedOption] = useState<string>('Select');
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(e.target.value);
@@ -62,10 +53,10 @@ export default function PurchasePlanning() {
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
-            <div className="main main-app p-3 p-lg-4">
-                <div className="min-h-screen bg-gray-50 p-6">
+            <div className="main main-app p-lg-1">
+                <div className="min-h-screen bg-gray-50">
 
-                    <HeaderComponents showList={showList} icon={FiPackage} />
+                    <HeaderComponents title='Purchase Planning' icon={FiPackage} />
 
 
                     <Card className="card-one mt-2">
@@ -113,7 +104,8 @@ export default function PurchasePlanning() {
                                     </div>
               
 
-                                    <div className="flex justify-end space-x-4 mt-6 pb-4 pr-4">
+                                    <hr className="border-t border-gray-300 " />
+                                    <div className="flex justify-end space-x-4  mt-2 pr-4">
                                         <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
                                             Save
                                         </button>
@@ -123,7 +115,6 @@ export default function PurchasePlanning() {
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
                                                 </>)
                                                 : "Submit"}
-
                                         </Button>
                                     </div>
                                 </CardContent>

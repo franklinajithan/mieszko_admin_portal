@@ -233,7 +233,7 @@ export default function Contacts() {
   return (
     <React.Fragment>
       {/* <Header /> */}
-      <div className="main main-app p-3 p-lg-4">
+      <div className="main main-app p-lg-1">
         <div className={"contact-panel " + (isSidebarShow? "sidebar-show": "")}>
           <PerfectScrollbar className="contact-sidebar">
             <div className="mb-4">

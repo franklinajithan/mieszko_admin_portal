@@ -3,9 +3,11 @@ import { Card, Nav, } from "react-bootstrap";
 interface CardTitleProps {
 
     title: React.ReactNode;
+    onToggle?: () => void;
+    isOpen?: boolean;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({ title }) => {
+const CardTitle: React.FC<CardTitleProps> = ({ title, onToggle, isOpen }) => {
     return (
         <>
             <Card.Header>
@@ -22,8 +24,9 @@ const CardTitle: React.FC<CardTitleProps> = ({ title }) => {
                     <Nav.Link href="#">
                         <i className="ri-more-2-fill text-black text-6xl"></i>
                     </Nav.Link>
-                    <Nav.Link href="#">
-                        <i className="ri-arrow-down-s-line text-black text-6xl"></i>
+                
+                    <Nav.Link href="#" onClick={onToggle} className="">
+                        <i className={`ri-arrow-${isOpen ? 'up' : 'down'}-s-line text-6xl`}></i>
                     </Nav.Link>
                 </Nav>
             </Card.Header>

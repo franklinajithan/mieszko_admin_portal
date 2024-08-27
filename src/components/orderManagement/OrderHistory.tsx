@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { FiShoppingCart } from "react-icons/fi";
-import { Controller, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -11,12 +11,11 @@ import HeaderComponents from "../../elements/HeaderSection";
 import CardTitle from "../../elements/CardTitle";
 import InputField from "../../elements/InputField";
 import SelectField from "../../elements/SelectField";
-import { sample, status } from "../../data/constants";
+import { sample } from "../../data/constants";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
+import { Form } from "../ui/form";
 import { orderHistoryFormSchema } from "@/lib/utils";
-
-// Define the schema for form validation using Zod
 
 const OrderHistory = () => {
     const { t } = useTranslation("global");
@@ -39,8 +38,8 @@ const OrderHistory = () => {
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
-            <div className="main main-app p-3 p-lg-4">
-                <div className="min-h-screen bg-gray-50 p-6">
+            <div className="main main-app p-lg-1">
+                <div className="min-h-screen bg-gray-50">
                     <HeaderComponents
                         showList={{
                             title: 'Order History',
@@ -58,37 +57,28 @@ const OrderHistory = () => {
                     <Card className="card-one mt-2">
                         <CardTitle title="Order History" />
                         <Card.Body>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                                <div className="grid grid-cols-1 gap-4 mb-6">
-
-
-
-                                    <InputField control={form.control} label="Search" type="text" name="search" />
-
-                                </div>
-                                <div className="grid grid-cols-1 gap-4 mb-6">
-
-
-
-                                    <SelectField control={form.control} label="Filter By Status" name="filterByStatus" options={sample} />
-
-                                </div>
-                                <div className="flex justify-end space-x-4 mt-6 pb-4 pr-4">
-                                    <Button
-                                        type="submit"
-                                        disabled={isLoading}
-                                        className="form-btn"
-                                    >
-                                        {isLoading ? (
-                                            <>
-                                                <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
-                                            </>
-                                        ) : (
-                                            "Submit"
-                                        )}
-                                    </Button>
-                                </div>
-                            </form>
+                        <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                    <div className="grid grid-cols-2 gap-4 mb-6">
+                                        <InputField control={form.control} label="Search" type="text" name="search" />
+                                   
+                                        <SelectField control={form.control} label="Filter By Status" name="filterByStatus" options={sample} />
+                                    </div>
+                                    <hr className="border-t border-gray-300 " />
+                                    <div className="flex justify-end space-x-4  mt-2 pr-4">
+                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                            Save
+                                        </button>
+                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                                                </>)
+                                                : "Submit"}
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Form>
                             {/* Order History Table */}
                             <Card className="card-one mt-2">
                                 <Card.Header>

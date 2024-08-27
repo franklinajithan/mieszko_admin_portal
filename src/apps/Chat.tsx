@@ -216,7 +216,7 @@ export default function Chat() {
   return (
     <React.Fragment>
       {/* <Header /> */}
-      <div className="main main-app p-3 p-lg-4">
+      <div className="main main-app p-lg-1">
         <div className={"chat-panel" + (msgShow? " msg-show" : "")}>
           <div className="chat-sidebar">
             <div className="sidebar-header">

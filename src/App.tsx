@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from './layouts/Main';
 import NotFound from "./pages/NotFound";
@@ -11,56 +11,54 @@ import "./scss/style.scss";
 
 import { useTranslation } from "react-i18next";
 
-const Login = React.lazy(() => import('./pages/Signin'))
-
-localStorage.setItem('token', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
-localStorage.setItem('refreshToken', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
-localStorage.setItem('tokenLifeInSeconds', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
-
-window.addEventListener("load", function () {
-  let skinMode = localStorage.getItem("skin-mode");
-  // let HTMLTag = document.querySelector("html");
-
-  if (skinMode) {
-    //   HTMLTag.setAttribute("data-skin", skinMode);
-  }
-});
+const Login = React.lazy(() => import('./pages/Signin2'));
 
 export default function App() {
+  useEffect(() => {
+    const handleSkinMode = () => {
+      let skinMode = localStorage.getItem("skin-mode");
+      let HTMLTag = document.querySelector("html");
 
+      if (skinMode) {
+        HTMLTag?.setAttribute("data-skin", skinMode);
+      }
+    };
 
+    window.addEventListener("load", handleSkinMode);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener("load", handleSkinMode);
+    };
+  }, []);
 
   return (
     <React.Fragment>
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<AuthRoute><Main /></AuthRoute>}>
-
-            {protectedRoutes.map((route, index) => {
-              return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<AuthRoute><Main /></AuthRoute>}>
+              {protectedRoutes.map((route, index) => (
                 <Route
                   path={route.path}
                   element={route.element}
                   key={index}
                 />
-              )
-            })}
-          </Route>
+              ))}
+            </Route>
 
-          {publicRoutes.map((route, index) => {
-            return (
+            {publicRoutes.map((route, index) => (
               <Route
                 path={route.path}
                 element={route.element}
                 key={index}
               />
-            )
-          })}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            ))}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </React.Fragment>
-
   );
 }

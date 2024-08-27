@@ -25,7 +25,7 @@ export default function GalleryVideo() {
   return (
     <React.Fragment>
       {/* <Header /> */}
-      <div className="main main-app p-3 p-lg-4 p-xxl-5">
+      <div className="main main-app p-lg-1 p-xxl-5">
         <Carousel slide>
           <Carousel.Item>
             <div className="video-headline">

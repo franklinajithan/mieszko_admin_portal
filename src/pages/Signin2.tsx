@@ -1,9 +1,62 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Card, Col, Row } from "react-bootstrap";
 import bg1 from "../assets/img/bg1.jpg";
+import { userLogin } from "@/service/auth.service";
+import { Button } from "@/components/ui/button";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing icons from FontAwesome
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form } from "@/components/ui/form";
+import InputField from "@/elements/InputField";
+import { authFormSchema } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 export default function Signin2() {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const form = useForm<z.infer<typeof authFormSchema>>({
+    resolver: zodResolver(authFormSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
+    setIsLoading(true);
+    try {
+      const result = await userLogin({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (result.status !== 200) {
+        console.error(result.data);
+        return;
+      }
+
+      const { token } = result.data.data;
+      localStorage.setItem('token', token);
+      // localStorage.setItem('refreshToken', refreshToken);
+      // localStorage.setItem('tokenLifeInSeconds', tokenLifeInSeconds);
+
+
+      navigate('/order/new-purchase-planning');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <div className="page-sign d-block py-0">
       <Row className="g-0">
@@ -12,28 +65,52 @@ export default function Signin2() {
             <Card.Header>
               <Link to="/" className="header-logo mb-5">Mieszko</Link>
               <Card.Title>Sign In</Card.Title>
-              <Card.Text>Welcome back! Please signin to continue.</Card.Text>
+              <Card.Text>Welcome back! Please sign in to continue.</Card.Text>
             </Card.Header>
             <Card.Body>
-              <Form method="get" action="/dashboard/finance">
-                <div className="mb-4">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="text" placeholder="Enter your email address" value="me@themepixels.com" />
-                </div>
-                <div className="mb-4">
-                  <Form.Label className="d-flex justify-content-between">
-                    Password <Link to="">Forgot password?</Link>
-                  </Form.Label>
-                  <Form.Control type="password" placeholder="Enter your password" value="password123" />
-                </div>
-                <Button type="submit" className="btn-sign">Sign In</Button>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                  <InputField
+                    control={form.control}
+                    name="email"
+                    label="Username"
+                    placeholder="Enter your email"
+                    type="text"
+                  />
 
-                <div className="divider"><span>or sign in with</span></div>
-
-                <Row className="gx-2">
-                  <Col><Button variant="" className="btn-facebook"><i className="ri-facebook-fill"></i> Facebook</Button></Col>
-                  <Col><Button variant="" className="btn-google"><i className="ri-google-fill"></i> Google</Button></Col>
-                </Row>
+                  <div className="relative">
+                    <InputField
+                      control={form.control}
+                      name="password"
+                      label="Password"
+                      placeholder="Enter your password"
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-3"
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash size={20} />
+                      ) : (
+                        <FaEye size={20} />
+                      )}
+                    </button>
+                  </div>
+                  
+                  <div className="flex flex-col gap-4">
+                    <Button type="submit" disabled={isLoading} className="form-btn">
+                      {isLoading ? (
+                        <>
+                          <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                        </>
+                      ) : (
+                        'Sign In'
+                      )}
+                    </Button>
+                  </div>
+                </form>
               </Form>
             </Card.Body>
             <Card.Footer>
@@ -42,9 +119,9 @@ export default function Signin2() {
           </Card>
         </Col>
         <Col className="d-none d-lg-block">
-          <img src={bg1} className="auth-img" alt="" />
+          <img src={bg1} className="auth-img" alt="Background" />
         </Col>
       </Row>
     </div>
-  )
+  );
 }

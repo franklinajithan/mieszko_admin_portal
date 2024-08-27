@@ -32,16 +32,7 @@ const PurchaseOrder = () => {
 
     const [numberValue, setNumberValue] = useState<number | string>('');
     const [selectedOption, setSelectedOption] = useState<string>('Select');
-    const [showList, setShowList] = useState({
-        title: 'Purchase Order',
-        search: true,
-        new: true,
-        delete: true,
-        download: true,
-        bookmark: true,
-        setting: true,
-        filter: true
-    });
+
     const [values, setValues] = useState({
         startDate: '',
         endDate: '',
@@ -119,10 +110,10 @@ const PurchaseOrder = () => {
     return (
         <React.Fragment>
             <Header onSkin={setSkin} />
-            <div className="main main-app p-3 p-lg-4">
-                <div className="min-h-screen bg-gray-50 p-6">
+            <div className="main main-app p-lg-1">
+                <div className="min-h-screen bg-gray-50">
 
-                    <HeaderComponents showList={showList} icon={FiPackage} />
+                    <HeaderComponents title='Purchase Order' icon={FiPackage} />
 
 
                     <Card className="card-one mt-2">
@@ -164,7 +155,7 @@ const PurchaseOrder = () => {
                                         <InputField control={form.control} label="Closing Date" name="closingDate" type="date" />
                                     </div>
                                 </CardContent>
-
+                                <hr className="border-t border-gray-300 " />
                                 <CardContent>
                                     <div className="grid grid-cols-2 gap-4">
                                         <MultiInputField
@@ -249,7 +240,7 @@ const PurchaseOrder = () => {
                                         />
                                     </div>
                                 </CardContent>
-
+                                <hr className="border-t border-gray-300 " />
                                 <CardContent>
                                     <div className="grid grid-cols-2 gap-4">
                                         <MultiDateField label="Purchase Plan" firstName="purchasePlanStartDate" secondName="purchasePlanEndDate" control={form.control} />
@@ -261,20 +252,22 @@ const PurchaseOrder = () => {
                                         <MultiDateField label="Delivery" firstName="deliveryDateStartDate" secondName="deliveryDateEndDate" control={form.control} />
 
                                     </div>
-                                </CardContent>
-                                <div className="flex justify-end space-x-4 mt-6 pb-4 pr-4">
-                                    <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
-                                        Save
-                                    </button>
-                                    <Button type="submit" disabled={isLoading} className='form-btn'>
-                                        {isLoading ? (
-                                            <>
-                                                <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
-                                            </>)
-                                            : "Submit"}
 
-                                    </Button>
-                                </div>
+                                    <hr className="border-t border-gray-300 " />
+                                    <div className="flex justify-end space-x-4  mt-2 pr-4">
+                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                            Save
+                                        </button>
+                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                                                </>)
+                                                : "Submit"}
+                                        </Button>
+                                    </div>
+                                </CardContent>
+                                
                             </form>
                         </Form>
                         {/* </CardContent> */}

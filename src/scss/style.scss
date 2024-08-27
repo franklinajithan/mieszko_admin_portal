@@ -136,10 +136,33 @@ Contact: themepixels@gmail.com
 
 .header-logo, .sidebar-logo {
   font-size: 49px !important;
-  color: #9c0000 !important;
+  color:#dc2626 !important;
 }
 
 .sidebar-body .nav-label {
   text-transform: none !important;
 }
+
+.MuiDataGrid-columnHeaderTitle{
+  font-weight: bold !important;
+ // font-family: 'Open Sans' !important;
+  //font-size: 14px !important;
+}
+
+.MuiDataGrid-columnHeader{
+  height: 35px !important;
+ // padding-left: 10px !important;
+  background-color: #f3f5f9 !important;
+}
+.MuiDataGrid-columnHeaders{
+  height: 35px !important;
+  background-color: #f3f5f9 !important;
+}
+
+
+
+
+
+
+
 
