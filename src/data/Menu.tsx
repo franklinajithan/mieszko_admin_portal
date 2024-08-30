@@ -90,13 +90,13 @@ const storeManagementMenu = [
 
 const productManagementMenu = [
   {
-    "label": "Product Catalog",
-    "link": "/product/catalog",
+    "label": "Product Category ",
+    "link": "/product/category ",
     "icon": "ri-apps-fill"
   },
   {
-    "label": "Add New Product",
-    "link": "/product/new",
+    "label": "Product Brand ",
+    "link": "/product/brand",
     "icon": "ri-add-box-fill"
   },
   {

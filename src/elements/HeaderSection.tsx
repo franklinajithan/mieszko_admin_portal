@@ -31,7 +31,7 @@ export default function HeaderComponents({
     return (
         <header className="flex items-center justify-between bg-gradient-to-br from-red-600 via-red-700 to-red-800 p-2 shadow-md border-b-4 border-custom-red">
             <div className="flex items-center">
-                <div className="bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 p-2 rounded-full">
+                <div className="bg-gradient-to-r from-red-300 via-red-500 to-pink-500 p-2 rounded-full">
                     <Icon className="text-white text-base" aria-label="Main Icon" />
                 </div>
                 <h2 className="text-lg font-bold m-0 pl-2 text-white">{title}</h2>

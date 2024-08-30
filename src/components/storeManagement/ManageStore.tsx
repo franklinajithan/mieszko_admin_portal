@@ -89,7 +89,7 @@ const ManageStore = () => {
 
     const onSubmit = (data: any) => {
         // Handle form submission
-        console.log(data);
+        //console.log(data);
     };
 
     const [pageSize, setPageSize] = React.useState(5); // Set default rows per page
@@ -140,10 +140,10 @@ const ManageStore = () => {
 
 
                                     <div className="flex justify-end space-x-4 mt-2 pr-4">
-                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                    <button className="btn-gray">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className="form-btn">
+                                        <Button type="submit" disabled={isLoading} className='btn-red'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

@@ -66,9 +66,9 @@ const theme = createTheme({
             backgroundColor: '#ffffff', // White for even rows
           },
           '&.Mui-selected': {
-            backgroundColor: '#E4F4E4', // Light pink color for selected row
+            backgroundColor: '#fee2e2', // Light pink color for selected row
             '&:hover': {
-              backgroundColor: '#D5EED5', // Slightly darker pink on hover
+              backgroundColor: '#fecaca', // Slightly darker pink on hover
             },
           },
         },

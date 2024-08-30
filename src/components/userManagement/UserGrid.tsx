@@ -95,7 +95,7 @@ export default function UserGrid() {
 
     function onSubmit(values: z.infer<typeof userSearchSchema>) {
         setIsLoading(true);
-        console.log(values);
+        //console.log(values);
         setIsLoading(false);
     }
 
@@ -118,7 +118,7 @@ export default function UserGrid() {
                         <CardTitle title="Search" onToggle={toggleSearchCardBody} isOpen={isOpenSearch} />
                         {isOpenSearch && (<CardContent>
                             <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="">
                                     <div className="flex w-full grid-cols-1 gap-3 mt-2 items-end">
                                         <div className="flex grid-cols-1 gap-3 items-end w-4/6">
                                             <SelectField
@@ -146,7 +146,7 @@ export default function UserGrid() {
                                                 options={sample}
                                             />
                                         </div>
-                                        <div className="border rounded-md flex justify-center items-center w-2/6 h-10">
+                                        <div className="border rounded-md flex justify-center items-center w-2/6 h-10 mb-2">
                                             <div className="flex items-center gap-4">
                                                 <CheckboxField
                                                     control={form.control}
@@ -166,7 +166,7 @@ export default function UserGrid() {
 
                                     <hr className="border-t border-gray-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                        <Button type="submit" disabled={isLoading} className='btn-red'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

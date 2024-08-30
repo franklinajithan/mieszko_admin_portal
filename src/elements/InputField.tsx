@@ -14,7 +14,7 @@ interface InputFieldProps<T extends FieldValues> {
     disabled?: boolean;
 }
 
-const InputField = <T extends FieldValues>({ label, type, name, placeholder, control, disabled }: InputFieldProps<T>) => {
+const InputField = <T extends FieldValues>({ label, type, name, placeholder,control, disabled }: InputFieldProps<T>) => {
     return (
         <FormField
             control={control}
@@ -27,6 +27,7 @@ const InputField = <T extends FieldValues>({ label, type, name, placeholder, con
                             <Input
                                 id={name}
                                 placeholder={placeholder}
+                        
                                 className='input-class'
                                 disabled={disabled}
                                 type={type}

@@ -107,6 +107,32 @@ export const orderHistoryFormSchema = z.object({
   filterByStatus: z.string().optional(),
 });
 
+export const categoryFormSchema = z.object({
+  categoryName: z.string().nonempty("Category name is required"),
+  categoryLevel: z.string({
+    required_error: "Category Level is required",
+  }),
+  childCategory: z.string().optional(),
+  parentCategory: z.string().optional(),
+  isPlu: z.boolean().optional(),
+  isAssignItem: z.string().optional(),
+  translation: z.string().optional(),
+  clearForm: z.boolean().optional(),
+  pluCode: z.string()
+    .regex(/^\d{2}$/, "PLU Code must be exactly 2 numeric digits")
+    .optional(),
+})
+.superRefine((data, ctx) => {
+  // Check if 'isPlu' is true and 'pluCode' is missing or invalid
+  if (data.isPlu === true && !data.pluCode) {
+    ctx.addIssue({
+      path: ['pluCode'],
+      message: "PLU Code is required when 'PLU product' is true",
+      code: z.ZodIssueCode.custom
+    });
+  }
+});
+
 export const authFormSchema = z.object({
   email: z.string().optional(),
   password: z.string().optional(),

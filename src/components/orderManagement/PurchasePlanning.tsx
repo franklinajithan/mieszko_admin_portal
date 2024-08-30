@@ -46,7 +46,7 @@ export default function PurchasePlanning() {
 
     function onSubmit(values: z.infer<typeof purchasePlanningFormSchema>) {
         setIsLoading(true);
-        console.log(values);
+      //  console.log(values);
         setIsLoading(false);
     }
 
@@ -106,10 +106,10 @@ export default function PurchasePlanning() {
 
                                     <hr className="border-t border-gray-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                    <button className="btn-gray">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                        <Button type="submit" disabled={isLoading} className='btn-red'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

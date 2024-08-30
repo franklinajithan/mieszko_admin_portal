@@ -67,3 +67,56 @@
     @apply bg-background text-foreground;
   }
 }
+
+.btn-red {
+  @apply  h-10 px-4 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95;
+  background: linear-gradient(135deg, #ff7979, #c53030);
+  color: white !important
+}
+
+.btn-red:hover {
+  background: linear-gradient(135deg, #c53030, #ff7979); /* Reverse gradient on hover */
+  @apply shadow-lg;
+
+}
+
+.btn-red:focus {
+  @apply outline-none ring-2 ring-red-500 ring-offset-2;
+}
+
+
+.btn-toggle {
+  @apply flex items-center h-10 px-2 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95 cursor-pointer;
+  background: linear-gradient(135deg, #ff7979, #c53030);
+  color: white !important;
+}
+
+.btn-toggle:hover {
+  /* Reverse gradient on hover */
+  background: linear-gradient(135deg, #c53030, #ff7979); 
+  @apply shadow-lg; /* Larger shadow on hover */
+}
+
+.btn-toggle:focus {
+  @apply outline-none ring-2 ring-red-500 ring-offset-2; /* Ring effect on focus */
+}
+
+
+.btn-gray {
+  @apply h-10 px-4 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95;
+  background: linear-gradient(135deg, #868686, #bbbbbb); /* Gray gradient background */
+  color: white !important
+}
+
+/* Hover state for .btn-gray */
+.btn-gray:hover {
+  background: linear-gradient(135deg, #bbbbbb, #868686); /* Reverse gray gradient on hover */
+  @apply shadow-lg;
+}
+
+/* Focus state for .btn-gray */
+.btn-gray:focus {
+  @apply outline-none ring-2 ring-gray-500 ring-offset-2;
+}
+
+

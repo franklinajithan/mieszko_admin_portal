@@ -98,9 +98,9 @@ export default function Signin2() {
                       )}
                     </button>
                   </div>
-                  
+
                   <div className="flex flex-col gap-4">
-                    <Button type="submit" disabled={isLoading} className="form-btn">
+                    <Button type="submit" disabled={isLoading} className='btn-red'>
                       {isLoading ? (
                         <>
                           <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
@@ -119,7 +119,9 @@ export default function Signin2() {
           </Card>
         </Col>
         <Col className="d-none d-lg-block">
-          <img src={bg1} className="auth-img" alt="Background" />
+          {/* <div className="w-[1400px] h-[1000px] bg-gradient-to-r from-red-100 via-red-500 to-red-100 p-1">
+            <img src={bg1} className="auth-img w-full h-full object-cover" alt="Background" />
+          </div> */}
         </Col>
       </Row>
     </div>

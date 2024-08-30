@@ -73,7 +73,7 @@ export default function AddEditUser() {
 
     const onSubmit = (values: z.infer<typeof NewUserSchema>) => {
         setIsLoading(true);
-        console.log(values);
+        //console.log(values);
         // Handle form submission, including file upload if needed
         setIsLoading(false);
     };
@@ -118,8 +118,8 @@ export default function AddEditUser() {
                                             <div className="flex w-full gap-3">
                                                 <div className="grid grid-cols-1  w-1/6 mt-4">
                                                     {/* Image Upload */}
-                                                    <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br from-red-700 via-red-800 to-red-900 p-6 rounded-lg ">
-                                                        <div className="relative mb-4 bg-gradient-to-r from-red-600 via-red-700 to-red-800 p-2 rounded-full"> {/* Colorful background with #dc2626 */}
+                                                    <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br from-red-700 via-red-800 to-red-700 p-6 rounded-lg ">
+                                                        <div className="relative mb-4 bg-gradient-to-r from-red-600 via-red-700 to-red-600 p-2 rounded-full"> {/* Colorful background with #dc2626 */}
                                                             <img
                                                                 src={imagePreview || defaultProfileImage}
                                                                 alt="Profile"
@@ -328,10 +328,10 @@ export default function AddEditUser() {
                                             </div>
                                             <hr className="border-t border-gray-300 " />
                                             <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                                <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                                <button className="btn-gray">
                                                     Save
                                                 </button>
-                                                <Button type="submit" disabled={isLoading} className='form-btn'>
+                                                <Button type="submit" disabled={isLoading} className='btn-red'>
                                                     {isLoading ? (
                                                         <>
                                                             <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

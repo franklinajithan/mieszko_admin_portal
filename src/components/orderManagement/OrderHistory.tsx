@@ -29,7 +29,7 @@ const OrderHistory = () => {
 
     const onSubmit = (values: z.infer<typeof orderHistoryFormSchema>) => {
         setIsLoading(true);
-        console.log(values);
+     //   console.log(values);
         setTimeout(() => {
             setIsLoading(false);
         }, 2000); // Simulate a network request
@@ -40,36 +40,24 @@ const OrderHistory = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents
-                        showList={{
-                            title: 'Order History',
-                            search: true,
-                            new: false,
-                            delete: false,
-                            download: false,
-                            bookmark: false,
-                            setting: false,
-                            filter: true,
-                        }}
-                        icon={FiShoppingCart}
-                    />
+                    <HeaderComponents icon={FiShoppingCart} title={"Order History"} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title="Order History" />
                         <Card.Body>
-                        <Form {...form}>
+                            <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                                    <div className="grid grid-cols-2 gap-4 mb-6">
+                                    <div className="flex grid grid-cols-2 gap-4 mb-6">
                                         <InputField control={form.control} label="Search" type="text" name="search" />
-                                   
+
                                         <SelectField control={form.control} label="Filter By Status" name="filterByStatus" options={sample} />
                                     </div>
                                     <hr className="border-t border-gray-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <button className="bg-gray-600 text-white px-4 py-2 rounded-md">
+                                    <button className="btn-gray">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='form-btn'>
+                                        <Button type="submit" disabled={isLoading} className='btn-red'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

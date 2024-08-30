@@ -1,47 +1,54 @@
 
 
 export const sample = [
-    { value: 'sample', label: 'sample' },
-    { value: 'sample1', label: 'sample2' },
-   
-  ];
+  { value: 'sample', label: 'sample' },
+  { value: 'sample1', label: 'sample2' },
+
+];
+
+export const category = [
+  { value:'parent', label: 'Parent Category' },
+  { value:'child', label: 'Child Category' },
+  { value:'grandchild', label: 'Grandchild Category' },
+];
+
 
 export const groceryDepartments = [
-    { value: 'produce', label: 'Produce' },
-    { value: 'dairy', label: 'Dairy' },
-    { value: 'bakery', label: 'Bakery' },
-    { value: 'meat', label: 'Meat' },
-    { value: 'frozen', label: 'Frozen Foods' },
-    { value: 'canned', label: 'Canned Goods' },
-    { value: 'snacks', label: 'Snacks' },
-    { value: 'beverages', label: 'Beverages' },
-  ];
+  { value: 'produce', label: 'Produce' },
+  { value: 'dairy', label: 'Dairy' },
+  { value: 'bakery', label: 'Bakery' },
+  { value: 'meat', label: 'Meat' },
+  { value: 'frozen', label: 'Frozen Foods' },
+  { value: 'canned', label: 'Canned Goods' },
+  { value: 'snacks', label: 'Snacks' },
+  { value: 'beverages', label: 'Beverages' },
+];
 
-  export const OrderQty = [
-    { value: 'Case', label: 'Case' },
-    { value: 'Unit', label: 'Unit' },
-   
-  ];
+export const OrderQty = [
+  { value: 'Case', label: 'Case' },
+  { value: 'Unit', label: 'Unit' },
 
-  export const YesOrNO = [
-    { value: 'Yes', label: 'Yes' },
-    { value: 'No', label: 'No' },
-   
-  ];
- export const status = [
-    { value: 'Active', label: 'Active' },
-    { value: 'Inactive', label: 'Inactive' },
-   
-  ];
+];
 
-  export const Week = [
-    { value: 'Monday', label: 'Monday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Wednesday', label: 'Wednesday' },
-    { value: 'Thursday', label: 'Thursday' },
-    { value: 'Friday', label: 'Friday' },
-    { value: 'Saturday', label: 'Saturday' },
-    { value: 'Sunday', label: 'Sunday' }
+export const YesOrNO = [
+  { value: 'Yes', label: 'Yes' },
+  { value: 'No', label: 'No' },
+
+];
+export const status = [
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' },
+
+];
+
+export const Week = [
+  { value: 'Monday', label: 'Monday' },
+  { value: 'Tuesday', label: 'Tuesday' },
+  { value: 'Wednesday', label: 'Wednesday' },
+  { value: 'Thursday', label: 'Thursday' },
+  { value: 'Friday', label: 'Friday' },
+  { value: 'Saturday', label: 'Saturday' },
+  { value: 'Sunday', label: 'Sunday' }
 ];
 
 export const Month = [
@@ -142,7 +149,7 @@ interface UrlQueryParams {
 
 
 
-export function getAccountTypeColors(type: AccountTypes) {
+export function getAccountTypeColors(type:any) {
   switch (type) {
     case "depository":
       return {
