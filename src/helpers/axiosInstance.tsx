@@ -23,10 +23,14 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Handle the 401 error: Unauthorized
       localStorage.clear();
-      // Redirect to login page
-      window.location.href = '/login';
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1000);
+
+    }
+    else{
+      console.log(error)
     }
     return Promise.reject(error);
   },

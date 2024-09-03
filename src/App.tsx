@@ -5,7 +5,7 @@ import NotFound from "./pages/NotFound";
 import AuthRoute from './helpers/AuthRoute';
 import publicRoutes from "./routes/PublicRoutes";
 import protectedRoutes from "./routes/ProtectedRoutes";
-
+import { Toaster } from "@/components/ui/toaster"
 import "./assets/css/remixicon.css";
 import "./scss/style.scss";
 
@@ -38,7 +38,7 @@ export default function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRoute><Main /></AuthRoute>}>
+            <Route path="/" element={<AuthRoute><Toaster /><Main /> </AuthRoute>}>
               {protectedRoutes.map((route, index) => (
                 <Route
                   path={route.path}

@@ -10,8 +10,7 @@ import HelpdeskService from "../dashboard/HelpdeskService";
 import StorageManagement from "../dashboard/StorageManagement";
 import ProductManagement from "../dashboard/ProductManagement";
 
-//Mangement
-import ProductGrid from "..//components/productManagement/ProductGrid";
+
 
 // Apps
 import GalleryMusic from "../apps/GalleryMusic";
@@ -42,7 +41,10 @@ import NewPurchasePlanning from "../components/orderManagement/NewPurchasePlanni
 
 import Category from "../components/productManagement/Category";
 import Brand from "../components/productManagement/Brand";
+import NewBrand from "../components/productManagement/NewBrand";
 
+import NewProduct from "../components/productManagement/NewProduct";
+import Product from "../components/productManagement/Product";
 
 
 
@@ -117,7 +119,7 @@ const protectedRoutes = [
   { path: "dashboard/storage", element: <StorageManagement /> },
   { path: "dashboard/product", element: <ProductManagement /> },
 
-  { path: "product/product-grid", element: <ProductGrid /> },
+
   { path: "order/purchase-planning", element: <PurchasePlanning /> },
   { path: "order/new-purchase-planning", element: <NewPurchasePlanning /> },
   { path: "order/purchase-order", element: <PurchaseOrder /> },
@@ -128,7 +130,9 @@ const protectedRoutes = [
 
   { path: "product/category", element: <Category /> },
   { path: "product/brand", element: <Brand /> },
-
+  { path: "product/new-brand", element: <NewBrand /> },
+  { path: "product/new-product", element: <NewProduct /> },
+  { path: "product/list", element: <Product /> },
 
   { path: "user/user-grid", element: <UserGrid /> },
   { path: "user/new-user", element: <AddEditUser /> },

@@ -90,25 +90,25 @@ const storeManagementMenu = [
 
 const productManagementMenu = [
   {
-    "label": "Product Category ",
-    "link": "/product/category ",
-    "icon": "ri-apps-fill"
+    "label": "Product Category",
+    "link": "/product/category",
+    "icon": "ri-grid-fill" 
   },
   {
-    "label": "Product Brand ",
+    "label": "Product Brand",
     "link": "/product/brand",
-    "icon": "ri-add-box-fill"
+    "icon": "ri-trademark-fill" 
   },
   {
-    "label": "Product Categories",
-    "link": "/product/categories",
-    "icon": "ri-list-settings-fill"
+    "label": "Product",
+    "link": "/product/list",
+    "icon": "ri-list-unordered" 
   },
   {
-    "label": "Product Reviews",
-    "link": "/product/reviews",
-    "icon": "ri-star-fill"
-  }
+    "label": "New Product",
+    "link": "/product/new-product",
+    "icon": "ri-list-unordered" 
+  },
 ];
 
 const supplierManagementMenu = [

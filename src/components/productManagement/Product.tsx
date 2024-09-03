@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 
-export default function ProductGrid() {
+export default function Product() {
   const { t } = useTranslation("global");
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [skin, setSkin] = useState(currentSkin);

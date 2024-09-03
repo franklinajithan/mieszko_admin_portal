@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 type Category = {
     category_id: string;
@@ -35,19 +35,23 @@ const TreeNode = ({ node, isOpen, onEdit, showEditButton }: TreeNodeProps) => {
             <div className="flex items-center">
                 <button
                     onClick={handleToggle}
-                    className="flex items-center justify-between w-full p-2 mb-2 text-left border rounded bg-red-50 hover:bg-red-100"
+                    className="flex items-center justify-between w-1/4 p-2 mb-2 text-left border rounded bg-red-50 hover:bg-red-100"
                 >
-                    <span className="font-medium text-red-900 flex items-center">
+                    <span className=" text-red-900 font-bold flex items-center">
                         {node.category_name}
                     </span>
-                    {node.children && (
+                    {node.children && node.children.length > 0 && (
                         <span className="ml-2 text-gray-500">
-                            {isNodeOpen ? '-' : '+'}
+                            {isNodeOpen ? (
+                                <FontAwesomeIcon icon={faMinus} />
+                            ) : (
+                                <FontAwesomeIcon icon={faPlus} />
+                            )}
                         </span>
                     )}
                 </button>
-                 {/* Conditionally render the edit button based on showEditButton */}
-                 {showEditButton && (
+                {/* Conditionally render the edit button based on showEditButton */}
+                {showEditButton && (
                     <div
                         onClick={handleEditClick}
                         className="ml-2 p-1 text-gray-500 hover:text-gray-800"
@@ -59,15 +63,15 @@ const TreeNode = ({ node, isOpen, onEdit, showEditButton }: TreeNodeProps) => {
             </div>
 
             {isNodeOpen && node.children && (
-                <div className="ml-4 pl-2 border-l-2 border-red-300">
+                <div className="pl-2 border-l-2 border-red-300">
                     {node.children.map((child) => (
                         <TreeNode
-                        key={child.category_id}
-                        node={child}
-                        isOpen={isOpen}
-                        onEdit={onEdit}
-                        showEditButton={showEditButton} // Pass showEditButton to child nodes
-                    />
+                            key={child.category_id}
+                            node={child}
+                            isOpen={isOpen}
+                            onEdit={onEdit}
+                            showEditButton={showEditButton} // Pass showEditButton to child nodes
+                        />
                     ))}
                 </div>
             )}

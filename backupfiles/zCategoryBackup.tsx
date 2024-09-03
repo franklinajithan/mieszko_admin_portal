@@ -22,7 +22,6 @@ import TreeView from '../ui/treeView';
 import { addCategory, addCategoryById, getCategory, updateCategoryById } from '@/service/category.service';
 import { debug } from 'console';
 
-
 type CategoryLevel = 'parent' | 'child' | 'grandchild';
 
 interface Category {
@@ -141,28 +140,23 @@ const Category = () => {
             if (categoryLevel == 'parent') { level = 1, parentId = 0 }
             if (categoryLevel == 'child') { level = 2, parentId = values.parentCategory }
             if (categoryLevel == 'grandchild') { level = 3, parentId = values.childCategory }
-      
+
+
+            let isPLU;
+            const formData = new FormData();
+            formData.append('categoryName', values.categoryName || '');
+            formData.append('parentId', parentId || 0);
+            formData.append('canAssignItem', 'false');
+            formData.append('translatedName', "test");
+            formData.append('level', level.toString());
             try {
-
-
-
-              let data=  {
-                    "categoryName": values.categoryName || '',
-                    "translatedName": values.translation || '',
-                    "isPLU": true,
-                    "parentId":  parentId || 0,
-                    "canAssignItem": false,
-                    //"status": true,
-                    "pluCode": "2",
-                    "level": level.toString()
-                  }
-                let result: any;
-                if (editMode == true) {
-                    result = await addCategory(data);
-                } else {
-                    // result = await updateCategoryById(formData);
+                let result :any;
+                if(editMode==true){
+                    result = await addCategory(formData);
+                }else{
+                   // result = await updateCategoryById(formData);
                 }
-
+               
                 fetchCategory()
                 if (values.clearForm) {
                     reset();
@@ -373,11 +367,11 @@ const Category = () => {
                     <Card className="card-one mt-2">
                         <CardTitle title="Add Category" />
                         <Card.Body>
-                            <div className="grid grid-cols-1 gap-4 mb-6">
+                            <div className="grid grid-cols-2 gap-4 mb-6">
                                 <div>
                                     <Form {...form}>
                                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                                            <div className="grid grid-cols-5 gap-4">
+                                            <div className="grid grid-cols-2 gap-4">
 
                                                 <div>
                                                     <SelectField
@@ -488,9 +482,9 @@ const Category = () => {
                                                     </Button>
 
                                                     {/* Button to trigger form validity check and log invalid fields */}
-                                                    {/* <button type="button" onClick={checkInvalidFields}>
+                                                    <button type="button" onClick={checkInvalidFields}>
                                                         Check Invalid Fields
-                                                    </button> */}
+                                                    </button>
 
                                                     {/* Optional: Displaying form errors for debugging */}
                                                     {/* {Object.keys(formState.errors).map((fieldName) => (
@@ -504,22 +498,11 @@ const Category = () => {
                                     </Form>
                                 </div>
                                 <div>
-
-
-
-
+                                    {!isLoading && <TreeView category={categories} onEditTree={onEditTree} topEditButton={topEditButton} />}
                                 </div>
                             </div>
                         </Card.Body>
                     </Card>
-                    <Card className="card-one mt-2">
-                       
-                        <Card.Body>
-                            {!isLoading && <TreeView category={categories} onEditTree={onEditTree} topEditButton={topEditButton} />}
-                        </Card.Body>
-                    </Card>
-
-                   
                 </div>
             </div>
         </>

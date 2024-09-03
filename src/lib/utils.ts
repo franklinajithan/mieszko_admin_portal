@@ -115,7 +115,7 @@ export const categoryFormSchema = z.object({
   childCategory: z.string().optional(),
   parentCategory: z.string().optional(),
   isPlu: z.boolean().optional(),
-  isAssignItem: z.string().optional(),
+  isAssignItem: z.boolean().optional(),
   translation: z.string().optional(),
   clearForm: z.boolean().optional(),
   pluCode: z.string()
@@ -192,6 +192,14 @@ export const NewUserSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"], // Set the path of the error to 'confirmPassword'
     message: "Passwords don't match",
+  });
+
+
+  export const newBrandFormSchema = z.object({
+    brandName: z.string().min(1, "Brand name is required"),
+    description: z.string(),
+    website: z.string().url("Invalid URL"),
+    status: z.boolean(),
   });
 
 

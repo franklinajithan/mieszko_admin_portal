@@ -16,9 +16,10 @@ type Category = {
 type TreeViewProps = {
     category: Category[];
     onEditTree: (node: any) => void; // Define the type for onEditTree prop
+    topEditButton: (showEditButton: boolean) => void;
 };
 
-const TreeView = ({ category, onEditTree }: TreeViewProps) => {
+const TreeView = ({ category, onEditTree, topEditButton }: TreeViewProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [show, setShow] = useState(true);
     const [showEditButton, setShowEditButton] = useState(false); // State to manage the visibility of the edit button
@@ -42,12 +43,23 @@ const TreeView = ({ category, onEditTree }: TreeViewProps) => {
     // Toggle function for the switch to show/hide the edit button
     const toggleSwitch = () => {
         setShowEditButton(!showEditButton);
+        topEditButton(!showEditButton)
     };
 
     return (
-        <div className="bg-white border-l-2">
-            <div className="flex justify-end items-center pb-2">
-                <button onClick={() => toggleAll(true)} className="btn-red">
+        <div className="bg-white">
+            <div className="flex justify-start items-center mb-3 ml-4">
+                <div className="btn-toggle ml-1">
+                    <div className="mr-2 ml-2">
+                        <span>Edit Tree</span>
+                    </div>
+                    <IOSSwitch
+                        checked={showEditButton}
+                        onChange={toggleSwitch}
+                        className="ml-2"
+                    />
+                </div>
+                <button onClick={() => toggleAll(true)} className="ml-1 btn-red">
                     Expand All
                 </button>
                 <button onClick={() => toggleAllShow()} className="ml-1 btn-red">
@@ -55,16 +67,7 @@ const TreeView = ({ category, onEditTree }: TreeViewProps) => {
                 </button>
 
 
-                <div className="btn-toggle ml-1">
-                    <div className="mr-2 ml-2">
-                        <span>Edit Tree</span>
-                    </div>
-                    <IOSSwitch 
-                        checked={showEditButton}
-                        onChange={toggleSwitch}
-                        className="ml-2"
-                    />
-                </div>
+
             </div>
 
             {show && (

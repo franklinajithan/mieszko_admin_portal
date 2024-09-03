@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
+
 export default function Main() {
 
   const offsets = ["/apps/file-manager", "/apps/email", "/apps/calendar"];
@@ -21,6 +22,7 @@ export default function Main() {
     <React.Fragment>
       <Sidebar />
       <Outlet />
+      
     </React.Fragment>
   )
 }

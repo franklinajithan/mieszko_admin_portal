@@ -26,6 +26,7 @@ import theme from '@/elements/GridTheme';
 import { DataGrid, GridColDef, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { CardContent } from '../ui/card';
+import { getBrand } from '@/service/brand.service';
 
 
 
@@ -44,19 +45,47 @@ const Brand = () => {
     const [rows, setRows] = useState([])
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const result = await getBrand();
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                };
+
+                setRows(result.data.data);
+
+
+
+            } catch (e) {
+                console.error(e);
+            } finally {
+                // Cleanup or additional logic can go here if needed.
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+
+
+
+
+    
     const columns: GridColDef[] = [
-        { field: 'user_id', headerName: 'User ID', flex: 1 },
-        { field: 'username', headerName: 'Username', flex: 1 },
-        { field: 'email', headerName: 'Email', flex: 1 },
-        { field: 'first_name', headerName: 'First Name', flex: 1 },
-        { field: 'last_name', headerName: 'Last Name', flex: 1 },
-        { field: 'mobile', headerName: 'Mobile', flex: 1 },
-        { field: 'status', headerName: 'Status', flex: 1 },
+        { field: 'brand_name', headerName: 'Name', flex: 1 },
+        { field: 'brand_description', headerName: 'Description', flex: 1 },
+        { field: 'brand_status', headerName: 'Status', flex: 1 },
+        { field: 'brand_website', headerName: 'Website', flex: 1 },
+        { field: 'brand_image', headerName: 'Image', flex: 1 },
+      
     ];
 
     const handleRedirect = () => {
-        navigate('/user/new-user'); // Redirect to the desired path
+        navigate('/product/new-brand'); // Redirect to the desired path
     };
+
 
     return (
         <>
@@ -64,23 +93,23 @@ const Brand = () => {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
                     <HeaderComponents icon={FiList} title="Brand" />
-                    <Card className="card-one mt-2">
+                    {/* <Card className="card-one mt-2">
                         <CardTitle title="Brand Grid" />
                         <Card.Body>
                             <div className="grid grid-cols-2 gap-4 mb-6">
                                 <div>
-                                    {/* <Form {...form}>
+                                    <Form {...form}>
                                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                                           
 
                                         </form>
-                                    </Form> */}
+                                    </Form> 
 
                                 </div>
                                 
                             </div>
                         </Card.Body>
-                    </Card>
+                    </Card> */}
 
                     <Card className="card-one mt-2">
                         <CardTitle title="User Grid" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
@@ -103,7 +132,7 @@ const Brand = () => {
                                                     setRowSelectionModel(newRowSelectionModel);
                                                 }}
                                                 rowSelectionModel={rowSelectionModel}
-                                                getRowId={(row) => row.user_id}
+                                                getRowId={(row) => row.brand_id}
                                                 rowHeight={35}
                                                 rows={rows}
                                                 columns={columns}
