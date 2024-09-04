@@ -3,17 +3,17 @@ import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiPlusCircle, FiShoppingCart } from "react-icons/fi";
 
-import HeaderComponents from "../../elements/HeaderSection";
-import SelectField from "../../elements/SelectField";
-import InputField from "../../elements/InputField";
-import MultiDateField from "../../elements/MultiDateField";
-import CardTitle from "../../elements/CardTitle";
+import HeaderComponents from "@/elements/HeaderSection";
+import SelectField from "@/elements/SelectField";
+import InputField from "@/elements/InputField";
+import MultiDateField from "@/elements/MultiDateField";
+import CardTitle from "@/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
-import { CardContent } from "../ui/card";
+import { CardContent } from "@/components/ui/card";
 import { newBrandFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form";
 import { z } from "zod";

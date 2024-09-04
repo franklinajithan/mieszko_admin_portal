@@ -3,16 +3,16 @@ import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiPackage } from "react-icons/fi";
 
-import HeaderComponents from "../../elements/HeaderSection";
-import MultiSelectDropdown from "../../elements/MultiSelectDropdown";
-import SelectField from "../../elements/SelectField";
-import InputField from "../../elements/InputField";
-import MultiInputField from "../../elements/MultiInputField";
-import MultiDateField from "../../elements/MultiDateField";
+import HeaderComponents from "@/elements/HeaderSection";
+import MultiSelectDropdown from "@/elements/MultiSelectDropdown";
+import SelectField from "@/elements/SelectField";
+import InputField from "@/elements/InputField";
+import MultiInputField from "@/elements/MultiInputField";
+import MultiDateField from "@/elements/MultiDateField";
 import { groceryDepartments, sample } from "../../data/constants";
-import CardTitle from "../../elements/CardTitle";
+import CardTitle from "@/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
-import { CardContent, CardHeader } from "../ui/card";
+import { CardContent, CardHeader } from "@/components/ui/card";
 import { purchaseOrderFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 

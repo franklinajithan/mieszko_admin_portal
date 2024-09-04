@@ -8,28 +8,40 @@ interface InputFieldProps<T extends FieldValues> {
     name: FieldPath<T>;
     control: Control<T>;
     label: string;
-    type: 'text' | 'number' | 'date' | 'email' | 'time' | 'password' | 'tel' | 'url'; // Added more types for completeness
+    type: 'text' | 'number' | 'date' | 'email' | 'time' | 'password' | 'tel' | 'url';
     placeholder?: string;
-    value?: string | number; // Adjust to support the types you need
+    value?: string | number;
     disabled?: boolean;
+    readonly?: boolean;
+    id?: string;
 }
 
-const InputField = <T extends FieldValues>({ label, type, name, placeholder,control, disabled }: InputFieldProps<T>) => {
+const InputField = <T extends FieldValues>({
+    label,
+    type = 'text',
+    name,
+    placeholder,
+    control,
+    disabled,
+    readonly = false, 
+    id = name
+}: InputFieldProps<T>) => {
     return (
         <FormField
             control={control}
             name={name}
             render={({ field }) => (
                 <div className='form-item'>
-                    <LabelField label={label} />
+                    <LabelField label={label} htmlFor={name} />
                     <div className='flex w-full flex-col'>
                         <FormControl>
                             <Input
-                                id={name}
+                                id={id}
                                 placeholder={placeholder}
-                        
+                                autoComplete='off'
                                 className='input-class'
                                 disabled={disabled}
+                                readOnly={readonly} // Pass readonly prop to Input
                                 type={type}
                                 {...field}
                                 value={field.value as any} // Cast to `any` for handling different types

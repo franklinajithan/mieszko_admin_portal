@@ -7,14 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import Header from "../../layouts/Header";
-import HeaderComponents from "../../elements/HeaderSection";
-import CardTitle from "../../elements/CardTitle";
-import InputField from "../../elements/InputField";
-import SelectField from "../../elements/SelectField";
+import HeaderComponents from "@/elements/HeaderSection";
+import CardTitle from "@/elements/CardTitle";
+import InputField from "@/elements/InputField";
+import SelectField from "@/elements/SelectField";
 import { sample } from "../../data/constants";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { Form } from "../ui/form";
+import { Form } from "@/components/ui/form";
 import { orderHistoryFormSchema } from "@/lib/utils";
 
 const OrderHistory = () => {

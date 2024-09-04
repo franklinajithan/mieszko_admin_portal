@@ -34,11 +34,14 @@ const SelectField = <T extends FieldValues>({
   onChange,
   options
 }: SelectFieldProps<T>) => {
+  // Generate a unique id for the select element based on the name
+  const id = `select-${name}`;
+
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState }) => { 
+      render={({ field, fieldState }) => {
         const { onChange: formOnChange, value } = field; // Destructure field properties
 
         // Ensure the value is either a string or undefined
@@ -52,24 +55,26 @@ const SelectField = <T extends FieldValues>({
         return (
           <div className='w-full'>
             <FormItem>
-              <LabelField label={label} />
-              <Select onValueChange={handleChange} value={selectedValue} defaultValue={selectedValue}>
-                <FormControl>
-                  <SelectTrigger disabled={disabled}>
+              <LabelField label={label} htmlFor={id} /> {/* Ensure LabelField supports htmlFor */}
+              <FormControl>
+                <Select onValueChange={handleChange} value={selectedValue} defaultValue={selectedValue}>
+                  <SelectTrigger id={id} disabled={disabled} aria-label={label} aria-disabled={disabled}>
                     <SelectValue placeholder={placeholder || "Select an option"} />
                   </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {options.map((option, index) => (
-                    <SelectItem key={index} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage>
-                {fieldState.error?.message} {/* Display error message */}
-              </FormMessage>
+                  <SelectContent>
+                    {options.map((option, index) => (
+                      <SelectItem key={index} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              {fieldState.error?.message && (
+                <FormMessage className='text-red-500 mt-1'>
+                  {fieldState.error?.message} {/* Display error message */}
+                </FormMessage>
+              )}
             </FormItem>
           </div>
         );

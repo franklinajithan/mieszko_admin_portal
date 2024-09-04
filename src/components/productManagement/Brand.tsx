@@ -7,25 +7,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import Header from '../../layouts/Header';
-import HeaderComponents from '../../elements/HeaderSection';
-import CardTitle from '../../elements/CardTitle';
-import InputField from '../../elements/InputField';
-import SelectField from '../../elements/SelectField';
+import HeaderComponents from '@/elements/HeaderSection';
+import CardTitle from '@/elements/CardTitle';
+import InputField from '@/elements/InputField';
+import SelectField from '@/elements/SelectField';
 import { category } from '../../data/constants';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import { Form } from '../ui/form';
+import { Form } from '@/components/ui/form';
 import { categoryFormSchema } from '@/lib/utils';
 import CheckboxField from '@/elements/CheckboxField';
 import LabelField from '@/elements/LabelField';
-import TreeView from '../ui/treeView';
+import TreeView from '@/components/ui/treeView';
 import { addCategory, addCategoryById, getCategory } from '@/service/category.service';
 import { debug } from 'console';
 import { ThemeProvider } from '@mui/material';
 import theme from '@/elements/GridTheme';
 import { DataGrid, GridColDef, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
-import { CardContent } from '../ui/card';
+import { CardContent } from '@/components/ui/card';
 import { getBrand } from '@/service/brand.service';
 
 
@@ -61,7 +61,7 @@ const Brand = () => {
             } catch (e) {
                 console.error(e);
             } finally {
-                // Cleanup or additional logic can go here if needed.
+             
             }
         };
 

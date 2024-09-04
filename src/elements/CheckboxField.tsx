@@ -41,6 +41,7 @@ const CheckboxField = <T extends object>({
             <FormControl>
               <Checkbox
                 id={id}
+                name={name}
                 checked={field.value}
                 onCheckedChange={handleChange} // Use custom handleChange function
               />

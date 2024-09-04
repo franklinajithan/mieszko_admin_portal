@@ -7,10 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import Header from '../../layouts/Header';
-import HeaderComponents from '../../elements/HeaderSection';
-import CardTitle from '../../elements/CardTitle';
-import InputField from '../../elements/InputField';
-import SelectField from '../../elements/SelectField';
+import HeaderComponents from '@/elements/HeaderSection';
+import CardTitle from '@/elements/CardTitle';
+import InputField from '@/elements/InputField';
+import SelectField from '@/elements/SelectField';
 import { category } from '../../data/constants';
 import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
@@ -128,7 +128,7 @@ const Category = () => {
 
 
     const onSubmit = async (values: any) => {
-        debugger;
+
         const fetchUser = async () => {
 
             setIsLoading(true);
@@ -339,7 +339,7 @@ const Category = () => {
 
 
     const checkInvalidFields = () => {
-        debugger
+
         const { errors } = formState;
 
         if (Object.keys(errors).length > 0) {
@@ -486,7 +486,7 @@ const Category = () => {
                                                         Check Invalid Fields
                                                     </button>
 
-                                                    {/* Optional: Displaying form errors for debugging */}
+                                                    
                                                     {/* {Object.keys(formState.errors).map((fieldName) => (
                                                         <p key={fieldName}>{fieldName} -{formState?.errors[fieldName]?.message}</p>
                                                     ))} */}

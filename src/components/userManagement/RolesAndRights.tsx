@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { FiShield } from "react-icons/fi";
 import { Card, Nav } from "react-bootstrap";
 import Header from "../../layouts/Header";
-import HeaderComponents from "../../elements/HeaderSection";
+import HeaderComponents from "@/elements/HeaderSection";
 
 type PermissionActions = {
   add: boolean;

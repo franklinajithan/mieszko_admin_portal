@@ -1,352 +1,505 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Header from "../../layouts/Header";
+import React, { useEffect, useState } from "react";
+import { Card, Nav, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { FiShoppingCart } from "react-icons/fi";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-export default function Product() {
-  const { t } = useTranslation("global");
-  const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
-  const [skin, setSkin] = useState(currentSkin);
+import Header from "../../layouts/Header";
+import HeaderComponents from "@/elements/HeaderSection";
+import CardTitle from "@/elements/CardTitle";
+import InputField from "@/elements/InputField";
+import SelectField from "@/elements/SelectField";
+import { sample } from "../../data/constants";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { Form } from "@/components/ui/form";
+import { productSearchFormSchema } from "@/lib/utils";
+import CheckboxField from "@/elements/CheckboxField";
+import { getBrand } from "@/service/brand.service";
+import defaultProductImage from '../../assets/img/default-product-image.png';
+import { addProduct, getItemCode, getProduct } from "@/service/product.service";
 
-  return (
-    <React.Fragment>
-      <Header onSkin={setSkin} />
-      <div className="main main-app p-lg-1">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <ol className="breadcrumb fs-sm mb-1">
-              <li className="breadcrumb-item active" aria-current="page">
-                Website Analytics
-              </li>
-            </ol>
-            <h4 className="main-title mb-0">{t("header.message")}</h4>
-          </div>
+import { useToast } from "@/hooks/use-toast";
+import { debug } from "console";
+import { getParentCategory } from "@/service/category.service";
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
+import { Link, useNavigate } from "react-router-dom";
+import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
+import { FiDownload, FiFilter, FiSettings, FiBookmark, FiUsers } from "react-icons/fi";
 
-          <nav className="nav-icon nav-icon-lg">
-            <button className="tooltip" aria-label="Share">
-              <i className="ri-share-line"></i>
-            </button>
-            <button className="tooltip" aria-label="Print">
-              <i className="ri-printer-line"></i>
-            </button>
-            <button className="tooltip" aria-label="Report">
-              <i className="ri-bar-chart-2-line"></i>
-            </button>
-          </nav>
-        </div>
+import { getUser } from "@/service/user.service";
+import { CardContent } from "@/components/ui/card";
+import { ThemeProvider } from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridColDef, GridColumnVisibilityModel, GridRowId, GridRowModes, GridRowModesModel, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
+import theme from "@/elements/GridTheme";
+import { decryptParam } from "@/lib/cryptoUtils";
+import { encryptParam } from "@/lib/cryptoUtils";
 
-        <div className="grid gap-3 justify-center">
-          <div className="col-span-1 md:col-span-6 xl:col-span-4">
-            <div className="card">
-              <div className="card-body">
-                <div className="grid grid-cols-5">
-                  <div className="col-span-3">
-                    <h3 className="card-value mb-1">4,608</h3>
-                    <label className="card-title font-medium text-dark mb-1">
-                      Click Through
-                    </label>
-                    <span className="block text-muted text-xs font-secondary leading-4">
-                      No. of clicks to ad that consist of a single impression.
-                    </span>
-                  </div>
+const exampleDepartmentOptions = [
+    { value: '1', label: 'HR' },
+    { value: '2', label: 'Finance' },
+    { value: '3', label: 'Engineering' },
+];
+
+const exampleSupplierOptions = [
+    { value: '1', label: 'Supplier A' },
+    { value: '2', label: 'Supplier B' },
+];
+
+const exampleBarcodePluOptions = [
+    { value: '123', label: '123-456' },
+    { value: '456', label: '456-789' },
+];
+
+const exampleItemCodeOptions = [
+    { value: 'A1', label: 'Item A1' },
+    { value: 'B2', label: 'Item B2' },
+];
+
+const exampleItemNameOptions = [
+    { value: 'item1', label: 'Item One' },
+    { value: 'item2', label: 'Item Two' },
+];
+
+const exampleStatusOptions = [
+    { value: 'available', label: 'Available' },
+    { value: 'out-of-stock', label: 'Out of Stock' },
+];
+
+const exampleBrandOptions = [
+    { value: 'brand1', label: 'Brand One' },
+    { value: 'brand2', label: 'Brand Two' },
+];
+
+const examplePriceMarkedItemOptions = [
+    { value: 'marked1', label: 'Marked Item One' },
+    { value: 'marked2', label: 'Marked Item Two' },
+];
+
+const exampleCaseSizeOptions = [
+    { value: 'small', label: 'Small' },
+    { value: 'large', label: 'Large' },
+];
+
+const exampleFastestDeliveryOptions = [
+    { value: '24h', label: '24 Hours' },
+    { value: '48h', label: '48 Hours' },
+];
+
+
+const Product = () => {
+
+    const { t } = useTranslation("global");
+    const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
+    const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
+    const { toast } = useToast()
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null); // State for selected image URL
+    const [isLoading, setIsLoading] = useState(false);
+    const [brandList, setBrandList] = useState<any[]>([]);
+    const [ItemCode, setItemCode] = useState();
+    const [department, setDepartment] = useState([]);
+    const [departmentOptions, setDepartmentOptions] = useState(exampleDepartmentOptions);
+    const [supplierOptions, setSupplierOptions] = useState(exampleSupplierOptions);
+    const [barcodePluOptions, setBarcodePluOptions] = useState(exampleBarcodePluOptions);
+    const [itemCodeOptions, setItemCodeOptions] = useState(exampleItemCodeOptions);
+    const [itemNameOptions, setItemNameOptions] = useState(exampleItemNameOptions);
+    const [statusOptions, setStatusOptions] = useState(exampleStatusOptions);
+    const [brandOptions, setBrandOptions] = useState(exampleBrandOptions);
+    const [priceMarkedItemOptions, setPriceMarkedItemOptions] = useState(examplePriceMarkedItemOptions);
+    const [caseSizeOptions, setCaseSizeOptions] = useState(exampleCaseSizeOptions);
+    const [fastestDeliveryOptions, setFastestDeliveryOptions] = useState(exampleFastestDeliveryOptions);
+
+    const form = useForm<z.infer<typeof productSearchFormSchema>>({
+        resolver: zodResolver(productSearchFormSchema),
+        defaultValues: {
+            department: '',
+            supplier: '',
+            barcodePlu: '',
+            itemCode: '',
+            itemName: '',
+            status: '',
+            brand: '',
+            priceMarkedItem: '',
+            caseSize: '',
+            fastestDelivery: '',
+
+        }
+    });
+
+    const { handleSubmit, formState, reset, setValue } = form;
+    const { isValid, isDirty, errors } = formState;
+    const [rows, setRows] = useState([]);
+    const [isOpenGrid, setIsOpenGrid] = useState(true);
+    const toggleGridCardBody = () => { setIsOpenGrid(!isOpenGrid); };
+    const [isOpenSearch, setIsOpenSearch] = useState(true);
+    const toggleSearchCardBody = () => { setIsOpenSearch(!isOpenSearch); };
+    const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+
+                const product = await getProduct();
+                if (product.status !== 200) {
+                    console.error(product.data);
+                    return;
+                };
+                setRows(product.data.data)
+
+                const category = await getParentCategory();
+                if (category.status !== 200) {
+                    console.error(category.data);
+                    return;
+                };
+                setDepartment(category.data.data.map((item: any) => ({
+                    value: item.category_id.toString(),
+                    label: item.category_name,
+                })));
+
+                const result = await getBrand();
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                };
+                setBrandList(result.data.data.map((item: any) => ({
+                    value: item.brand_id.toString(),
+                    label: item.brand_name,
+                })));
+
+                const ItemId: any = await getItemCode();
+
+                // setItemCode(ItemId.data.data.item_code)
+                // setValue('itemCode', ItemId.data.data.item_code);
+
+
+
+            } catch (e) {
+                console.error(e);
+            } finally {
+
+            }
+        };
+
+        fetchUser();
+    }, [])
+
+
+
+
+
+    const onSubmit = (values: z.infer<typeof productSearchFormSchema>) => {
+
+
+        const fetchUser = async () => {
+            let result: any
+            setIsLoading(true);
+
+            try {
+                let data = {
+                    department: values.department,
+
+
+                }
+
+                result = await addProduct(data);
+
+                if (result.status == 201) {
+                    toast({ variant: "success", title: result.data.status, description: result.data.message, duration: 800, })
+                } else {
+                    toast({ variant: "destructive", title: result.data.status, description: result.data.message, duration: 800, })
+                }
+            } catch (e: any) {
+                toast({ variant: "destructive", title: e.response.status, description: e.response.data.message, duration: 800, })
+            } finally {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 2000);
+            }
+        };
+        fetchUser();
+    };
+
+ 
+
+    const handleEditClick = (id: GridRowId) => () => {
+        debugger;
+       
+        navigate(`/product/edit-product/${encryptParam(id.toString())}`);
+        //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    };
+
+    const handleSaveClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    };
+
+    const handleDeleteClick = (id: GridRowId) => () => {
+        setRows(rows.filter((row: any) => row.id !== id));
+    };
+
+    const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+
+        const editedRow: any = rows.find((row: any) => row.id === id);
+        if (editedRow!.isNew) {
+            setRows(rows.filter((row: any) => row.id !== id));
+        }
+    };
+
+    const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
+    const columns: GridColDef[] = [{
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        width: 100,
+        cellClassName: 'actions',
+        getActions: ({ id }) => {
+            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+            if (isInEditMode) {
+                return [
+                    <GridActionsCellItem
+                        icon={<SaveIcon />}
+                        label="Save"
+                        sx={{
+                            color: 'primary.main',
+                        }}
+                        onClick={handleSaveClick(id)}
+                    />,
+                    <GridActionsCellItem
+                        icon={<CancelIcon />}
+                        label="Cancel"
+                        className="textPrimary"
+                        onClick={handleCancelClick(id)}
+                        color="inherit"
+                    />,
+                ];
+            }
+
+            return [
+                <GridActionsCellItem
+                    icon={<EditIcon />}
+                    label="Edit"
+                    className="textPrimary"
+                    onClick={handleEditClick(id)}
+                    color="inherit"
+                />,
+                <GridActionsCellItem
+                    icon={<DeleteIcon />}
+                    label="Delete"
+                    onClick={handleDeleteClick(id)}
+                    color="inherit"
+                />,
+            ];
+        }
+    },
+    { field: 'id', headerName: 'ID', flex: 1 },
+    { field: 'itemCode', headerName: 'Item Code', flex: 1 },
+    { field: 'itemName', headerName: 'Item Name', flex: 1 },
+    { field: 'translatedName', headerName: 'Translated Name', flex: 1 },
+    { field: 'description', headerName: 'Description', flex: 1 },
+    { field: 'labelName', headerName: 'Label Name', flex: 1 },
+    { field: 'invoiceName', headerName: 'Invoice Name', flex: 1 },
+    { field: 'tillMessage', headerName: 'Till Message', flex: 1 },
+    { field: 'ingredients', headerName: 'Ingredients', flex: 1 },
+    { field: 'translatedIngredients', headerName: 'Translated Ingredients', flex: 1 },
+    { field: 'allergicDetails', headerName: 'Allergic Details', flex: 1 },
+    { field: 'translatedAllergicDetails', headerName: 'Translated Allergic Details', flex: 1 },
+    { field: 'item_image', headerName: 'Item Image', flex: 1 },
+    { field: 'uom', headerName: 'UOM', flex: 1 },
+    { field: 'retailUom', headerName: 'Retail UOM', flex: 1 },
+    { field: 'wastagePercentage', headerName: 'Wastage Percentage', flex: 1 },
+    { field: 'itemType', headerName: 'Item Type', flex: 1 },
+    { field: 'minOrderQty', headerName: 'Min Order Qty', flex: 1 },
+    { field: 'maxOrderQty', headerName: 'Max Order Qty', flex: 1 },
+    { field: 'leadTime', headerName: 'Lead Time', flex: 1 },
+    { field: 'reorderLevel', headerName: 'Reorder Level', flex: 1 },
+    { field: 'reorderLevelType', headerName: 'Reorder Level Type', flex: 1 },
+    { field: 'safetyStock', headerName: 'Safety Stock', flex: 1 },
+    { field: 'shelfLife', headerName: 'Shelf Life', flex: 1 },
+    { field: 'shelfLifeType', headerName: 'Shelf Life Type', flex: 1 },
+    { field: 'countryOfOrigin', headerName: 'Country of Origin', flex: 1 },
+        // { field: 'vat.vatCode', headerName: 'VAT Code', flex: 1 },
+        // { field: 'vat.vatRate', headerName: 'VAT Rate', flex: 1 },
+        // { field: 'vat.effectiveFrom', headerName: 'VAT Effective From', flex: 1 },
+        // { field: 'brand.brandName', headerName: 'Brand Name', flex: 1 },
+        // { field: 'brand.description', headerName: 'Brand Description', flex: 1 },
+        // { field: 'category.categoryName', headerName: 'Category Name', flex: 1 },
+        // { field: 'category.isPLU', headerName: 'Category PLU', flex: 1 },
+        // { field: 'category.pluCode', headerName: 'Category PLU Code', flex: 1 },
+        // { field: 'item_details.tags', headerName: 'Tags', flex: 1 },
+        // { field: 'item_details.isPluCoded', headerName: 'Is PLU Coded', flex: 1 },
+        // { field: 'item_details.isSeasoned', headerName: 'Is Seasoned', flex: 1 },
+        // { field: 'item_details.isStoreUse', headerName: 'Is Store Use', flex: 1 },
+        // { field: 'item_details.isWeighted', headerName: 'Is Weighted', flex: 1 },
+        // { field: 'item_details.hasLeadTime', headerName: 'Has Lead Time', flex: 1 },
+        // { field: 'item_details.canBeInPromo', headerName: 'Can Be In Promo', flex: 1 },
+        // { field: 'item_details.canSplitSell', headerName: 'Can Split Sell', flex: 1 },
+        // { field: 'item_details.canStockTake', headerName: 'Can Stock Take', flex: 1 },
+        // { field: 'item_details.isOutOfStock', headerName: 'Is Out Of Stock', flex: 1 },
+        // { field: 'item_details.needPreOrder', headerName: 'Need Pre Order', flex: 1 },
+        // { field: 'item_details.splitSellQty', headerName: 'Split Sell Qty', flex: 1 },
+        // { field: 'item_details.hasBoxBarcode', headerName: 'Has Box Barcode', flex: 1 },
+        // { field: 'item_details.hasLinkedItem', headerName: 'Has Linked Item', flex: 1 },
+        // { field: 'item_details.isPriceMarked', headerName: 'Is Price Marked', flex: 1 },
+        // { field: 'item_details.minSellingQty', headerName: 'Min Selling Qty', flex: 1 },
+        // { field: 'item_details.isDiscontinued', headerName: 'Is Discontinued', flex: 1 },
+        // { field: 'item_details.isDiscountable', headerName: 'Is Discountable', flex: 1 },
+        // { field: 'item_details.isStoreVisible', headerName: 'Is Store Visible', flex: 1 },
+        // { field: 'item_details.hasOuterBarcode', headerName: 'Has Outer Barcode', flex: 1 },
+        // { field: 'item_details.isAgeRestricted', headerName: 'Is Age Restricted', flex: 1 },
+        // { field: 'item_details.canOrderInPallet', headerName: 'Can Order In Pallet', flex: 1 },
+        // { field: 'item_details.hasMinSellingQty', headerName: 'Has Min Selling Qty', flex: 1 },
+        // { field: 'item_details.hasPalletBarcode', headerName: 'Has Pallet Barcode', flex: 1 },
+        // { field: 'item_details.canPurchaseLocally', headerName: 'Can Purchase Locally', flex: 1 },
+        // { field: 'item_details.isStoreTransferable', headerName: 'Is Store Transferable', flex: 1 },
+        // { field: 'item_details.isConsideredForPurchasePlan', headerName: 'Is Considered For Purchase Plan', flex: 1 }
+    ];
+
+
+    const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
+        id: false,
+        itemCode: true,
+        itemName: true,
+        translatedName: false,
+        description: true,
+        labelName: true,
+        invoiceName: true,
+        tillMessage: true,
+        ingredients: true,
+        translatedIngredients: false,
+        allergicDetails: true,
+        translatedAllergicDetails: false,
+        item_image: false,
+        uom: true,
+        retailUom: true,
+        wastagePercentage: false,
+        itemType: true,
+        minOrderQty: true,
+        maxOrderQty: true,
+        leadTime: true,
+        reorderLevel: false,
+        reorderLevelType: false,
+        safetyStock: false,
+        shelfLife: false,
+        shelfLifeType: false,
+        countryOfOrigin: false,
+        vat: false,
+        brand: false,
+        category: false,
+        item_details: false,
+
+    });
+
+
+    return (
+        <>
+            <Header onSkin={setSkin} />
+            <div className="main main-app p-lg-1">
+                <div className="min-h-screen bg-gray-50">
+                    <HeaderComponents icon={FiShoppingCart} title={"Product List"} />
+
+                    <Card className="card-one mt-2">
+                        <CardTitle title="Search" onToggle={toggleSearchCardBody} isOpen={isOpenSearch} />
+                        {isOpenSearch && (<Card.Body>
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
+                                    <div className="grid w-full grid-cols-5 gap-4">
+                                        <SelectField control={form.control} label="Department" name="department" options={departmentOptions} />
+                                        <SelectField control={form.control} label="Supplier" name="supplier" options={supplierOptions} />
+                                        <SelectField control={form.control} label="Barcode/Plu" name="barcodePlu" options={barcodePluOptions} />
+                                        <SelectField control={form.control} label="Item Code" name="itemCode" options={itemCodeOptions} />
+                                        <SelectField control={form.control} label="Item Name" name="itemName" options={itemNameOptions} />
+                                        <SelectField control={form.control} label="Status" name="status" options={statusOptions} />
+                                        <SelectField control={form.control} label="Brand" name="brand" options={brandOptions} />
+                                        <SelectField control={form.control} label="Price Marked Item" name="priceMarkedItem" options={priceMarkedItemOptions} />
+                                        <SelectField control={form.control} label="Case Size" name="caseSize" options={caseSizeOptions} />
+                                        <SelectField control={form.control} label="Fastest Delivery" name="fastestDelivery" options={fastestDeliveryOptions} />
+                                    </div>
+
+
+
+                                    <hr className="border-t border-gray-300 " />
+                                    <div className="flex justify-end space-x-4  mt-2 pr-4">
+                                        <button className="btn-gray">
+                                            Reset
+                                        </button>
+                                        <Button type="submit" disabled={isLoading} className='btn-red'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                                                </>)
+                                                : "Search"}
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Form>
+                        </Card.Body>)}
+                    </Card>
+
+                    <Card className="card-one mt-2">
+                        <CardTitle title="Product List" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
+                        {isOpenGrid && (<CardContent>
+                            <div className="flex justify-start space-x-4  mt-2 pr-4">
+
+                            </div>
+                            <div className="w-full mt-3"> {/* TailwindCSS classes for height and width */}
+                                <div className="h-full w-full"> {/* Container for DataGrid */}
+                                    <div>
+                                        <ThemeProvider theme={theme}>
+                                            <DataGrid autoHeight
+                                                // disableColumnFilter
+                                                // disableColumnSelector
+                                                // disableDensitySelector
+                                                // checkboxSelection
+                                                onRowSelectionModelChange={(newRowSelectionModel) => {
+                                                    setRowSelectionModel(newRowSelectionModel);
+                                                }}
+
+                                                columnVisibilityModel={columnVisibility}
+                                                onColumnVisibilityModelChange={(newModel) =>
+                                                    setColumnVisibility(newModel)
+                                                }
+                                                getRowId={(row) => row.id}
+                                                rowHeight={35}
+                                                rows={rows}
+                                                columns={columns}
+                                                initialState={{
+                                                    pagination: {
+                                                        paginationModel: { pageSize: 15, page: 0 },
+                                                    },
+                                                }}
+
+                                                slots={{ toolbar: GridToolbar }}
+                                                slotProps={{
+                                                    toolbar: {
+                                                        showQuickFilter: true,
+                                                    },
+                                                }
+                                                }
+                                            />
+                                        </ThemeProvider>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </CardContent>)}
+
+                    </Card>
                 </div>
-              </div>
             </div>
-          </div>
+        </>
+    );
+};
 
-          <div className="col-span-1 md:col-span-6 xl:col-span-4">
-            <div className="card">
-              <div className="card-body">
-                <div className="grid grid-cols-5">
-                  <div className="col-span-3">
-                    <h3 className="card-value mb-1">4,868</h3>
-                    <label className="card-title font-medium text-dark mb-1">
-                      View Through
-                    </label>
-                    <span className="block text-muted text-xs font-secondary leading-4">
-                      Estimated daily unique views per visitor on the ads.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-6 xl:col-span-4">
-            <div className="card">
-              <div className="card-body">
-                <div className="grid grid-cols-5">
-                  <div className="col-span-3">
-                    <h3 className="card-value mb-1">8,785</h3>
-                    <label className="card-title font-medium text-dark mb-1">
-                      Total Conversions
-                    </label>
-                    <span className="block text-muted text-xs font-secondary leading-4">
-                      Estimated total conversions on ads per impressions.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-7 xl:col-span-8">
-            <div className="card">
-              <div className="card-header">
-                <h6 className="card-title">Organic Visits & Conversions</h6>
-                <nav className="nav-icon nav-icon-sm ms-auto">
-                  <button>
-                    <i className="ri-refresh-line"></i>
-                  </button>
-                  <button>
-                    <i className="ri-more-2-fill"></i>
-                  </button>
-                </nav>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-5 xl:col-span-4">
-            <div className="card">
-              <div className="card-header">
-                <h6 className="card-title">Analytics Performance</h6>
-                <nav className="nav-icon nav-icon-sm ms-auto">
-                  <button>
-                    <i className="ri-refresh-line"></i>
-                  </button>
-                  <button>
-                    <i className="ri-more-2-fill"></i>
-                  </button>
-                </nav>
-              </div>
-              <div className="card-body p-3">
-                <h2 className="performance-value mb-0">
-                  9.8{" "}
-                  <small className="text-success flex items-center">
-                    <i className="ri-arrow-up-line"></i> 2.8%
-                  </small>
-                </h2>
-
-                <label className="card-title text-sm font-medium">
-                  Performance Score
-                </label>
-
-                <div className="progress h-2 mt-2 mb-4">
-                  <div className="bg-primary w-1/2"></div>
-                  <div className="bg-green-500 w-1/4"></div>
-                  <div className="bg-orange-500 w-1/20"></div>
-                  <div className="bg-pink-500 w-1/20"></div>
-                  <div className="bg-blue-500 w-1/10"></div>
-                  <div className="bg-indigo-500 w-1/20"></div>
-                </div>
-
-                <table className="table-fixed w-full">
-                  <tbody>
-                    {[
-                      {
-                        dot: "bg-primary",
-                        label: "Excellent",
-                        count: "3,007",
-                        percent: "50%",
-                      },
-                      {
-                        dot: "bg-green-500",
-                        label: "Very Good",
-                        count: "1,674",
-                        percent: "25%",
-                      },
-                      {
-                        dot: "bg-orange-500",
-                        label: "Good",
-                        count: "125",
-                        percent: "6%",
-                      },
-                      {
-                        dot: "bg-pink-500",
-                        label: "Fair",
-                        count: "98",
-                        percent: "5%",
-                      },
-                      {
-                        dot: "bg-blue-500",
-                        label: "Poor",
-                        count: "512",
-                        percent: "10%",
-                      },
-                      {
-                        dot: "bg-indigo-500",
-                        label: "Very Poor",
-                        count: "81",
-                        percent: "4%",
-                      },
-                    ].map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <div className={"badge-dot " + item.dot}></div>
-                        </td>
-                        <td>{item.label}</td>
-                        <td>{item.count}</td>
-                        <td>{item.percent}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-6">
-            <div className="card">
-              <div className="card-header">
-                <h6 className="card-title">Acquisition</h6>
-                <nav className="nav-icon nav-icon-sm ms-auto">
-                  <button>
-                    <i className="ri-refresh-line"></i>
-                  </button>
-                  <button>
-                    <i className="ri-more-2-fill"></i>
-                  </button>
-                </nav>
-              </div>
-              <div className="card-body">
-                <p className="text-sm mb-4">
-                  Tells you where your visitors originated from, such as search
-                  engines, social networks, or website referrals.{" "}
-                  <Link to="">Learn more</Link>
-                </p>
-
-                <div className="grid grid-cols-2 mb-2">
-                  <div className="flex items-center">
-                    <div className="card-icon bg-primary">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">33.50%</h4>
-                      <span className="block text-sm font-medium">
-                        Bounce Rate
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="card-icon bg-gray-200">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">9,065</h4>
-                      <span className="block text-sm font-medium">
-                        Page Sessions
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 mb-2">
-                  <div className="flex items-center">
-                    <div className="card-icon bg-gray-200">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">1,005</h4>
-                      <span className="block text-sm font-medium">
-                        Pages/Session
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="card-icon bg-gray-200">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">00:01:21</h4>
-                      <span className="block text-sm font-medium">
-                        Avg. Session Duration
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2">
-                  <div className="flex items-center">
-                    <div className="card-icon bg-primary">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">88.24%</h4>
-                      <span className="block text-sm font-medium">
-                        New Sessions
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="card-icon bg-gray-200">
-                      <i className="ri-line-chart-fill"></i>
-                    </div>
-                    <div className="ms-2">
-                      <h4 className="card-value mb-1">44.28%</h4>
-                      <span className="block text-sm font-medium">
-                        Return Visitor
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 md:col-span-6">
-            <div className="card">
-              <div className="card-header">
-                <h6 className="card-title">Audience Metrics</h6>
-                <nav className="nav-icon nav-icon-sm ms-auto">
-                  <button>
-                    <i className="ri-refresh-line"></i>
-                  </button>
-                  <button>
-                    <i className="ri-more-2-fill"></i>
-                  </button>
-                </nav>
-              </div>
-              <div className="card-body">
-                <p className="text-sm">
-                  Audience overview report of your active users on the site.
-                </p>
-                <ul className="list-unstyled">
-                  {[
-                    {
-                      title: "Total Users",
-                      count: "78,865",
-                      color: "text-primary",
-                    },
-                    {
-                      title: "Avg. Session",
-                      count: "00:01:21",
-                      color: "text-orange-500",
-                    },
-                    {
-                      title: "Bounce Rate",
-                      count: "33.50%",
-                      color: "text-red-500",
-                    },
-                  ].map((metric, index) => (
-                    <li
-                      className="flex justify-between items-center mb-3"
-                      key={index}
-                    >
-                      <span className={metric.color + " font-medium"}>
-                        {metric.title}
-                      </span>
-                      <span>{metric.count}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
-  );
-}
+export default Product;

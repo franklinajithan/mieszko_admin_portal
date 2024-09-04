@@ -7,18 +7,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import Header from '../../layouts/Header';
-import HeaderComponents from '../../elements/HeaderSection';
-import CardTitle from '../../elements/CardTitle';
-import InputField from '../../elements/InputField';
-import SelectField from '../../elements/SelectField';
+import HeaderComponents from '@/elements/HeaderSection';
+import CardTitle from '@/elements/CardTitle';
+import InputField from '@/elements/InputField';
+import SelectField from '@/elements/SelectField';
 import { category } from '../../data/constants';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import { Form } from '../ui/form';
+import { Form } from '@/components/ui/form';
 import { categoryFormSchema } from '@/lib/utils';
 import CheckboxField from '@/elements/CheckboxField';
 import LabelField from '@/elements/LabelField';
-import TreeView from '../ui/treeView';
+import TreeView from '@/components/ui/treeView';
 import { addCategory, addCategoryById, getCategory, updateCategoryById } from '@/service/category.service';
 import { debug } from 'console';
 
@@ -129,7 +129,7 @@ const Category = () => {
 
 
     const onSubmit = async (values: any) => {
-        debugger;
+
         const fetchUser = async () => {
 
             setIsLoading(true);
@@ -201,6 +201,7 @@ const Category = () => {
         setCategoryName(categoryNames[level]);
 
         if (level === 'child' || level === 'grandchild') {
+            
             setParentCategories(extractLevelCategories(list, 1));
         }
     };
@@ -345,7 +346,7 @@ const Category = () => {
 
 
     const checkInvalidFields = () => {
-        debugger
+  
         const { errors } = formState;
 
         if (Object.keys(errors).length > 0) {
@@ -422,7 +423,7 @@ const Category = () => {
                                                         label="Parent Category"
                                                         name="parentCategory"
                                                         options={parentCategories}
-                                                        onChange={onChangeParent}
+                                                        // onChange={onChangeParent}
                                                     />
                                                 )}
                                                 {categoryLevel === 'grandchild' && (
@@ -432,7 +433,7 @@ const Category = () => {
                                                             label="Parent Category"
                                                             name="parentCategory"
                                                             options={parentCategories}
-                                                            onChange={onChangeParent}
+                                                            // onChange={onChangeParent}
                                                         />
                                                         <SelectField
                                                             control={form.control}
@@ -492,7 +493,7 @@ const Category = () => {
                                                         Check Invalid Fields
                                                     </button> */}
 
-                                                    {/* Optional: Displaying form errors for debugging */}
+                                                  
                                                     {/* {Object.keys(formState.errors).map((fieldName) => (
                                                         <p key={fieldName}>{fieldName} -{formState?.errors[fieldName]?.message}</p>
                                                     ))} */}

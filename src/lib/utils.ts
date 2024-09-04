@@ -42,63 +42,63 @@ export const newPurchasePlanningFormSchema = z.object({
 
 
 export const purchaseOrderFormSchema = z.object({
-    supplier:z.string().optional(),
-    status: z.string().optional(),
-    orderWay: z.string().optional(),
-    store: z.string().optional(),
-    orderNumber: z.string().optional(),
-    supplierOrderNumber: z.string().optional(),
-    grnNumber: z.string().optional(),
-    itemCode: z.string().optional(),
-    itemName: z.string().optional(),
-    ean: z.string().optional(),
-    orderType: z.string().optional(),
-    comments: z.string().optional(), // Assuming comments is a string; use z.number() if it's a number
-    promotion: z.string().optional(),
-    presell: z.string().optional(),
-    totalLineItems: z.string().optional(), // Assuming totalLineItems is a string; use z.number() if it's a number
-    orderUomType: z.string().optional(),
-    purchasePlanId: z.string().optional(),
-    supplierInvoiceNumber: z.string().optional(),
-    customerRequestedItem: z.string().optional(),
-    orderFromMobile: z.string().optional(),
-    orderMethod: z.string().optional(),
-    invoiceNumber: z.string().optional(),
-    paymentStatus: z.string().optional(),
-    itemSize: z.string().optional(), // Assuming itemSize is a string; use z.number() if it's a number
-    supplierCode: z.string().optional(), // Assuming supplierCode is a string; use z.number() if it's a number
-    ownLabel: z.string().optional(),
-    priceMarked: z.string().optional(),
-    supplierReferenceNumber: z.string().optional(), // Assuming supplierReferenceNumber is a string; use z.number() if it's a number
-    closingDate: z.string().optional(), // Use z.date() if you're working with actual Date objects
-    purchasePlanStartDate: z.string().optional(), 
-    purchasePlanEndDate: z.string().optional(), 
-    orderPlacedStartDate: z.string().optional(), 
-    orderPlacedEndDate: z.string().optional(), 
-    orderDateStartDate: z.string().optional(), 
-    orderDateEndDate: z.string().optional(), 
-    deliveryDateStartDate: z.string().optional(), 
-    deliveryDateEndDate: z.string().optional(), 
-   
+  supplier: z.string().optional(),
+  status: z.string().optional(),
+  orderWay: z.string().optional(),
+  store: z.string().optional(),
+  orderNumber: z.string().optional(),
+  supplierOrderNumber: z.string().optional(),
+  grnNumber: z.string().optional(),
+  itemCode: z.string().optional(),
+  itemName: z.string().optional(),
+  ean: z.string().optional(),
+  orderType: z.string().optional(),
+  comments: z.string().optional(), // Assuming comments is a string; use z.number() if it's a number
+  promotion: z.string().optional(),
+  presell: z.string().optional(),
+  totalLineItems: z.string().optional(), // Assuming totalLineItems is a string; use z.number() if it's a number
+  orderUomType: z.string().optional(),
+  purchasePlanId: z.string().optional(),
+  supplierInvoiceNumber: z.string().optional(),
+  customerRequestedItem: z.string().optional(),
+  orderFromMobile: z.string().optional(),
+  orderMethod: z.string().optional(),
+  invoiceNumber: z.string().optional(),
+  paymentStatus: z.string().optional(),
+  itemSize: z.string().optional(), // Assuming itemSize is a string; use z.number() if it's a number
+  supplierCode: z.string().optional(), // Assuming supplierCode is a string; use z.number() if it's a number
+  ownLabel: z.string().optional(),
+  priceMarked: z.string().optional(),
+  supplierReferenceNumber: z.string().optional(), // Assuming supplierReferenceNumber is a string; use z.number() if it's a number
+  closingDate: z.string().optional(), // Use z.date() if you're working with actual Date objects
+  purchasePlanStartDate: z.string().optional(),
+  purchasePlanEndDate: z.string().optional(),
+  orderPlacedStartDate: z.string().optional(),
+  orderPlacedEndDate: z.string().optional(),
+  orderDateStartDate: z.string().optional(),
+  orderDateEndDate: z.string().optional(),
+  deliveryDateStartDate: z.string().optional(),
+  deliveryDateEndDate: z.string().optional(),
+
 });
 
 
 export const purchasePlanningFormSchema = z.object({
-  supplier: z.string().optional(), 
-  date: z.string().optional(), 
-  planType: z.string().optional(), 
-  orderDate: z.string().optional(), 
-  status: z.string().optional(), 
-  store: z.string().optional(), 
-  totalLineItems: z.string().optional(), 
-  expectedDeliveryDate: z.string().optional(), 
-  orderQuantity: z.string().optional(), 
-  promoItems: z.string().optional(), 
-  hhuBasketItem: z.string().optional(), 
-  customerSpecialRequestItem: z.string().optional(), 
-  priceMarkedItemIncluded: z.string().optional(), 
-  cheapestPlan: z.string().optional(), 
-  fastestDelivery: z.string().optional(), 
+  supplier: z.string().optional(),
+  date: z.string().optional(),
+  planType: z.string().optional(),
+  orderDate: z.string().optional(),
+  status: z.string().optional(),
+  store: z.string().optional(),
+  totalLineItems: z.string().optional(),
+  expectedDeliveryDate: z.string().optional(),
+  orderQuantity: z.string().optional(),
+  promoItems: z.string().optional(),
+  hhuBasketItem: z.string().optional(),
+  customerSpecialRequestItem: z.string().optional(),
+  priceMarkedItemIncluded: z.string().optional(),
+  cheapestPlan: z.string().optional(),
+  fastestDelivery: z.string().optional(),
 
 });
 
@@ -122,16 +122,16 @@ export const categoryFormSchema = z.object({
     .regex(/^\d{2}$/, "PLU Code must be exactly 2 numeric digits")
     .optional(),
 })
-.superRefine((data, ctx) => {
-  // Check if 'isPlu' is true and 'pluCode' is missing or invalid
-  if (data.isPlu === true && !data.pluCode) {
-    ctx.addIssue({
-      path: ['pluCode'],
-      message: "PLU Code is required when 'PLU product' is true",
-      code: z.ZodIssueCode.custom
-    });
-  }
-});
+  .superRefine((data, ctx) => {
+    // Check if 'isPlu' is true and 'pluCode' is missing or invalid
+    if (data.isPlu === true && !data.pluCode) {
+      ctx.addIssue({
+        path: ['pluCode'],
+        message: "PLU Code is required when 'PLU product' is true",
+        code: z.ZodIssueCode.custom
+      });
+    }
+  });
 
 export const authFormSchema = z.object({
   email: z.string().optional(),
@@ -156,7 +156,7 @@ export const manageStoreFormSchema = z.object({
   postcode: z.string(),            // Required string
   city: z.string(),                    // Required string
   licenseType: z.string(),     // Required string
-  expiry:  z.string(),                              // Optional date field
+  expiry: z.string(),                              // Optional date field
   company: z.string(),              // Required string
   storeType: z.string(),         // Required string
 });
@@ -195,11 +195,58 @@ export const NewUserSchema = z
   });
 
 
-  export const newBrandFormSchema = z.object({
-    brandName: z.string().min(1, "Brand name is required"),
-    description: z.string(),
-    website: z.string().url("Invalid URL"),
-    status: z.boolean(),
-  });
+export const newBrandFormSchema = z.object({
+  brandName: z.string().min(1, "Brand name is required"),
+  description: z.string(),
+  website: z.string().url("Invalid URL"),
+  status: z.boolean(),
+});
+
+export const newProductFormSchema = z.object({
+  itemName: z.string().min(1, 'Name is required').max(100, 'Name must be at most 100 characters'),
+  englishName: z.string().min(1, 'English name is required').max(100, 'English name must be at most 100 characters'),
+  itemCode: z.string().min(1, 'Item code is required').max(50, 'Item code must be at most 50 characters'),
+  description: z.string().min(1, 'Description is required').max(500, 'Description must be at most 500 characters'),
+  caseSize: z.string().min(1, 'Case size is required').max(50, 'Case size must be at most 50 characters'),
+  casePrice: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Case price must be a valid number'),
+  palletSize: z.string().min(1, 'Pallet size is required').max(50, 'Pallet size must be at most 50 characters'),
+  palletPrice: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Pallet price must be a valid number'),
+  minOrderQty: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Min order qty must be a valid number'),
+  maxOrderQty: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Max order qy must be a valid number'),
+  isDiscounted: z.boolean().optional(),
+  isStoreTransferable: z.boolean().optional(),
+  canBePurchasedLocally: z.boolean().optional(),
+  isOutOfStock: z.boolean().optional(),
+  isWeighedItem: z.boolean().optional(),
+  size: z.string().min(1, 'Size is required').max(50, 'Size must be at most 50 characters'),
+  weight: z.string().regex(/^\d+(\.\d{1,2})?$/, 'Weight must be a valid number'),
+  vatId: z.string().min(1, 'Vat ID is required').max(50, 'Vat ID must be at most 50 characters'),
+  brand: z.string().optional(),
+  isSeasonedProduct: z.boolean().optional(),
+  allergicDetails: z.string().optional(),
+  ingredientsDetails: z.string().optional(),
+  priceLookupCode: z.string().optional(),
+  eanCode: z.string().optional(),
+  departmentId: z.string().optional(),
+  itemCategoryId: z.string().optional(),
+  itemCategory2Id: z.string().optional(),
+  unitOfMeasure: z.string().optional(),
+  searchKeywordsTags: z.string().optional(),
+  status: z.boolean().optional(),
+});
+
+export const productSearchFormSchema = z.object({
+  department: z.string().min(1, "Department is required"),
+  supplier: z.string().min(1, "Supplier is required"),
+  barcodePlu: z.string().optional(),
+  itemCode: z.string().optional(),
+  itemName: z.string().optional(),
+  status: z.string().optional(),
+  brand: z.string().optional(),
+  priceMarkedItem: z.string().optional(),
+  caseSize: z.string().optional(),
+  fastestDelivery: z.string().optional(),
+  
+});
 
 

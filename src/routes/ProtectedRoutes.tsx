@@ -51,6 +51,7 @@ import Product from "../components/productManagement/Product";
 import UserGrid from "../components/userManagement/UserGrid";
 import AddEditUser from "../components/userManagement/AddEditUser";
 import RolesAndRights from "../components/userManagement/RolesAndRights";
+import EditProduct from "@/components/productManagement/EditProduct";
 
 
 
@@ -133,6 +134,7 @@ const protectedRoutes = [
   { path: "product/new-brand", element: <NewBrand /> },
   { path: "product/new-product", element: <NewProduct /> },
   { path: "product/list", element: <Product /> },
+  { path: "product/edit-product/:id", element: <EditProduct /> },
 
   { path: "user/user-grid", element: <UserGrid /> },
   { path: "user/new-user", element: <AddEditUser /> },
