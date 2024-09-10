@@ -69,7 +69,7 @@
 .video-headline {
   height: 420px;
   position: relative;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   img {
     width: 100%;
@@ -122,7 +122,7 @@
 .card-video {
   border-radius: 6px;
   border-width: 0;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   .card-title {
     font-weight: $font-weight-semibold;
@@ -192,7 +192,7 @@
 .card-movie {
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   img {
     border-radius: 4px;
@@ -225,7 +225,7 @@
 .card-video-item {
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   .card-title {
     width: 100%;
@@ -251,7 +251,7 @@
 .card-poster {
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   img {
     width: 100%;

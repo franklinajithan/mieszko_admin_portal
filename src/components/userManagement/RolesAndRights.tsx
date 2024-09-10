@@ -31,7 +31,7 @@ const PermissionSection: React.FC<{
             <label key={action} className="flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox text-red-600"
+                className="form-checkbox text-cyan-600"
                 checked={value[action as keyof PermissionActions]}
                 onChange={() => onChange(key, action as keyof PermissionActions)}
               />
@@ -187,7 +187,7 @@ const RolesAndRights= ({ title,icon}:any) => {
     <React.Fragment>
       <Header onSkin={setSkin} />
       <div className="main main-app p-lg-1">
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-zinc-50">
         <HeaderComponents icon={icon} title={title} />
 
           <Card className="card-one mt-2">
@@ -216,17 +216,17 @@ const RolesAndRights= ({ title,icon}:any) => {
                   "Reporting Person",
                 ].map((label, index) => (
                   <div key={index}>
-                    <label className="block text-sm font-medium text-gray-700">{label}</label>
-                    <select className="w-full p-2 border border-gray-300 rounded-md">
+                    <label className="block text-sm font-medium text-zinc-700">{label}</label>
+                    <select className="w-full p-2 border border-zinc-300 rounded-md">
                       <option>Select</option>
                     </select>
                   </div>
                 ))}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">User Name</label>
+                  <label className="block text-sm font-medium text-zinc-700">User Name</label>
                   <input
                     type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border border-zinc-300 rounded-md"
                     placeholder="Enter User Name"
                   />
                 </div>

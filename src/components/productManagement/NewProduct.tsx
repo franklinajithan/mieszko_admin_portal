@@ -146,11 +146,11 @@ const NewProduct = ({ title,icon}:any) => {
     };
 
     const ImagePopup = ({ src, onClose }: ImagePopupProps) => (
-        <div className="fixed inset-0 bg-gray-200 bg-opacity-60 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-zinc-200 bg-opacity-60 flex justify-center items-center z-50">
             <div className="relative p-4 rounded-lg shadow-lg max-w-screen-md max-h-screen" style={{ backgroundColor: 'transparent' }}>
                 <button
                     onClick={onClose}
-                    className="absolute top-2 right-2 bg-white text-black rounded-full p-1 shadow-md hover:bg-gray-200 transition"
+                    className="absolute top-2 right-2 bg-white text-black rounded-full p-1 shadow-md hover:bg-zinc-200 transition"
                     style={{ width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                     &times;
@@ -167,7 +167,7 @@ const NewProduct = ({ title,icon}:any) => {
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                 <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
@@ -200,7 +200,7 @@ const NewProduct = ({ title,icon}:any) => {
                                                 />
                                                 <label
                                                     htmlFor="file-input"
-                                                    className="btn-red"
+                                                    className="btn-cyan"
                                                     style={{ position: 'relative', zIndex: 5 }}
                                                 >
                                                     Upload Product Image
@@ -272,12 +272,12 @@ const NewProduct = ({ title,icon}:any) => {
                                         <CheckboxField control={form.control} id="status" label="Status" name="status" />
                                     </div>
 
-                                    <hr className="border-t border-gray-300 " />
+                                    <hr className="border-t border-zinc-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <button className="btn-gray">
+                                        <button className="btn-zinc">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='btn-red'>
+                                        <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

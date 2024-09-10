@@ -104,7 +104,7 @@ export default function AddEditUser({ title,icon}:any) {
         <React.Fragment>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                     {/* Header */}
                     <HeaderComponents icon={icon} title={title} />
 
@@ -118,8 +118,8 @@ export default function AddEditUser({ title,icon}:any) {
                                             <div className="flex w-full gap-3">
                                                 <div className="grid grid-cols-1  w-1/6 mt-4">
                                                     {/* Image Upload */}
-                                                    <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br from-red-700 via-red-800 to-red-700 p-6 rounded-lg ">
-                                                        <div className="relative mb-4 bg-gradient-to-r from-red-600 via-red-700 to-red-600 p-2 rounded-full"> {/* Colorful background with #dc2626 */}
+                                                    <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br from-cyan-700 via-cyan-800 to-cyan-700 p-6 rounded-lg ">
+                                                        <div className="relative mb-4 bg-gradient-to-r from-cyan-600 via-cyan-700 to-cyan-600 p-2 rounded-full">
                                                             <img
                                                                 src={imagePreview || defaultProfileImage}
                                                                 alt="Profile"
@@ -137,7 +137,7 @@ export default function AddEditUser({ title,icon}:any) {
                                                             />
                                                             <label
                                                                 htmlFor="file-input"
-                                                                className="w-full cursor-pointer bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white px-4 py-2 rounded-md shadow-lg hover:bg-gradient-to-r hover:from-red-700 hover:via-red-800 hover:to-red-900 transition-colors duration-300 ease-in-out"
+                                                                className="w-full cursor-pointer bg-gradient-to-r from-cyan-600 via-cyan-700 to-cyan-800 text-white px-4 py-2 rounded-md shadow-lg hover:bg-gradient-to-r hover:from-cyan-700 hover:via-cyan-800 hover:to-cyan-900 transition-colors duration-300 ease-in-out"
                                                                 style={{ position: 'relative', zIndex: 5 }}
                                                             >
                                                                 Upload Profile Picture
@@ -326,12 +326,12 @@ export default function AddEditUser({ title,icon}:any) {
                                                     ]}
                                                 />
                                             </div>
-                                            <hr className="border-t border-gray-300 " />
+                                            <hr className="border-t border-zinc-300 " />
                                             <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                                <button className="btn-gray">
+                                                <button className="btn-zinc">
                                                     Save
                                                 </button>
-                                                <Button type="submit" disabled={isLoading} className='btn-red'>
+                                                <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                                     {isLoading ? (
                                                         <>
                                                             <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

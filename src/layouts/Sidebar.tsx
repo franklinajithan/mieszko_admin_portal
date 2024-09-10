@@ -210,8 +210,8 @@ const SidebarMenu: React.FC = () => {
                         <NavLink 
                             to={subItem.link || '#'} 
                             className={({ isActive }) => 
-                                `nav-sub-link flex items-center text-gray-400 hover:text-white hover:bg-gray-700 rounded-md transition duration-300 ${
-                                    isActive ? 'bg-gray-800 text-white' : ''
+                                `nav-sub-link flex items-center text-zinc-400 hover:text-white hover:bg-zinc-700 rounded-md transition duration-300 ${
+                                    isActive ? 'bg-zinc-800 text-white' : ''
                                 }`
                             }
                             key={subIndex}
@@ -233,7 +233,7 @@ const SidebarMenu: React.FC = () => {
                                     to={item.link || '#'} 
                                     className={({ isActive }) => 
                                         `nav-link flex items-center rounded-md transition duration-300 ${
-                                            isActive ? 'bg-red-500 text-white hover:text-white' : 'text-gray-300 hover:text-white hover:bg-red-400'
+                                            isActive ? 'bg-cyan-500 text-white hover:text-white' : 'text-zinc-300 hover:text-white hover:bg-cyan-400'
                                         }`
                                     }
                                 >
@@ -243,7 +243,7 @@ const SidebarMenu: React.FC = () => {
                             ) : (
                                 <div 
                                     onClick={() => toggleMenu(item.label as MenuGroupKey)} 
-                                    className="nav-link flex items-center justify-between text-gray-300 hover:text-white hover:bg-gray-700 rounded-md cursor-pointer transition duration-300"
+                                    className="nav-link flex items-center justify-between text-zinc-300 hover:text-white hover:bg-zinc-700 rounded-md cursor-pointer transition duration-300"
                                 >
                                     <div className="flex items-center">
                                         <FontAwesomeIcon icon={item.icon || ['fas', 'circle']} className="mr-2" /> 
@@ -269,9 +269,9 @@ const SidebarMenu: React.FC = () => {
 
     return (
 <>
-    <div className={`nav-group ${menuGroups.dashboard ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.dashboard ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('dashboard')}
         >
             <FaChartLine className="nav-icon" size={20} /> 
@@ -280,9 +280,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(dashboardMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.orderManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.orderManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('orderManagement')}
         >
             <FaClipboardList className="nav-icon" size={20}/> 
@@ -291,9 +291,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(OrderManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.storeManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.storeManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('storeManagement')}
         >
             <FaStoreAlt className="nav-icon" size={20}/> 
@@ -302,9 +302,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(storeManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.productManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.productManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('productManagement')}
         >
             <FaTags className="nav-icon" size={20}/> 
@@ -313,9 +313,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(productManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.supplierManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.supplierManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('supplierManagement')}
         >
             <FaTruckLoading className="nav-icon" size={20}/> 
@@ -324,9 +324,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(supplierManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.stockManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.stockManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('stockManagement')}
         >
             <FaBoxes className="nav-icon" size={20} /> 
@@ -335,9 +335,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(stockManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.invoiceManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.invoiceManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('invoiceManagement')}
         >
             <FaFileInvoiceDollar className="nav-icon" size={20} /> 
@@ -346,9 +346,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(invoiceManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.wasteManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.wasteManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('wasteManagement')}
         >
             <FaRecycle className="nav-icon" size={20}/> 
@@ -357,9 +357,9 @@ const SidebarMenu: React.FC = () => {
         <div className="pl-2">{populateMenu(wasteManagementMenu)}</div>
     </div>
 
-    <div className={`nav-group ${menuGroups.userManagement ? 'show' : ''} bg-gray-50 rounded-lg my-2`}>
+    <div className={`nav-group ${menuGroups.userManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
         <div 
-            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-red-300 transition-colors duration-300 rounded-lg" 
+            className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg" 
             onClick={() => toggleMenu('userManagement')}
         >
             <FaUserShield className="nav-icon" size={20}/> 

@@ -122,7 +122,7 @@ const Product = ({ title,icon}:any) => {
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                 <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
@@ -141,12 +141,12 @@ const Product = ({ title,icon}:any) => {
 
 
 
-                                    <hr className="border-t border-gray-300 " />
+                                    <hr className="border-t border-zinc-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <button className="btn-gray">
+                                        <button className="btn-zinc">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='btn-red'>
+                                        <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

@@ -71,7 +71,7 @@ const SelectField = <T extends FieldValues>({
                 </Select>
               </FormControl>
               {fieldState.error?.message && (
-                <FormMessage className='text-red-500 mt-1'>
+                <FormMessage className='text-cyan-500 mt-1'>
                   {fieldState.error?.message} {/* Display error message */}
                 </FormMessage>
               )}

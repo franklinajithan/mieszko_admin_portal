@@ -48,7 +48,7 @@ const CheckboxField = <T extends object>({
 
 
               <div className="w-full">
-                <div className="btn-toggle-gray flex items-center">
+                <div className="btn-toggle-zinc flex items-center">
                   <div className="mr-2 ml-2 mt-2">
                   <LabelField htmlFor={id} label={label} />
                   </div>

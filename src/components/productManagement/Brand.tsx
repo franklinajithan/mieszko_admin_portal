@@ -91,7 +91,7 @@ const Brand = ({ title,icon}:any) => {
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                 <HeaderComponents icon={icon} title={title} />
                     {/* <Card className="card-one mt-2">
                         <CardTitle title="Brand Grid" />
@@ -115,7 +115,7 @@ const Brand = ({ title,icon}:any) => {
                         {/* <CardTitle title="Brand Grid" onToggle={toggleGridCardBody} isOpen={isOpenGrid} /> */}
                         {isOpenGrid && (<CardContent>
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
-                                <Button type="submit" className='btn-red' onClick={handleRedirect}>
+                                <Button type="submit" className='btn-cyan' onClick={handleRedirect}>
                                     New Brand
                                 </Button>
                             </div>

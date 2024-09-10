@@ -43,16 +43,16 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ label, option
         <LabelField label={label}/>
       <div className="" ref={dropdownRef}>
         <div
-          className={`flex flex-wrap gap-2 p-2 border border-gray-300 rounded-md cursor-pointer min-h-[35px]`}
+          className={`flex flex-wrap gap-2 p-2 border border-zinc-300 rounded-md cursor-pointer min-h-[35px]`}
           onClick={toggleDropdown}
         >
           {selectedOptions.length === 0 ? (
-            <span className="text-gray-500">Select options...</span>
+            <span className="text-zinc-500">Select options...</span>
           ) : (
             selectedOptions.map((optionValue, index) => (
               <div
                 key={index}
-                className="flex items-center bg-gray-200 rounded px-1 py-0.5 text-xs"
+                className="flex items-center bg-zinc-200 rounded px-1 py-0.5 text-xs"
               >
                 {options.find(option => option.value === optionValue)?.label}
                 <button
@@ -60,7 +60,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ label, option
                     e.stopPropagation();
                     handleRemove(optionValue);
                   }}
-                  className="ml-1 text-gray-600 hover:text-gray-800"
+                  className="ml-1 text-zinc-600 hover:text-zinc-800"
                 >
                   &times;
                 </button>
@@ -70,12 +70,12 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ label, option
         </div>
 
         {dropdownOpen && (
-          <div className="absolute mt-1 w-96 bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+          <div className="absolute mt-1 w-96 bg-white border border-zinc-300 rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
             {options.map((option, index) => (
               <div
                 key={index}
-                className={`px-4 py-2 cursor-pointer hover:bg-gray-200 ${
-                  selectedOptions.includes(option.value) ? 'bg-gray-100' : ''
+                className={`px-4 py-2 cursor-pointer hover:bg-zinc-200 ${
+                  selectedOptions.includes(option.value) ? 'bg-zinc-100' : ''
                 }`}
                 onClick={() => handleSelect(option.value)}
               >

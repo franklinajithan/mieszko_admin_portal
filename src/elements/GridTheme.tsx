@@ -5,18 +5,18 @@ import type { } from '@mui/x-data-grid/themeAugmentation';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#dc2626', // Teal color for primary
+      main: '#00bcd4', // Cyan color for primary
     },
     secondary: {
       main: '#ff5722', // Deep orange color for secondary
     },
     background: {
-      default: '#fafafa', // Very light gray background
+      default: '#fafafa', // Very light zinc background
       paper: '#ffffff',  // White paper background
     },
     text: {
-      primary: '#212121', // Very dark gray text
-      secondary: '#757575', // Medium gray text
+      primary: '#212121', // Very dark zinc text
+      secondary: '#757575', // Medium zinc text
     },
   },
   typography: {
@@ -56,19 +56,19 @@ const theme = createTheme({
           fontFamily: 'Open Sans',
           color: '#47505f',
           fontSize: '14px',
-          borderRight: '1px solid #e0e0e0', // Light gray border between cells
+          borderRight: '1px solid #e0e0e0', // Light zinc border between cells
         },
         row: {
           '&:nth-of-type(odd)': {
-            backgroundColor: '#f9fafb', // Light gray for odd rows
+            backgroundColor: '#f9fafb', // Light zinc for odd rows
           },
           '&:nth-of-type(even)': {
             backgroundColor: '#ffffff', // White for even rows
           },
           '&.Mui-selected': {
-            backgroundColor: '#fee2e2', // Light pink color for selected row
+            backgroundColor: '#e0f7fa', // Light cyan color for selected row
             '&:hover': {
-              backgroundColor: '#fecaca', // Slightly darker pink on hover
+              backgroundColor: '#b2ebf2', // Slightly darker cyan on hover
             },
           },
         },

@@ -35,9 +35,9 @@
 
     .sidebar {
       left: 0;
-      box-shadow: 1px 0 1px rgba($gray-900, 0.01),
-                  4px 0 4px rgba($gray-900, 0.01),
-                  16px 0 16px rgba($gray-900, 0.01);
+      box-shadow: 1px 0 1px rgba($zinc-900, 0.01),
+                  4px 0 4px rgba($zinc-900, 0.01),
+                  16px 0 16px rgba($zinc-900, 0.01);
     }
 
     .header-main,
@@ -86,9 +86,9 @@
     opacity: 1;
     visibility: visible;
     left: 0;
-    box-shadow: 1px 0 1px rgba($gray-900, 0.01),
-                4px 0 4px rgba($gray-900, 0.01),
-                16px 0 16px rgba($gray-900, 0.01);
+    box-shadow: 1px 0 1px rgba($zinc-900, 0.01),
+                4px 0 4px rgba($zinc-900, 0.01),
+                16px 0 16px rgba($zinc-900, 0.01);
   }
 
   @include media-breakpoint-up(xxl) { width: $sidebar-width; }
@@ -122,7 +122,7 @@
   height: $height-header;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid $zinc-200;
 }
 
 .sidebar-logo {
@@ -134,7 +134,7 @@
   position: relative;
 
   .nav-group {
-    border-bottom: 1px solid $gray-200;
+    border-bottom: 1px solid $zinc-200;
 
     &.show {
       .nav-label::after { content: '\EA4E'; }
@@ -148,14 +148,14 @@
     font-size: 11px;
     font-family: $ff-secondary;
     text-transform: uppercase;
-    color: $gray-600;
+    color: $zinc-600;
     letter-spacing: .7px;
     position: relative;
     cursor: pointer;
 
     &:hover,
     &:focus {
-      color: $gray-600;
+      color: $zinc-600;
     }
 
     &::after {
@@ -197,7 +197,7 @@
   bottom: -250px;
   left: 0;
   right: 0;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid $zinc-200;
   background-color: #fff;
   z-index: 10;
   box-shadow: -20px -20px 20px #fff;
@@ -217,7 +217,7 @@
 
     &:hover,
     &:focus {
-      background-color: rgba($gray-200, .6);
+      background-color: rgba($zinc-200, .6);
       opacity: 1;
     }
   }
@@ -279,15 +279,15 @@
   a {
     height: 35px;
     padding: 0 8px;
-    color: $gray-700;
+    color: $zinc-700;
     display: flex;
     align-items: center;
     border-radius: 3px;
     @include transition(all 0.25s);
 
     &:hover {
-      background-color: $gray-200;
-      color: $gray-900;
+      background-color: $zinc-200;
+      color: $zinc-900;
     }
   }
 

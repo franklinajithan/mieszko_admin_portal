@@ -10,8 +10,8 @@
 
 .pagination-filled {
   .page-item {
-    &.disabled .page-link { background-color: $gray-100; }
-    &:not(.active) .page-link:hover { background-color: $gray-200; }
+    &.disabled .page-link { background-color: $zinc-100; }
+    &:not(.active) .page-link:hover { background-color: $zinc-200; }
 
     &.active .page-link {
       background-color: $primary;
@@ -21,7 +21,7 @@
 
   .page-link {
     border-width: 0;
-    background-color: $gray-200;
+    background-color: $zinc-200;
     color: $secondary;
   }
 }

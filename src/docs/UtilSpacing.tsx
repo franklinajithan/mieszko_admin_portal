@@ -97,12 +97,12 @@ export default function UtilSpacing() {
 
           <Card className="card-example">
             <Card.Body>
-              <div className="mx-auto w-200 p-2 bg-gray-200 text-center">
+              <div className="mx-auto w-200 p-2 bg-zinc-200 text-center">
                 Centered element
               </div>
             </Card.Body>
             <Card.Footer>
-              <pre><code className="language-html">{`<div className="mx-auto w-200 p-2 bg-gray-200 text-center">
+              <pre><code className="language-html">{`<div className="mx-auto w-200 p-2 bg-zinc-200 text-center">
   Centered element
 </div>`}</code></pre>
             </Card.Footer>

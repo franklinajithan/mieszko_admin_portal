@@ -44,9 +44,9 @@ const MultiInputField: FC<MultiInputFieldProps> = ({
 
             <div className="flex space-x-4 items-start w-3/4 ">
                 <div className="flex flex-col space-y-1 w-1/3">
-                    <label className="text-gray-700 font-medium">Operation</label>
+                    <label className="text-zinc-700 font-medium">Operation</label>
                     <select
-                        className="border border-gray-300 rounded-md p-2"
+                        className="border border-zinc-300 rounded-md p-2"
                         value={operation}
                         onChange={(e) => {
                             setOperation(e.target.value);
@@ -62,10 +62,10 @@ const MultiInputField: FC<MultiInputFieldProps> = ({
                 </div>
 
                 <div className="flex flex-col space-y-1 w-1/3">
-                    <label className="text-gray-700 font-medium">From</label>
+                    <label className="text-zinc-700 font-medium">From</label>
                     <input
                         type="text"
-                        className="border border-gray-300 rounded-md p-2"
+                        className="border border-zinc-300 rounded-md p-2"
                         placeholder={fromPlaceholder}
                         value={from}
                         onChange={(e) => {
@@ -76,10 +76,10 @@ const MultiInputField: FC<MultiInputFieldProps> = ({
                 </div>
 
                 <div className="flex flex-col space-y-1 w-1/3">
-                    <label className="text-gray-700 font-medium">To</label>
+                    <label className="text-zinc-700 font-medium">To</label>
                     <input
                         type="text"
-                        className="border border-gray-300 rounded-md p-2"
+                        className="border border-zinc-300 rounded-md p-2"
                         placeholder={toPlaceholder}
                         value={to}
                         onChange={(e) => {

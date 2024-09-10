@@ -537,7 +537,7 @@ export default function EventManagement() {
                             "id": "00025",
                             "avatar": {
                               "initial": "A",
-                              "bg": "bg-gray-700"
+                              "bg": "bg-zinc-700"
                             },
                             "name": "Adrian M. Moniño",
                             "email": "adrian@themepixels.me",
@@ -566,7 +566,7 @@ export default function EventManagement() {
                             "id": "00023",
                             "avatar": {
                               "initial": "C",
-                              "bg": "bg-gray-700"
+                              "bg": "bg-zinc-700"
                             },
                             "name": "Carlyn Y. Salomon",
                             "email": "carlyn@themepixels.me",
@@ -731,13 +731,13 @@ export default function EventManagement() {
                       "value": "3,000",
                       "percent": "20%",
                       "progress": 80,
-                      "variant": "gray-700"
+                      "variant": "zinc-700"
                     }, {
                       "name": "Entertainment",
                       "value": "2,250",
                       "percent": "15%",
                       "progress": 85,
-                      "variant": "gray-500"
+                      "variant": "zinc-500"
                     }
                   ].map((item, index) => (
                     <Col xs="6" key={index}>

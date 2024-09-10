@@ -45,6 +45,7 @@ const EditProduct = ({ title, icon }: any) => {
 
     // Function to handle menu item clicks
     const handleMenuItemClick = (item: any) => {
+        debugger
         setActiveItem(item);
     };
     const form = useForm<z.infer<typeof editProductFormSchema>>({
@@ -254,47 +255,47 @@ const EditProduct = ({ title, icon }: any) => {
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                     <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardContent>
                             <Form {...form}>
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                                    {/* <h5>Basic Information {decryptedValue}</h5> */}
+                                   
 
                                     <div className=" mt-2">
                                         <div className="md:flex">
-                                            <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+                                            <ul className="flex-column space-y space-y-4 text-sm font-medium text-zinc-500 dark:text-zinc-400 md:me-4 mb-4 md:mb-0">
                                                 <MenuItem href="#" text="Profile" isActive={activeItem === "profile"} onClick={() => handleMenuItemClick("profile")} />
                                                 <MenuItem href="#" text="Information" isActive={activeItem === "information"} onClick={() => handleMenuItemClick("information")} />
-                                                <MenuItem href="#" text="Stock" sActive={activeItem === "stock"} onClick={() => handleMenuItemClick("stock")} />
-                                                <MenuItem href="#" text="Brand" sActive={activeItem === "brand"} onClick={() => handleMenuItemClick("brand")} />
+                                                <MenuItem href="#" text="Stock" isActive={activeItem === "stock"} onClick={() => handleMenuItemClick("stock")} />
+                                                <MenuItem href="#" text="Brand" isActive={activeItem === "brand"} onClick={() => handleMenuItemClick("brand")} />
                                                 <MenuItem href="#" text="Sales" isActive={activeItem === "sales"} onClick={() => handleMenuItemClick("sales")} />
 
                                                 {/* <MenuItem href="#" text="Disabled" isActive={activeItem === "disabled"} onClick={() => handleMenuItemClick("disabled")} /> */}
                                             </ul>
-                                            <div className="p-3 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                                            <div className="p-3 bg-zinc-50 text-medium text-zinc-500 dark:text-zinc-400 dark:bg-zinc-800 rounded-lg w-full">
 
                                                 {activeItem === "profile" && (
                                                     <div className="flex w-full gap-2">
                                                         <ImageUploader imagePreview={imagePreview} onImageChange={handleImageChange} onImageClick={handleImageClick} isPopupOpen={isPopupOpen} onClosePopup={handleClosePopup} selectedImage={selectedImage} />
                                                         <div className="grid w-4/5 grid-cols-1 gap-4">
-                                                            <div className="grid lg:grid-cols-5 border-1 md:grid-cols-3 sm:grid-cols-1 gap-4 border-gray-100 w-full">
-                                                                <div className="bg-gray-100 flex items-end h-full">
+                                                            <div className="grid lg:grid-cols-5 border-1 md:grid-cols-3 sm:grid-cols-1 gap-4 border-zinc-100 w-full">
+                                                                <div className="bg-zinc-100 flex items-end h-full">
                                                                     <InputField control={form.control} label="Retail Price" placeholder="Enter item name" name="retailUom" type="text" clipboard={true} />
                                                                 </div>
-                                                                <div className="bg-gray-100 flex items-end h-full">
+                                                                <div className="bg-zinc-100 flex items-end h-full">
                                                                     <InputField control={form.control} label="Promotional Retail" placeholder="Enter item name" name="promtionPrice" type="text" />
                                                                 </div>
-                                                                <div className="bg-gray-100 flex items-end h-full">
+                                                                <div className="bg-zinc-100 flex items-end h-full">
                                                                     <InputField control={form.control} label="Margin" placeholder="Enter item name" name="margin" type="text" />
                                                                 </div>
-                                                                <div className="bg-gray-100 flex items-end h-full">
+                                                                <div className="bg-zinc-100 flex items-end h-full">
 
 
                                                                     <div className="w-full">
-                                                                        <div className="btn-toggle-gray flex items-center">
+                                                                        <div className="btn-toggle-zinc flex items-center">
                                                                             <div className="mr-2 ml-2">
                                                                                 <span>Promotion</span>
                                                                             </div>
@@ -306,9 +307,9 @@ const EditProduct = ({ title, icon }: any) => {
                                                                     </div>
 
                                                                 </div>
-                                                                <div className="bg-gray-100 flex items-end h-full">
+                                                                <div className="bg-zinc-100 flex items-end h-full">
                                                                     <div className="w-full">
-                                                                        <div className="btn-toggle-gray flex items-center">
+                                                                        <div className="btn-toggle-zinc flex items-center">
                                                                             <div className="mr-2 ml-2">
                                                                                 <span>Status</span>
                                                                             </div>
@@ -323,9 +324,9 @@ const EditProduct = ({ title, icon }: any) => {
 
                                                             </div>
 
-                                                            <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-gray-600">
+                                                            <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-zinc-600">
                                                                 <div className="col-span-2">
-                                                                    <InputField control={form.control} label="Product Name" placeholder="Enter product name" name="itemName" type="text" readonly clipboard={true} />
+                                                                    <InputField control={form.control} label="Product Name" placeholder="Enter product name" name="itemName" type="text"  clipboard={true} />
                                                                 </div>
                                                                 <div className="col-span-2">
                                                                     <InputField control={form.control} label="English Name" placeholder="Enter product English name" name="englishName" type="text" clipboard={true} />
@@ -345,7 +346,7 @@ const EditProduct = ({ title, icon }: any) => {
 
                                                 {activeItem === "information" && (
                                                     <>
-                                                        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-gray-600">
+                                                        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-zinc-600">
 
 
                                                             <InputField control={form.control} label="Label Name" placeholder="Enter label name" name="labelName" type="text" />
@@ -407,7 +408,7 @@ const EditProduct = ({ title, icon }: any) => {
                                                     </>
                                                 )}
                                                 {activeItem === "stock" && (
-                                                    <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-gray-600">
+                                                    <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-zinc-600">
                                                         <InputField control={form.control} label="Min Order Qty" placeholder="Enter min order qty" name="minOrderQty" type="number" />
                                                         <InputField control={form.control} label="Max Order Qty" placeholder="Enter max order qty" name="maxOrderQty" type="number" />
                                                         <InputField control={form.control} label="Lead Time" placeholder="Enter lead time" name="leadTime" type="text" />
@@ -421,7 +422,7 @@ const EditProduct = ({ title, icon }: any) => {
                                                 )}
                                                 {activeItem === "brand" && (
                                                     <>
-                                                        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-gray-600">
+                                                        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4  border-zinc-600">
                                                             <InputField control={form.control} label="VAT Code" placeholder="Enter VAT code" name="vat.vatCode" type="text" />
                                                             <InputField control={form.control} label="VAT Rate" placeholder="Enter VAT rate" name="vat.vatRate" type="number" />
                                                             <InputField control={form.control} label="VAT Country Code" placeholder="Enter VAT country code" name="vat.countryCode" type="text" />
@@ -440,7 +441,7 @@ const EditProduct = ({ title, icon }: any) => {
                                                 )}
                                                 {activeItem === "sales" && (
                                                     <>
-                                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Disabled</h3>
+                                                        <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">Disabled</h3>
                                                         <p className="mb-2">This menu item is disabled and does not have any content associated with it.</p>
                                                     </>
                                                 )}
@@ -473,10 +474,10 @@ const EditProduct = ({ title, icon }: any) => {
                                         </TabsContent>
                                     </Tabs>
 
-                                    <hr className="border-t border-gray-300" />
+                                    <hr className="border-t border-zinc-300" />
                                     <div className="flex justify-end space-x-4 mt-2 pr-4">
-                                        <button className="btn-gray">Save</button>
-                                        <Button type="submit" disabled={isLoading} className="btn-red">
+                                        <button className="btn-zinc">Save</button>
+                                        <Button type="submit" disabled={isLoading} className="btn-cyan">
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...

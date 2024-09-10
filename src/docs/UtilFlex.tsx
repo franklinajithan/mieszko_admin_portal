@@ -51,27 +51,27 @@ export default function UtilFlex() {
             <Card.Body>
               <div className="demo-flex">
                 <div className="d-flex flex-row border mb-2">
-                  <div className="p-2 bg-gray-300">Flex item 1</div>
-                  <div className="p-2 bg-gray-300">Flex item 2</div>
-                  <div className="p-2 bg-gray-300">Flex item 3</div>
+                  <div className="p-2 bg-zinc-300">Flex item 1</div>
+                  <div className="p-2 bg-zinc-300">Flex item 2</div>
+                  <div className="p-2 bg-zinc-300">Flex item 3</div>
                 </div>
                 <div className="d-flex flex-row-reverse border">
-                  <div className="p-2 bg-gray-300">Flex item 1</div>
-                  <div className="p-2 bg-gray-300">Flex item 2</div>
-                  <div className="p-2 bg-gray-300">Flex item 3</div>
+                  <div className="p-2 bg-zinc-300">Flex item 1</div>
+                  <div className="p-2 bg-zinc-300">Flex item 2</div>
+                  <div className="p-2 bg-zinc-300">Flex item 3</div>
                 </div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex flex-row border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex flex-row-reverse border">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -84,66 +84,66 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex justify-content-start border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex justify-content-end border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex justify-content-center border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex justify-content-between border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex justify-content-around border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex justify-content-evenly border">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex justify-content-start border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex justify-content-end border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex justify-content-center border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex justify-content-between border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex justify-content-around border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex justify-content-evenly border">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -156,46 +156,46 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex align-items-start ht-100 border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex align-items-end ht-100 border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex align-items-center ht-100 border mb-2">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
               <div className="d-flex align-items-stretch ht-100 border">
-                <div className="p-2 bg-gray-300">Flex item 1</div>
-                <div className="p-2 bg-gray-300">Flex item 2</div>
-                <div className="p-2 bg-gray-300">Flex item 3</div>
+                <div className="p-2 bg-zinc-300">Flex item 1</div>
+                <div className="p-2 bg-zinc-300">Flex item 2</div>
+                <div className="p-2 bg-zinc-300">Flex item 3</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex align-items-start ht-100 border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex align-items-end ht-100 border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex align-items-center ht-100 border mb-2">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>
 <div className="d-flex align-items-stretch ht-100 border">
-  <div className="p-2 bg-gray-300">Flex item 1</div>
-  <div className="p-2 bg-gray-300">Flex item 2</div>
-  <div className="p-2 bg-gray-300">Flex item 3</div>
+  <div className="p-2 bg-zinc-300">Flex item 1</div>
+  <div className="p-2 bg-zinc-300">Flex item 2</div>
+  <div className="p-2 bg-zinc-300">Flex item 3</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -208,18 +208,18 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex ht-100 border mb-2">
-                <div className="p-2 bg-gray-300 align-self-start">Flex item 1</div>
-                <div className="p-2 bg-gray-300 align-self-end">Flex item 2</div>
-                <div className="p-2 bg-gray-300 align-self-center">Flex item 3</div>
-                <div className="p-2 bg-gray-300 align-self-stretch">Flex item 4</div>
+                <div className="p-2 bg-zinc-300 align-self-start">Flex item 1</div>
+                <div className="p-2 bg-zinc-300 align-self-end">Flex item 2</div>
+                <div className="p-2 bg-zinc-300 align-self-center">Flex item 3</div>
+                <div className="p-2 bg-zinc-300 align-self-stretch">Flex item 4</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex ht-100 border mb-2">
-  <div className="p-2 bg-gray-300 align-self-start">Flex item 1</div>
-  <div className="p-2 bg-gray-300 align-self-end">Flex item 2</div>
-  <div className="p-2 bg-gray-300 align-self-center">Flex item 3</div>
-  <div className="p-2 bg-gray-300 align-self-stretch">Flex item 4</div>
+  <div className="p-2 bg-zinc-300 align-self-start">Flex item 1</div>
+  <div className="p-2 bg-zinc-300 align-self-end">Flex item 2</div>
+  <div className="p-2 bg-zinc-300 align-self-center">Flex item 3</div>
+  <div className="p-2 bg-zinc-300 align-self-stretch">Flex item 4</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -232,16 +232,16 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex">
-                <div className="p-2 bg-gray-300 flex-fill">Flex item with a lot of content</div>
-                <div className="p-2 bg-gray-300 flex-fill">Flex item</div>
-                <div className="p-2 bg-gray-300 flex-fill">Flex item</div>
+                <div className="p-2 bg-zinc-300 flex-fill">Flex item with a lot of content</div>
+                <div className="p-2 bg-zinc-300 flex-fill">Flex item</div>
+                <div className="p-2 bg-zinc-300 flex-fill">Flex item</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex">
-  <div className="p-2 bg-gray-300 flex-fill">Flex item with a lot of content</div>
-  <div className="p-2 bg-gray-300 flex-fill">Flex item</div>
-  <div className="p-2 bg-gray-300 flex-fill">Flex item</div>
+  <div className="p-2 bg-zinc-300 flex-fill">Flex item with a lot of content</div>
+  <div className="p-2 bg-zinc-300 flex-fill">Flex item</div>
+  <div className="p-2 bg-zinc-300 flex-fill">Flex item</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -254,16 +254,16 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex">
-                <div className="p-2 bg-gray-300 flex-grow-1">Flex item with a lot of content</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
+                <div className="p-2 bg-zinc-300 flex-grow-1">Flex item with a lot of content</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex">
-  <div className="p-2 bg-gray-300 flex-grow-1">Flex item with a lot of content</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
+  <div className="p-2 bg-zinc-300 flex-grow-1">Flex item with a lot of content</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -276,26 +276,26 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex mb-2">
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300 me-auto">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300 me-auto">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
               </div>
               <div className="d-flex">
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300 ms-auto">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300 ms-auto">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex mb-2">
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300 me-auto">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300 me-auto">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
 </div>
 <div className="d-flex">
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300 ms-auto">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300 ms-auto">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -308,16 +308,16 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex">
-                <div className="order-3 p-2 bg-gray-300">First flex item</div>
-                <div className="order-2 p-2 bg-gray-300">Second flex item</div>
-                <div className="order-1 p-2 bg-gray-300">Third flex item</div>
+                <div className="order-3 p-2 bg-zinc-300">First flex item</div>
+                <div className="order-2 p-2 bg-zinc-300">Second flex item</div>
+                <div className="order-1 p-2 bg-zinc-300">Third flex item</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex">
-  <div className="order-3 p-2 bg-gray-300">First flex item</div>
-  <div className="order-2 p-2 bg-gray-300">Second flex item</div>
-  <div className="order-1 p-2 bg-gray-300">Third flex item</div>
+  <div className="order-3 p-2 bg-zinc-300">First flex item</div>
+  <div className="order-2 p-2 bg-zinc-300">Second flex item</div>
+  <div className="order-1 p-2 bg-zinc-300">Third flex item</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -330,28 +330,28 @@ export default function UtilFlex() {
           <Card className="card-example">
             <Card.Body className="demo-flex">
               <div className="d-flex align-content-end flex-wrap border ht-150 mb-2">
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
-                <div className="p-2 bg-gray-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
+                <div className="p-2 bg-zinc-300">Flex item</div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex align-content-end flex-wrap border ht-150 mb-2">
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
-  <div className="p-2 bg-gray-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
+  <div className="p-2 bg-zinc-300">Flex item</div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>

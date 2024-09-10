@@ -758,7 +758,7 @@ export default function ProductManagement() {
                 <Row className="g-3">
                   <Col sm="4" md="3" xl="4">
                     <div className="avatar avatar-xl mb-2">
-                      <span className="avatar-initial bg-gray-700">s</span>
+                      <span className="avatar-initial bg-zinc-700">s</span>
                     </div>
                     <h6 className="fw-semibold text-dark mb-1">Reyna R. Labares</h6>
                     <p className="fs-xs text-secondary mb-1">Dec 20, 2023 8:45am</p>

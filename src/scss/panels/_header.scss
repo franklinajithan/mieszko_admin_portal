@@ -46,16 +46,16 @@
   &:hover,
   &:focus { color: $dark; }
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 3.5px;
-    right: -8px;
-    width: 6px;
-    height: 6px;
-    border-radius: 100%;
-    background-color: $primary;
-  }
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   bottom: 3.5px;
+  //   right: -8px;
+  //   width: 6px;
+  //   height: 6px;
+  //   border-radius: 100%;
+  //   background-color: $primary;
+  // }
 }
 
 .header-main {
@@ -65,18 +65,18 @@
   left: 0;
   right: 0;
   z-index: 800;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid $zinc-200;
   background-color: #fff;
   display: flex;
   align-items: center;
   @include transition(all 0.25s);
-  box-shadow: 0 1px 1px rgba($gray-900, 0.01),
-              0 4px 4px rgba($gray-900, 0.01),
-              0 16px 16px rgba($gray-900, 0.01);
+  box-shadow: 0 1px 1px rgba($zinc-900, 0.01),
+              0 4px 4px rgba($zinc-900, 0.01),
+              0 16px 16px rgba($zinc-900, 0.01);
 
   @include media-breakpoint-up(lg) {
     left: $sidebar-width - 10px;
-    border-left: 1px solid $gray-100;
+    border-left: 1px solid $zinc-100;
   }
 
   @include media-breakpoint-up(xxl) { left: $sidebar-width; }
@@ -84,7 +84,7 @@
   .form-search {
     width: 180px;
     box-shadow: none;
-    background-color: $gray-200;
+    background-color: $zinc-200;
 
     @include media-breakpoint-down(md) {
       height: $height-base + 2px;
@@ -136,7 +136,7 @@
     color: $secondary;
     position: relative;
 
-    &:hover { color: $gray-700; }
+    &:hover { color: $zinc-700; }
 
     i {
       font-size: 20px;
@@ -186,8 +186,8 @@
     border-color: $border-color;
     border-radius: 6px;
     border-width: 0;
-    box-shadow: 0 2px 10px rgba($gray-600, 0.1),
-                0 10px 20px rgba($gray-600, 0.1);
+    box-shadow: 0 2px 10px rgba($zinc-600, 0.1),
+                0 10px 20px rgba($zinc-600, 0.1);
 
     label {
       font-size: 10px;
@@ -202,7 +202,7 @@
     }
 
     hr {
-      border-color: $gray-300;
+      border-color: $zinc-300;
       opacity: 1;
       margin: 20px 0;
     }
@@ -214,15 +214,15 @@
   white-space: nowrap;
 
   .nav-link {
-    border: 1px solid $gray-400;
+    border: 1px solid $zinc-400;
     font-size: $font-size-sm;
     padding: 4px 15px;
-    color: $gray-700;
+    color: $zinc-700;
 
     &:hover,
     &:focus {
-      border-color: $gray-500;
-      background-color: $gray-200;
+      border-color: $zinc-500;
+      background-color: $zinc-200;
       position: relative;
     }
 
@@ -242,7 +242,7 @@
       letter-spacing: normal;
       font-weight: 400;
       border-color: $secondary;
-      background-color: $gray-300;
+      background-color: $zinc-300;
       color: $dark;
       position: relative;
       z-index: 2;
@@ -262,8 +262,8 @@
     border-color: $border-color;
     border-radius: 6px;
     border-width: 0;
-    box-shadow: 0 2px 10px rgba($gray-600, 0.1),
-                0 10px 20px rgba($gray-600, 0.1);
+    box-shadow: 0 2px 10px rgba($zinc-600, 0.1),
+                0 10px 20px rgba($zinc-600, 0.1);
 
     @include media-breakpoint-up(sm) { width: 340px; }
   }
@@ -295,7 +295,7 @@
     background-color: transparent;
 
     &:hover {
-      background-color: rgba($gray-200, .85);
+      background-color: rgba($zinc-200, .85);
       cursor: pointer;
     }
 
@@ -308,7 +308,7 @@
   }
 
   .list-group-body {
-    color: $gray-800;
+    color: $zinc-800;
     line-height: 1.4;
     padding-right: 10px;
 
@@ -342,8 +342,8 @@
     border-color: $border-color;
     border-radius: 6px;
     border-width: 0;
-    box-shadow: 0 2px 10px rgba($gray-600, 0.1),
-                0 10px 20px rgba($gray-600, 0.1);
+    box-shadow: 0 2px 10px rgba($zinc-600, 0.1),
+                0 10px 20px rgba($zinc-600, 0.1);
   }
 
   .dropdown-menu-body {
@@ -361,13 +361,13 @@
     display: flex;
     align-items: center;
     padding: 7px 8px;
-    color: $gray-700;
+    color: $zinc-700;
     border-radius: 4px;
     @include transition(all 0.25s);
 
     &:hover {
-      background-color: $gray-200;
-      color: $gray-900;
+      background-color: $zinc-200;
+      color: $zinc-900;
     }
 
     i {

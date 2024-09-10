@@ -86,7 +86,7 @@ export default function FormSelects() {
           <br /><br /><br />
 
           <h5 id="section3" className="main-subtitle">Disabled</h5>
-          <p>Add the disabled boolean attribute on a select to give it a grayed out appearance and remove pointer events.</p>
+          <p>Add the disabled boolean attribute on a select to give it a zinced out appearance and remove pointer events.</p>
 
           <Card className="card-example">
             <Card.Body>

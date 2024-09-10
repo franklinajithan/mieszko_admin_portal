@@ -410,7 +410,7 @@ const Product = ({ title, icon }: any) => {
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
                     <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
@@ -434,12 +434,12 @@ const Product = ({ title, icon }: any) => {
 
 
 
-                                    <hr className="border-t border-gray-300 " />
+                                    <hr className="border-t border-zinc-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                        <button className="btn-gray">
+                                        <button className="btn-zinc">
                                             Reset
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='btn-red'>
+                                        <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
@@ -456,7 +456,7 @@ const Product = ({ title, icon }: any) => {
                         <CardTitle title="Product List" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
                         {isOpenGrid && (<CardContent>
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
-                                <Button type="submit" className='btn-red' onClick={handleRedirect}>
+                                <Button type="submit" className='btn-cyan' onClick={handleRedirect}>
                                     New Product
                                 </Button>
                             </div>

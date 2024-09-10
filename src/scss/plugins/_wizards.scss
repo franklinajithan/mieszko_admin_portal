@@ -45,7 +45,7 @@
             font-family: 'remixicon';
             font-size: 16px;
             font-weight: $font-weight-base;
-            color: $gray-400;
+            color: $zinc-400;
             position: absolute;
             top: calc(50% + 1px);
             left: -26px;
@@ -61,7 +61,7 @@
     a,
     a:hover,
     a:active {
-      color: $gray-900;
+      color: $zinc-900;
       font-weight: $font-weight-medium;
       font-size: inherit;
       display: flex;
@@ -81,7 +81,7 @@
         justify-content: center;
         flex-shrink: 0;
         font-family: $font-family-sans-serif;
-        border: 2px solid $gray-600;
+        border: 2px solid $zinc-600;
         @include border-radius(100%);
 
         @include media-breakpoint-up(md) {
@@ -95,11 +95,11 @@
       a,
       a:hover,
       a:active {
-        color: $gray-500;
+        color: $zinc-500;
 
         .number {
-          color: $gray-500;
-          border-color: $gray-400;
+          color: $zinc-500;
+          border-color: $zinc-400;
         }
       }
 
@@ -151,7 +151,7 @@
 
     > .title {
       font-size: 16px;
-      color: $gray-900;
+      color: $zinc-900;
       font-weight: $font-weight-semibold;
       margin-bottom: 5px;
       display: none;
@@ -204,7 +204,7 @@
       a,
       a:hover,
       a:active {
-        background-color: $gray-300;
+        background-color: $zinc-300;
         color: $secondary;
       }
     }
@@ -365,7 +365,7 @@
     .done a { background-color: $green; }
 
     .disabled a {
-      background-color: $gray-300;
+      background-color: $zinc-300;
       color: $secondary;
     }
 

@@ -48,7 +48,7 @@
     padding-right: 10px;
     border-radius: 4px;
 
-    &:hover { background-color: $gray-200; }
+    &:hover { background-color: $zinc-200; }
 
     &.active {
       background-color: rgba($primary, .1);
@@ -175,7 +175,7 @@
   display: flex;
 
   &:hover {
-    background-color: rgba($gray-200, .6);
+    background-color: rgba($zinc-200, .6);
     cursor: pointer;
   }
 
@@ -340,7 +340,7 @@
 .card-attachment {
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   .card-body {
     display: flex;
@@ -388,7 +388,7 @@
       display: flex;
       font-size: $font-size-xs;
       font-family: $font-family-sans-serif;
-      color: $gray-500;
+      color: $zinc-500;
       text-transform: uppercase;
     }
   }
@@ -405,7 +405,7 @@
     border-radius: inherit;
     padding: 15px;
     font-size: $font-size-base;
-    @include shadow-dreamy($gray-400);
+    @include shadow-dreamy($zinc-400);
   }
 
   .ql-snow.ql-toolbar {
@@ -441,13 +441,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba($gray-900, .5);
+    background-color: rgba($zinc-900, .5);
 
     .compose-content {
       width: 100%;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
-      @include shadow-dreamy($gray-800);
+      @include shadow-dreamy($zinc-800);
 
       @include media-breakpoint-up(md) { width: 80%; }
     }
@@ -469,7 +469,7 @@
     height: auto;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    @include shadow-dreamy($gray-500);
+    @include shadow-dreamy($zinc-500);
   }
 
   @include media-breakpoint-up(xl) {
@@ -537,7 +537,7 @@
     padding: 0 0 12px;
     border-radius: 0;
     border-width: 0 0 1px;
-    border-bottom-color: $gray-200;
+    border-bottom-color: $zinc-200;
     color: $color-tx-01;
 
     &::placeholder {
@@ -575,7 +575,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $gray-700;
+    color: $zinc-700;
     border-radius: 4px;
 
     @include media-breakpoint-up(md) {
@@ -585,7 +585,7 @@
 
     &:hover,
     &:focus {
-      background-color: rgba($gray-200, .65);
+      background-color: rgba($zinc-200, .65);
       color: $color-tx-01;
     }
 
@@ -604,7 +604,7 @@
     margin: 0 4px;
     width: 1px;
     height: 18px;
-    background-color: $gray-200;
+    background-color: $zinc-200;
   }
 }
 

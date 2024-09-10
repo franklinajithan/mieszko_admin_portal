@@ -67,7 +67,7 @@ export default function FormElements() {
           <br /><br /><br />
 
           <h5 id="section3" className="main-subtitle">Disabled</h5>
-          <p>Add the disabled boolean attribute on an input to give it a grayed out appearance and remove pointer events.</p>
+          <p>Add the disabled boolean attribute on an input to give it a zinced out appearance and remove pointer events.</p>
 
           <Card className="card-example">
             <Card.Body>

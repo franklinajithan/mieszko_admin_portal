@@ -799,7 +799,7 @@ export default function FinanceMonitoring() {
                   </Col>
                   <Col xs="6" sm="4" md>
                     <div className="finance-item">
-                      <div className="finance-item-circle bg-gray-400">
+                      <div className="finance-item-circle bg-zinc-400">
                         <h1>2.1B</h1>
                         <label>Net Profit</label>
                       </div>

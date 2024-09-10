@@ -69,77 +69,77 @@
   }
 }
 
-.btn-red {
+.btn-cyan {
   @apply h-10 px-4 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95;
-  background: linear-gradient(180deg, #fca5a5, #dc2626);
+  background: linear-gradient(180deg, #22d3ee, #0891b2);
   color: white !important
 }
 
-.btn-red:hover {
-  background: linear-gradient(180deg, #dc2626, #fca5a5);
+.btn-cyan:hover {
+  background: linear-gradient(180deg, #0891b2, #22d3ee);
   /* Reverse gradient on hover */
   @apply shadow-lg;
 
 }
 
-.btn-red:focus {
-  @apply outline-none ring-2 ring-red-600 ring-offset-2;
+.btn-cyan:focus {
+  @apply outline-none ring-2 ring-cyan-600 ring-offset-2;
 }
 
 
-.btn-toggle-red {
+.btn-toggle-cyan {
   @apply flex items-center h-10 px-2 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95 cursor-pointer;
-  background: linear-gradient(180deg, #fca5a5, #dc2626);
+  background: linear-gradient(180deg, #22d3ee, #0891b2);
   color: white !important;
 }
 
-.btn-toggle-red:hover {
+.btn-toggle-cyan:hover {
   /* Reverse gradient on hover */
-  background: linear-gradient(180deg, #c53030, #fca5a5);
+  background: linear-gradient(180deg, #0891b2, #22d3ee);
   @apply shadow-lg;
   /* Larger shadow on hover */
 }
 
-.btn-toggle-red:focus {
-  @apply outline-none ring-2 ring-red-500 ring-offset-2;
+.btn-toggle-cyan:focus {
+  @apply outline-none ring-2 ring-cyan-500 ring-offset-2;
   /* Ring effect on focus */
 }
 
 
 
-.btn-toggle-gray {
+.btn-toggle-zinc {
   @apply flex items-center h-10 px-2 py-2 rounded-md font-normal transition-all transform cursor-pointer;
   border: 1px solid #e2e5ec;
   background: #ffffff;
   color: #636363;
 }
 
-/* .btn-toggle-gray:hover {
+/* .btn-toggle-zinc:hover {
   @apply shadow-lg;
   background: #cecece;
 }
 
-.btn-toggle-gray:focus {
-  @apply outline-none ring-2 ring-gray-500 ring-offset-2;
+.btn-toggle-zinc:focus {
+  @apply outline-none ring-2 ring-zinc-500 ring-offset-2;
 } */
 
 
 
-.btn-gray {
+.btn-zinc {
   @apply h-10 px-4 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95;
-  background: linear-gradient(180deg, #d4d4d4, #525252);
-  /* Gray gradient background */
+  background: linear-gradient(180deg, #a1a1aa,#52525b);
+  /* zinc gradient background */
   color: white !important
 }
 
-/* Hover state for .btn-gray */
-.btn-gray:hover {
-  background: linear-gradient(180deg, #525252, #d4d4d4);
-  /* Reverse gray gradient on hover */
+/* Hover state for .btn-zinc */
+.btn-zinc:hover {
+  background: linear-gradient(180deg, #52525b, #a1a1aa);
+  /* Reverse zinc gradient on hover */
   @apply shadow-lg;
 }
 
-/* Focus state for .btn-gray */
-.btn-gray:focus {
-  @apply outline-none ring-2 ring-gray-500 ring-offset-2;
+/* Focus state for .btn-zinc */
+.btn-zinc:focus {
+  @apply outline-none ring-2 ring-zinc-500 ring-offset-2;
 }

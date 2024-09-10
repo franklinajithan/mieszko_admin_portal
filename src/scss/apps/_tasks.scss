@@ -7,7 +7,7 @@
     width: 100%;
     border-width: 0;
     border-radius: 6px;
-    @include shadow-dreamy($gray-400);
+    @include shadow-dreamy($zinc-400);
   }
 
   .react-datepicker__header {
@@ -83,10 +83,10 @@
   border-radius: 6px;
   cursor: pointer;
   border: 1px solid transparent;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
   @include transition(all 0.25s);
 
-  &:hover { border-color: $gray-400; }
+  &:hover { border-color: $zinc-400; }
 
   + .card-task { margin-top: 12px; }
 
@@ -123,7 +123,7 @@
     }
 
     .nav-link {
-      color: $gray-500;
+      color: $zinc-500;
       display: flex;
       align-items: center;
       font-size: $font-size-xs;
@@ -145,7 +145,7 @@
     max-width: none;
     border-width: 0;
     border-radius: 6px;
-    @include shadow-dreamy($gray-400);
+    @include shadow-dreamy($zinc-400);
   }
 
   .ui-datepicker {
@@ -161,8 +161,8 @@
       }
 
       td {
-        border-color: $gray-300;
-        &:last-child { border-right: 1px solid $gray-300; }
+        border-color: $zinc-300;
+        &:last-child { border-right: 1px solid $zinc-300; }
       }
 
       td a {
@@ -175,7 +175,7 @@
         }
 
         &:hover {
-          background-color: $gray-200;
+          background-color: $zinc-200;
         }
       }
 
@@ -184,7 +184,7 @@
         color: $primary;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: $zinc-200;
           color: $primary;
         }
       }

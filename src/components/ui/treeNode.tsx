@@ -35,13 +35,13 @@ const TreeNode = ({ node, isOpen, onEdit, showEditButton }: TreeNodeProps) => {
             <div className="flex items-center">
                 <button
                     onClick={handleToggle}
-                    className="flex items-center justify-between w-1/4 p-2 mb-2 text-left border rounded bg-red-50 hover:bg-red-100"
+                    className="flex items-center justify-between w-1/4 p-2 mb-2 text-left border rounded bg-cyan-50 hover:bg-cyan-100"
                 >
-                    <span className=" text-red-900 font-bold flex items-center">
+                    <span className=" text-cyan-900 font-bold flex items-center">
                         {node.category_name}
                     </span>
                     {node.children && node.children.length > 0 && (
-                        <span className="ml-2 text-gray-500">
+                        <span className="ml-2 text-zinc-500">
                             {isNodeOpen ? (
                                 <FontAwesomeIcon icon={faMinus} />
                             ) : (
@@ -54,7 +54,7 @@ const TreeNode = ({ node, isOpen, onEdit, showEditButton }: TreeNodeProps) => {
                 {showEditButton && (
                     <div
                         onClick={handleEditClick}
-                        className="ml-2 p-1 text-gray-500 hover:text-gray-800"
+                        className="ml-2 p-1 text-zinc-500 hover:text-zinc-800"
                         aria-label="Edit"
                     >
                         <FontAwesomeIcon icon={faEdit} />
@@ -63,7 +63,7 @@ const TreeNode = ({ node, isOpen, onEdit, showEditButton }: TreeNodeProps) => {
             </div>
 
             {isNodeOpen && node.children && (
-                <div className="pl-2 border-l-2 border-red-300">
+                <div className="pl-2 border-l-2 border-cyan-300">
                     {node.children.map((child) => (
                         <TreeNode
                             key={child.category_id}

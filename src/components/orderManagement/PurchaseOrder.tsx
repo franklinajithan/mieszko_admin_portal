@@ -111,7 +111,7 @@ const PurchaseOrder = ({ title,icon}:any) => {
         <React.Fragment>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
 
                 <HeaderComponents icon={icon} title={title} />
 
@@ -155,7 +155,7 @@ const PurchaseOrder = ({ title,icon}:any) => {
                                         <InputField control={form.control} label="Closing Date" name="closingDate" type="date" />
                                     </div>
                                 </CardContent>
-                                <hr className="border-t border-gray-300 " />
+                                <hr className="border-t border-zinc-300 " />
                                 <CardContent>
                                     <div className="grid grid-cols-2 gap-4">
                                         <MultiInputField
@@ -240,7 +240,7 @@ const PurchaseOrder = ({ title,icon}:any) => {
                                         />
                                     </div>
                                 </CardContent>
-                                <hr className="border-t border-gray-300 " />
+                                <hr className="border-t border-zinc-300 " />
                                 <CardContent>
                                     <div className="grid grid-cols-2 gap-4">
                                         <MultiDateField label="Purchase Plan" firstName="purchasePlanStartDate" secondName="purchasePlanEndDate" control={form.control} />
@@ -253,12 +253,12 @@ const PurchaseOrder = ({ title,icon}:any) => {
 
                                     </div>
 
-                                    <hr className="border-t border-gray-300 " />
+                                    <hr className="border-t border-zinc-300 " />
                                     <div className="flex justify-end space-x-4  mt-2 pr-4">
-                                    <button className="btn-gray">
+                                    <button className="btn-zinc">
                                             Save
                                         </button>
-                                        <Button type="submit" disabled={isLoading} className='btn-red'>
+                                        <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
@@ -286,7 +286,7 @@ const PurchaseOrder = ({ title,icon}:any) => {
                         <CardContent>
                             <table className="w-full border-collapse">
                                 <thead>
-                                    <tr className="bg-gray-100 text-left text-sm font-semibold">
+                                    <tr className="bg-zinc-100 text-left text-sm font-semibold">
                                         <th className="p-2 border-b">#</th>
                                         <th className="p-2 border-b">Purchase Plan No</th>
                                         <th className="p-2 border-b">P1 Start Date</th>
@@ -301,11 +301,11 @@ const PurchaseOrder = ({ title,icon}:any) => {
                                 </thead>
                                 <tbody>
                                     {[...Array(10)].map((_, index) => (
-                                        <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                                        <tr key={index} className={index % 2 === 0 ? "bg-zinc-50" : "bg-white"}>
                                             <td className="p-2 border-b">
                                                 <input type="checkbox" />
                                             </td>
-                                            <td className="p-2 border-b text-red-500 font-medium">PP-2024-01</td>
+                                            <td className="p-2 border-b text-cyan-500 font-medium">PP-2024-01</td>
                                             <td className="p-2 border-b">April 01, 2024</td>
                                             <td className="p-2 border-b">April 15, 2024</td>
                                             <td className="p-2 border-b">April 16, 2024</td>
@@ -321,9 +321,9 @@ const PurchaseOrder = ({ title,icon}:any) => {
 
                             {/* Pagination */}
                             <div className="mt-4 flex justify-between items-center">
-                                <button className="p-2 bg-gray-200 rounded-md">Previous</button>
+                                <button className="p-2 bg-zinc-200 rounded-md">Previous</button>
                                 <div className="text-sm">Page 1 of 10</div>
-                                <button className="p-2 bg-gray-200 rounded-md">Next</button>
+                                <button className="p-2 bg-zinc-200 rounded-md">Next</button>
                             </div>
                         </CardContent>
                     </Card>

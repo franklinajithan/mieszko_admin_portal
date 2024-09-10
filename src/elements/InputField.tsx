@@ -74,7 +74,7 @@ const InputField = <T extends FieldValues>({
                                             top: '50%',
                                             transform: 'translateY(0%)',
                                             padding: '0',
-                                            color: 'gray'
+                                            color: 'zinc'
                                         }}
                                     >
                                         <ContentCopyIcon />

@@ -8,8 +8,8 @@
   &:focus { color: #fff; }
 }
 
-.btn-gray {
-  background-color: rgba($gray-300, .75);
+.btn-zinc {
+  background-color: rgba($zinc-300, .75);
   color: $secondary;
 }
 
@@ -41,13 +41,13 @@
 }
 
 .btn-white {
-  border: 1px solid $gray-400;
+  border: 1px solid $zinc-400;
   background-color: #fff;
 
   &:hover,
   &:focus {
-    border-color: darken($gray-400, 5%);
-    background-color: $gray-100;
+    border-color: darken($zinc-400, 5%);
+    background-color: $zinc-100;
   }
 }
 

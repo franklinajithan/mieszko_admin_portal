@@ -39,12 +39,12 @@
 
 .main-title-text {
   font-size: 16px;
-  color: $gray-700;
+  color: $zinc-700;
 }
 
 .main-separator {
   margin: 40px 0;
-  background-color: $gray-300;
+  background-color: $zinc-300;
   opacity: .12;
 }
 
@@ -71,7 +71,7 @@
   @include media-breakpoint-up(lg) { display: none; }
 
   &.scroll {
-    @include shadow-diffuse($gray-300);
+    @include shadow-diffuse($zinc-300);
   }
 
   .menu-link {
@@ -92,7 +92,7 @@
   bottom: 0;
   left: 0;
   z-index: 900;
-  background-color: rgba($gray-900, .6);
+  background-color: rgba($zinc-900, .6);
   opacity: 0;
   visibility: hidden;
   @include transition(all 0.25s);

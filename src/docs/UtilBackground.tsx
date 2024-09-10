@@ -19,33 +19,33 @@ export default function UtilBackground() {
 
           <hr className="main-separator" />
 
-          <h5 id="section1" className="main-subtitle">Gray Set</h5>
-          <p>A set of gray background utilities classes.</p>
+          <h5 id="section1" className="main-subtitle">zinc Set</h5>
+          <p>A set of zinc background utilities classes.</p>
 
           <Card className="card-example">
             <Card.Body>
               <div className="demo-background">
-                <div className="flex-fill ht-50 bg-gray-900"></div>
-                <div className="flex-fill ht-50 bg-gray-800"></div>
-                <div className="flex-fill ht-50 bg-gray-700"></div>
-                <div className="flex-fill ht-50 bg-gray-600"></div>
-                <div className="flex-fill ht-50 bg-gray-500"></div>
-                <div className="flex-fill ht-50 bg-gray-400"></div>
-                <div className="flex-fill ht-50 bg-gray-300"></div>
-                <div className="flex-fill ht-50 bg-gray-200"></div>
-                <div className="flex-fill ht-50 bg-gray-100"></div>
+                <div className="flex-fill ht-50 bg-zinc-900"></div>
+                <div className="flex-fill ht-50 bg-zinc-800"></div>
+                <div className="flex-fill ht-50 bg-zinc-700"></div>
+                <div className="flex-fill ht-50 bg-zinc-600"></div>
+                <div className="flex-fill ht-50 bg-zinc-500"></div>
+                <div className="flex-fill ht-50 bg-zinc-400"></div>
+                <div className="flex-fill ht-50 bg-zinc-300"></div>
+                <div className="flex-fill ht-50 bg-zinc-200"></div>
+                <div className="flex-fill ht-50 bg-zinc-100"></div>
               </div>
             </Card.Body>
             <Card.Footer>
-              <pre><code className="language-html">{`<div className="flex-fill ht-50 bg-gray-900"></div>
-<div className="flex-fill ht-50 bg-gray-800"></div>
-<div className="flex-fill ht-50 bg-gray-700"></div>
-<div className="flex-fill ht-50 bg-gray-600"></div>
-<div className="flex-fill ht-50 bg-gray-500"></div>
-<div className="flex-fill ht-50 bg-gray-400"></div>
-<div className="flex-fill ht-50 bg-gray-300"></div>
-<div className="flex-fill ht-50 bg-gray-200"></div>
-<div className="flex-fill ht-50 bg-gray-100"></div>`}</code></pre>
+              <pre><code className="language-html">{`<div className="flex-fill ht-50 bg-zinc-900"></div>
+<div className="flex-fill ht-50 bg-zinc-800"></div>
+<div className="flex-fill ht-50 bg-zinc-700"></div>
+<div className="flex-fill ht-50 bg-zinc-600"></div>
+<div className="flex-fill ht-50 bg-zinc-500"></div>
+<div className="flex-fill ht-50 bg-zinc-400"></div>
+<div className="flex-fill ht-50 bg-zinc-300"></div>
+<div className="flex-fill ht-50 bg-zinc-200"></div>
+<div className="flex-fill ht-50 bg-zinc-100"></div>`}</code></pre>
             </Card.Footer>
           </Card>
 
@@ -158,7 +158,7 @@ export default function UtilBackground() {
 
         <Nav id="navDocs" className="nav-docs">
           <label>On This Page</label>
-          <Nav.Link href="#section1">Gray Set</Nav.Link>
+          <Nav.Link href="#section1">zinc Set</Nav.Link>
           <Nav.Link href="#section2">Background Color</Nav.Link>
           <Nav.Link href="#section3">Background Gradient</Nav.Link>
           <Nav.Link href="#section4">Background Opacity</Nav.Link>

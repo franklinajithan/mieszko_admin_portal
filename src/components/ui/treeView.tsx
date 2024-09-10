@@ -49,7 +49,7 @@ const TreeView = ({ category, onEditTree, topEditButton }: TreeViewProps) => {
     return (
         <div className="bg-white">
             <div className="flex justify-start items-center mb-3 ml-4">
-                <div className="btn-toggle-red ml-1">
+                <div className="btn-toggle-cyan ml-1">
                     <div className="mr-2 ml-2">
                         <span>Edit Tree</span>
                     </div>
@@ -59,10 +59,10 @@ const TreeView = ({ category, onEditTree, topEditButton }: TreeViewProps) => {
                         className="ml-2"
                     />
                 </div>
-                <button onClick={() => toggleAll(true)} className="ml-1 btn-red">
+                <button onClick={() => toggleAll(true)} className="ml-1 btn-cyan">
                     Expand All
                 </button>
-                <button onClick={() => toggleAllShow()} className="ml-1 btn-red">
+                <button onClick={() => toggleAllShow()} className="ml-1 btn-cyan">
                     Collapse All
                 </button>
 

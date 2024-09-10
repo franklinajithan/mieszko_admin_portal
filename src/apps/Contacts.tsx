@@ -324,8 +324,8 @@ export default function Contacts() {
                   <p>Software Engineer at Themepixels, Inc.</p>
                   <div className="d-flex">
                     <Button variant="primary" className="px-5">Message</Button>
-                    <Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-star-line"></i></Button>
-                    <Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-more-fill"></i></Button>
+                    <Button variant="" className="btn-icon btn-zinc ms-1"><i className="ri-star-line"></i></Button>
+                    <Button variant="" className="btn-icon btn-zinc ms-1"><i className="ri-more-fill"></i></Button>
                   </div>
                 </div>
               </div>

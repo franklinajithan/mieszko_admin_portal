@@ -50,14 +50,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           id="file-input"
           className="hidden"
         />
-        <label htmlFor="file-input" className="btn-red">Upload</label>
+        <label htmlFor="file-input" className="btn-cyan">Upload</label>
       </div>
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-gray-200 bg-opacity-60 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-zinc-200 bg-opacity-60 flex justify-center items-center z-50">
         <div className="relative p-4 rounded-lg max-w-screen-md max-h-screen">
           <button
             onClick={handleClosePopup}
-            className="absolute top-2 right-2 w-10 h-10 p-2 bg-white text-black rounded-full shadow-md flex items-center justify-center hover:bg-gray-200"
+            className="absolute top-2 right-2 w-10 h-10 p-2 bg-white text-black rounded-full shadow-md flex items-center justify-center hover:bg-zinc-200"
             style={{ fontSize: '1.5rem' }}
           >
             &times;

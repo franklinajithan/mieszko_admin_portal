@@ -81,7 +81,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
         <React.Fragment>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
-                <div className="min-h-screen bg-gray-50">
+                <div className="min-h-screen bg-zinc-50">
 
 
 
@@ -91,252 +91,252 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Owner Name */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Owner Name</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Owner Name</label>
                                     <input
                                         type="text"
                                         name="ownerName"
                                         value={formData.ownerName}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Registered No */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Registered No</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Registered No</label>
                                     <input
                                         type="text"
                                         name="registeredNo"
                                         value={formData.registeredNo}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Store Name */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Store Name</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Store Name</label>
                                     <input
                                         type="text"
                                         name="storeName"
                                         value={formData.storeName}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Store Code */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Store Code</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Store Code</label>
                                     <input
                                         type="text"
                                         name="storeCode"
                                         value={formData.storeCode}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Address */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Address</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Address</label>
                                     <input
                                         type="text"
                                         name="address"
                                         value={formData.address}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* State */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">State</label>
+                                    <label className="block text-sm font-medium text-zinc-700">State</label>
                                     <input
                                         type="text"
                                         name="state"
                                         value={formData.state}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Country */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Country</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Country</label>
                                     <input
                                         type="text"
                                         name="country"
                                         value={formData.country}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* City */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">City</label>
+                                    <label className="block text-sm font-medium text-zinc-700">City</label>
                                     <input
                                         type="text"
                                         name="city"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* GST No */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">GST No</label>
+                                    <label className="block text-sm font-medium text-zinc-700">GST No</label>
                                     <input
                                         type="text"
                                         name="gstNo"
                                         value={formData.gstNo}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Email */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Email</label>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Mobile */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Mobile</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Mobile</label>
                                     <input
                                         type="text"
                                         name="mobile"
                                         value={formData.mobile}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Area */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Area</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Area</label>
                                     <input
                                         type="text"
                                         name="area"
                                         value={formData.area}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Company */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Company</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Company</label>
                                     <input
                                         type="text"
                                         name="company"
                                         value={formData.company}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* License Key */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">License Key</label>
+                                    <label className="block text-sm font-medium text-zinc-700">License Key</label>
                                     <input
                                         type="text"
                                         name="licenseKey"
                                         value={formData.licenseKey}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Agent */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Agent</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Agent</label>
                                     <input
                                         type="text"
                                         name="agent"
                                         value={formData.agent}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* License Type */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">License Type</label>
+                                    <label className="block text-sm font-medium text-zinc-700">License Type</label>
                                     <input
                                         type="text"
                                         name="licenseType"
                                         value={formData.licenseType}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Sales Email */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Sales Email</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Sales Email</label>
                                     <input
                                         type="email"
                                         name="salesEmail"
                                         value={formData.salesEmail}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Thank You Message */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Thank You Message</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Thank You Message</label>
                                     <input
                                         type="text"
                                         name="thankYouMessage"
                                         value={formData.thankYouMessage}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Footer Text */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Footer Text</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Footer Text</label>
                                     <input
                                         type="text"
                                         name="footerText"
                                         value={formData.footerText}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* VAT Update */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">VAT Update</label>
+                                    <label className="block text-sm font-medium text-zinc-700">VAT Update</label>
                                     <input
                                         type="text"
                                         name="vatUpdate"
                                         value={formData.vatUpdate}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
 
                                 {/* Logo Upload */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Logo</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Logo</label>
                                     <input
                                         type="file"
                                         name="logo"
                                         onChange={handleFileUpload}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
                             </div>
@@ -354,7 +354,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                             onChange={handleInputChange}
                                             className="mr-2"
                                         />
-                                        <label htmlFor="isAutoList" className="text-sm font-medium text-gray-700">
+                                        <label htmlFor="isAutoList" className="text-sm font-medium text-zinc-700">
                                             Auto List
                                         </label>
                                     </div>
@@ -367,7 +367,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                             onChange={handleInputChange}
                                             className="mr-2"
                                         />
-                                        <label htmlFor="isAutoInvoice" className="text-sm font-medium text-gray-700">
+                                        <label htmlFor="isAutoInvoice" className="text-sm font-medium text-zinc-700">
                                             Auto Invoice
                                         </label>
                                     </div>
@@ -380,7 +380,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                             onChange={handleInputChange}
                                             className="mr-2"
                                         />
-                                        <label htmlFor="isEnableStockVisibility" className="text-sm font-medium text-gray-700">
+                                        <label htmlFor="isEnableStockVisibility" className="text-sm font-medium text-zinc-700">
                                             Enable Stock Visibility
                                         </label>
                                     </div>
@@ -393,7 +393,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                             onChange={handleInputChange}
                                             className="mr-2"
                                         />
-                                        <label htmlFor="isOnStoreTransfer" className="text-sm font-medium text-gray-700">
+                                        <label htmlFor="isOnStoreTransfer" className="text-sm font-medium text-zinc-700">
                                             On Store Transfer
                                         </label>
                                     </div>
@@ -406,7 +406,7 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                             onChange={handleInputChange}
                                             className="mr-2"
                                         />
-                                        <label htmlFor="isIncludeVat" className="text-sm font-medium text-gray-700">
+                                        <label htmlFor="isIncludeVat" className="text-sm font-medium text-zinc-700">
                                             Include VAT Invoice
                                         </label>
                                     </div>
@@ -417,13 +417,13 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                             <div className="mt-6">
                                 <h3 className="text-lg font-medium mb-2">Invoice Size</h3>
                                 <div className="flex items-center gap-4">
-                                    <label className="block text-sm font-medium text-gray-700">Size:</label>
+                                    <label className="block text-sm font-medium text-zinc-700">Size:</label>
                                     <input
                                         type="text"
                                         name="invoiceSize"
                                         value={formData.invoiceSize}
                                         onChange={handleInputChange}
-                                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                        className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                     />
                                 </div>
                             </div>
@@ -517,53 +517,53 @@ const ManageStoreDetails  = ({ title,icon}:any) => {
                                 <h3 className="text-lg font-medium mb-2">Store Item Mapping</h3>
                                 <div className="grid grid-cols-5 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Scan Code</label>
+                                        <label className="block text-sm font-medium text-zinc-700">Scan Code</label>
                                         <input
                                             type="text"
                                             name="scanCode"
                                             value={formData.storeItemMapping.scanCode}
                                             onChange={handleInputChange}
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                            className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Item Code</label>
+                                        <label className="block text-sm font-medium text-zinc-700">Item Code</label>
                                         <input
                                             type="text"
                                             name="itemCode"
                                             value={formData.storeItemMapping.itemCode}
                                             onChange={handleInputChange}
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                            className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">RFID</label>
+                                        <label className="block text-sm font-medium text-zinc-700">RFID</label>
                                         <input
                                             type="text"
                                             name="rfid"
                                             value={formData.storeItemMapping.rfid}
                                             onChange={handleInputChange}
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                            className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Item Name</label>
+                                        <label className="block text-sm font-medium text-zinc-700">Item Name</label>
                                         <input
                                             type="text"
                                             name="itemName"
                                             value={formData.storeItemMapping.itemName}
                                             onChange={handleInputChange}
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                            className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Nick Name</label>
+                                        <label className="block text-sm font-medium text-zinc-700">Nick Name</label>
                                         <input
                                             type="text"
                                             name="nickName"
                                             value={formData.storeItemMapping.nickName}
                                             onChange={handleInputChange}
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                                            className="mt-1 p-2 w-full border border-zinc-300 rounded-md"
                                         />
                                     </div>
                                 </div>

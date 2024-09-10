@@ -526,7 +526,7 @@ export default function Cryptocurrency() {
                         "percent": "-1.11%",
                         "success": false
                       }, {
-                        "dot": "gray-400",
+                        "dot": "zinc-400",
                         "currency": "SGD",
                         "amount": "5,393.00",
                         "percent": "0.66%",
@@ -595,7 +595,7 @@ export default function Cryptocurrency() {
                     }
                   ].map((item, index) => (
                     <ListGroup.Item key={index} as="li" className="px-0 d-flex align-items-center gap-2">
-                      <div className="avatar bg-gray-300 text-secondary"><i className={"cf cf-" + item.icon}></i></div>
+                      <div className="avatar bg-zinc-300 text-secondary"><i className={"cf cf-" + item.icon}></i></div>
                       <div>
                         <h6 className="mb-0">{item.name}</h6>
                         <small>{item.icon.toUpperCase()}/USD</small>

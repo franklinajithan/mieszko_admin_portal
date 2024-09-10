@@ -15,7 +15,7 @@ type HeaderComponentsProps = {
     icon: IconType;
 };
 
-const buttonClasses = "flex items-center text-gray-600 hover:text-gray-800";
+const buttonClasses = "flex items-center text-zinc-600 hover:text-zinc-800";
 
 export default function HeaderComponents({
     title,
@@ -29,9 +29,9 @@ export default function HeaderComponents({
     icon: Icon
 }: HeaderComponentsProps) {
     return (
-        <header className="flex items-center justify-between bg-gradient-to-br from-red-400 via-red-700 to-red-400 p-2 shadow-md border-b-4 border-custom-red">
+        <header className="flex items-center justify-between bg-gradient-to-br from-cyan-400 via-cyan-700 to-cyan-400 p-2 shadow-md border-b-4 border-custom-cyan">
             <div className="flex items-center">
-                <div className="bg-gradient-to-r from-red-300 via-red-500 to-pink-500 p-2 rounded-full">
+                <div className="bg-gradient-to-r from-cyan-300 via-cyan-500 to-sky-500 p-2 rounded-full">
                     <Icon className="text-white text-base" aria-label="Main Icon" />
                 </div>
                 <h2 className="text-lg font-bold m-0 pl-2 text-white">{title}</h2>

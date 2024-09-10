@@ -42,14 +42,14 @@
     vertical-align: middle;
     padding-left: 2px;
     padding-right: 2px;
-    border-color: $gray-200;
+    border-color: $zinc-200;
 
     &:first-child { padding-left: 0; }
     &:last-child { padding-right: 0; }
 
     strong {
       font-weight: $font-weight-medium;
-      color: $gray-800;
+      color: $zinc-800;
     }
 
     i { line-height: 1; }
@@ -85,7 +85,7 @@
 
   tbody td {
     vertical-align: middle;
-    border-color: $gray-200;
+    border-color: $zinc-200;
 
     &:last-child {
       text-align: right;
@@ -107,7 +107,7 @@
 
   .badge { display: block; }
 
-  h6 { color: $gray-800; }
+  h6 { color: $zinc-800; }
 }
 
 .apex-donut-one {

@@ -101,7 +101,7 @@
 
   li {
     padding: 12px 0;
-    border-top: 1px solid $gray-200;
+    border-top: 1px solid $zinc-200;
 
     &:last-child { padding-bottom: 0; }
   }
@@ -154,7 +154,7 @@
   justify-content: center;
   width: 45px;
   height: 50px;
-  background-color: $gray-300;
+  background-color: $zinc-300;
   color: $dark;
   border-radius: 4px;
   flex-shrink: 0;
@@ -196,7 +196,7 @@
       font-family: $ff-numerals;
       font-size: 11px;
       margin-bottom: 1px;
-      color: $gray-500;
+      color: $zinc-500;
     }
 
     h6 {

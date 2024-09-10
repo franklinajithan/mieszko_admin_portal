@@ -13,7 +13,7 @@ const CardTitle: React.FC<CardTitleProps> = ({ title, onToggle, isOpen }) => {
             <Card.Header>
                 <div className="relative inline-block">
                     <h4 className="text-black text-base font-bold">{title}</h4>
-                    <div className="absolute left-0 right-0 bottom-0 border-b-4 border-custom-red"></div>
+                    <div className="absolute left-0 right-0 bottom-0 border-b-4 border-custom-cyan"></div>
                 </div>
 
                 <Nav className="nav-icon ms-auto">

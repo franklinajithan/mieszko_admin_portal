@@ -113,8 +113,8 @@
 
   .dropdown-menu {
     width: 100%;
-    border-color: $gray-400;
-    @include shadow-dreamy($gray-500);
+    border-color: $zinc-400;
+    @include shadow-dreamy($zinc-500);
   }
 
   .dropdown-item {
@@ -291,7 +291,7 @@
   @include media-breakpoint-up(lg) { font-size: 24px; }
 
   .divider {
-    border-left: 1px dotted $gray-500;
+    border-left: 1px dotted $zinc-500;
     height: 30px;
     margin: 0 5px;
   }

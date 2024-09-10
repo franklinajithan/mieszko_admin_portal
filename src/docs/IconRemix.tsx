@@ -1278,7 +1278,7 @@ export default function IconRemix() {
               <Col><i className="ri-currency-line"></i></Col>
               <Col><i className="ri-funds-line"></i></Col>
               <Col><i className="ri-funds-box-line"></i></Col>
-              <Col><i className="ri-red-packet-line"></i></Col>
+              <Col><i className="ri-cyan-packet-line"></i></Col>
               <Col><i className="ri-water-flash-line"></i></Col>
               <Col><i className="ri-stock-line"></i></Col>
               <div className="w-100"></div>
@@ -1289,7 +1289,7 @@ export default function IconRemix() {
               <Col><i className="ri-currency-fill"></i></Col>
               <Col><i className="ri-funds-fill"></i></Col>
               <Col><i className="ri-funds-box-fill"></i></Col>
-              <Col><i className="ri-red-packet-fill"></i></Col>
+              <Col><i className="ri-cyan-packet-fill"></i></Col>
               <Col><i className="ri-water-flash-fill"></i></Col>
               <Col><i className="ri-stock-fill"></i></Col>
               <div className="w-100"></div>

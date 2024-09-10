@@ -53,16 +53,16 @@ export default function UtilDivider() {
           <Card className="card-example">
             <Card.Body>
               <div className="d-flex">
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
                 <div className="divider divider-vertical"></div>
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex">
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
   <div className="divider divider-vertical"></div>
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -70,16 +70,16 @@ export default function UtilDivider() {
           <Card className="card-example">
             <Card.Body>
               <div className="d-flex">
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
                 <div className="divider divider-vertical"><span>AND</span></div>
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex">
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
   <div className="divider divider-vertical"><span>AND</span></div>
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>
@@ -103,28 +103,28 @@ export default function UtilDivider() {
           <Card className="card-example">
             <Card.Body>
               <div className="d-flex mb-3">
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
                 <div className="divider divider-vertical divider-top"><span>AND</span></div>
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
               </div>
 
               <div className="d-flex">
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
                 <div className="divider divider-vertical divider-bottom"><span>AND</span></div>
-                <div className="flex-fill ht-100 bg-gray-300"></div>
+                <div className="flex-fill ht-100 bg-zinc-300"></div>
               </div>
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<div className="d-flex mb-3">
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
   <div className="divider divider-vertical divider-top"><span>AND</span></div>
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
 </div>
 
 <div className="d-flex">
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
   <div className="divider divider-vertical divider-bottom"><span>AND</span></div>
-  <div className="flex-fill ht-100 bg-gray-300"></div>
+  <div className="flex-fill ht-100 bg-zinc-300"></div>
 </div>`}</code></pre>
             </Card.Footer>
           </Card>

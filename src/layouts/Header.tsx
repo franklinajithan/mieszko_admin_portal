@@ -159,7 +159,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
         id="small"
         value={selectedOption}
         onChange={handleChange}
-        className="w-64 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="w-64 p-2 text-sm text-zinc-900 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       >
         {selectedOption === "default" && (
           <option value="default" hidden>
