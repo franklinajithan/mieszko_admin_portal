@@ -39,7 +39,7 @@ interface ParentCategory {
     children: Category[];
 }
 
-const Category = () => {
+const Category = ({ title,icon}:any) => {
 
     const { t } = useTranslation('global');
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -141,21 +141,21 @@ const Category = () => {
             if (categoryLevel == 'parent') { level = 1, parentId = 0 }
             if (categoryLevel == 'child') { level = 2, parentId = values.parentCategory }
             if (categoryLevel == 'grandchild') { level = 3, parentId = values.childCategory }
-      
+
             try {
 
 
 
-              let data=  {
+                let data = {
                     "categoryName": values.categoryName || '',
                     "translatedName": values.translation || '',
                     "isPLU": true,
-                    "parentId":  parentId || 0,
+                    "parentId": parentId || 0,
                     "canAssignItem": false,
                     //"status": true,
                     "pluCode": "2",
                     "level": level.toString()
-                  }
+                }
                 let result: any;
                 if (editMode == true) {
                     result = await addCategory(data);
@@ -201,7 +201,7 @@ const Category = () => {
         setCategoryName(categoryNames[level]);
 
         if (level === 'child' || level === 'grandchild') {
-            
+
             setParentCategories(extractLevelCategories(list, 1));
         }
     };
@@ -346,7 +346,7 @@ const Category = () => {
 
 
     const checkInvalidFields = () => {
-  
+
         const { errors } = formState;
 
         if (Object.keys(errors).length > 0) {
@@ -370,7 +370,7 @@ const Category = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiList} title="Category" />
+                    <HeaderComponents icon={icon} title={title} />
                     <Card className="card-one mt-2">
                         <CardTitle title="Add Category" />
                         <Card.Body>
@@ -423,7 +423,7 @@ const Category = () => {
                                                         label="Parent Category"
                                                         name="parentCategory"
                                                         options={parentCategories}
-                                                        // onChange={onChangeParent}
+                                                    // onChange={onChangeParent}
                                                     />
                                                 )}
                                                 {categoryLevel === 'grandchild' && (
@@ -433,7 +433,7 @@ const Category = () => {
                                                             label="Parent Category"
                                                             name="parentCategory"
                                                             options={parentCategories}
-                                                            // onChange={onChangeParent}
+                                                        // onChange={onChangeParent}
                                                         />
                                                         <SelectField
                                                             control={form.control}
@@ -493,7 +493,7 @@ const Category = () => {
                                                         Check Invalid Fields
                                                     </button> */}
 
-                                                  
+
                                                     {/* {Object.keys(formState.errors).map((fieldName) => (
                                                         <p key={fieldName}>{fieldName} -{formState?.errors[fieldName]?.message}</p>
                                                     ))} */}
@@ -514,13 +514,13 @@ const Category = () => {
                         </Card.Body>
                     </Card>
                     <Card className="card-one mt-2">
-                       
+
                         <Card.Body>
                             {!isLoading && <TreeView category={categories} onEditTree={onEditTree} topEditButton={topEditButton} />}
                         </Card.Body>
                     </Card>
 
-                   
+
                 </div>
             </div>
         </>

@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { z } from "zod";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -247,6 +248,86 @@ export const productSearchFormSchema = z.object({
   caseSize: z.string().optional(),
   fastestDelivery: z.string().optional(),
   
+});
+
+
+export const editProductFormSchema = z.object({
+  itemName: z.string(),
+  englishName: z.string(),
+  itemCode: z.string(),
+  description: z.string(),
+  labelName: z.string(),
+  invoiceName: z.string(),
+  tillMessage: z.string(),
+  ingredients: z.string(),
+  translatedIngredients: z.string().optional(),
+  allergicDetails: z.string(),
+  translatedAllergicDetails: z.string().optional(),
+  item_image: z.string().optional(),
+  uom: z.string(),
+  retailUom: z.string(),
+  wastagePercentage: z.string(),
+  itemType: z.string(),
+  minOrderQty: z.string(),
+  maxOrderQty: z.string(),
+  leadTime: z.string(),
+  reorderLevel: z.string(),
+  reorderLevelType: z.string(),
+  safetyStock: z.string(),
+  shelfLife: z.number(),
+  shelfLifeType: z.string(),
+  countryOfOrigin: z.string(),
+  vat: z.object({
+    vatCode: z.string(),
+    vatRate: z.number(),
+    countryCode: z.string().nullable(),
+    description: z.string().nullable(),
+    effectiveTo: z.string().nullable(),
+    effectiveFrom: z.string(),
+  }),
+  brand: z.object({
+    image: z.string(),
+    website: z.string(),
+    brandName: z.string(),
+    description: z.string(),
+  }),
+  category: z.object({
+    image: z.string(),
+    isPLU: z.boolean(),
+    pluCode: z.string(),
+    parentId: z.number(),
+    categoryName: z.string(),
+    translatedName: z.string(),
+  }),
+  item_details: z.object({
+    tags: z.array(z.string()),
+    isPluCoded: z.boolean(),
+    isSeasoned: z.boolean(),
+    isStoreUse: z.boolean(),
+    isWeighted: z.boolean(),
+    hasLeadTime: z.boolean(),
+    canBeInPromo: z.boolean(),
+    canSplitSell: z.boolean(),
+    canStockTake: z.boolean(),
+    isOutOfStock: z.boolean(),
+    needPreOrder: z.boolean(),
+    splitSellQty: z.number(),
+    hasBoxBarcode: z.boolean(),
+    hasLinkedItem: z.boolean(),
+    isPriceMarked: z.boolean(),
+    minSellingQty: z.number(),
+    isDiscontinued: z.boolean(),
+    isDiscountable: z.boolean(),
+    isStoreVisible: z.boolean(),
+    hasOuterBarcode: z.boolean(),
+    isAgeRestricted: z.boolean(),
+    canOrderInPallet: z.boolean(),
+    hasMinSellingQty: z.boolean(),
+    hasPalletBarcode: z.boolean(),
+    canPurchaseLocally: z.boolean(),
+    isStoreTransferable: z.boolean(),
+    isConsideredForPurchasePlan: z.boolean(),
+  }),
 });
 
 

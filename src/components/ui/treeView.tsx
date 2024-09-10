@@ -49,7 +49,7 @@ const TreeView = ({ category, onEditTree, topEditButton }: TreeViewProps) => {
     return (
         <div className="bg-white">
             <div className="flex justify-start items-center mb-3 ml-4">
-                <div className="btn-toggle ml-1">
+                <div className="btn-toggle-red ml-1">
                     <div className="mr-2 ml-2">
                         <span>Edit Tree</span>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../../layouts/Header';
 
-const ManageStoreDetails: React.FC = () => {
+const ManageStoreDetails  = ({ title,icon}:any) => {
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
     const [skin, setSkin] = useState(currentSkin);
     const [formData, setFormData] = useState({

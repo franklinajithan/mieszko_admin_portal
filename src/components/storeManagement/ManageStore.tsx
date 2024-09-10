@@ -22,7 +22,7 @@ import { DataGrid, GridColDef, GridRowsProp, GridToolbar } from '@mui/x-data-gri
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/elements/GridTheme';
 
-const ManageStore = () => {
+const ManageStore = ({ title, icon }: any) => {
 
 
     const { t } = useTranslation("global");
@@ -114,10 +114,10 @@ const ManageStore = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents title= 'Purchase Order' icon={FiPackage} />
+                    <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
-                        {/* <CardTitle title={'Search'} /> */}
+                        <CardTitle title="Search" />
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                                 <CardContent>
@@ -140,7 +140,7 @@ const ManageStore = () => {
 
 
                                     <div className="flex justify-end space-x-4 mt-2 pr-4">
-                                    <button className="btn-gray">
+                                        <button className="btn-gray">
                                             Save
                                         </button>
                                         <Button type="submit" disabled={isLoading} className='btn-red'>
@@ -156,11 +156,11 @@ const ManageStore = () => {
                         </Form>
                     </Card>
                     <Card className="card-one mt-2">
-                      
+
                         <CardTitle title="Store List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
-                     
-                        
-                        {isOpenGrid && (   <CardContent>
+
+
+                        {isOpenGrid && (<CardContent>
 
 
                             <div>
@@ -168,25 +168,24 @@ const ManageStore = () => {
                                     <div className="h-full w-full"> {/* Container for DataGrid */}
                                         <div>
                                             <ThemeProvider theme={theme}>
-                                                <DataGrid style={{ height: 650, width: '100%' }}
-                                                //  disableColumnFilter
-                                                //  disableColumnSelector
-                                                //  disableDensitySelector
+                                                <DataGrid
+                                                    style={{ height: 650, width: '100%' }}
                                                     rowHeight={35}
                                                     rows={rows}
                                                     columns={columns}
                                                     initialState={{
                                                         pagination: {
-                                                          paginationModel: { pageSize: 15, page: 0 },
+                                                            paginationModel: { pageSize: 15, page: 0 },
                                                         },
-                                                      }}
-                                                    
-                                                      slots={{ toolbar: GridToolbar }}
-                                                      slotProps={{
+                                                    }}
+                                                    pageSizeOptions={[15, 25, 50]}
+                                                    slots={{ toolbar: GridToolbar }}
+                                                    slotProps={{
                                                         toolbar: {
-                                                          showQuickFilter: true,
+                                                            showQuickFilter: true,
                                                         },
-                                                      }}
+                                                    }}
+                                                    pagination
                                                 />
                                             </ThemeProvider>
                                         </div>

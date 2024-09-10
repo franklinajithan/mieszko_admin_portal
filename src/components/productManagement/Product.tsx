@@ -32,7 +32,7 @@ import CancelIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
 import { FiDownload, FiFilter, FiSettings, FiBookmark, FiUsers } from "react-icons/fi";
-
+import MenuItem from '@/elements/MenuItem';
 import { getUser } from "@/service/user.service";
 import { CardContent } from "@/components/ui/card";
 import { ThemeProvider } from "@mui/material";
@@ -93,7 +93,7 @@ const exampleFastestDeliveryOptions = [
 ];
 
 
-const Product = () => {
+const Product = ({ title, icon }: any) => {
 
     const { t } = useTranslation("global");
     const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
@@ -226,11 +226,11 @@ const Product = () => {
         fetchUser();
     };
 
- 
+
 
     const handleEditClick = (id: GridRowId) => () => {
         debugger;
-       
+
         navigate(`/product/edit-product/${encryptParam(id.toString())}`);
         //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
@@ -400,13 +400,18 @@ const Product = () => {
 
     });
 
+    const handleRedirect = () => {
+        navigate('/product/new-product'); // Redirect to the desired path
+    };
+
+
 
     return (
         <>
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiShoppingCart} title={"Product List"} />
+                    <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title="Search" onToggle={toggleSearchCardBody} isOpen={isOpenSearch} />
@@ -446,12 +451,14 @@ const Product = () => {
                             </Form>
                         </Card.Body>)}
                     </Card>
-
+             
                     <Card className="card-one mt-2">
                         <CardTitle title="Product List" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
                         {isOpenGrid && (<CardContent>
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
-
+                                <Button type="submit" className='btn-red' onClick={handleRedirect}>
+                                    New Product
+                                </Button>
                             </div>
                             <div className="w-full mt-3"> {/* TailwindCSS classes for height and width */}
                                 <div className="h-full w-full"> {/* Container for DataGrid */}
@@ -479,6 +486,7 @@ const Product = () => {
                                                         paginationModel: { pageSize: 15, page: 0 },
                                                     },
                                                 }}
+                                                pageSizeOptions={[15, 25, 50]}
 
                                                 slots={{ toolbar: GridToolbar }}
                                                 slotProps={{

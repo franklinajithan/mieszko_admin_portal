@@ -87,23 +87,42 @@
 }
 
 
-.btn-toggle {
+.btn-toggle-red {
   @apply flex items-center h-10 px-2 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95 cursor-pointer;
   background: linear-gradient(180deg, #fca5a5, #dc2626);
   color: white !important;
 }
 
-.btn-toggle:hover {
+.btn-toggle-red:hover {
   /* Reverse gradient on hover */
   background: linear-gradient(180deg, #c53030, #fca5a5);
   @apply shadow-lg;
   /* Larger shadow on hover */
 }
 
-.btn-toggle:focus {
+.btn-toggle-red:focus {
   @apply outline-none ring-2 ring-red-500 ring-offset-2;
   /* Ring effect on focus */
 }
+
+
+
+.btn-toggle-gray {
+  @apply flex items-center h-10 px-2 py-2 rounded-md font-normal transition-all transform cursor-pointer;
+  border: 1px solid #e2e5ec;
+  background: #ffffff;
+  color: #636363;
+}
+
+/* .btn-toggle-gray:hover {
+  @apply shadow-lg;
+  background: #cecece;
+}
+
+.btn-toggle-gray:focus {
+  @apply outline-none ring-2 ring-gray-500 ring-offset-2;
+} */
+
 
 
 .btn-gray {

@@ -363,7 +363,7 @@ const Category = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiList} title="Category" />
+                <HeaderComponents icon={icon} title={title} />
                     <Card className="card-one mt-2">
                         <CardTitle title="Add Category" />
                         <Card.Body>

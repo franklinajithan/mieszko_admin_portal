@@ -30,7 +30,7 @@ import { getBrand } from '@/service/brand.service';
 
 
 
-const Brand = () => {
+const Brand = ({ title,icon}:any) => {
 
     const { t } = useTranslation('global');
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -92,7 +92,7 @@ const Brand = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiList} title="Brand" />
+                <HeaderComponents icon={icon} title={title} />
                     {/* <Card className="card-one mt-2">
                         <CardTitle title="Brand Grid" />
                         <Card.Body>
@@ -112,7 +112,7 @@ const Brand = () => {
                     </Card> */}
 
                     <Card className="card-one mt-2">
-                        <CardTitle title="User Grid" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
+                        {/* <CardTitle title="Brand Grid" onToggle={toggleGridCardBody} isOpen={isOpenGrid} /> */}
                         {isOpenGrid && (<CardContent>
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
                                 <Button type="submit" className='btn-red' onClick={handleRedirect}>
@@ -141,6 +141,7 @@ const Brand = () => {
                                                         paginationModel: { pageSize: 15, page: 0 },
                                                     },
                                                 }}
+                                                pageSizeOptions={[15, 25, 50]}
 
                                                 slots={{ toolbar: GridToolbar }}
                                                 slotProps={{

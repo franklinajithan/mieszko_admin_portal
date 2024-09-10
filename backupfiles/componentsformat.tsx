@@ -28,7 +28,7 @@ import { debug } from "console";
 
 
 
-const Product = () => {
+const Product = ({ title,icon}:any) => {
     const { t } = useTranslation("global");
     const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -123,7 +123,7 @@ const Product = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiShoppingCart} title={"New Product"} />
+                <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title="New Product" />

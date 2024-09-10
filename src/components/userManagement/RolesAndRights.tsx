@@ -90,7 +90,7 @@ const PermissionsPanel: React.FC<PermissionsPanelProps> = ({
   </div>
 );
 
-const RolesAndRights: React.FC = () => {
+const RolesAndRights= ({ title,icon}:any) => {
   const initialPermissions = [
     { name: "Testing Mode", checked: true },
     { name: "Training Mode", checked: true },
@@ -188,7 +188,7 @@ const RolesAndRights: React.FC = () => {
       <Header onSkin={setSkin} />
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-gray-50">
-          <HeaderComponents showList={showList} icon={FiShield} />
+        <HeaderComponents icon={icon} title={title} />
 
           <Card className="card-one mt-2">
             <Card.Header>

@@ -17,7 +17,7 @@ import { Loader2 } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { orderHistoryFormSchema } from "@/lib/utils";
 
-const OrderHistory = () => {
+const OrderHistory = ({ title,icon}:any) => {
     const { t } = useTranslation("global");
     const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
     const [isLoading, setIsLoading] = useState(false);
@@ -40,10 +40,10 @@ const OrderHistory = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiShoppingCart} title={"Order History"} />
+                <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
-                        <CardTitle title="Order History" />
+                        <CardTitle title="Search" />
                         <Card.Body>
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

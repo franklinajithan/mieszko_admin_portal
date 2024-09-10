@@ -150,37 +150,37 @@ export default function Header({ onSkin }: { onSkin: any }) {
       </div>
 
       <div className="row">
-        <div className="col-2">
-          <i className="ri-store-line text-2xl"></i>
-        </div>
-        <div className="col-10">
-          <form className="max-w-sm mx-auto">
-            <select
-              id="small"
-              value={selectedOption}
-              onChange={handleChange}
-              className="w-full p-2 px-2 text-sm text-gray-900 border border-gray-300 rounded-lg appearance-none text-overflow-ellipsis"
-              style={{ width: '100%', minWidth: '150px', maxWidth: '300px' }}
-            >
-              {selectedOption === "default" && (
-                <option value="default" hidden>
-                  Choose the Store
-                </option>
-              )}
-              <option value="headOffice">Head Office</option>
-              <option value="eastham">East Ham</option>
-              <option value="gravesend">Gravesend</option>
-              <option value="hayes">Hayes</option>
-              <option value="hounslow">Hounslow</option>
-              <option value="perivale">Perivale</option>
-              <option value="streatham">Streatham</option>
-              <option value="sudbury">Sudbury</option>
-              <option value="swindon">Swindon</option>
-              <option value="watford">Watford</option>
-            </select>
-          </form>
-        </div>
-      </div>
+  <div className="col-2">
+    <i className="ri-store-line text-2xl"></i>
+  </div>
+  <div className="col-10">
+    <form className="mx-auto">
+      <select
+        id="small"
+        value={selectedOption}
+        onChange={handleChange}
+        className="w-64 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      >
+        {selectedOption === "default" && (
+          <option value="default" hidden>
+            Choose the Store
+          </option>
+        )}
+        <option value="headOffice">Head Office</option>
+        <option value="eastham">East Ham</option>
+        <option value="gravesend">Gravesend</option>
+        <option value="hayes">Hayes</option>
+        <option value="hounslow">Hounslow</option>
+        <option value="perivale">Perivale</option>
+        <option value="streatham">Streatham</option>
+        <option value="sudbury">Sudbury</option>
+        <option value="swindon">Swindon</option>
+        <option value="watford">Watford</option>
+      </select>
+    </form>
+  </div>
+</div>
+
 
       <Dropdown className="ml-3 dropdown-skin" align="end">
         <Dropdown.Toggle as={CustomToggle}>

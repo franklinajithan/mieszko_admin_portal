@@ -1,5 +1,6 @@
 import React from "react";
-
+import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag,  } from 'react-icons/fi'; 
+import { BsFillBagPlusFill } from "react-icons/bs";
 // Dashboard
 import EventManagement from "../dashboard/EventManagement";
 import SalesMonitoring from "../dashboard/SalesMonitoring";
@@ -109,6 +110,7 @@ import EditProduct from "@/components/productManagement/EditProduct";
 // import IconFeather from "../docs/IconFeather";
 
 
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 
 const protectedRoutes = [
   { path: "dashboard/finance", element: <FinanceMonitoring /> },
@@ -121,24 +123,25 @@ const protectedRoutes = [
   { path: "dashboard/product", element: <ProductManagement /> },
 
 
-  { path: "order/purchase-planning", element: <PurchasePlanning /> },
-  { path: "order/new-purchase-planning", element: <NewPurchasePlanning /> },
-  { path: "order/purchase-order", element: <PurchaseOrder /> },
-  { path: "order/order-history", element: <OrderHistory /> },
+  { path: "product/category", element: <Category icon={FiArchive} title="Product Category" /> },
+  { path: "order/purchase-planning", element: <PurchasePlanning icon={FiShoppingCart} title="Purchase Planning" /> },
+  { path: "order/new-purchase-planning", element: <NewPurchasePlanning icon={FiShoppingCart} title="New Purchase Planning" /> },
+  { path: "order/purchase-order", element: <PurchaseOrder icon={FiShoppingCart} title="Purchase Order" /> },
+  { path: "order/order-history", element: <OrderHistory icon={FiArchive} title="Order History" /> },
 
-  { path: "store/manage-store", element: <ManageStore /> },
-  { path: "store/new-store", element: <NewStore /> },
+  { path: "store/manage-store", element: <ManageStore icon={FiPackage} title="Manage Store" /> },
+  { path: "store/new-store", element: <NewStore icon={FiPackage} title="New Store" /> },
 
-  { path: "product/category", element: <Category /> },
-  { path: "product/brand", element: <Brand /> },
-  { path: "product/new-brand", element: <NewBrand /> },
-  { path: "product/new-product", element: <NewProduct /> },
-  { path: "product/list", element: <Product /> },
-  { path: "product/edit-product/:id", element: <EditProduct /> },
+  { path: "product/category", element: <Category icon={FiArchive} title="Product Category" /> },
+  { path: "product/brand", element: <Brand icon={FiList} title="Product Brand" /> },
+  { path: "product/new-brand", element: <NewBrand icon={FiList} title="New Brand" /> },
+  { path: "product/new-product", element: <NewProduct icon={BsFillBagPlusFill} title="New Product" /> },
+  { path: "product/list", element: <Product icon={HiOutlineShoppingBag} title="Product" /> },
+  { path: "product/edit-product/:id", element: <EditProduct icon={FiEdit} title="Edit Product" /> },
 
-  { path: "user/user-grid", element: <UserGrid /> },
-  { path: "user/new-user", element: <AddEditUser /> },
-  { path: "user/roles-and-rights", element: <RolesAndRights /> },
+  { path: "user/user-grid", element: <UserGrid icon={FiUsers} title="User Grid" /> },
+  { path: "user/new-user", element: <AddEditUser icon={FiUserPlus} title="New User" /> },
+  { path: "user/roles-and-rights", element: <RolesAndRights icon={FiShield} title="Roles and Rights" /> },
 
 
 

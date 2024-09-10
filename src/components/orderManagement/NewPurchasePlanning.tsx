@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiShoppingCart } from "react-icons/fi";
-import Header from "../../layouts/Header"; 
+import Header from "../../layouts/Header";
 import HeaderComponents from "@/elements/HeaderSection";
 
 import CardTitle from "@/elements/CardTitle";
@@ -22,8 +22,11 @@ import { newPurchasePlanningFormSchema } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from 'lucide-react';
 import { FiPackage } from "react-icons/fi";
+import { ThemeProvider } from "@mui/material";
+import theme from "@/elements/GridTheme";
+import { DataGrid, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 
-const NewPurchasePlanning = () => {
+const NewPurchasePlanning = ({ title, icon }: any) => {
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
 
@@ -32,7 +35,134 @@ const NewPurchasePlanning = () => {
 
     const [deliveryType, setDeliveryType] = useState("fastest");
     const [selectedOption, setSelectedOption] = useState('Select');
+    const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
+    const [columnVisibility, setColumnVisibility] = React.useState({});
 
+    // Define the columns based on your structure
+    const columns = [
+        { field: 'Default', headerName: 'Default', width: 90 },
+        { field: 'supplierId', headerName: 'Supplier ID', width: 150 },
+        { field: 'EANNumber', headerName: 'EAN Number', width: 150 },
+        { field: 'caseSize', headerName: 'Case Size', width: 150 },
+        { field: 'RRP', headerName: 'RRP', width: 150 },
+        { field: 'caseCost', headerName: 'Case Cost', width: 150 },
+        { field: 'eachPrice', headerName: 'Each Price', width: 150 },
+        { field: 'outerBarcode', headerName: 'Outer Barcode', width: 150 },
+    ];
+
+    // Create row values that align with the column definitions
+    const rows =[
+        {
+          "id": 68,
+          "Default": "Yes",
+          "supplierId": "SUP607",
+          "EANNumber": "2437854112008",
+          "caseSize": "13x437ml",
+          "RRP": "21.70",
+          "caseCost": "455.99",
+          "eachPrice": "10.40",
+          "outerBarcode": "2892582744921"
+        },
+        {
+          "id": 81,
+          "Default": "No",
+          "supplierId": "SUP845",
+          "EANNumber": "1400018119569",
+          "caseSize": "44x342ml",
+          "RRP": "13.15",
+          "caseCost": "409.26",
+          "eachPrice": "11.26",
+          "outerBarcode": "1170843091663"
+        },
+        {
+          "id": 98,
+          "Default": "No",
+          "supplierId": "SUP485",
+          "EANNumber": "1341018658955",
+          "caseSize": "47x328ml",
+          "RRP": "27.97",
+          "caseCost": "208.42",
+          "eachPrice": "11.47",
+          "outerBarcode": "8725926152658"
+        },
+        {
+          "id": 92,
+          "Default": "Yes",
+          "supplierId": "SUP106",
+          "EANNumber": "6730623072761",
+          "caseSize": "44x487ml",
+          "RRP": "17.04",
+          "caseCost": "371.09",
+          "eachPrice": "11.61",
+          "outerBarcode": "1196859554747"
+        },
+        {
+          "id": 34,
+          "Default": "No",
+          "supplierId": "SUP616",
+          "EANNumber": "3482454205668",
+          "caseSize": "42x372ml",
+          "RRP": "17.73",
+          "caseCost": "262.17",
+          "eachPrice": "19.70",
+          "outerBarcode": "8359888378431"
+        },
+        {
+          "id": 9,
+          "Default": "No",
+          "supplierId": "SUP691",
+          "EANNumber": "2694576564709",
+          "caseSize": "27x281ml",
+          "RRP": "27.02",
+          "caseCost": "330.81",
+          "eachPrice": "18.45",
+          "outerBarcode": "4282413928666"
+        },
+        {
+          "id": 62,
+          "Default": "Yes",
+          "supplierId": "SUP408",
+          "EANNumber": "2977138403865",
+          "caseSize": "44x414ml",
+          "RRP": "15.45",
+          "caseCost": "487.23",
+          "eachPrice": "10.14",
+          "outerBarcode": "8543114615491"
+        },
+        {
+          "id": 10,
+          "Default": "Yes",
+          "supplierId": "SUP613",
+          "EANNumber": "1835006287776",
+          "caseSize": "35x211ml",
+          "RRP": "14.49",
+          "caseCost": "474.26",
+          "eachPrice": "14.65",
+          "outerBarcode": "2307359463940"
+        },
+        {
+          "id": 72,
+          "Default": "Yes",
+          "supplierId": "SUP785",
+          "EANNumber": "5486482832773",
+          "caseSize": "22x320ml",
+          "RRP": "23.72",
+          "caseCost": "488.25",
+          "eachPrice": "17.66",
+          "outerBarcode": "0166414927436"
+        },
+        {
+          "id": 79,
+          "Default": "No",
+          "supplierId": "SUP934",
+          "EANNumber": "0160442630341",
+          "caseSize": "41x498ml",
+          "RRP": "10.01",
+          "caseCost": "294.23",
+          "eachPrice": "16.00",
+          "outerBarcode": "9289683178923"
+        }
+      ] ;
     const form = useForm<z.infer<typeof newPurchasePlanningFormSchema>>({
         resolver: zodResolver(newPurchasePlanningFormSchema),
         defaultValues: {
@@ -83,7 +213,7 @@ const NewPurchasePlanning = () => {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
 
-                    <HeaderComponents title='New Purchase Planning' icon={FiPackage} />
+                    <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title={'Search'} />
@@ -120,10 +250,10 @@ const NewPurchasePlanning = () => {
                                             <InputField control={form.control} label="Period 2 End Date" name="period2EndDate" type="text" placeholder='Enter period 2 end date' />
                                         </div>
                                         <div className="inline-block min-h-[1em] w-0.5 self-stretch bg-neutral-100 dark:bg-white/10"></div>
-                                        <div className="grid grid-cols-4 gap-4 w-2/3">
+                                        <div className="grid grid-cols-4 gap-4 w-2/3 items-end">
 
 
-                                            <span className="mt-14"><CheckboxField control={form.control} id="currentStock" label="Current Stock" name="currentStock1" /></span>
+                                            <CheckboxField control={form.control} id="currentStock" label="Current Stock" name="currentStock1" />
 
                                             <SelectField control={form.control} label="Schedule Day" name="scheduleDay" options={Week} />
                                             <InputField control={form.control} label="Time" name="time" type="text" placeholder='Enter the time' />
@@ -157,58 +287,43 @@ const NewPurchasePlanning = () => {
                     </Card>
 
                     <Card className="card-one mt-2">
-                        <CardHeader>
-                            <h1>Purchase Plan List</h1>
-                            <Nav as="nav" className="nav-icon nav-icon-sm ms-auto">
-                                <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
-                                <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
-                            </Nav>
-                        </CardHeader>
+                    <CardTitle title="Purchase Plan List"/>
                         <CardContent>
-                            <div className="space-y-6">
-                                <div className="grid grid-cols-4 gap-4 pb-2">
-                                    {/* <InputField type="text" label="Supplier Code" placeholder="Supplier Code" />
-                                    <InputField type="text" label="Item Code" placeholder="Item Code" />
-                                    <InputField type="text" label="Item Name" placeholder="Item Name" />
-                                    <InputField type="text" label="EAN / PLU" placeholder="EAN / PLU" /> */}
-                                </div>
-                            </div>
-                            <table className="w-full border-collapse">
-                                <thead>
-                                    <tr className="bg-gray-100 text-left text-sm font-semibold">
-                                        <th className="py-2 px-4 bg-gray-200">Check box</th>
-                                        <th className="py-2 px-4 bg-gray-200">Supplier Code</th>
-                                        <th className="py-2 px-4 bg-gray-200">Item Code</th>
-                                        <th className="py-2 px-4 bg-gray-200">Item Name</th>
-                                        <th className="py-2 px-4 bg-gray-200">UOM</th>
-                                        <th className="py-2 px-4 bg-gray-200">Recommended Qty</th>
-                                        <th className="py-2 px-4 bg-gray-200">Unit Cost</th>
-                                        <th className="py-2 px-4 bg-gray-200">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {[...Array(10)].map((_, index) => (
-                                        <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                                            <td className="p-2 border-b">
-                                                <input type="checkbox" /> <span className="pl-3">{index + 1}</span>
-                                            </td>
-                                            <td className="border px-4 py-2">1234567890123</td>
-                                            <td className="border px-4 py-2">1234567890123</td>
-                                            <td className="border px-4 py-2">WB-001</td>
-                                            <td className="border px-4 py-2">Whole Wheat Bread</td>
-                                            <td className="border px-4 py-2">Loaf</td>
-                                            <td className="border px-4 py-2">200</td>
-                                            <td className="border px-4 py-2">$5.50</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                            <div className="mt-4 flex justify-between items-center">
-                                <button className="p-2 bg-gray-200 rounded-md">Previous</button>
-                                <div className="text-sm">Page 1 of 10</div>
-                                <button className="p-2 bg-gray-200 rounded-md">Next</button>
-                            </div>
+                            <ThemeProvider theme={theme}>
+                                <DataGrid
+                                    autoHeight
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    disableDensitySelector
+                                    checkboxSelection
+                                    rowSelectionModel={rowSelectionModel}
+                                    onRowSelectionModelChange={(newRowSelectionModel) => {
+                                        setRowSelectionModel(newRowSelectionModel);
+                                    }}
+                                    columnVisibilityModel={columnVisibility}
+                                    onColumnVisibilityModelChange={(newModel) =>
+                                        setColumnVisibility(newModel)
+                                    }
+                                    getRowId={(row) => row.id}
+                                    rowHeight={35}
+                                    rows={rows}
+                                    columns={columns}
+                                    initialState={{
+                                        pagination: {
+                                            paginationModel: { pageSize: 15, page: 0 },
+                                        },
+                                    }}
+                                    pageSizeOptions={[15, 25, 50]}
+                                    slots={{ toolbar: GridToolbar }}
+                                    slotProps={{
+                                        toolbar: {
+                                            showQuickFilter: false,
+                                            printOptions: { disableToolbarButton: true },
+                                            csvOptions: { disableToolbarButton: true },
+                                        }
+                                    }}
+                                />
+                            </ThemeProvider>
                         </CardContent>
                     </Card>
                 </div>

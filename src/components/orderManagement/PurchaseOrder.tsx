@@ -24,7 +24,7 @@ import { Loader2 } from 'lucide-react';
 
 
 
-const PurchaseOrder = () => {
+const PurchaseOrder = ({ title,icon}:any) => {
 
     const { t } = useTranslation("global");
     const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
@@ -113,7 +113,7 @@ const PurchaseOrder = () => {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
 
-                    <HeaderComponents title='Purchase Order' icon={FiPackage} />
+                <HeaderComponents icon={icon} title={title} />
 
 
                     <Card className="card-one mt-2">
@@ -130,10 +130,10 @@ const PurchaseOrder = () => {
                                         <SelectField control={form.control} label="Store" name="store" options={sample} />
                                         <SelectField control={form.control} label="Order Number" name="orderNumber" options={sample} />
                                         <InputField control={form.control} label="Supplier Order Number" name="supplierOrderNumber" type="text" />
-                                        <InputField control={form.control} label="GRN Number" name="grnNumber" type="text" />
-                                        <InputField control={form.control} label="Item Code" name="itemCode" type="text" />
-                                        <InputField control={form.control} label="Item Name" name="itemName" type="text" />
-                                        <InputField control={form.control} label="EAN" name="ean" type="text" />
+                                        <InputField control={form.control} label="GRN Number" name="grnNumber" type="text" clipboard={true}/>
+                                        <InputField control={form.control} label="Item Code" name="itemCode" type="text" clipboard={true} />
+                                        <InputField control={form.control} label="Item Name" name="itemName" type="text" clipboard={true}/>
+                                        <InputField control={form.control} label="EAN" name="ean" type="text" clipboard={true}/>
                                         <InputField control={form.control} label="Order Type" name="orderType" type="text" />
                                         <InputField control={form.control} label="Comments" name="comments" type="number" value={"1010"} />
                                         <SelectField control={form.control} label="Promotion" name="promotion" options={sample} />

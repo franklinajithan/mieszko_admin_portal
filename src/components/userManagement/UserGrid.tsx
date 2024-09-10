@@ -24,7 +24,7 @@ import { sample } from "@/data/constants";
 import CheckboxField from "@/elements/CheckboxField";
 import { userSearchSchema } from "@/lib/utils";
 
-export default function UserGrid() {
+export default function UserGrid({ title,icon}:any) {
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
     const [rowSelectionModel, setRowSelectionModel] =
@@ -110,7 +110,7 @@ export default function UserGrid() {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
                     {/* Header */}
-                    <HeaderComponents title="User Grid" icon={FiUsers} />
+                    <HeaderComponents icon={icon} title={title} />
 
 
                     <Card className="card-one mt-2">
@@ -209,6 +209,7 @@ export default function UserGrid() {
                                                         paginationModel: { pageSize: 15, page: 0 },
                                                     },
                                                 }}
+                                                pageSizeOptions={[15, 25, 50]}
 
                                                 slots={{ toolbar: GridToolbar }}
                                                 slotProps={{

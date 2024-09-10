@@ -24,7 +24,7 @@ import LabelField from "@/elements/LabelField";
 import CheckboxField from "@/elements/CheckboxField";
 import defaultProfileImage from '../../assets/img/user.png';
 
-export default function AddEditUser() {
+export default function AddEditUser({ title,icon}:any) {
 
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
@@ -106,7 +106,7 @@ export default function AddEditUser() {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
                     {/* Header */}
-                    <HeaderComponents title="New User" icon={FiUsers} />
+                    <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title="Basic Information" onToggle={toggleBasicInfo} isOpen={isOpenBasicInfo} />

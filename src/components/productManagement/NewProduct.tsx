@@ -28,7 +28,7 @@ interface ImagePopupProps {
 }
 
 
-const NewProduct = () => {
+const NewProduct = ({ title,icon}:any) => {
     const { t } = useTranslation("global");
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -168,7 +168,7 @@ const NewProduct = () => {
             <Header onSkin={setSkin} />
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-gray-50">
-                    <HeaderComponents icon={FiShoppingCart} title={"New Product"} />
+                <HeaderComponents icon={icon} title={title} />
 
                     <Card className="card-one mt-2">
                         <CardTitle title="New Product" />

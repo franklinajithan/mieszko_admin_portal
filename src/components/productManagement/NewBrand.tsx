@@ -24,7 +24,7 @@ import defaultProductImage from '../../assets/img/default-product-image.png';
 import { addBrand } from "@/service/brand.service";
 
 
-const BrandNewPage = () => {
+const BrandNewPage = ({ title,icon}:any) => {
   const { t } = useTranslation("global");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast()
@@ -125,7 +125,7 @@ const BrandNewPage = () => {
       <Header onSkin={setSkin} />
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-gray-50">
-          <HeaderComponents icon={FiShoppingCart} title={"New Brand"} />
+        <HeaderComponents icon={icon} title={title} />
 
           <Card className="card-one mt-2">
             <CardTitle title="New Brand" />
