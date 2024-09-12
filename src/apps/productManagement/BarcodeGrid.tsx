@@ -1,4 +1,4 @@
-import theme from '@/elements/GridTheme'; // Ensure this path is correct
+import theme from '@/components/elements/GridTheme'; // Ensure this path is correct
 import { ThemeProvider } from '@mui/material';
 import { DataGrid, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 import React from 'react';

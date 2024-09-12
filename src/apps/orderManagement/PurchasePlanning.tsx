@@ -3,13 +3,13 @@ import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiPackage, FiShoppingCart } from "react-icons/fi";
 import { Card, Nav } from "react-bootstrap";
-import HeaderComponents from "@/elements/HeaderSection";
-import SelectField from "@/elements/SelectField";
-import InputField from "@/elements/InputField";
-import MultiInputField from "@/elements/MultiInputField";
-import MultiSelectDropdown from "@/elements/MultiSelectDropdown";
+import HeaderComponents from "@/components/elements/HeaderSection";
+import SelectField from "@/components/elements/SelectField";
+import InputField from "@/components/elements/InputField";
+import MultiInputField from "@/components/elements/MultiInputField";
+import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
 import { groceryDepartments, OrderQty, sample, YesOrNO } from "../../data/constants";
-import CardTitle from "@/elements/CardTitle";
+import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { CardContent } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ import { z } from "zod";
 import { purchasePlanningFormSchema } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import theme from '@/elements/GridTheme'; // Ensure this path is correct
+import theme from '@/components/elements/GridTheme'; // Ensure this path is correct
 import { ThemeProvider } from '@mui/material';
 import { DataGrid, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 export default function PurchasePlanning({ title,icon}:any) {

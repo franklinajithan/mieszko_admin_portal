@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import Header from "../../layouts/Header";
-import HeaderComponents from "@/elements/HeaderSection";
+import HeaderComponents from "@/components/elements/HeaderSection";
 import ProductForm from "./ProductForm";
 
 

@@ -3,11 +3,11 @@ import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiPlusCircle, FiShoppingCart } from "react-icons/fi";
 
-import HeaderComponents from "@/elements/HeaderSection";
-import SelectField from "@/elements/SelectField";
-import InputField from "@/elements/InputField";
-import MultiDateField from "@/elements/MultiDateField";
-import CardTitle from "@/elements/CardTitle";
+import HeaderComponents from "@/components/elements/HeaderSection";
+import SelectField from "@/components/elements/SelectField";
+import InputField from "@/components/elements/InputField";
+import MultiDateField from "@/components/elements/MultiDateField";
+import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent } from "@/components/ui/card";
 import { newBrandFormSchema } from "@/lib/utils";

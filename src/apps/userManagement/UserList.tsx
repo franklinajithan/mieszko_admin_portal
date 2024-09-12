@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
 import { FiDownload, FiFilter, FiSettings, FiBookmark, FiUsers } from "react-icons/fi";
 import { Card, Col, Nav, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
-import HeaderComponents from "@/elements/HeaderSection";
+import HeaderComponents from "@/components/elements/HeaderSection";
 import { getUser } from "@/service/user.service";
 import { CardContent } from "@/components/ui/card";
 import { ThemeProvider } from "@mui/material";
 import { DataGrid, GridColDef, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
-import theme from "@/elements/GridTheme";
-import CardTitle from "@/elements/CardTitle";
+import theme from "@/components/elements/GridTheme";
+import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,9 +19,9 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 import { z } from "zod";
-import SelectField from "@/elements/SelectField";
+import SelectField from "@/components/elements/SelectField";
 import { sample } from "@/data/constants";
-import CheckboxField from "@/elements/CheckboxField";
+import CheckboxField from "@/components/elements/CheckboxField";
 import { userSearchSchema } from "@/lib/utils";
 
 export default function UserList({ title,icon}:any) {

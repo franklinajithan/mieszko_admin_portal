@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import InputField from "@/elements/InputField";
+import InputField from "@/components/elements/InputField";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 

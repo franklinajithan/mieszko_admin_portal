@@ -4,24 +4,24 @@ import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiUsers } from "react-icons/fi";
 import { Card } from "react-bootstrap";
-import HeaderComponents from "@/elements/HeaderSection";
+import HeaderComponents from "@/components/elements/HeaderSection";
 import { CardContent } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
-import SelectField from "@/elements/SelectField";
-import InputField from "@/elements/InputField";
+import SelectField from "@/components/elements/SelectField";
+import InputField from "@/components/elements/InputField";
 import { sample } from "@/data/constants";
 import { NewUserSchema } from "@/lib/utils";
-import CardTitle from "@/elements/CardTitle";
+import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { FaCheck } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
-import LabelField from "@/elements/LabelField";
-import CheckboxField from "@/elements/CheckboxField";
+import LabelField from "@/components/elements/LabelField";
+import CheckboxField from "@/components/elements/CheckboxField";
 import defaultProfileImage from '../../assets/img/user.png';
 
 export default function NewUser({ title,icon}:any) {

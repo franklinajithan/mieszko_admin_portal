@@ -1,21 +1,21 @@
-import CheckboxField from '@/elements/CheckboxField'
-import InputField from '@/elements/InputField'
+import CheckboxField from '@/components/elements/CheckboxField'
+import InputField from '@/components/elements/InputField'
 import React, { useState } from 'react'
 
-import MenuItem from '@/elements/MenuItem'
+import MenuItem from '@/components/elements/MenuItem'
 import { Form } from "@/components/ui/form";
 import { editProductFormSchema } from '@/lib/utils'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarInput } from '@/elements/CalendarInput'
+import { CalendarInput } from '@/components/elements/CalendarInput'
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 import { z } from 'zod'
 import { addProduct } from '@/service/product.service'
-import IOSSwitch from '@/elements/toggleTheme'
-import ImageUploader from '@/elements/ImageUploader'
+import IOSSwitch from '@/components/elements/toggleTheme'
+import ImageUploader from '@/components/elements/ImageUploader'
 import { Card } from '@mui/material';
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

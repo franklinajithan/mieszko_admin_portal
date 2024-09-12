@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiShoppingCart } from "react-icons/fi";
 import Header from "../../layouts/Header";
-import HeaderComponents from "@/elements/HeaderSection";
+import HeaderComponents from "@/components/elements/HeaderSection";
 
-import CardTitle from "@/elements/CardTitle";
-import InputField from "@/elements/InputField";
-import SelectField from "@/elements/SelectField";
-import MultiSelectDropdown from "@/elements/MultiSelectDropdown";
+import CardTitle from "@/components/elements/CardTitle";
+import InputField from "@/components/elements/InputField";
+import SelectField from "@/components/elements/SelectField";
+import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
 
 import { Form } from "@/components/ui/form";
 import { status, sample, groceryDepartments, Week } from "../../data/constants";
-import CheckboxField from "@/elements/CheckboxField";
-import RadioField from "@/elements/RadioField";
+import CheckboxField from "@/components/elements/CheckboxField";
+import RadioField from "@/components/elements/RadioField";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from 'lucide-react';
 import { FiPackage } from "react-icons/fi";
 import { ThemeProvider } from "@mui/material";
-import theme from "@/elements/GridTheme";
+import theme from "@/components/elements/GridTheme";
 import { DataGrid, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 
 const NewPurchasePlanning = ({ title, icon }: any) => {

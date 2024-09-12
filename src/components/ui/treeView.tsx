@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import TreeNode from './treeNode'; // Adjust import as necessary
 import { Switch } from '@mui/material';
 import { FormLabel } from 'react-bootstrap';
-import LabelField from '@/elements/LabelField';
-import IOSSwitch from '@/elements/toggleTheme';
+import LabelField from '@/components/elements/LabelField';
+import IOSSwitch from '@/components/elements/toggleTheme';
 
 
 type Category = {

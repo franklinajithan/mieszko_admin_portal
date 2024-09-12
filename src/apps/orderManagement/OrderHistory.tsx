@@ -7,10 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import Header from "../../layouts/Header";
-import HeaderComponents from "@/elements/HeaderSection";
-import CardTitle from "@/elements/CardTitle";
-import InputField from "@/elements/InputField";
-import SelectField from "@/elements/SelectField";
+import HeaderComponents from "@/components/elements/HeaderSection";
+import CardTitle from "@/components/elements/CardTitle";
+import InputField from "@/components/elements/InputField";
+import SelectField from "@/components/elements/SelectField";
 import { sample } from "../../data/constants";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";

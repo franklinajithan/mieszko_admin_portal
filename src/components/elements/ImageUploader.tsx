@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import defaultProductImage from '../assets/img/default-product-image.png';
+import defaultProductImage from '../../assets/img/default-product-image.png';
 
 interface ImageUploaderProps {
   imagePreview?: string | null;

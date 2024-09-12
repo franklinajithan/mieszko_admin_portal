@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Header from "../../layouts/Header";
 import { useTranslation } from "react-i18next";
 import { FiPackage } from "react-icons/fi";
-import HeaderComponents from "@/elements/HeaderSection";
-import SelectField from "@/elements/SelectField";
-import InputField from "@/elements/InputField";
-import MultiDateField from "@/elements/MultiDateField";
+import HeaderComponents from "@/components/elements/HeaderSection";
+import SelectField from "@/components/elements/SelectField";
+import InputField from "@/components/elements/InputField";
+import MultiDateField from "@/components/elements/MultiDateField";
 import { sample, status } from "../../data/constants";
-import CardTitle from "@/elements/CardTitle";
+import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { manageStoreFormSchema } from "@/lib/utils";
@@ -20,7 +20,7 @@ import { Form } from "@/components/ui/form";
 import { Loader2 } from 'lucide-react';
 import { DataGrid, GridColDef, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '@/elements/GridTheme';
+import theme from '@/components/elements/GridTheme';
 
 const ManageStore = ({ title, icon }: any) => {
 
