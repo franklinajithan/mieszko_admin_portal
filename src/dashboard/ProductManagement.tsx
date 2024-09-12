@@ -11,7 +11,7 @@ import prod3 from "../assets/img/prod3.jpg";
 import prod4 from "../assets/img/prod4.jpg";
 import prod5 from "../assets/img/prod5.jpg";
 
-export default function ProductManagement() {
+export default function ProductManagement({ title, icon }: any) {
 
   const states = {
     hover: {

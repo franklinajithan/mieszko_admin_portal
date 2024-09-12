@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
 import { Doughnut, Line, PolarArea, Radar } from 'react-chartjs-2';
 
-export default function StorageManagement() {
+export default function StorageManagement({ title, icon }: any) {
 
   const states = {
     hover: {

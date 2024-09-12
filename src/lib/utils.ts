@@ -277,7 +277,32 @@ export const editProductFormSchema = z.object({
   shelfLife: z.number(),
   shelfLifeType: z.string(),
   countryOfOrigin: z.string(),
+  selfNo: z.string().optional(), // Add .optional() if the field is not required
+  inventory: z.string().optional(),
+  qtyOnPurchaseOrder: z.string().optional(),
+  stockOutWarning: z.string().optional(),
+  standardCost: z.number().optional(), // Use z.number() for numerical fields
+  unitCost: z.number().optional(),
+  reorderingPolicy: z.string().optional(),
+  safetyLeadTime: z.string().optional(),
+  safetyStockQuantity: z.string().optional(),
+  includeInventory: z.string().optional(),
+  reschedulePeriod: z.string().optional(),
+  reorderQuantity: z.string().optional(),
+  maximumInventory: z.string().optional(),
+  minimumOrderQuantity: z.string().optional(),
+  maximumOrderQuantity: z.string().optional(),
+  orderMultiple: z.string().optional(),
+  baseUnitOfMeasure: z.string().optional(),
+  caseSize: z.string().optional(),
+  pcsPerPallet: z.string().optional(),
+  pcsPerLayers: z.string().optional(),
+  itemCategoryCode: z.string().optional(), // New field
+  retailPrice: z.string().optional(), // Adjusted based on type in the form
+  promotionalRetail: z.string().optional(), // Adjusted based on type in the form
+  margin: z.string().optional(), // Adjusted based on type in the form
   vat: z.object({
+    vatId: z.string(),
     vatCode: z.string(),
     vatRate: z.number(),
     countryCode: z.string().nullable(),

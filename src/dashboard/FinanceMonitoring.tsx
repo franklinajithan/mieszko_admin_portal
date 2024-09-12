@@ -6,7 +6,7 @@ import Header from "../layouts/Header";
 import { dp3 } from "../data/DashboardData";
 import ReactApexChart from "react-apexcharts";
 
-export default function FinanceMonitoring() {
+export default function FinanceMonitoring({ title, icon }: any) {
 
   const seriesOne = [{
     name: 'series1',

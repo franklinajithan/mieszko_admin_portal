@@ -9,7 +9,7 @@ interface LabelFieldProps {
 const LabelField: React.FC<LabelFieldProps> = ({ label,htmlFor }) => {
   return (
    
-      <Label htmlFor={htmlFor} className='form-label flex items-center'>{label}</Label>
+      <Label htmlFor={htmlFor} className='form-label text-zinc-500 flex items-center'>{label}</Label>
 
   
   

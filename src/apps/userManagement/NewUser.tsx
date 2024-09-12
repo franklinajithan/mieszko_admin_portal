@@ -24,7 +24,7 @@ import LabelField from "@/elements/LabelField";
 import CheckboxField from "@/elements/CheckboxField";
 import defaultProfileImage from '../../assets/img/user.png';
 
-export default function AddEditUser({ title,icon}:any) {
+export default function NewUser({ title,icon}:any) {
 
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";

@@ -8,7 +8,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import LabelField from './LabelField';
-import { divIcon } from 'leaflet';
 
 interface CheckboxFieldProps<T extends object> {
   name: FieldPath<T>;
@@ -38,64 +37,28 @@ const CheckboxField = <T extends object>({
         };
 
         return (
-
-
-
-
-          <>
-           <FormItem>
+          <FormItem>
             <div className="flex items-end h-full">
-
-
               <div className="w-full">
                 <div className="btn-toggle-zinc flex items-center">
                   <div className="mr-2 ml-2 mt-2">
-                  <LabelField htmlFor={id} label={label} />
+                    {/* Ensure LabelField renders a label with htmlFor */}
+                    <LabelField htmlFor={id} label={label} />
                   </div>
                   <div className="ml-auto">
-                  <FormControl>
-                 
-                  <Checkbox
-                      id={id}
-                      name={name}
-                      checked={field.value}
-                      onCheckedChange={handleChange} // Use custom handleChange function
-                    />
-                   
+                    <FormControl>
+                      <Checkbox
+                        id={id}
+                        name={name}
+                        checked={field.value}
+                        onCheckedChange={handleChange} // Use custom handleChange function
+                      />
                     </FormControl>
                   </div>
                 </div>
-
               </div>
-
             </div>
-            </FormItem>
-
-
-
-
-
-
-
-
-          </>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          </FormItem>
         );
       }}
     />

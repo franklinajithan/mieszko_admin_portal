@@ -24,7 +24,7 @@ import { sample } from "@/data/constants";
 import CheckboxField from "@/elements/CheckboxField";
 import { userSearchSchema } from "@/lib/utils";
 
-export default function UserGrid({ title,icon}:any) {
+export default function UserList({ title,icon}:any) {
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
     const [rowSelectionModel, setRowSelectionModel] =

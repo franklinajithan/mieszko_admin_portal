@@ -39,7 +39,7 @@ interface ParentCategory {
     children: Category[];
 }
 
-const Category = ({ title,icon}:any) => {
+const ProductCategory = ({ title,icon}:any) => {
 
     const { t } = useTranslation('global');
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -527,4 +527,4 @@ const Category = ({ title,icon}:any) => {
     );
 };
 
-export default Category;
+export default ProductCategory;

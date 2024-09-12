@@ -93,7 +93,7 @@ const exampleFastestDeliveryOptions = [
 ];
 
 
-const Product = ({ title, icon }: any) => {
+const ProductList = ({ title, icon }: any) => {
 
     const { t } = useTranslation("global");
     const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
@@ -138,7 +138,7 @@ const Product = ({ title, icon }: any) => {
     const [rows, setRows] = useState([]);
     const [isOpenGrid, setIsOpenGrid] = useState(true);
     const toggleGridCardBody = () => { setIsOpenGrid(!isOpenGrid); };
-    const [isOpenSearch, setIsOpenSearch] = useState(true);
+    const [isOpenSearch, setIsOpenSearch] = useState(false);
     const toggleSearchCardBody = () => { setIsOpenSearch(!isOpenSearch); };
     const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
     const navigate = useNavigate();
@@ -229,7 +229,6 @@ const Product = ({ title, icon }: any) => {
 
 
     const handleEditClick = (id: GridRowId) => () => {
-        debugger;
 
         navigate(`/product/edit-product/${encryptParam(id.toString())}`);
         //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
@@ -510,4 +509,4 @@ const Product = ({ title, icon }: any) => {
     );
 };
 
-export default Product;
+export default ProductList;

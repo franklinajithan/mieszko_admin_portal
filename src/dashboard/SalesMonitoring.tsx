@@ -16,7 +16,7 @@ import img8 from "../assets/img/img8.jpg";
 import img9 from "../assets/img/img9.jpg";
 import img10 from "../assets/img/img10.jpg";
 
-export default function SalesMonitoring() {
+export default function SalesMonitoring({ title, icon }: any) {
 
   const seriesOne = [{
     name: 'Growth',

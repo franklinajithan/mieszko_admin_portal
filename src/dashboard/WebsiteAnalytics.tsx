@@ -8,7 +8,7 @@ import ReactApexChart from "react-apexcharts";
 import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
 
-export default function WebsiteAnalytics() {
+export default function WebsiteAnalytics({ title, icon }: any) {
 
   var data = [[0, 9], [1, 7], [2, 4], [3, 8], [4, 4], [5, 12], [6, 4], [7, 6], [8, 5], [9, 10], [10, 4], [11, 5], [12, 10], [13, 2], [14, 6]];
 

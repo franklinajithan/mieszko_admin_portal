@@ -13,7 +13,7 @@ import crypto3 from "../assets/img/crypto3.jpg";
 
 import "cryptofont/css/cryptofont.css";
 
-export default function Cryptocurrency() {
+export default function Cryptocurrency({ title, icon }: any) {
 
   var chart = {
     parentHeightOffset: 0,

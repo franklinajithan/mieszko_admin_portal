@@ -15,17 +15,17 @@ type HeaderComponentsProps = {
     icon: IconType;
 };
 
-const buttonClasses = "flex items-center text-zinc-600 hover:text-zinc-800";
+const buttonClasses = "flex items-center text-white hover:text-gray-200";
 
 export default function HeaderComponents({
     title,
-    searchIcon,
-    newIcon,
-    deleteIcon,
-    downloadIcon,
-    bookmarkIcon,
-    settingIcon,
-    filterIcon,
+    searchIcon=true,
+    newIcon=true,
+    deleteIcon=true,
+    downloadIcon=true,
+    bookmarkIcon=true,
+    settingIcon=true,
+    filterIcon=true,
     icon: Icon
 }: HeaderComponentsProps) {
     return (
@@ -39,43 +39,43 @@ export default function HeaderComponents({
             <div className="flex items-center space-x-4">
                 {searchIcon && (
                     <button className={buttonClasses}>
-                        <FaSearch className="mr-1" />
+                        <FaSearch className="text-white mr-1" />
                         <span>Search</span>
                     </button>
                 )}
                 {newIcon && (
                     <button className={buttonClasses}>
-                        <FaPlus className="mr-1" />
+                        <FaPlus className="text-white mr-1" />
                         <span>New</span>
                     </button>
                 )}
                 {deleteIcon && (
                     <button className={buttonClasses}>
-                        <FaTrash className="mr-1" />
+                        <FaTrash className="text-white mr-1" />
                         <span>Delete</span>
                     </button>
                 )}
                 {downloadIcon && (
                     <button className={buttonClasses}>
-                        <FiDownload className="mr-1" />
+                        <FiDownload className="text-white mr-1" />
                         <span>Download</span>
                     </button>
                 )}
                 {bookmarkIcon && (
                     <button className={buttonClasses}>
-                        <FiBookmark className="mr-1" />
+                        <FiBookmark className="text-white mr-1" />
                         <span>Bookmark</span>
                     </button>
                 )}
                 {settingIcon && (
                     <button className={buttonClasses}>
-                        <FiSettings className="mr-1" />
+                        <FiSettings className="text-white mr-1" />
                         <span>Settings</span>
                     </button>
                 )}
                 {filterIcon && (
                     <button className={buttonClasses}>
-                        <FiFilter className="mr-1" />
+                        <FiFilter className="text-white mr-1" />
                         <span>Filter</span>
                     </button>
                 )}

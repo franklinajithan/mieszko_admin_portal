@@ -30,7 +30,7 @@ import { getBrand } from '@/service/brand.service';
 
 
 
-const Brand = ({ title,icon}:any) => {
+const ProductBrand = ({ title,icon}:any) => {
 
     const { t } = useTranslation('global');
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
@@ -165,4 +165,4 @@ const Brand = ({ title,icon}:any) => {
     );
 };
 
-export default Brand;
+export default ProductBrand;

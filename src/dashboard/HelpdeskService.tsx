@@ -20,7 +20,7 @@ import img16 from "../assets/img/img16.jpg";
 import img17 from "../assets/img/img17.jpg";
 import img18 from "../assets/img/img18.jpg";
 
-export default function HelpdeskService() {
+export default function HelpdeskService({ title, icon }: any) {
 
   //Current Ticket Status
   const dataBar1 = {

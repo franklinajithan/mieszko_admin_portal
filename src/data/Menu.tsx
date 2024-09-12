@@ -4,24 +4,35 @@ import {
   faPlusSquare, faAddressBook, faUserPlus, faFileContract, faUser, faShieldAlt, 
   faUserCog, faHistory, faWarehouse, faTools, faExchangeAlt, faBell, faTrashAlt, 
   faFileAlt, faFileInvoice, faMoneyBillWave, faStore, faTags, faTruck, faBoxes, 
-  faRecycle, faFileInvoiceDollar 
+  faRecycle, faFileInvoiceDollar, 
+  faPlus,
+  faFire,
+  faCalendarAlt,
+  faPlusCircle,
+  faClock,
+  faClipboardList,
+  faPaperPlane,
+  faCalendarCheck,
+  faUsers,
+  faUserTag,
+  faFileSignature
 } from '@fortawesome/free-solid-svg-icons';
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 
 // Dashboard Menu
-const dashboardMenu = [
+export const dashboardMenu = [
   { label: "Finance Monitoring", link: "/dashboard/finance", icon: faChartLine },
-  { label: "Events Management", link: "/dashboard/events", icon: faCalendarDay },
+  // { label: "Events Management", link: "/dashboard/events", icon: faCalendarDay },
   { label: "Sales Monitoring", link: "/dashboard/sales", icon: faChartBar },
   { label: "Website Analytics", link: "/dashboard/analytics", icon: faChartPie },
-  { label: "Cryptocurrency", link: "/dashboard/crypto", icon: faBitcoin },
-  { label: "Helpdesk Service", link: "/dashboard/helpdesk", icon: faHeadphones },
-  { label: "Storage Management", link: "/dashboard/storage", icon: faDatabase },
+  // { label: "Cryptocurrency", link: "/dashboard/crypto", icon: faBitcoin },
+  // { label: "Helpdesk Service", link: "/dashboard/helpdesk", icon: faHeadphones },
+  // { label: "Storage Management", link: "/dashboard/storage", icon: faDatabase },
   { label: "Product Management", link: "/dashboard/product", icon: faBox }
 ];
 
 // Order Management Menu
-const OrderManagementMenu = [
+export const OrderManagementMenu = [
   { label: "New Purchase Planning", link: "/order/new-purchase-planning", icon: faShoppingBag },
   { label: "Purchase Planning", link: "/order/purchase-planning", icon: faCalendarDay },
   { label: "Purchase Order", link: "/order/purchase-order", icon: faFileAlt },
@@ -29,7 +40,7 @@ const OrderManagementMenu = [
 ];
 
 // Store Management Menu
-const storeManagementMenu = [
+export const storeManagementMenu = [
   { label: "Manage Store", link: "/store/manage-store", icon: faStore },
   { label: "New Store Setup", link: "/store/new-store", icon: faCube },
   { label: "Store Inventory", link: "/store/inventory", icon: faBox },
@@ -37,8 +48,8 @@ const storeManagementMenu = [
 ];
 
 // Product Management Menu
-const productManagementMenu = [
-  { label: "Product", link: "/product/list", icon: faShoppingBag },
+export const productManagementMenu = [
+  { label: "Product List", link: "/product/list", icon: faShoppingBag },
   { label: "New Product", link: "/product/new-product", icon: faPlusSquare },
   { label: "Product Category", link: "/product/category", icon: faFolder },
   { label: "Product Brand", link: "/product/brand", icon: faTrademark },
@@ -47,7 +58,7 @@ const productManagementMenu = [
 ];
 
 // Supplier Management Menu
-const supplierManagementMenu = [
+export const supplierManagementMenu = [
   { label: "Supplier Directory", link: "/supplier/directory", icon: faAddressBook },
   { label: "Add New Supplier", link: "/supplier/new", icon: faUserPlus },
   { label: "Supplier Contracts", link: "/supplier/contracts", icon: faFileContract },
@@ -55,7 +66,7 @@ const supplierManagementMenu = [
 ];
 
 // User Management Menu
-const userManagementMenu = [
+export const userManagementMenu = [
   { label: "User List", link: "/user/user-grid", icon: faUser },
   { label: "New User", link: "/user/new-user", icon: faUserPlus },
   { label: "Roles And Rights", link: "/user/roles-and-rights", icon: faShieldAlt },
@@ -64,7 +75,7 @@ const userManagementMenu = [
 ];
 
 // Stock Management Menu
-const stockManagementMenu = [
+export const stockManagementMenu = [
   { label: "Stock Overview", link: "/stock/overview", icon: faWarehouse },
   { label: "Stock Adjustments", link: "/stock/adjustments", icon: faTools },
   { label: "Stock Transfers", link: "/stock/transfers", icon: faExchangeAlt },
@@ -72,7 +83,7 @@ const stockManagementMenu = [
 ];
 
 // Waste Management Menu
-const wasteManagementMenu = [
+export const wasteManagementMenu = [
   { label: "Waste Tracking", link: "/waste/tracking", icon: faTrashAlt },
   { label: "Waste Reports", link: "/waste/reports", icon: faFileAlt },
   { label: "New Waste Entry", link: "/waste/new", icon: faFileAlt },
@@ -80,15 +91,50 @@ const wasteManagementMenu = [
 ];
 
 // Invoice Management Menu
-const invoiceManagementMenu = [
+export const invoiceManagementMenu = [
   { label: "Invoice List", link: "/invoice/list", icon: faFileAlt },
   { label: "Create Invoice", link: "/invoice/new", icon: faFileInvoice },
   { label: "Payment Status", link: "/invoice/payment-status", icon: faMoneyBillWave },
   { label: "Invoice Reports", link: "/invoice/reports", icon: faChartBar }
 ];
 
+export const deliveryManagementMenu = [
+  { label: "Delivery List", link: "/delivery/list", icon: faBox },
+  { label: "Create Delivery", link: "/delivery/new", icon: faPlusSquare },
+  { label: "Delivery Status", link: "/delivery/status", icon: faTruck },
+  { label: "Delivery Reports", link: "/delivery/reports", icon: faFileAlt }
+];
+
+export const promotionManagementMenu = [
+  { label: "Promotion List", link: "/promotion/list", icon: faTags },
+  { label: "Create Promotion", link: "/promotion/new", icon: faPlus },
+  { label: "Active Promotions", link: "/promotion/active", icon: faFire },
+  { label: "Promotion Reports", link: "/promotion/reports", icon: faChartLine }
+];
+
+export const rotaManagementMenu = [
+  { label: "Rota List", link: "/rota/list", icon: faCalendarAlt },
+  { label: "Create Rota", link: "/rota/new", icon: faPlusCircle },
+  { label: "Rota Schedule", link: "/rota/schedule", icon: faClock },
+  { label: "Rota Reports", link: "/rota/reports", icon: faChartPie }
+];
+
+export const leaveManagementMenu = [
+  { label: "Leave Requests", link: "/leave/requests", icon: faClipboardList },
+  { label: "Apply for Leave", link: "/leave/apply", icon: faPaperPlane },
+  { label: "Leave Status", link: "/leave/status", icon: faCalendarCheck },
+  { label: "Leave Reports", link: "/leave/reports", icon: faFileAlt }
+];
+
+export const staffManagementMenu = [
+  { label: "Staff List", link: "/staff/list", icon: faUsers },
+  { label: "Add Staff", link: "/staff/new", icon: faUserPlus },
+  { label: "Staff Roles", link: "/staff/roles", icon: faUserTag },
+  { label: "Staff Reports", link: "/staff/reports", icon: faFileSignature }
+];
+
 // Management Menu
-const ManagementMenu = [
+export const ManagementMenu = [
   {
     label: "Order Management",
     link: "/order/order-management",
@@ -107,15 +153,4 @@ const ManagementMenu = [
   { label: "Invoice Management", link: "/invoice/invoice-management", icon: faFileInvoiceDollar }
 ];
 
-export {
-  dashboardMenu,
-  OrderManagementMenu,
-  storeManagementMenu,
-  productManagementMenu,
-  supplierManagementMenu,
-  userManagementMenu,
-  stockManagementMenu,
-  invoiceManagementMenu,
-  wasteManagementMenu,
-  ManagementMenu
-};
+
