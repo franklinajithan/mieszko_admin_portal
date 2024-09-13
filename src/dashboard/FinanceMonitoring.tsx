@@ -497,7 +497,7 @@ export default function FinanceMonitoring({ title, icon }: any) {
 
   return (
     <React.Fragment>
-      <Header onSkin={setSkin} />
+  
       <div className="main main-app p-lg-1">
         <div className="d-md-flex align-items-center justify-content-between mb-4">
           <div>

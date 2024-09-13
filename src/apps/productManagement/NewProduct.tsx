@@ -14,7 +14,7 @@ const NewProduct = ({ title,icon}:any) => {
 
     return (
         <>
-            <Header onSkin={setSkin} />
+      
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
                 <HeaderComponents icon={icon} title={title} />
@@ -22,7 +22,7 @@ const NewProduct = ({ title,icon}:any) => {
                     <Card className="card-one mt-2">
                      
                         <Card.Body>
-                            <ProductForm/>
+                            <ProductForm type='add'/>
                         </Card.Body>
                     </Card>
                 </div>

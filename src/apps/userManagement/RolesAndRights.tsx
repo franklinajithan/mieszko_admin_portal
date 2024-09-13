@@ -185,7 +185,7 @@ const RolesAndRights= ({ title,icon}:any) => {
 
   return (
     <React.Fragment>
-      <Header onSkin={setSkin} />
+    
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-zinc-50">
         <HeaderComponents icon={icon} title={title} />

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import LabelField from './LabelField';
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { FormControl, FormField, FormMessage } from '@/components/ui/form';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; // Import the calendar icon
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
+// Define a type for dynamic field paths
+type FieldPathWithDynamicKey<T extends FieldValues> = FieldPath<T> | `${FieldPath<T>}[${number}].${string}`;
+
 interface InputFieldProps<T extends FieldValues> {
-    name: FieldPath<T>;
+    name: FieldPathWithDynamicKey<T>;
     control: Control<T>;
     label: string;
     type: 'text' | 'number' | 'date' | 'email' | 'time' | 'password' | 'tel' | 'url';
@@ -19,7 +21,7 @@ interface InputFieldProps<T extends FieldValues> {
     readonly?: boolean;
     id?: string;
     clipboard?: boolean; 
-  
+    required?: boolean;  // Add a prop for required
 }
 
 const InputField = <T extends FieldValues>({
@@ -32,9 +34,14 @@ const InputField = <T extends FieldValues>({
     readonly = false,
     id = name,
     clipboard = false,
-
+    required = false,  // Set default to false
 }: InputFieldProps<T>) => {
     const [copied, setCopied] = useState(false);
+
+    const { field } = useController({
+        name: name as FieldPath<T>, 
+        control,
+    });
 
     const handleCopy = (value: string | number) => {
         navigator.clipboard.writeText(value?.toString() || '');
@@ -45,28 +52,29 @@ const InputField = <T extends FieldValues>({
     return (
         <FormField
             control={control}
-            name={name}
-            render={({ field }) => (
+            name={name as FieldPath<T>}
+            render={() => (
                 <div className='form-item w-full'>
-                    <LabelField label={label} htmlFor={name} />
+                    <LabelField label={label} htmlFor={name} required={required}/>
+                    
                     <FormControl className='relative'>
                         <div className='relative w-full'>
                             <Input
                                 id={id}
                                 placeholder={placeholder}
                                 autoComplete='off'
-                                className='input-class pr-16' // Increase padding to the right for both icons
+                                className='input-class pr-16 form-control' // Increase padding to the right for both icons
                                 disabled={disabled}
                                 readOnly={readonly}
                                 type={type}
                                 {...field}
-                                value={field.value as any}
+                                value={field.value ?? ''} // Fallback to empty string if field.value is null or undefined
                                 style={{ paddingRight: '40px' }} // Add space for the icons inside the input
                             />
                             {clipboard && (
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                     <IconButton
-                                        onClick={() => handleCopy(field.value)}
+                                        onClick={() => handleCopy(field.value ?? '')} // Fallback to empty string if field.value is null
                                         className='absolute right-12 top-0 h-full'
                                         style={{
                                             position: 'absolute',
@@ -81,7 +89,6 @@ const InputField = <T extends FieldValues>({
                                     </IconButton>
                                 </Tooltip>
                             )}
-                            
                         </div>
                     </FormControl>
                     <FormMessage className='form-message mt-2' />

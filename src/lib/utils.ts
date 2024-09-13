@@ -162,12 +162,14 @@ export const manageStoreFormSchema = z.object({
   storeType: z.string(),         // Required string
 });
 
-export const NewUserSchema = z
+export const userSchema = z
   .object({
     Id: z.string().nonempty("Id is required"),
+    firstName: z.string().nonempty("First name is required"),
     lastName: z.string().nonempty("Last name is required"),
     email: z.string().email("Invalid email address").nonempty("Email is required"),
     phone: z.string().nonempty("Phone number is required"),
+    dob: z.string().nonempty("data of birth is required"),
     address: z.string().optional(),
     city: z.string().optional(),
     state: z.string().optional(),
@@ -247,7 +249,7 @@ export const productSearchFormSchema = z.object({
   priceMarkedItem: z.string().optional(),
   caseSize: z.string().optional(),
   fastestDelivery: z.string().optional(),
-  
+
 });
 
 
@@ -354,5 +356,116 @@ export const editProductFormSchema = z.object({
     isConsideredForPurchasePlan: z.boolean(),
   }),
 });
+
+
+
+export const supplierFormSchema = z.object({
+    supplier_id: z.string().optional(),
+    short_code: z.string().optional(),
+    supplier_logo: z.string().optional(),
+    supplier_name: z.string().optional(),
+    contact_person_name: z.string().optional(),
+    supplier_email: z.string().optional(),
+    email_cc: z.string().optional(),
+    supplier_phone: z.string().optional(),
+    supplier_fax: z.string().optional(),
+    supplier_website: z.string().optional(),
+    web_portal: z.string().optional(),
+    supplier_address: z.string().optional(),
+    supplier_city: z.string().optional(),
+    supplier_postcode: z.string().optional(),
+    supplier_state: z.string().optional(),
+    supplier_country: z.string().optional(),
+    supplier_type: z.string().optional(),
+    posting_group: z.string().optional(),
+    credit_score: z.string().optional(),
+    supplier_status: z.boolean().optional(),
+    created_by: z.number().optional(),
+    created_at: z.string().optional(),
+    updated_at: z.string().optional(),
+    supplier_details: z.array(z.object({
+        order_cc: z.string().optional(),
+        order_bcc: z.string().optional(),
+        order_uom: z.string().optional(),
+        order_email: z.string().optional(),
+        invoice_type: z.string().optional(),
+        max_order_qty: z.string().optional(),
+        min_order_qty: z.string().optional(),
+        delivery_charge: z.string().optional(),
+        has_ftp_account: z.boolean().optional(),
+        max_order_value: z.string().optional(),
+        min_order_value: z.string().optional(),
+        is_cash_accepted: z.boolean().optional(),
+        is_main_supplier: z.boolean().optional(),
+        can_accept_return: z.boolean().optional(),
+        is_daily_supplier: z.boolean().optional(),
+        can_schedule_order: z.boolean().optional(),
+        is_rebate_supplier: z.boolean().optional(),
+        order_status_email: z.string().optional(),
+        is_any_special_price: z.boolean().optional(),
+        order_placement_type: z.string().optional(),
+        pay_out_amount_limit: z.string().optional(),
+        can_raise_credit_note: z.boolean().optional(),
+        is_pre_payment_needed: z.boolean().optional(),
+        can_place_multiple_order: z.boolean().optional(),
+        can_be_paid_out_from_till: z.boolean().optional(),
+        free_delivery_order_value: z.string().optional(),
+        will_receive_delivery_note: z.boolean().optional(),
+        can_order_price_marked_item: z.boolean().optional(),
+        can_be_part_of_purchase_plan: z.boolean().optional(),
+        no_of_delivery_notes_to_be_merged: z.string().optional(),
+        can_be_considered_for_fastest_supplier: z.boolean().optional(),
+        can_be_considered_for_cheapest_supplier: z.boolean().optional(),
+        need_to_check_pallet_price_before_order: z.boolean().optional(),
+    })).optional(),
+    ftp_data: z.array(z.object({
+        ftpUrl: z.string().optional(),
+        ftpType: z.string().optional(),
+        autoDelete: z.boolean().optional(),
+        ftpPassword: z.string().optional(),
+        ftpUsername: z.string().optional(),
+        autoDownload: z.boolean().optional(),
+        sellerBuyerId: z.string().optional(),
+        connectionName: z.string().optional(),
+        autoDownloadTime: z.string().optional(),
+    })).optional(),
+    price_rules: z.array(z.object({
+        margin: z.number().optional(),
+        endDate: z.string().optional(),
+        startDate: z.string().optional(),
+        categoryId: z.string().optional(),
+        roundValue1: z.number().optional(),
+        roundValue2: z.number().optional(),
+        categoryName: z.string().optional(),
+        roundConcept: z.string().optional(),
+    })).optional(),
+    delivery_schedules: z.array(z.object({
+        endTime: z.string().optional(),
+        orderDay: z.string().optional(),
+        startTime: z.string().optional(),
+        deliveryDay: z.string().optional(),
+        scheduledType: z.string().optional(),
+        extendedLeadTime: z.string().optional(),
+        standardLeadTime: z.string().optional(),
+        promotionLeadTime: z.string().optional(),
+    })).optional(),
+    categories: z.array(z.object({
+        isPLU: z.boolean().optional(),
+        level: z.number().optional(),
+        pluCode: z.string().optional(),
+        parentId: z.string().optional(),
+        categoryName: z.string().optional(),
+        canAssignItems: z.boolean().optional(),
+        translatedName: z.string().optional(),
+    })).optional(),
+    agents: z.array(z.object({
+        agentName: z.string().optional(),
+        agentEmail: z.string().optional(),
+        agentPhone: z.string().optional(),
+        agentWhatsapp: z.string().optional(),
+    })).optional(),
+});
+
+
 
 

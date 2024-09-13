@@ -87,6 +87,23 @@
 }
 
 
+
+.btn-danger {
+  @apply h-10 px-4 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95;
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+  color: white !important;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(180deg, #b91c1c, #ef4444);
+  /* Reverse gradient on hover */
+  @apply shadow-lg;
+}
+
+.btn-danger:focus {
+  @apply outline-none ring-2 ring-red-600 ring-offset-2;
+}
+
 .btn-toggle-cyan {
   @apply flex items-center h-10 px-2 py-2 rounded-md shadow-md font-semibold transition-all transform active:scale-95 cursor-pointer;
   background: linear-gradient(180deg, #22d3ee, #0891b2);

@@ -1,6 +1,6 @@
 import CheckboxField from '@/components/elements/CheckboxField'
 import InputField from '@/components/elements/InputField'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import MenuItem from '@/components/elements/MenuItem'
 import { Form } from "@/components/ui/form";
@@ -13,13 +13,17 @@ import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 import { z } from 'zod'
-import { addProduct } from '@/service/product.service'
+import { addProduct, getItemDetail } from '@/service/product.service'
 import IOSSwitch from '@/components/elements/toggleTheme'
 import ImageUploader from '@/components/elements/ImageUploader'
 import { Card } from '@mui/material';
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-const ProductForm = () => {
+import { ProductDetails } from '@/interface/productInterfaces';
+import { countries, reorderingPolicies, reschedulePeriods } from '@/data/enum';
+import SelectField from '@/components/elements/SelectField';
+const ProductForm = ({ id, type }: any) => {
+
     const [activeItem, setActiveItem] = useState("Product");
 
     const [isLoading, setIsLoading] = useState(false);
@@ -139,6 +143,7 @@ const ProductForm = () => {
     const { isValid, isDirty, errors } = formState;
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [productDetails, setProductDetails] = useState<ProductDetails | null>(null); // Initialize with null
     const onSubmit = async (values: z.infer<typeof editProductFormSchema>) => {
         setIsLoading(true);
         try {
@@ -170,6 +175,117 @@ const ProductForm = () => {
             }, 2000);
         }
     };
+
+
+    useEffect(() => {
+
+        const fetch = async () => {
+            try {
+
+                const result = await getItemDetail(id);
+
+                setProductDetails(result.data.data)
+
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                }
+
+
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        if (type == 'edit') {
+            fetch();
+        }
+
+    }, [])
+
+    useEffect(() => {
+        if (productDetails != null) {
+            const formValues = {
+                itemName: productDetails.itemName || '',
+                englishName: productDetails.englishName || '',
+                itemCode: productDetails.itemCode || '',
+                description: productDetails.description || '',
+                labelName: productDetails.labelName || '',
+                invoiceName: productDetails.invoiceName || '',
+                tillMessage: productDetails.tillMessage || '',
+                ingredients: productDetails.ingredients || '',
+                translatedIngredients: productDetails.translatedIngredients || '',
+                allergicDetails: productDetails.allergicDetails || '',
+                translatedAllergicDetails: productDetails.translatedAllergicDetails || '',
+                item_image: productDetails.item_image || '',
+                uom: productDetails.uom || '',
+                retailUom: productDetails.retailUom || '',
+                wastagePercentage: productDetails.wastagePercentage || '',
+                itemType: productDetails.itemType || '',
+                minOrderQty: productDetails.minOrderQty || '',
+                maxOrderQty: productDetails.maxOrderQty || '',
+                leadTime: productDetails.leadTime || '',
+                reorderLevel: productDetails.reorderLevel || '',
+                reorderLevelType: productDetails.reorderLevelType || '',
+                safetyStock: productDetails.safetyStock || '',
+                shelfLife: productDetails.shelfLife || 0, // assuming shelfLife is a number
+                shelfLifeType: productDetails.shelfLifeType || '',
+                countryOfOrigin: productDetails.countryOfOrigin || '',
+                vat: {
+                    vatCode: productDetails.vat?.vatCode || '',
+                    vatRate: productDetails.vat?.vatRate || 0, // assuming vatRate is a number
+                    countryCode: productDetails.vat?.countryCode || null,
+                    description: productDetails.vat?.description || null,
+                    effectiveTo: productDetails.vat?.effectiveTo || null,
+                    effectiveFrom: productDetails.vat?.effectiveFrom || '',
+                },
+                brand: {
+                    image: productDetails.brand?.image || '',
+                    website: productDetails.brand?.website || '',
+                    brandName: productDetails.brand?.brandName || '',
+                    description: productDetails.brand?.description || '',
+                },
+                category: {
+                    image: productDetails.category?.image || '',
+                    isPLU: productDetails.category?.isPLU || false, // assuming isPLU is a boolean
+                    pluCode: productDetails.category?.pluCode || '',
+                    parentId: productDetails.category?.parentId || 0, // assuming parentId is a number
+                    categoryName: productDetails.category?.categoryName || '',
+                    translatedName: productDetails.category?.translatedName || '',
+                },
+                item_details: {
+                    tags: productDetails.item_details?.tags || ['', ''],
+                    isPluCoded: productDetails.item_details?.isPluCoded || false,
+                    isSeasoned: productDetails.item_details?.isSeasoned || false,
+                    isStoreUse: productDetails.item_details?.isStoreUse || false,
+                    isWeighted: productDetails.item_details?.isWeighted || false,
+                    hasLeadTime: productDetails.item_details?.hasLeadTime || false,
+                    canBeInPromo: productDetails.item_details?.canBeInPromo || false,
+                    canSplitSell: productDetails.item_details?.canSplitSell || false,
+                    canStockTake: productDetails.item_details?.canStockTake || false,
+                    isOutOfStock: productDetails.item_details?.isOutOfStock || false,
+                    needPreOrder: productDetails.item_details?.needPreOrder || false,
+                    splitSellQty: productDetails.item_details?.splitSellQty || 0, // assuming it's a number
+                    hasBoxBarcode: productDetails.item_details?.hasBoxBarcode || false,
+                    hasLinkedItem: productDetails.item_details?.hasLinkedItem || false,
+                    isPriceMarked: productDetails.item_details?.isPriceMarked || false,
+                    minSellingQty: productDetails.item_details?.minSellingQty || 0, // assuming it's a number
+                    isDiscontinued: productDetails.item_details?.isDiscontinued || false,
+                    isDiscountable: productDetails.item_details?.isDiscountable || false,
+                    isStoreVisible: productDetails.item_details?.isStoreVisible || false,
+                    hasOuterBarcode: productDetails.item_details?.hasOuterBarcode || false,
+                    isAgeRestricted: productDetails.item_details?.isAgeRestricted || false,
+                    canOrderInPallet: productDetails.item_details?.canOrderInPallet || false,
+                    hasMinSellingQty: productDetails.item_details?.hasMinSellingQty || false,
+                    hasPalletBarcode: productDetails.item_details?.hasPalletBarcode || false,
+                    canPurchaseLocally: productDetails.item_details?.canPurchaseLocally || false,
+                    isStoreTransferable: productDetails.item_details?.isStoreTransferable || false,
+                    isConsideredForPurchasePlan: productDetails.item_details?.isConsideredForPurchasePlan || false,
+                },
+            };
+
+            reset(formValues); // Assuming reset is your form reset function
+        }
+    }, [productDetails]);
 
     const handleMenuItemClick = (item: any) => {
         setActiveItem(item);
@@ -322,7 +438,7 @@ const ProductForm = () => {
 
                                                 </div>
 
-                                                
+
                                             </>
                                         )}
 
@@ -390,7 +506,7 @@ const ProductForm = () => {
                                                 <InputField control={form.control} label="Safety Stock" placeholder="Enter safety stock" name="safetyStock" type="number" />
                                                 <InputField control={form.control} label="Shelf Life" placeholder="Enter shelf life" name="shelfLife" type="number" />
                                                 <InputField control={form.control} label="Shelf Life Type" placeholder="Enter shelf life type" name="shelfLifeType" type="text" />
-                                                <InputField control={form.control} label="Country of Origin" placeholder="Enter country of origin" name="countryOfOrigin" type="text" />
+                                                <SelectField control={form.control} label="Country of Origin" name="countryOfOrigin" options={countries} />
                                             </div>
                                         )}
                                         {activeItem === "PriceAndSales" && (
@@ -399,10 +515,10 @@ const ProductForm = () => {
                                                 <InputField control={form.control} label="VAT id" placeholder="Enter VAT ID" name="vat.vatId" type="text" />
                                                 <InputField control={form.control} label="VAT Code" placeholder="Enter VAT code" name="vat.vatCode" type="text" />
                                                 <InputField control={form.control} label="VAT Rate" placeholder="Enter VAT rate" name="vat.vatRate" type="number" />
-                                                <InputField control={form.control} label="VAT Country Code" placeholder="Enter VAT country code" name="vat.countryCode" type="text" />
+                                                <SelectField control={form.control} label="VAT Country Code" name="vat.countryCode" options={countries} />
                                                 <InputField control={form.control} label="VAT Description" placeholder="Enter VAT description" name="vat.description" type="text" />
-                                                <CalendarInput control={form.control} label="Effective From" name="vat.effectiveFrom" value={undefined} />
-                                                <CalendarInput control={form.control} label="Effective To" name="vat.effectiveTo" value={undefined} />
+                                                <CalendarInput control={form.control} label="Effective From" name="vat.effectiveFrom" value={null} />
+                                                <CalendarInput control={form.control} label="Effective To" name="vat.effectiveTo" value={null} />
                                                 <InputField control={form.control} label="Brand Image" placeholder="Enter brand image URL" name="brand.image" type="text" />
                                                 <InputField control={form.control} label="Brand Website" placeholder="Enter brand website" name="brand.website" type="url" />
                                                 <InputField control={form.control} label="Brand Name" placeholder="Enter brand name" name="brand.brandName" type="text" />
@@ -420,11 +536,12 @@ const ProductForm = () => {
 
                                         {activeItem === "Planning" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
-                                                <InputField control={form.control} label="Reordering Policy" placeholder="Enter reordering policy" name="reorderingPolicy" type="text" />
+                                                <SelectField control={form.control} label="Reordering Policy" name="reorderingPolicy" options={reorderingPolicies} />
                                                 <InputField control={form.control} label="Safety Lead time" placeholder="Enter safety lead time" name="safetyLeadTime" type="text" />
                                                 <InputField control={form.control} label="Safety Stock Quantity" placeholder="Enter safety stock quantity" name="safetyStockQuantity" type="text" />
-                                                <InputField control={form.control} label="Include Inventory" placeholder="Include inventory" name="includeInventory" type="text" />
-                                                <InputField control={form.control} label="Reschedule Period" placeholder="Enter reschedule period" name="reschedulePeriod" type="text" />
+                                                <CheckboxField control={form.control} label="Include Inventory" name="includeInventory" />
+                                              
+                                                <SelectField control={form.control} label="Reschedule Period" name="reschedulePeriod" options={reschedulePeriods} />
                                                 <InputField control={form.control} label="Reorder Quantity" placeholder="Enter reorder quantity" name="reorderQuantity" type="text" />
                                                 <InputField control={form.control} label="Maximum Inventory" placeholder="Enter maximum inventory" name="maximumInventory" type="text" />
                                                 <InputField control={form.control} label="Minimum Order Quantity" placeholder="Enter minimum order quantity" name="minimumOrderQuantity" type="text" />
@@ -450,7 +567,7 @@ const ProductForm = () => {
 
                             <hr className="border-t border-zinc-300" />
                             <div className="flex justify-end space-x-4 mt-2 pr-4">
-                                <button className="btn-zinc">Save</button>
+                                <button className="btn-zinc">Cancel</button>
                                 <Button type="submit" disabled={isLoading} className="btn-cyan">
                                     {isLoading ? (
                                         <>

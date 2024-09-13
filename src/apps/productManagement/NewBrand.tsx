@@ -122,7 +122,7 @@ const BrandNewPage = ({ title,icon}:any) => {
   };
   return (
     <React.Fragment>
-      <Header onSkin={setSkin} />
+ 
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-zinc-50">
         <HeaderComponents icon={icon} title={title} />
@@ -172,7 +172,7 @@ const BrandNewPage = ({ title,icon}:any) => {
                   <hr className="border-t border-zinc-300 " />
                   <div className="flex justify-end space-x-4  mt-2 pr-4">
                     <button className="btn-zinc">
-                      Save
+                    Cancel
                     </button>
                     <Button type="submit" disabled={isLoading} className='btn-cyan'>
                       {isLoading ? (

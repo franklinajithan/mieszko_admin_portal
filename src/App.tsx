@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect, Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from './layouts/Main';
 import NotFound from "./pages/NotFound";
@@ -10,7 +10,7 @@ import "./assets/css/remixicon.css";
 import "./scss/style.scss";
 
 import { useTranslation } from "react-i18next";
-
+import Header from "./layouts/Header";
 const Login = React.lazy(() => import('./pages/Signin2'));
 
 export default function App() {
@@ -31,14 +31,14 @@ export default function App() {
       window.removeEventListener("load", handleSkinMode);
     };
   }, []);
-
+  const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
   return (
     <React.Fragment>
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRoute><Toaster /><Main /> </AuthRoute>}>
+            <Route path="/" element={<AuthRoute><Toaster /><Header onSkin={setSkin} /><Main /> </AuthRoute>}>
               {protectedRoutes.map((route, index) => (
                 <Route
                   path={route.path}

@@ -86,11 +86,22 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: 6,
           textTransform: 'none',
           boxShadow: 'none',
+          background: 'linear-gradient(180deg, #22d3ee, #0891b2)', // Gradient background
+          color: '#ffffff', // Text color
+          fontWeight: 600, // Bold text
+          //padding: '5px 5px', // Padding for button
+          //transition: 'all 0.3s ease', // Smooth transition
           '&:hover': {
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            background: 'linear-gradient(180deg, #0891b2, #22d3ee)', // Maintain gradient on hover
+           // boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)', // Enhanced shadow
+            //transform: 'scale(1.05)', // Slightly enlarge button on hover
+          },
+          '&:focus': {
+            outline: 'none',
+            boxShadow: '0 0 0 3px rgba(0, 0, 0, 0.2)', // Focus state with shadow
           },
         },
       },

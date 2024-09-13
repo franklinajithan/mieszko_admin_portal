@@ -14,7 +14,7 @@ import { z } from "zod";
 import SelectField from "@/components/elements/SelectField";
 import InputField from "@/components/elements/InputField";
 import { sample } from "@/data/constants";
-import { NewUserSchema } from "@/lib/utils";
+import { userSchema } from "@/lib/utils";
 import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { FaCheck } from "react-icons/fa";
@@ -23,8 +23,10 @@ import { Input } from "@/components/ui/input";
 import LabelField from "@/components/elements/LabelField";
 import CheckboxField from "@/components/elements/CheckboxField";
 import defaultProfileImage from '../../assets/img/user.png';
+import { countries, roles, storeLocations, ukCities, ukRegions, visaStatuses, visaTypes } from "@/data/enum";
+import { CalendarInput } from "@/components/elements/CalendarInput";
 
-export default function NewUser({ title,icon}:any) {
+export default function NewUser({ title, icon }: any) {
 
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
@@ -43,8 +45,8 @@ export default function NewUser({ title,icon}:any) {
     const toggleBasicInfo = () => setIsOpenBasicInfo(!isOpenBasicInfo);
     const toggleVisaInfo = () => setIsOpenVisaInfo(!isOpenVisaInfo);
 
-    const form = useForm<z.infer<typeof NewUserSchema>>({
-        resolver: zodResolver(NewUserSchema),
+    const form = useForm<z.infer<typeof userSchema>>({
+        resolver: zodResolver(userSchema),
         defaultValues: {
             Id: "",
             lastName: "",
@@ -71,7 +73,7 @@ export default function NewUser({ title,icon}:any) {
 
     const { control, handleSubmit, formState: { errors } } = form;
 
-    const onSubmit = (values: z.infer<typeof NewUserSchema>) => {
+    const onSubmit = (values: z.infer<typeof userSchema>) => {
         setIsLoading(true);
         //console.log(values);
         // Handle form submission, including file upload if needed
@@ -102,7 +104,7 @@ export default function NewUser({ title,icon}:any) {
 
     return (
         <React.Fragment>
-            <Header onSkin={setSkin} />
+
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
                     {/* Header */}
@@ -128,16 +130,8 @@ export default function NewUser({ title,icon}:any) {
                                                             />
                                                         </div>
                                                         <div className="relative">
-                                                            <input
-                                                                type="file"
-                                                                accept="image/*"
-                                                                onChange={handleImageChange}
-                                                                id="file-input"
-                                                                className="hidden" // Hide the native file input
-                                                            />
-                                                            <label
-                                                                htmlFor="file-input"
-                                                                className="w-full cursor-pointer bg-gradient-to-r from-cyan-600 via-cyan-700 to-cyan-800 text-white px-4 py-2 rounded-md shadow-lg hover:bg-gradient-to-r hover:from-cyan-700 hover:via-cyan-800 hover:to-cyan-900 transition-colors duration-300 ease-in-out"
+                                                            <input type="file" accept="image/*" onChange={handleImageChange} id="file-input" className="hidden" />
+                                                            <label htmlFor="file-input" className="w-full cursor-pointer bg-gradient-to-r from-cyan-600 via-cyan-700 to-cyan-800 text-white px-4 py-2 rounded-md shadow-lg hover:bg-gradient-to-r hover:from-cyan-700 hover:via-cyan-800 hover:to-cyan-900 transition-colors duration-300 ease-in-out"
                                                                 style={{ position: 'relative', zIndex: 5 }}
                                                             >
                                                                 Upload Profile Picture
@@ -150,186 +144,47 @@ export default function NewUser({ title,icon}:any) {
                                                 </div>
                                                 <div className="inline-block min-h-[1em] w-0.5 self-stretch bg-neutral-100 dark:bg-white/10"></div>
                                                 <div className="grid grid-cols-1 w-5/6 md:grid-cols-2 lg:grid-cols-5 gap-3 mt-4">
-                                                    <InputField
-                                                        control={control}
-                                                        label="Employee Id"
-                                                        name="Id"
-                                                        type="text"
-                                                        placeholder="Enter your Id"
-                                                    />
-                                                    <InputField
-                                                        control={control}
-                                                        label="Last Name"
-                                                        name="lastName"
-                                                        type="text"
-                                                        placeholder="Enter your last name"
-                                                    />
-                                                    <div className="relative">
-                                                        <InputField
-                                                            control={control}
-                                                            name="email"
-                                                            label="Email Address"
-                                                            type="email"
-                                                            placeholder="Enter your email address"
-                                                        />
-                                                    </div>
-                                                    <div className="relative">
-                                                        <InputField
-                                                            control={control}
-                                                            name="phone"
-                                                            label="Phone Number"
-                                                            type="tel"
-                                                            placeholder="Enter your phone number"
-                                                        />
-                                                    </div>
-                                                    <InputField
-                                                        control={control}
-                                                        label="Address"
-                                                        name="address"
-                                                        type="text"
-                                                        placeholder="Enter your address"
-                                                    />
-                                                    <InputField
-                                                        control={control}
-                                                        label="City"
-                                                        name="city"
-                                                        type="text"
-                                                        placeholder="Enter your city"
-                                                    />
-                                                    <InputField
-                                                        control={control}
-                                                        label="State/Province"
-                                                        name="state"
-                                                        type="text"
-                                                        placeholder="Enter your state or province"
-                                                    />
-                                                    <InputField
-                                                        control={control}
-                                                        label="Postal Code"
-                                                        name="postalCode"
-                                                        type="text"
-                                                        placeholder="Enter your postal code"
-                                                    />
-                                                    <SelectField
-                                                        control={control}
-                                                        label="Country"
-                                                        name="country"
-                                                        options={sample}
-                                                    />
+                                                    <InputField control={control} label="Employee Id" name="Id" type="text" placeholder="Enter your Id" />
+                                                    <InputField control={control} label="First Name" name="firstName" type="text" placeholder="Enter your First name" />
+                                                    <InputField control={control} label="Last Name" name="lastName" type="text" placeholder="Enter your last name" />
+                                                    <CalendarInput control={control} label="Date of Birth" name="dateOfBirth" value={null} />
+                                                    <InputField control={control} name="email" label="Email Address" type="email" placeholder="Enter your email address" />
+                                                    <InputField control={control} name="phone" label="Phone Number" type="tel" placeholder="Enter your phone number" />
+                                                    <InputField control={control} label="Address" name="address" type="text" placeholder="Enter your address" />
+                                                    <SelectField control={control} label="City" name="city" options={ukCities} />
+                                                    <SelectField control={control} label="State/Province" name="state" options={ukRegions} />
+                                                    <InputField control={control} label="Postal Code" name="postalCode" type="text" placeholder="Enter your postal code" />
+                                                    <SelectField control={control} label="Country" name="country" options={countries} />
                                                 </div>
                                             </div>
                                             <h6 className="mt-4 font-bold">Sign in Information</h6>
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                                                <InputField
-                                                    control={control}
-                                                    label="Username"
-                                                    name="username"
-                                                    type="text"
-                                                    placeholder="Enter the username"
-                                                />
-                                                <InputField
-                                                    control={control}
-                                                    label="Password"
-                                                    name="password"
-                                                    type="password"
-                                                    placeholder="Enter your password"
-                                                />
-                                                <InputField
-                                                    control={control}
-                                                    label="Confirm Password"
-                                                    name="confirmPassword"
-                                                    type="password"
-                                                    placeholder="Confirm your password"
-                                                />
+                                                <InputField control={control} label="Username" name="username" type="text" placeholder="Enter the username" />
+                                                <InputField control={control} label="Password" name="password" type="password" placeholder="Enter your password" />
+                                                <InputField control={control} label="Confirm Password" name="confirmPassword" type="password" placeholder="Confirm your password" />
                                             </div>
                                             <h6 className="mt-4 font-bold">Store Information</h6>
                                             <div className="grid grid-cols-6 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                                                <SelectField
-                                                    control={control}
-                                                    label="Role"
-                                                    name="role"
-                                                    options={sample}
-                                                />
-                                                <SelectField
-                                                    control={control}
-                                                    label="Assign Store"
-                                                    name="assignStore"
-                                                    options={sample}
-                                                />
-                                                <div className="flex items-center gap-4 col-span-2">
-                                                    <CheckboxField
-                                                        control={control}
-                                                        id="mobileAccess"
-                                                        label="Access to Mobile"
-                                                        name="mobileAccess"
-                                                    />
-                                                    <CheckboxField
-                                                        control={control}
-                                                        id="desktopAccess"
-                                                        label="Access to Desktop"
-                                                        name="desktopAccess"
-                                                    />
-                                                    <CheckboxField
-                                                        control={control}
-                                                        id="posAccess"
-                                                        label="User Access to Pos"
-                                                        name="posAccess"
-                                                    />
-                                                </div>
+                                                <SelectField control={control} label="Role" name="role" options={roles} />
+                                                <SelectField control={control} label="Assign Store" name="assignStore" options={storeLocations} />
+                                                <CheckboxField control={control} id="mobileAccess" label="Access to Mobile" name="mobileAccess" />
+                                                <CheckboxField control={control} id="desktopAccess" label="Access to Desktop" name="desktopAccess" />
+                                                <CheckboxField control={control} id="posAccess" label="User Access to Pos" name="posAccess" />
+
                                             </div>
                                             <h6 className="mt-4 font-bold">Visa Information</h6>
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                                                <InputField
-                                                    control={control}
-                                                    label="Visa Number"
-                                                    name="visaNumber"
-                                                    type="text"
-                                                    placeholder="Enter your visa number"
-                                                />
-                                                <SelectField
-                                                    control={control}
-                                                    label="Visa Type"
-                                                    name="visaType"
-                                                    options={[
-                                                        { value: 'Tourist', label: 'Tourist' },
-                                                        { value: 'Business', label: 'Business' },
-                                                        { value: 'Student', label: 'Student' },
-                                                    ]}
-                                                />
-                                                <InputField
-                                                    control={control}
-                                                    label="Issue Date"
-                                                    name="issueDate"
-                                                    type="date"
-                                                />
-                                                <InputField
-                                                    control={control}
-                                                    label="Expiry Date"
-                                                    name="expiryDate"
-                                                    type="date"
-                                                />
-                                                <InputField
-                                                    control={control}
-                                                    label="Visa Issued By"
-                                                    name="visaIssuedBy"
-                                                    type="text"
-                                                    placeholder="Enter the issuing authority"
-                                                />
-                                                <SelectField
-                                                    control={control}
-                                                    label="Visa Status"
-                                                    name="visaStatus"
-                                                    options={[
-                                                        { value: 'Active', label: 'Active' },
-                                                        { value: 'Expired', label: 'Expired' },
-                                                        { value: 'Pending', label: 'Pending' },
-                                                    ]}
-                                                />
+                                                <InputField control={control} label="Visa Number" name="visaNumber" type="text" placeholder="Enter your visa number" />
+                                                <SelectField control={control} label="Visa Type" name="visaType" options={visaTypes} />
+                                                <InputField control={control} label="Issue Date" name="issueDate" type="date" />
+                                                <InputField control={control} label="Expiry Date" name="expiryDate" type="date" />
+                                                <InputField control={control} label="Visa Issued By" name="visaIssuedBy" type="text" placeholder="Enter the issuing authority" />
+                                                <SelectField control={control} label="Visa Status" name="visaStatus" options={visaStatuses} />
                                             </div>
                                             <hr className="border-t border-zinc-300 " />
                                             <div className="flex justify-end space-x-4  mt-2 pr-4">
                                                 <button className="btn-zinc">
-                                                    Save
+                                                    Cancel
                                                 </button>
                                                 <Button type="submit" disabled={isLoading} className='btn-cyan'>
                                                     {isLoading ? (

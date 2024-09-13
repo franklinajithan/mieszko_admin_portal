@@ -7,21 +7,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { Control, FieldValues, FieldPath } from 'react-hook-form';
 import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage, // Import FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 
 interface SelectFieldProps<T extends FieldValues> {
-  name: FieldPath<T>;
+  name: string; // Changed to string for dynamic field names
   control: Control<T>;
   label: string;
   placeholder?: string;
   disabled?: boolean;
-  onChange?: (value: string) => void; // Specify the type for onChange
+  onChange?: (value: string) => void;
   options: { value: string; label: string }[];
 }
 
@@ -34,36 +34,39 @@ const SelectField = <T extends FieldValues>({
   onChange,
   options
 }: SelectFieldProps<T>) => {
-  // Generate a unique id for the select element based on the name
   const id = `select-${name}`;
 
   return (
     <FormField
       control={control}
-      name={name}
+      name={name as FieldPath<T>} // Cast to FieldPath<T>
       render={({ field, fieldState }) => {
-        const { onChange: formOnChange, value } = field; // Destructure field properties
+        const { onChange: formOnChange, value } = field;
 
-        // Ensure the value is either a string or undefined
+        // Ensure selectedValue is a string or undefined
         const selectedValue = typeof value === 'string' ? value : undefined;
 
         const handleChange = (val: string) => {
-          formOnChange(val); // Update the form state
-          if (onChange) onChange(val); // Call the custom onChange handler if provided
+          formOnChange(val);
+          if (onChange) onChange(val);
         };
 
         return (
           <div className='w-full'>
             <FormItem>
-              <LabelField label={label} htmlFor={id} /> {/* Ensure LabelField supports htmlFor */}
+              <LabelField label={label} htmlFor={id} />
               <FormControl>
-                <Select onValueChange={handleChange} value={selectedValue} defaultValue={selectedValue}>
-                  <SelectTrigger id={id} disabled={disabled} aria-label={label} aria-disabled={disabled}>
+                <Select
+                  value={selectedValue}
+                  onValueChange={handleChange}
+                  disabled={disabled}
+                >
+                  <SelectTrigger id={id} aria-label={label} aria-disabled={disabled}>
                     <SelectValue placeholder={placeholder || "Select an option"} />
                   </SelectTrigger>
                   <SelectContent>
-                    {options.map((option, index) => (
-                      <SelectItem key={index} value={option.value}>
+                    {options.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
                         {option.label}
                       </SelectItem>
                     ))}
@@ -72,7 +75,7 @@ const SelectField = <T extends FieldValues>({
               </FormControl>
               {fieldState.error?.message && (
                 <FormMessage className='text-cyan-500 mt-1'>
-                  {fieldState.error?.message} {/* Display error message */}
+                  {fieldState.error.message}
                 </FormMessage>
               )}
             </FormItem>
