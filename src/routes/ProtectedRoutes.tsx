@@ -1,7 +1,7 @@
 import React from "react";
 import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag,  } from 'react-icons/fi'; 
 import { BsFillBagPlusFill } from "react-icons/bs";
-import { FaFileAlt, FaHistory, FaStore, FaCube, FaArrowsAltH, FaFolder, FaTrademark, FaShoppingBag, FaAddressBook, FaUserPlus, FaUser, FaShieldAlt, FaUserCog, FaWarehouse, FaTools, FaExchangeAlt, FaBell, FaTrashAlt, FaFileInvoice, FaMoneyBillWave, FaTruck, FaBoxes, FaRecycle, FaFileInvoiceDollar, FaPlus, FaFire, FaCalendarAlt, FaPlusCircle, FaClock, FaClipboardList, FaPaperPlane, FaCalendarCheck, FaUsers, FaUserTag, FaFileSignature, FaPlusSquare, FaTags, FaChartPie, FaBitcoin, FaHeadphones, FaDatabase } from 'react-icons/fa';
+import { FaFileAlt, FaHistory, FaStore, FaCube, FaArrowsAltH, FaFolder, FaTrademark, FaShoppingBag, FaAddressBook, FaUserPlus,FaUsers, FaUser, FaShieldAlt, FaUserCog, FaWarehouse, FaTools, FaExchangeAlt, FaBell, FaTrashAlt, FaFileInvoice, FaMoneyBillWave, FaTruck, FaBoxes, FaRecycle, FaFileInvoiceDollar, FaPlus, FaFire, FaCalendarAlt, FaPlusCircle, FaClock, FaClipboardList, FaPaperPlane, FaCalendarCheck,  FaUserTag, FaFileSignature, FaPlusSquare, FaTags, FaChartPie, FaBitcoin, FaHeadphones, FaDatabase } from 'react-icons/fa';
 
 // Dashboard
 import EventManagement from "../dashboard/EventManagement";
@@ -21,8 +21,7 @@ import ProductManagement from "../dashboard/ProductManagement";
 
 import PurchaseOrder from "../apps/orderManagement/PurchaseOrder";
 import OrderHistory from "../apps/orderManagement/OrderHistory";
-import ManageStore from "../apps/storeManagement/ManageStore";
-import NewStore from "../apps/storeManagement/NewStore";
+;
 
 import PurchasePlanning from "../apps/orderManagement/PurchasePlanning";
 import NewPurchasePlanning from "../apps/orderManagement/NewPurchasePlanning";
@@ -42,8 +41,7 @@ import { FaBox, FaCalendarDay, FaChartBar, FaChartLine, FaFileContract } from "r
 import StoreInventory from "@/apps/storeManagement/StoreInventory";
 import StoreTransfers from "@/apps/storeManagement/StoreTransfers";
 
-import SupplierDirectory from "@/apps/supplierManagement/SupplierDirectory";
-import AddNewSupplier from "@/apps/supplierManagement/AddNewSupplier";
+
 import SupplierContracts from "@/apps/supplierManagement/SupplierContracts";
 import SupplierPerformance from "@/apps/supplierManagement/SupplierPerformance";
 import UserList from "../apps/userManagement/UserList";
@@ -78,6 +76,14 @@ import NewProduct from "@/apps/productManagement/NewProduct";
 import ProductCategory from "@/apps/productManagement/ProductCategory";
 import ProductBrand from "@/apps/productManagement/ProductBrand";
 import EditProduct from "@/apps/productManagement/EditProduct";
+import { ModeType } from "@/data/enum";
+import NewSupplier from "@/apps/supplierManagement/NewSupplier";
+import EditSupplier from "@/apps/supplierManagement/EditSupplier";
+import SupplierList from "@/apps/supplierManagement/SupplierList";
+import CompanyList from "@/apps/storeManagement/CompanyList";
+import AddEditCompany from "@/apps/storeManagement/AddEditCompany";
+import StoreList from "@/apps/storeManagement/StoreList";
+import AddEditStore from "@/apps/storeManagement/AddEditStore";
 
 const protectedRoutes = [
 
@@ -95,24 +101,30 @@ const protectedRoutes = [
   { path: "order/purchase-order", element: <PurchaseOrder icon={FaFileAlt} title="Purchase Order" /> },
   { path: "order/order-history", element: <OrderHistory icon={FaHistory} title="Order History" /> },
 
-  { path: "store/manage-store", element: <ManageStore icon={FaStore} title="Manage Store" /> },
-  { path: "store/new-store", element: <NewStore icon={FaCube} title="New Store" /> },
+
+  { path: "store/company-List", element: <CompanyList icon={FaStore} title="Company List" /> },
+  { path: "store/new-company", element: <AddEditCompany icon={FaStore} title="New Company" /> },
+  { path: "store/edit-company/:id", element: <AddEditCompany icon={FaStore} title="Edit Company" /> },
+  { path: "store/store-list", element: <StoreList icon={FaStore} title="Store List" /> },
+  { path: "store/new-store", element: <AddEditStore icon={FaCube} title="New Store" /> },
   { path: "store/inventory", element: <StoreInventory icon={FaBox} title="Store Inventory" /> },
   { path: "store/transfers", element: <StoreTransfers icon={FaArrowsAltH} title="Store Transfers" /> },
 
-  { path: "product/list", element: <ProductList icon={FaShoppingBag} title="Product List" /> },
+  { path: "product/product-list", element: <ProductList icon={FaShoppingBag} title="Product List" /> },
   { path: "product/new-product", element: <NewProduct icon={FaPlusSquare} title="New Product" /> },
-  { path: "product/category", element: <ProductCategory icon={FaFolder} title="Product Category" /> },
-  { path: "product/brand", element: <ProductBrand icon={FaTrademark} title="Product Brand" /> },
+  { path: "product/product-category", element: <ProductCategory icon={FaFolder} title="Product Category" /> },
+  { path: "product/product-brand", element: <ProductBrand icon={FaTrademark} title="Product Brand" /> },
   { path: "product/edit-product/:id", element: <EditProduct icon={FiEdit} title="Edit Product" /> },
 
-  { path: "supplier/directory", element: <SupplierDirectory icon={FaAddressBook} title="Supplier Directory" /> },
-  { path: "supplier/new", element: <AddNewSupplier icon={FaUserPlus} title="Add New Supplier" /> },
+  { path: "supplier/supplier-list", element: <SupplierList icon={FaAddressBook} title="Supplier Directory" /> },
+  { path: "supplier/new-supplier", element: <NewSupplier icon={FaUserPlus} title="Add Supplier" /> },
+  { path: "supplier/edit-supplier/:id", element: <EditSupplier icon={FaUserPlus} title="Edit Supplier" /> },
   { path: "supplier/contracts", element: <SupplierContracts icon={FaFileContract} title="Supplier Contracts" /> },
   { path: "supplier/performance", element: <SupplierPerformance icon={FaChartLine} title="Supplier Performance" /> },
 
-  { path: "user/user-grid", element: <UserList icon={FaUser} title="User List" /> },
-  { path: "user/new-user", element: <NewUser icon={FaUserPlus} title="New User" /> },
+  { path: "user/user-list", element: <UserList icon={FaUsers} title="User List" /> },
+  { path: "user/new-user", element: <NewUser icon={FaUserPlus} title="New User" type={ModeType.Add} /> },
+  { path: "user/edit-user/:id", element: <NewUser icon={FaUserPlus} title="Edit User" type={ModeType.Edit} /> },
   { path: "user/roles-and-rights", element: <RolesAndRights icon={FaShieldAlt} title="Roles and Rights" /> },
   { path: "user/roles", element: <UserRoles icon={FaUserCog} title="User Roles" /> },
   { path: "user/logs", element: <UserActivityLogs icon={FaHistory} title="User Activity Logs" /> },

@@ -43,7 +43,7 @@ const CheckboxField = <T extends FieldValues>({
                 <div className="mr-2 ml-2 mt-2">
                   <LabelField htmlFor={id} label={label} />
                 </div>
-                <div className="ml-auto">
+                <div className="ml-auto mt-1">
                   <FormControl>
                     <Checkbox
                       id={id}

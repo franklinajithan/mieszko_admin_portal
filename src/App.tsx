@@ -38,7 +38,10 @@ export default function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRoute><Toaster /><Header onSkin={setSkin} /><Main /> </AuthRoute>}>
+            <Route path="/" element={<AuthRoute><Toaster />
+            <Header onSkin={setSkin} />
+            <Main /> 
+            </AuthRoute>}>
               {protectedRoutes.map((route, index) => (
                 <Route
                   path={route.path}

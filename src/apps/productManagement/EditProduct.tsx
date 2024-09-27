@@ -14,6 +14,7 @@ import SupplierGrid from "./SupplierGrid";
 import PromotionGrid from "./PromotionGrid";
 
 import ProductForm from "./ProductForm";
+import { ModeType } from "@/data/enum";
 
 
 const EditProduct = ({ title, icon }: any) => {
@@ -32,7 +33,7 @@ const EditProduct = ({ title, icon }: any) => {
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
                     <HeaderComponents icon={icon} title={title} />
-                    <ProductForm type='edit' id={Number(decryptedValue)}/>
+                    <ProductForm type={ModeType.Edit} id={Number(decryptedValue)}/>
                     <Card className="card-one mt-4 shadow-lg rounded-lg">
                         <CardContent className="p-1">
                             <Tabs defaultValue="barcode" className="w-full">

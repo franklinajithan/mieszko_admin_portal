@@ -6,25 +6,33 @@ import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
 import { FiDownload, FiFilter, FiSettings, FiBookmark, FiUsers } from "react-icons/fi";
 import { Card, Col, Nav, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
 import HeaderComponents from "@/components/elements/HeaderSection";
-import { getUser } from "@/service/user.service";
+import { deleteUser, getUser } from "@/service/user.service";
 import { CardContent } from "@/components/ui/card";
 import { ThemeProvider } from "@mui/material";
-import { DataGrid, GridColDef, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridColDef, GridColumnVisibilityModel, GridRowId, GridRowModes, GridRowModesModel, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 import theme from "@/components/elements/GridTheme";
 import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, SaveIcon } from "lucide-react";
 
 import { z } from "zod";
 import SelectField from "@/components/elements/SelectField";
 import { sample } from "@/data/constants";
 import CheckboxField from "@/components/elements/CheckboxField";
 import { userSearchSchema } from "@/lib/utils";
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import CancelIcon from '@mui/icons-material/Close';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import DeleteUser from "./DeleteUser";
+import { useToast } from "@/hooks/use-toast";
 
-export default function UserList({ title,icon}:any) {
+export default function UserList({ title, icon }: any) {
     const { t } = useTranslation("global");
     const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
     const [rowSelectionModel, setRowSelectionModel] =
@@ -32,29 +40,118 @@ export default function UserList({ title,icon}:any) {
     const [isLoading, setIsLoading] = useState(false);
     const [skin, setSkin] = useState(currentSkin);
     const [rows, setRows] = useState([])
+    const [deleteUserId, setDeleteUserId] = useState(null)
     const navigate = useNavigate();
- 
+    const { toast } = useToast();
 
     const [isOpenSearch, setIsOpenSearch] = useState(true);
     const toggleSearchCardBody = () => {
         setIsOpenSearch(!isOpenSearch);
     };
+    const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
     const [isOpenGrid, setIsOpenGrid] = useState(true);
     const toggleGridCardBody = () => {
         setIsOpenGrid(!isOpenGrid);
     };
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
+
+
+
+
+ 
+
+    const handleCloseDeleteDialog = () => {
+        setIsDeleteDialogOpen(false);
+    };
+    const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
+        userId: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        phone: true, // Assuming 'phone' as 'mobile'
+        status: true,
+        roles: true, // Example of hiding a column
+        hasAccessToMobile: false,
+        hasAccessToBackOffice: false,
+        hasAccessToPos: false,
+        hasVisaDetails: false,
+        dob: true,
+        address: false,
+        city: false,
+        state: false,
+        country: false,
+        postcode: false
+    });
 
 
     const columns: GridColDef[] = [
-        { field: 'user_id', headerName: 'User ID', flex: 1 },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Actions',
+            width: 100,
+            cellClassName: 'actions',
+            getActions: ({ id }) => {
+                const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+                if (isInEditMode) {
+                    return [
+                        <GridActionsCellItem
+                            icon={<SaveIcon />}
+                            label="Save"
+                            sx={{
+                                color: 'primary.main',
+                            }}
+                            onClick={handleSaveClick(id)}
+                        />,
+                        <GridActionsCellItem
+                            icon={<CancelIcon />}
+                            label="Cancel"
+                            className="textPrimary"
+                            onClick={handleCancelClick(id)}
+                            color="inherit"
+                        />,
+                    ];
+                }
+
+                return [
+                    <GridActionsCellItem
+                        icon={<EditIcon />}
+                        label="Edit"
+                        className="textPrimary"
+                        onClick={handleEditClick(id)}
+                        color="inherit"
+                    />,
+                    <GridActionsCellItem
+                        icon={<DeleteIcon />}
+                        label="Delete"
+                        onClick={handleDeleteClick(id)}
+                        color="error"
+                    />,
+                ];
+            }
+        },
+        { field: 'userId', headerName: 'User ID', flex: 1 },
         { field: 'username', headerName: 'Username', flex: 1 },
         { field: 'email', headerName: 'Email', flex: 1 },
-        { field: 'first_name', headerName: 'First Name', flex: 1 },
-        { field: 'last_name', headerName: 'Last Name', flex: 1 },
-        { field: 'mobile', headerName: 'Mobile', flex: 1 },
+        { field: 'firstName', headerName: 'First Name', flex: 1 },
+        { field: 'lastName', headerName: 'Last Name', flex: 1 },
+        { field: 'phone', headerName: 'Mobile', flex: 1 }, // Assuming 'phone' as 'mobile'
         { field: 'status', headerName: 'Status', flex: 1 },
+        { field: 'roleName', headerName: 'Role', flex: 1 }, // Roles might need further formatting if shown
+        { field: 'hasAccessToMobile', headerName: 'Mobile Access', flex: 1 },
+        { field: 'hasAccessToBackOffice', headerName: 'Back Office Access', flex: 1 },
+        { field: 'hasAccessToPos', headerName: 'POS Access', flex: 1 },
+        { field: 'hasVisaDetails', headerName: 'Visa Details', flex: 1 },
+        { field: 'dob', headerName: 'Date of Birth', flex: 1 },
+        { field: 'address', headerName: 'Address', flex: 1 },
+        { field: 'city', headerName: 'City', flex: 1 },
+        { field: 'state', headerName: 'State', flex: 1 },
+        { field: 'country', headerName: 'Country', flex: 1 },
+        { field: 'postcode', headerName: 'Postcode', flex: 1 }
     ];
 
 
@@ -101,12 +198,68 @@ export default function UserList({ title,icon}:any) {
 
 
 
+    const handleEditClick = (id: GridRowId) => () => {
+
+        navigate(`/user/edit-user/${(id.toString())}`);
+        //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    };
+
+    const handleSaveClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    };
+
+    const handleDeleteClick = (id: any) => () => {
+        setDeleteUserId(id)
+        setIsDeleteDialogOpen(true);
+
+        // setRows(rows.filter((row: any) => row.id !== id));
+    };
+
+    const onclickDeleteUser = () => {
+        const removeUser = async () => {
+            try {
+                const result = await deleteUser(deleteUserId);
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                };
+                toast({ variant: "success", title: result.data.status, description: result.data.message, duration: 800 });
+                setIsDeleteDialogOpen(false);
+                const user = await getUser();
+                if (user.status !== 200) {
+                    console.error(user.data);
+                    return;
+                };
+                setRows(user.data.data);
+
+            } catch (e) {
+                console.error(e);
+            } finally {
+                // Cleanup or additional logic can go here if needed.
+            }
+        };
+
+        removeUser();
+    };
+    const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+
+        const editedRow: any = rows.find((row: any) => row.id === id);
+        if (editedRow!.isNew) {
+            setRows(rows.filter((row: any) => row.id !== id));
+        }
+    };
+
+
     const handleRedirect = () => {
         navigate('/user/new-user'); // Redirect to the desired path
     };
     return (
-        <React.Fragment>
-        
+        <div>
+
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
                     {/* Header */}
@@ -119,49 +272,16 @@ export default function UserList({ title,icon}:any) {
                         {isOpenSearch && (<CardContent>
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="">
-                                    <div className="flex w-full grid-cols-1 gap-3 mt-2 items-end">
-                                        <div className="flex grid-cols-1 gap-3 items-end w-4/6">
-                                            <SelectField
-                                                control={form.control}
-                                                label="Role"
-                                                name="role"
-                                                options={sample}
-                                            />
-                                            <SelectField
-                                                control={form.control}
-                                                label="Type"
-                                                name="type"  // Updated to match the label
-                                                options={sample}
-                                            />
-                                            <SelectField
-                                                control={form.control}
-                                                label="Reporting"
-                                                name="reporting"  // Updated to match the label
-                                                options={sample}
-                                            />
-                                            <SelectField
-                                                control={form.control}
-                                                label="Status"
-                                                name="status"  // Updated to match the label
-                                                options={sample}
-                                            />
-                                        </div>
-                                        <div className="border rounded-md flex justify-center items-center w-2/6 h-10 mb-2">
-                                            <div className="flex items-center gap-4">
-                                                <CheckboxField
-                                                    control={form.control}
-                                                    id="posAccess"  // Updated to a unique ID
-                                                    label="Users Access to POS"
-                                                    name="usersAccessToPOS"  // Updated to match the label
-                                                />
-                                                <CheckboxField
-                                                    control={form.control}
-                                                    id="mobileAccess"  // Updated to a unique ID
-                                                    label="User Access to Mobile"
-                                                    name="userAccessToMobile"  // Updated to match the label
-                                                />
-                                            </div>
-                                        </div>
+                                    <div className="flex w-full grid grid-cols-6 gap-3 mt-2">
+
+                                        <SelectField control={form.control} label="Role" name="role" options={sample} />
+                                        <SelectField control={form.control} label="Type" name="type" options={sample} />
+                                        <SelectField control={form.control} label="Reporting" name="reporting" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <CheckboxField control={form.control} id="posAccess" label="Users Access to POS" name="usersAccessToPOS" />
+                                        <CheckboxField control={form.control} id="mobileAccess" label="User Access to Mobile" name="userAccessToMobile" />
+
+
                                     </div>
 
                                     <hr className="border-t border-zinc-300 " />
@@ -170,8 +290,13 @@ export default function UserList({ title,icon}:any) {
                                             {isLoading ? (
                                                 <>
                                                     <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
-                                                </>)
-                                                : "Search"}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <FontAwesomeIcon icon={faSearch} />
+                                                    &nbsp; Search
+                                                </>
+                                            )}
                                         </Button>
                                     </div>
                                 </form>
@@ -183,7 +308,8 @@ export default function UserList({ title,icon}:any) {
                         <CardTitle title="User Grid" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
                         {isOpenGrid && (<CardContent>
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
-                                <Button type="submit" className='form-btn' onClick={handleRedirect}>
+                                <Button type="submit" className='form-btn btn-cyan' onClick={handleRedirect}>
+                                    <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                                     New User
                                 </Button>
                             </div>
@@ -195,12 +321,16 @@ export default function UserList({ title,icon}:any) {
                                                 // disableColumnFilter
                                                 // disableColumnSelector
                                                 // disableDensitySelector
-                                                checkboxSelection
+                                                // checkboxSelection
                                                 onRowSelectionModelChange={(newRowSelectionModel) => {
                                                     setRowSelectionModel(newRowSelectionModel);
                                                 }}
-                                                rowSelectionModel={rowSelectionModel}
-                                                getRowId={(row) => row.user_id}
+
+                                                columnVisibilityModel={columnVisibility}
+                                                onColumnVisibilityModelChange={(newModel) =>
+                                                    setColumnVisibility(newModel)
+                                                }
+                                                getRowId={(row) => row.userId}
                                                 rowHeight={35}
                                                 rows={rows}
                                                 columns={columns}
@@ -234,6 +364,11 @@ export default function UserList({ title,icon}:any) {
 
 
             </div>
-        </React.Fragment>
+            <DeleteUser
+                open={isDeleteDialogOpen}
+                onClose={handleCloseDeleteDialog}
+                onDelete={onclickDeleteUser}
+            />
+        </div>
     );
 }

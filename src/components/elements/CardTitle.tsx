@@ -7,7 +7,7 @@ interface CardTitleProps {
     isOpen?: boolean;
 }
 
-const CardTitle: React.FC<CardTitleProps> = ({ title, onToggle, isOpen }) => {
+const CardTitle: React.FC<CardTitleProps> = ({ title, onToggle, isOpen=false }) => {
     return (
         <>
             <Card.Header>

@@ -128,7 +128,7 @@ const SidebarMenu: React.FC = () => {
             '/order/order-history': 'orderManagement',
     
             // Store Management Menu
-            '/store/manage-store': 'storeManagement',
+            '/store/store-list': 'storeManagement',
             '/store/new-store': 'storeManagement',
             '/store/inventory': 'storeManagement',
             '/store/transfers': 'storeManagement',

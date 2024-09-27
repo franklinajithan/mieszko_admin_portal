@@ -20,10 +20,9 @@ import { Card } from '@mui/material';
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ProductDetails } from '@/interface/productInterfaces';
-import { countries, reorderingPolicies, reschedulePeriods } from '@/data/enum';
+import { countries, ModeType, reorderingPolicies, reschedulePeriods } from '@/data/enum';
 import SelectField from '@/components/elements/SelectField';
 const ProductForm = ({ id, type }: any) => {
-
     const [activeItem, setActiveItem] = useState("Product");
 
     const [isLoading, setIsLoading] = useState(false);
@@ -196,7 +195,7 @@ const ProductForm = ({ id, type }: any) => {
                 console.error(e);
             }
         };
-        if (type == 'edit') {
+        if (type == ModeType.Edit) {
             fetch();
         }
 
@@ -340,7 +339,7 @@ const ProductForm = ({ id, type }: any) => {
                                         <MenuItem href="#" text="Inventory" isActive={activeItem === "Inventory"} onClick={() => handleMenuItemClick("Inventory")} />
                                         <MenuItem href="#" text="Cost " isActive={activeItem === "Cost"} onClick={() => handleMenuItemClick("Cost")} />
                                         <MenuItem href="#" text="Price & Sales" isActive={activeItem === "PriceAndSales"} onClick={() => handleMenuItemClick("PriceAndSales")} />
-                                        <MenuItem href="#" text="Replenishment" isActive={activeItem === "Replenishment"} onClick={() => handleMenuItemClick("Replenishment")} />
+                                        {/* <MenuItem href="#" text="Replenishment" isActive={activeItem === "Replenishment"} onClick={() => handleMenuItemClick("Replenishment")} /> */}
                                         <MenuItem href="#" text="Planning" isActive={activeItem === "Planning"} onClick={() => handleMenuItemClick("Planning")} />
 
 
@@ -517,8 +516,8 @@ const ProductForm = ({ id, type }: any) => {
                                                 <InputField control={form.control} label="VAT Rate" placeholder="Enter VAT rate" name="vat.vatRate" type="number" />
                                                 <SelectField control={form.control} label="VAT Country Code" name="vat.countryCode" options={countries} />
                                                 <InputField control={form.control} label="VAT Description" placeholder="Enter VAT description" name="vat.description" type="text" />
-                                                <CalendarInput control={form.control} label="Effective From" name="vat.effectiveFrom" value={null} />
-                                                <CalendarInput control={form.control} label="Effective To" name="vat.effectiveTo" value={null} />
+                                                <CalendarInput control={form.control} label="Effective From" name="vat.effectiveFrom"  />
+                                                <CalendarInput control={form.control} label="Effective To" name="vat.effectiveTo"  />
                                                 <InputField control={form.control} label="Brand Image" placeholder="Enter brand image URL" name="brand.image" type="text" />
                                                 <InputField control={form.control} label="Brand Website" placeholder="Enter brand website" name="brand.website" type="url" />
                                                 <InputField control={form.control} label="Brand Name" placeholder="Enter brand name" name="brand.brandName" type="text" />

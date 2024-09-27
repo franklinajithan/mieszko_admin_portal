@@ -5,8 +5,9 @@ import HeaderComponents from '@/components/elements/HeaderSection';
 import { Card } from '@/components/ui/card';
 import { CardContent } from '@mui/material';
 import { SupplierForm } from './SupplierForm';
+import { ModeType } from '@/data/enum';
 
-const AddNewSupplier = ({ title, icon }: any) => {
+const NewSupplier = ({ title, icon }: any) => {
   const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
   return (
     <div>
@@ -17,7 +18,7 @@ const AddNewSupplier = ({ title, icon }: any) => {
             <Card className="card-one mt-2">
              
                 <CardContent>
-                    <SupplierForm type='add'/>
+                    <SupplierForm type={ModeType.Add}/>
                 </CardContent>
             </Card>
         </div>
@@ -25,4 +26,4 @@ const AddNewSupplier = ({ title, icon }: any) => {
   )
 }
 
-export default AddNewSupplier
+export default NewSupplier

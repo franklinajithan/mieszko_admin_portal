@@ -15,7 +15,11 @@ import {
   faCalendarCheck,
   faUsers,
   faUserTag,
-  faFileSignature
+  faFileSignature,
+  faBuilding,
+  faCog,
+  faShop,
+  faShopLock
 } from '@fortawesome/free-solid-svg-icons';
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 
@@ -41,33 +45,35 @@ export const OrderManagementMenu = [
 
 // Store Management Menu
 export const storeManagementMenu = [
-  { label: "Manage Store", link: "/store/manage-store", icon: faStore },
-  { label: "New Store Setup", link: "/store/new-store", icon: faCube },
+  { label: "Company List", link: "/store/company-list", icon: faBuilding },
+  // { label: "New Company", link: "/store/new-company", icon: faPlusSquare },
+  { label: "Store List", link: "/store/store-list", icon: faShop },
+  // { label: "New Store", link: "/store/new-store", icon: faCube },
   { label: "Store Inventory", link: "/store/inventory", icon: faBox },
-  { label: "Store Transfers", link: "/store/transfers", icon: faArrowsAltH }
+  { label: "Store Transfers", link: "/store/transfers", icon: faExchangeAlt } 
 ];
 
 // Product Management Menu
 export const productManagementMenu = [
-  { label: "Product List", link: "/product/list", icon: faShoppingBag },
+  { label: "Product List", link: "/product/product-list", icon: faShoppingBag },
   { label: "New Product", link: "/product/new-product", icon: faPlusSquare },
-  { label: "Product Category", link: "/product/category", icon: faFolder },
-  { label: "Product Brand", link: "/product/brand", icon: faTrademark },
+  { label: "Product Category", link: "/product/product-category", icon: faFolder },
+  { label: "Product Brand", link: "/product/product-brand", icon: faTrademark },
  
  
 ];
 
 // Supplier Management Menu
 export const supplierManagementMenu = [
-  { label: "Supplier Directory", link: "/supplier/directory", icon: faAddressBook },
-  { label: "Add New Supplier", link: "/supplier/new", icon: faUserPlus },
+  { label: "Supplier List", link: "/supplier/supplier-list", icon: faAddressBook },
+  { label: "New Supplier", link: "/supplier/new-supplier", icon: faUserPlus },
   { label: "Supplier Contracts", link: "/supplier/contracts", icon: faFileContract },
   { label: "Supplier Performance", link: "/supplier/performance", icon: faChartLine }
 ];
 
 // User Management Menu
 export const userManagementMenu = [
-  { label: "User List", link: "/user/user-grid", icon: faUser },
+  { label: "User List", link: "/user/user-list", icon: faUsers },
   { label: "New User", link: "/user/new-user", icon: faUserPlus },
   { label: "Roles And Rights", link: "/user/roles-and-rights", icon: faShieldAlt },
   { label: "User Roles", link: "/user/roles", icon: faUserCog },
@@ -128,7 +134,7 @@ export const leaveManagementMenu = [
 
 export const staffManagementMenu = [
   { label: "Staff List", link: "/staff/list", icon: faUsers },
-  { label: "Add Staff", link: "/staff/new", icon: faUserPlus },
+  { label: "New Staff", link: "/staff/new", icon: faUserPlus },
   { label: "Staff Roles", link: "/staff/roles", icon: faUserTag },
   { label: "Staff Reports", link: "/staff/reports", icon: faFileSignature }
 ];

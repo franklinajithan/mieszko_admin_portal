@@ -4,6 +4,10 @@ import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 import { Input } from '@/components/ui/input';
 import { FormControl, FormField, FormMessage } from '@/components/ui/form';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import CancelIcon from '@mui/icons-material/Cancel'; // Updated import
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -21,7 +25,12 @@ interface InputFieldProps<T extends FieldValues> {
     readonly?: boolean;
     id?: string;
     clipboard?: boolean; 
-    required?: boolean;  // Add a prop for required
+    verify?: boolean; 
+    showPasswordToggle?: boolean; 
+    clearInput?: boolean;
+    required?: boolean;
+    canView?: boolean; // New prop for visibility permission
+    canEdit?: boolean; // New prop for edit permission
 }
 
 const InputField = <T extends FieldValues>({
@@ -34,9 +43,15 @@ const InputField = <T extends FieldValues>({
     readonly = false,
     id = name,
     clipboard = false,
-    required = false,  // Set default to false
+    verify = false,
+    showPasswordToggle = false,
+    clearInput = false,
+    required = false,
+    canView = true, // Default: can view the field
+    canEdit = true, // Default: can edit the field
 }: InputFieldProps<T>) => {
     const [copied, setCopied] = useState(false);
+    const [showPassword, setShowPassword] = useState(type === 'password');
 
     const { field } = useController({
         name: name as FieldPath<T>, 
@@ -46,8 +61,20 @@ const InputField = <T extends FieldValues>({
     const handleCopy = (value: string | number) => {
         navigator.clipboard.writeText(value?.toString() || '');
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+        setTimeout(() => setCopied(false), 2000);
     };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleClear = () => {
+        field.onChange(''); // Clear the input field
+    };
+
+    if (!canView) {
+        return null; // If the user doesn't have view permission, hide the field
+    }
 
     return (
         <FormField
@@ -63,18 +90,18 @@ const InputField = <T extends FieldValues>({
                                 id={id}
                                 placeholder={placeholder}
                                 autoComplete='off'
-                                className='input-class pr-16 form-control' // Increase padding to the right for both icons
-                                disabled={disabled}
-                                readOnly={readonly}
-                                type={type}
+                                className='input-class pr-24 form-control'
+                                disabled={disabled || !canEdit} // Disable if no edit permission
+                                readOnly={readonly || !canEdit} // Make read-only if no edit permission
+                                type={showPassword ? 'text' : type}
                                 {...field}
-                                value={field.value ?? ''} // Fallback to empty string if field.value is null or undefined
-                                style={{ paddingRight: '40px' }} // Add space for the icons inside the input
+                                value={field.value ?? ''}
+                                style={{ paddingRight: '40px' }}
                             />
                             {clipboard && (
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                     <IconButton
-                                        onClick={() => handleCopy(field.value ?? '')} // Fallback to empty string if field.value is null
+                                        onClick={() => handleCopy(field.value ?? '')}
                                         className='absolute right-12 top-0 h-full'
                                         style={{
                                             position: 'absolute',
@@ -82,10 +109,60 @@ const InputField = <T extends FieldValues>({
                                             top: '50%',
                                             transform: 'translateY(0%)',
                                             padding: '0',
-                                            color: 'zinc'
                                         }}
                                     >
                                         <ContentCopyIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                            {verify && (
+                                <Tooltip title='Verified'>
+                                    <IconButton
+                                        className='absolute right-0 top-0 h-full'
+                                        style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                            top: '50%',
+                                            transform: 'translateY(0%)',
+                                            padding: '0',
+                                            color: 'green',
+                                        }}
+                                    >
+                                        <CheckCircleIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                            {showPasswordToggle && type === 'password' && (
+                                <Tooltip title={showPassword ? 'Hide Password' : 'Show Password'}>
+                                    <IconButton
+                                        onClick={togglePasswordVisibility}
+                                        className='absolute right-16 top-0 h-full'
+                                        style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                            top: '50%',
+                                            transform: 'translateY(0%)',
+                                            padding: '0',
+                                        }}
+                                    >
+                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                            {clearInput && (
+                                <Tooltip title='Clear'>
+                                    <IconButton
+                                        onClick={handleClear}
+                                        className='absolute right-24 top-0 h-full'
+                                        style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                            top: '50%',
+                                            transform: 'translateY(0%)',
+                                            padding: '0',
+                                        }}
+                                    >
+                                        <CancelIcon /> {/* Updated icon */}
                                     </IconButton>
                                 </Tooltip>
                             )}

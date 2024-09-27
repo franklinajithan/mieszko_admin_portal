@@ -53,9 +53,6 @@ export default function Signin2() {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   return (
     <div className="page-sign d-block py-0">
@@ -75,7 +72,7 @@ export default function Signin2() {
                     name="email"
                     label="Username"
                     placeholder="Enter your email"
-                    type="text"
+                    type={"email"}
                   />
 
                   <div className="relative">
@@ -84,19 +81,10 @@ export default function Signin2() {
                       name="password"
                       label="Password"
                       placeholder="Enter your password"
-                      type={showPassword ? "text" : "password"}
+                      showPasswordToggle={true}
+                      type={"password"}
                     />
-                    <button
-                      type="button"
-                      onClick={togglePasswordVisibility}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-3"
-                    >
-                      {showPassword ? (
-                        <FaEyeSlash size={20} />
-                      ) : (
-                        <FaEye size={20} />
-                      )}
-                    </button>
+
                   </div>
 
                   <div className="flex flex-col gap-4">

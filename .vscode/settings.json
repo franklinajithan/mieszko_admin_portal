@@ -4,6 +4,11 @@
         "fontawesome",
         "fortawesome",
         "hookform",
-        "lucide"
+        "jsbarcode",
+        "lucide",
+        "prismjs",
+        "qrcode",
+        "tailwindcss",
+        "webp"
     ]
 }

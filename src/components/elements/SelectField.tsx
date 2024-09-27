@@ -14,14 +14,15 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import 'flag-icons/css/flag-icons.min.css';
 
 interface SelectFieldProps<T extends FieldValues> {
-  name: string; // Changed to string for dynamic field names
+  name: string;
   control: Control<T>;
   label: string;
   placeholder?: string;
   disabled?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (value: string) => void; // Ensuring this is a string
   options: { value: string; label: string }[];
 }
 
@@ -39,16 +40,14 @@ const SelectField = <T extends FieldValues>({
   return (
     <FormField
       control={control}
-      name={name as FieldPath<T>} // Cast to FieldPath<T>
+      name={name as FieldPath<T>}
       render={({ field, fieldState }) => {
         const { onChange: formOnChange, value } = field;
-
-        // Ensure selectedValue is a string or undefined
-        const selectedValue = typeof value === 'string' ? value : undefined;
+        const selectedValue = typeof value === 'string' ? value : '';
 
         const handleChange = (val: string) => {
           formOnChange(val);
-          if (onChange) onChange(val);
+          if (onChange) onChange(val); // Ensure onChange receives a string
         };
 
         return (
@@ -67,6 +66,9 @@ const SelectField = <T extends FieldValues>({
                   <SelectContent>
                     {options.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
+                        {name === 'country' && (
+                          <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
+                        )}
                         {option.label}
                       </SelectItem>
                     ))}

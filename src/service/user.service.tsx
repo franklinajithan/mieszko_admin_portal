@@ -1,3 +1,7 @@
 import axiosInstance from '../helpers/axiosInstance'
 
 export const getUser = () => axiosInstance.get(`/user`);
+export const addUser = (user:any) => axiosInstance.post(`/user/create`, user);
+export const updateUser = (id:any,user:any) => axiosInstance.put(`/user/edit/${id}`, user);
+export const deleteUser = (id:any) => axiosInstance.delete(`/user/delete/${id}`);
+export const getUserById = (id:any) => axiosInstance.get(`/user/${id}`);

@@ -30,8 +30,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from "react-router-dom";
-import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
-import { FiDownload, FiFilter, FiSettings, FiBookmark, FiUsers } from "react-icons/fi";
+
 import MenuItem from '@/components/elements/MenuItem';
 import { getUser } from "@/service/user.service";
 import { CardContent } from "@/components/ui/card";
@@ -303,7 +302,7 @@ const ProductList = ({ title, icon }: any) => {
     },
     { field: 'id', headerName: 'ID', flex: 1 },
     { field: 'itemCode', headerName: 'Item Code', flex: 1 },
-    { field: 'itemName', headerName: 'Item Name', flex: 1 },
+    { field: 'itemName', headerName: 'Item Name', flex: 2 },
     { field: 'translatedName', headerName: 'Translated Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
     { field: 'labelName', headerName: 'Label Name', flex: 1 },
