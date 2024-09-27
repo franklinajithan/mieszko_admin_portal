@@ -192,7 +192,6 @@ export default function UserList({ title, icon }: any) {
 
     function onSubmit(values: z.infer<typeof userSearchSchema>) {
         setIsLoading(true);
-        //console.log(values);
         setIsLoading(false);
     }
 

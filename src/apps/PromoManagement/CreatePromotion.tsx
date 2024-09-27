@@ -102,7 +102,6 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
       }
       const promotionResponse = await uploadPromotionList(data);
       if (promotionResponse.status === 200 || promotionResponse.status === 201) {
-        debugger;
         setRows(promotionResponse.data.data.updated_label_details);
       } else {
         console.error(promotionResponse.data);

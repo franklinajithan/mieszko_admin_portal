@@ -56,16 +56,16 @@ class Sidebar extends Component<{}, SidebarState> {
                     <SidebarMenu />
                 </PerfectScrollbar>
                 <div className="sidebar-footer">
-                    <div className="sidebar-footer-top">
-                        {/* <div className="sidebar-footer-thumb">
+                    {/* <div className="sidebar-footer-top"> */}
+                    {/* <div className="sidebar-footer-thumb">
                             <img src={userAvatar} alt="" />
                         </div> */}
-                        <div className="sidebar-footer-body">
-                            {/* <h6><Link to="../pages/profile.html">Shaira Diaz</Link></h6>
+                    {/* <div className="sidebar-footer-body"> */}
+                    {/* <h6><Link to="../pages/profile.html">Shaira Diaz</Link></h6>
                             <p>Premium Member</p> */}
-                        </div>
-                        {/* <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link> */}
-                    </div>
+                    {/* </div> */}
+                    {/* <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link> */}
+                    {/* </div> */}
                     <div className={`sidebar-footer-menu ${this.state.footerMenuOpen ? 'footer-menu-show' : ''}`}>
                         <nav className="nav">
                             <Link to=""><i className="ri-edit-2-line"></i> Edit Profile</Link>
@@ -109,141 +109,134 @@ const SidebarMenu: React.FC = () => {
 
     React.useEffect(() => {
         const findActiveMenuGroup = () => {
-          // Define static routes
-          const staticMenuMap: Record<string, MenuGroupKey> = {
-            // Dashboard Menu
-            '/dashboard/finance': 'dashboard',
-            '/dashboard/events': 'dashboard',
-            '/dashboard/sales': 'dashboard',
-            '/dashboard/analytics': 'dashboard',
-            '/dashboard/crypto': 'dashboard',
-            '/dashboard/helpdesk': 'dashboard',
-            '/dashboard/storage': 'dashboard',
-            '/dashboard/product': 'dashboard',
-    
-            // Order Management Menu
-            '/order/new-purchase-planning': 'orderManagement',
-            '/order/purchase-planning': 'orderManagement',
-            '/order/purchase-order': 'orderManagement',
-            '/order/order-history': 'orderManagement',
-    
-            // Store Management Menu
-            '/store/store-list': 'storeManagement',
-            '/store/new-store': 'storeManagement',
-            '/store/inventory': 'storeManagement',
-            '/store/transfers': 'storeManagement',
-    
-            // Product Management Menu
-            '/product/category': 'productManagement',
-            '/product/brand': 'productManagement',
-            '/product/list': 'productManagement',
-            '/product/new-product': 'productManagement',
-    
-            // Supplier Management Menu
-            '/supplier/directory': 'supplierManagement',
-            '/supplier/new': 'supplierManagement',
-            '/supplier/contracts': 'supplierManagement',
-            '/supplier/performance': 'supplierManagement',
-    
-            // User Management Menu
-            '/user/user-grid': 'userManagement',
-            '/user/new-user': 'userManagement',
-            '/user/roles-and-rights': 'userManagement',
-            '/user/roles': 'userManagement',
-            '/user/logs': 'userManagement',
-    
-            // Stock Management Menu
-            '/stock/overview': 'stockManagement',
-            '/stock/adjustments': 'stockManagement',
-            '/stock/transfers': 'stockManagement',
-            '/stock/alerts': 'stockManagement',
-    
-            // Waste Management Menu
-            '/waste/tracking': 'wasteManagement',
-            '/waste/reports': 'wasteManagement',
-            '/waste/new': 'wasteManagement',
-            '/waste/reduction': 'wasteManagement',
-    
-            // Invoice Management Menu
-            '/invoice/list': 'invoiceManagement',
-            '/invoice/new': 'invoiceManagement',
-            '/invoice/payment-status': 'invoiceManagement',
-            '/invoice/reports': 'invoiceManagement',
-    
-            // Management Menu (Top-Level)
-            '/order/order-management': 'orderManagement',
-            '/store/store-management': 'storeManagement',
-            '/product/product-management': 'productManagement',
-            '/supplier/supplier-management': 'supplierManagement',
-            '/user/user-management': 'userManagement',
-            '/stock/stock-management': 'stockManagement',
-            '/waste/waste-management': 'wasteManagement',
-            '/invoice/invoice-management': 'invoiceManagement',
-    
-            // Additional Menus
-            '/delivery/list': 'deliveryManagement',
-            '/delivery/new': 'deliveryManagement',
-            '/delivery/status': 'deliveryManagement',
-            '/delivery/reports': 'deliveryManagement',
-    
-            '/promotion/list': 'promotionManagement',
-            '/promotion/new': 'promotionManagement',
-            '/promotion/active': 'promotionManagement',
-            '/promotion/reports': 'promotionManagement',
-    
-            '/rota/list': 'rotaManagement',
-            '/rota/new': 'rotaManagement',
-            '/rota/schedule': 'rotaManagement',
-            '/rota/reports': 'rotaManagement',
-    
-            '/leave/requests': 'leaveManagement',
-            '/leave/apply': 'leaveManagement',
-            '/leave/status': 'leaveManagement',
-            '/leave/reports': 'leaveManagement',
-    
-            '/staff/list': 'staffManagement',
-            '/staff/new': 'staffManagement',
-            '/staff/roles': 'staffManagement',
-            '/staff/reports': 'staffManagement',
-          };
-    
-          // Define dynamic route patterns
-          const dynamicPatterns: { pattern: string, group: MenuGroupKey }[] = [
-            { pattern: '/product/edit-product/*', group: 'productManagement' },
-            // Add other dynamic patterns here
-          ];
-    
-          // Check static paths
-          const staticMenuGroup = staticMenuMap[currentPath];
-          if (staticMenuGroup) {
-            setMenuGroups(prevState => ({
-              ...prevState,
-              [staticMenuGroup]: true
-            }));
-            return;
-          }
-    
-          // Check dynamic patterns
-          for (const { pattern, group } of dynamicPatterns) {
-            const regex = new RegExp('^' + pattern.replace('*', '.*') + '$');
-            if (regex.test(currentPath)) {
-              setMenuGroups(prevState => ({
-                ...prevState,
-                [group]: true
-              }));
-              return;
+            // Define static routes
+            const staticMenuMap: Record<string, MenuGroupKey> = {
+                // Dashboard Menu
+                '/dashboard/finance': 'dashboard',
+                '/dashboard/events': 'dashboard',
+                '/dashboard/sales': 'dashboard',
+                '/dashboard/analytics': 'dashboard',
+                '/dashboard/product': 'dashboard',
+
+                // Order Management Menu
+                '/order/new-purchase-planning': 'orderManagement',
+                '/order/purchase-planning': 'orderManagement',
+                '/order/purchase-order': 'orderManagement',
+                '/order/order-history': 'orderManagement',
+
+                // Store Management Menu
+                '/store/company-list': 'storeManagement',
+                '/store/store-list': 'storeManagement',
+                '/store/inventory': 'storeManagement',
+                '/store/transfers': 'storeManagement',
+
+                // Product Management Menu
+                '/product/product-list': 'productManagement',
+                '/product/new-product': 'productManagement',
+                '/product/product-category': 'productManagement',
+                '/product/product-brand': 'productManagement',
+
+                // Supplier Management Menu
+                '/supplier/supplier-list': 'supplierManagement',
+                '/supplier/new-supplier': 'supplierManagement',
+                '/supplier/contracts': 'supplierManagement',
+                '/supplier/performance': 'supplierManagement',
+
+                // User Management Menu
+                '/user/user-list': 'userManagement',
+                '/user/new-user': 'userManagement',
+                '/user/roles-and-rights': 'userManagement',
+                '/user/roles': 'userManagement',
+                '/user/logs': 'userManagement',
+
+                // Stock Management Menu
+                '/stock/overview': 'stockManagement',
+                '/stock/adjustments': 'stockManagement',
+                '/stock/transfers': 'stockManagement',
+                '/stock/alerts': 'stockManagement',
+
+                // Waste Management Menu
+                '/waste/tracking': 'wasteManagement',
+                '/waste/reports': 'wasteManagement',
+                '/waste/new': 'wasteManagement',
+                '/waste/reduction': 'wasteManagement',
+
+                // Invoice Management Menu
+                '/invoice/list': 'invoiceManagement',
+                '/invoice/new': 'invoiceManagement',
+                '/invoice/payment-status': 'invoiceManagement',
+                '/invoice/reports': 'invoiceManagement',
+
+                // Delivery Management Menu
+                '/delivery/list': 'deliveryManagement',
+                '/delivery/new': 'deliveryManagement',
+                '/delivery/status': 'deliveryManagement',
+                '/delivery/reports': 'deliveryManagement',
+
+                // Promotion Management Menu
+                '/promotion/promotion-list': 'promotionManagement',
+                '/promotion/create-promotion': 'promotionManagement',
+                '/promotion/Label-list': 'promotionManagement',
+                '/promotion/create-label': 'promotionManagement',
+
+                // Rota Management Menu
+                '/rota/list': 'rotaManagement',
+                '/rota/new': 'rotaManagement',
+                '/rota/schedule': 'rotaManagement',
+                '/rota/reports': 'rotaManagement',
+
+                // Leave Management Menu
+                '/leave/requests': 'leaveManagement',
+                '/leave/apply': 'leaveManagement',
+                '/leave/status': 'leaveManagement',
+                '/leave/reports': 'leaveManagement',
+
+                // Staff Management Menu
+                '/staff/list': 'staffManagement',
+                '/staff/new': 'staffManagement',
+                '/staff/roles': 'staffManagement',
+                '/staff/reports': 'staffManagement',
+
+
+            };
+
+            // Define dynamic route patterns
+            const dynamicPatterns: { pattern: string, group: MenuGroupKey }[] = [
+                { pattern: '/product/edit-product/*', group: 'productManagement' },
+                // Add other dynamic patterns here
+            ];
+
+            // Check static paths
+            const staticMenuGroup = staticMenuMap[currentPath];
+            if (staticMenuGroup) {
+                setMenuGroups(prevState => ({
+                    ...prevState,
+                    [staticMenuGroup]: true
+                }));
+                return;
             }
-          }
-    
-          // Handle case where no match is found (optional)
-          setMenuGroups(prevState => ({
-            ...prevState,
-            // Set default or handle unknown paths
-          }));
+
+            // Check dynamic patterns
+            for (const { pattern, group } of dynamicPatterns) {
+                const regex = new RegExp('^' + pattern.replace('*', '.*') + '$');
+                if (regex.test(currentPath)) {
+                    setMenuGroups(prevState => ({
+                        ...prevState,
+                        [group]: true
+                    }));
+                    return;
+                }
+            }
+
+            // Handle case where no match is found (optional)
+            setMenuGroups(prevState => ({
+                ...prevState,
+                // Set default or handle unknown paths
+            }));
         };
-    
+
         findActiveMenuGroup();
-      }, [currentPath]);
+    }, [currentPath]);
 
     const toggleMenu = (menuLabel: MenuGroupKey) => {
         setMenuGroups(prevState => {

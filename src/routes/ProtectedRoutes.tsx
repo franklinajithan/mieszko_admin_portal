@@ -65,8 +65,6 @@ import DeliveryStatus from "@/apps/DeliveryManagement/DeliveryStatus";
 import DeliveryList from "@/apps/DeliveryManagement/DeliveryList";
 import PromotionList from "@/apps/PromoManagement/PromotionList";
 import CreatePromotion from "@/apps/PromoManagement/CreatePromotion";
-import ActivePromotions from "@/apps/PromoManagement/ActivePromotions";
-import PromotionReports from "@/apps/PromoManagement/PromotionReports";
 import RotaReports from "@/apps/RotaManagement/RotaReports";
 import RotaSchedule from "@/apps/RotaManagement/RotaSchedule";
 import CreateRota from "@/apps/RotaManagement/CreateRota";
@@ -84,6 +82,8 @@ import CompanyList from "@/apps/storeManagement/CompanyList";
 import AddEditCompany from "@/apps/storeManagement/AddEditCompany";
 import StoreList from "@/apps/storeManagement/StoreList";
 import AddEditStore from "@/apps/storeManagement/AddEditStore";
+import LabelList from "@/apps/PromoManagement/LabelList";
+import CreateLabel from "@/apps/PromoManagement/CreateLabel";
 
 const protectedRoutes = [
 
@@ -149,10 +149,10 @@ const protectedRoutes = [
   { path: "delivery/status", element: <DeliveryStatus icon={FaTruck} title="Delivery Status" /> },
   { path: "delivery/reports", element: <DeliveryReports icon={FaFileAlt} title="Delivery Reports" /> },
 
-  { path: "promotion/list", element: <PromotionList icon={FaTags} title="Promotion List" /> },
-  { path: "promotion/new", element: <CreatePromotion icon={FaPlus} title="Create Promotion" /> },
-  { path: "promotion/active", element: <ActivePromotions icon={FaFire} title="Active Promotions" /> },
-  { path: "promotion/reports", element: <PromotionReports icon={FaChartLine} title="Promotion Reports" /> },
+  { path: "promotion/promotion-list", element: <PromotionList icon={FaTags} title="Promotion List" /> },
+  { path: "promotion/create-promotion", element: <CreatePromotion icon={FaPlus} title="Create Promotion" /> },
+  { path: "promotion/label-list", element: <LabelList icon={FaFire} title="Label List" /> },
+  { path: "promotion/create-label", element: <CreateLabel icon={FaChartLine} title="Create Label" /> },
 
   { path: "rota/list", element: <RotaList icon={FaCalendarAlt} title="Rota List" /> },
   { path: "rota/new", element: <CreateRota icon={FaPlusCircle} title="Create Rota" /> },

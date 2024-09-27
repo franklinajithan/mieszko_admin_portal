@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
 
     }
     else{
-      console.log(error)
+      console.error(error)
     }
     return Promise.reject(error);
   },

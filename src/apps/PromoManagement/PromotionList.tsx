@@ -53,6 +53,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
         promotionResponse.data.data.forEach((element: any) => {
           element.image = element.barcode + '.webp';
         });
+
         setRows(promotionResponse.data.data);
       } else {
         console.error(promotionResponse.data);
@@ -73,12 +74,11 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
 
   useEffect(() => {
     setReloadFrame(false)
-    console.log(rows)
-    if(rows.length > 0) {
+    if (rows.length > 0) {
       const selectedRows: any = rows.filter((row) =>
         rowSelectionModel.includes(row.labelId)
       );
-  
+
       setDataForPdf(selectedRows);
     }
 
@@ -201,7 +201,6 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
 
 
   const updateImage = async (event: any) => {
-    debugger
     const file = event.target.files?.[0];
     //  setIsLoading(true);
 
@@ -221,7 +220,6 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
             ? { ...row, image: row.image.split('?')[0] + '?' + timestamp } // Update only the specific row image URL
             : row
         );
-
         setRows(updatedRows); // Update the rows with the new image URL for the specific row
         //    setIsLoading(false); // Stop loading spinner after image upload
       } else {
@@ -248,13 +246,13 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   };
 
   const processRowUpdate = (newRow: any, oldRow: any) => {
-debugger;
     const updatePromoData = async () => {
       setReloadFrame(false);
       try {
         const promotionResponse = await updateProductList(newRow.labelId, newRow);
         if (promotionResponse.status === 200 || promotionResponse.status === 201) {
-                setRows(promotionResponse.data.data);
+
+          // Alert Should come here
         } else {
           console.error(promotionResponse.data);
         }
@@ -284,31 +282,6 @@ debugger;
 
 
 
-  // const updatePromotions = async (formattedData: any) => {
-  //   setIsLoading(true);
-  //   try {
-
-  //     let data = {
-  //       "canUpdateDuplicates": true,
-  //       "item_details": formattedData
-  //     }
-  //     const promotionResponse = await uploadPromotionList(data);
-  //     if (promotionResponse.status === 200 || promotionResponse.status === 201) {
-  //       setRows(promotionResponse.data.data.updated_label_details);
-
-  //     } else {
-  //       console.error(promotionResponse.data);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-
-
-
   const CreatePdfFile = () => {
     const pdfContent = document.getElementById("pdf")?.innerHTML;
 
@@ -332,19 +305,17 @@ debugger;
       `);
 
       myWindow?.document.close();
-
-      // Wait for the window to load before printing
       myWindow?.addEventListener('load', () => {
-        myWindow.focus(); // Focus on the new window
-        myWindow.print(); // Print the content
-        myWindow.close(); // Close the window after printing
+        myWindow.focus();
+        myWindow.print(); 
+        myWindow.close(); 
       });
     } else {
       console.error("No content available for PDF generation.");
     }
   };
 
-  const [showBarcodeButton, setShowBarcodeButton] = useState(false);
+  const [showBarcodeButton, setShowBarcodeButton] = useState(true);
   const [reloadFrame, setReloadFrame] = useState(true);
   const toggleSwitchBarcode = () => {
     setShowBarcodeButton(!showBarcodeButton);
@@ -363,10 +334,9 @@ debugger;
   const handleDateRangeSelect = (range: DateRange | undefined) => {
     const formattedStartDate = range?.from ? formatDate(range.from) : '';
     const formattedEndDate = range?.to ? formatDate(range.to) : '';
-    setSelectedRange(range); // This still works for range selection
-    setPromoStartDate(formattedStartDate); // No error, since it accepts string
+    setSelectedRange(range); 
+    setPromoStartDate(formattedStartDate);
     setPromoEndDate(formattedEndDate);
-    console.log("Selected Date Range:", range);
   };
   return (
     <div className="main main-app p-lg-1">

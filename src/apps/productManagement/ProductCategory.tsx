@@ -350,17 +350,17 @@ const ProductCategory = ({ title,icon}:any) => {
         const { errors } = formState;
 
         if (Object.keys(errors).length > 0) {
-            console.log('Invalid fields:', errors);
+            console.error('Invalid fields:', errors);
 
             // Iterate over errors object to get detailed information
             Object.keys(errors).forEach((fieldName) => {
                 const error = errors[fieldName as keyof typeof errors];
                 if (error) {
-                    console.log(`Field: ${fieldName}, Error: ${error.message}`);
+                    console.error(`Field: ${fieldName}, Error: ${error.message}`);
                 }
             });
         } else {
-            console.log('All fields are valid!');
+            console.error('All fields are valid!');
         }
     };
 

@@ -162,7 +162,7 @@ export default function PurchasePlanning({ title,icon}:any) {
       ;
 
     const handleRetailValueChange = (values: { operation: string; from: string; to: string }) => {
-        // console.log(values);
+
     };
 
 
@@ -176,7 +176,6 @@ export default function PurchasePlanning({ title,icon}:any) {
 
     function onSubmit(values: z.infer<typeof purchasePlanningFormSchema>) {
         setIsLoading(true);
-      //  console.log(values);
         setIsLoading(false);
     }
 

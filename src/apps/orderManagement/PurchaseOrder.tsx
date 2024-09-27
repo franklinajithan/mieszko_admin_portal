@@ -96,12 +96,11 @@ const PurchaseOrder = ({ title,icon}:any) => {
     };
 
     const handleRetailValueChange = (values: { operation: string; from: string; to: string }) => {
-        //   console.log(values);
+
     };
 
     function onSubmit(values: z.infer<typeof purchaseOrderFormSchema>) {
         setIsLoading(true);
-       // console.log(values);
         setIsLoading(false);
     }
 

@@ -167,7 +167,6 @@ export default function SupplierList({ title, icon }: any) {
 
   function onSubmit(values: z.infer<typeof userSearchSchema>) {
     setIsLoading(true);
-    //console.log(values);
     setIsLoading(false);
   }
   const [isOpenGrid, setIsOpenGrid] = useState(true);

@@ -19,19 +19,16 @@ import {
   faBuilding,
   faCog,
   faShop,
-  faShopLock
+  faShopLock,
+  faTag
 } from '@fortawesome/free-solid-svg-icons';
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 
 // Dashboard Menu
 export const dashboardMenu = [
   { label: "Finance Monitoring", link: "/dashboard/finance", icon: faChartLine },
-  // { label: "Events Management", link: "/dashboard/events", icon: faCalendarDay },
   { label: "Sales Monitoring", link: "/dashboard/sales", icon: faChartBar },
   { label: "Website Analytics", link: "/dashboard/analytics", icon: faChartPie },
-  // { label: "Cryptocurrency", link: "/dashboard/crypto", icon: faBitcoin },
-  // { label: "Helpdesk Service", link: "/dashboard/helpdesk", icon: faHeadphones },
-  // { label: "Storage Management", link: "/dashboard/storage", icon: faDatabase },
   { label: "Product Management", link: "/dashboard/product", icon: faBox }
 ];
 
@@ -112,10 +109,10 @@ export const deliveryManagementMenu = [
 ];
 
 export const promotionManagementMenu = [
-  { label: "Promotion List", link: "/promotion/list", icon: faTags },
-  { label: "Create Promotion", link: "/promotion/new", icon: faPlus },
-  { label: "Active Promotions", link: "/promotion/active", icon: faFire },
-  { label: "Promotion Reports", link: "/promotion/reports", icon: faChartLine }
+  { label: "Promotion List", link: "/promotion/promotion-list", icon: faTags },
+  { label: "Create Promotion", link: "/promotion/create-promotion", icon: faPlus },
+  { label: "Label List", link: "/promotion/label-list", icon: faTag  },
+  { label: "Create Label", link: "/promotion/create-label", icon: faClipboardList  }
 ];
 
 export const rotaManagementMenu = [

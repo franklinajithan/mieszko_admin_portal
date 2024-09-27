@@ -203,7 +203,6 @@ const NewPurchasePlanning = ({ title, icon }: any) => {
 
     function onSubmit(values: z.infer<typeof newPurchasePlanningFormSchema>) {
         setIsLoading(true);
-        //console.log(values);
         setIsLoading(false);
     }
 

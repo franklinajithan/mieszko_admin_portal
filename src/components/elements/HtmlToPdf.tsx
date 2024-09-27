@@ -3,6 +3,7 @@ import Barcode from 'react-barcode';// Ensure you import the Barcode component
 import circle from '../../assets/img/yellow-circle.png';
 import logo from '../../assets/img/logo.png';
 import { StringDecoder } from 'string_decoder';
+import ImageProcessor from './ImageProcessor';
 interface DataItem {
     date: string;
     price: number | string;
@@ -29,14 +30,17 @@ const formattedDate = `${day}-${month}-${year}`;
 
 
 const HtmlToPdf = ({ data, barcode, startDate, endDate }: HtmlToPdfProps) => {
-    console.log(data)
     if (startDate == null) { startDate = formattedDate }
-    if (endDate == null) { endDate = "Until Further Notice" }
+    if (endDate == null || endDate == "") { endDate = "Until Further Notice" }
 
     const [imageUrl, setImageUrl] = useState<any>('http://192.168.128.126:5000/api/img/');
     const [barcodeShow, setBarcodeShow] = useState(barcode);
     if (!Array.isArray(data) || data.length === 0) {
-        return <p>No valid data available.</p>; // Handle the case where data is not an array or empty
+        return (
+            <div className="text-left p-4">
+                <p></p>
+            </div>
+        );
     }
 
     return (
@@ -75,7 +79,7 @@ const HtmlToPdf = ({ data, barcode, startDate, endDate }: HtmlToPdfProps) => {
                                             <div className="text-center text-[40px] font-bold text-white">Promotional Period</div>
 
                                             {(item.date == '' || item.date == null) && <div className="text-center mt-[-3px] text-[25px] font-bold text-white">
-                                                {startDate} - {endDate}
+                                                {startDate} {startDate?'- ': ''}{endDate}
                                             </div>}
 
                                             {(item.date != '' && item.date != null) && <div className="text-center mt-[-3px] text-[30px] font-bold text-white">
@@ -88,15 +92,12 @@ const HtmlToPdf = ({ data, barcode, startDate, endDate }: HtmlToPdfProps) => {
                             </div>
                             <div className="flex flex-wrap">
                                 <div className="w-6/12">
-                                    <div className="h-[400px] w-[550px] ml-2 flex justify-center items-center">
+                                    <div className="h-[425px] w-[550px] ml-2 flex justify-center items-center">
+                                       
+                                        
                                         {item.barcode && (
-                                            <img
-                                              
-                                                src={imageUrl + item.barcode + '.webp'}
-                                                alt="Product"
-                                                style={{ maxHeight: '380px', maxWidth: '550px' }}
-                                                className="object-contain"
-                                            />
+                                             <ImageProcessor imageUrl={imageUrl + item.barcode + '.webp'} maxHeight={'420px'} maxWidth= {'550px'}/>
+                                            
                                         )}
                                     </div>
                                 </div>
@@ -106,6 +107,7 @@ const HtmlToPdf = ({ data, barcode, startDate, endDate }: HtmlToPdfProps) => {
                                             className="image-shadow relative w-auto h-auto max-h-[87%] max-w-[96%] mt-[-26px]"
                                             src={circle}
                                             alt="Circle"
+                                            style={{ filter: 'drop-shadow(5px 11px 15px #222)' }}
                                         />
 
                                         {!(String(item.price).toLowerCase().includes("for")) && (

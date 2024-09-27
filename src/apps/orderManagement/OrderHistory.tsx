@@ -29,10 +29,9 @@ const OrderHistory = ({ title,icon}:any) => {
 
     const onSubmit = (values: z.infer<typeof orderHistoryFormSchema>) => {
         setIsLoading(true);
-     //   console.log(values);
         setTimeout(() => {
             setIsLoading(false);
-        }, 2000); // Simulate a network request
+        }, 2000); 
     };
 
     return (

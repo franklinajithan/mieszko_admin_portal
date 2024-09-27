@@ -207,7 +207,6 @@ const StoreList = ({ title, icon }: any) => {
 
   const onSubmit = (data: any) => {
     // Handle form submission
-    //console.log(data);
   };
 
   const [pageSize, setPageSize] = React.useState(5); // Set default rows per page
