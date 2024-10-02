@@ -22,10 +22,14 @@ import { RotatingSquaresLoader } from "@/components/elements/SquaresLoader";
 import CardTitle from "@/components/elements/CardTitle";
 import Tooltip from "@mui/material/Tooltip";
 import IOSSwitch from "@/components/elements/toggleTheme";
-import HtmlToPdf from "@/components/elements/HtmlToPdf";
+import PromoCard from "@/components/elements/PromoCard";
 import { DatePickerWithRange } from "@/components/elements/DatePickerWithRange";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/lib/formatDate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import ImageProcessor from "@/components/elements/ImageProcessor";
+import { imageUrlDev } from "@/_config";
 
 const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) => {
   const { t } = useTranslation("global");
@@ -37,7 +41,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   const [uploadImageId, setUploadImageId] = useState(false);
   const [currentRowId, setCurrentRowId] = useState(null);
   const random = Math.floor(Math.random() * 100000);
-  const [imageUrl, setImageUrl] = useState<any>('http://192.168.128.126:5000/public/img/label/');
+  const imageUrl =imageUrlDev;
   const timestamp = new Date().getTime();
   const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({});
@@ -136,16 +140,14 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
       width: 150,
       editable: false,
       renderCell: (params) => {
-        //  const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; 
+       
+       // const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; 
         const imageUrlWithNoCache = `${imageUrl}${params.row.image}`;
         return (
           <Tooltip
             title={
-              <img
-                src={imageUrlWithNoCache}
-                alt="Enlarged Product"
-                className="w-70 h-auto max-w-xs object-contain"
-              />
+              <ImageProcessor imageUrl={imageUrlWithNoCache} maxHeight={300} maxWidth={300} backgroundWhite/>
+            
             }
             arrow
             placement="top"
@@ -307,8 +309,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
       myWindow?.document.close();
       myWindow?.addEventListener('load', () => {
         myWindow.focus();
-        myWindow.print(); 
-        myWindow.close(); 
+        myWindow.print();
+        myWindow.close();
       });
     } else {
       console.error("No content available for PDF generation.");
@@ -334,7 +336,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   const handleDateRangeSelect = (range: DateRange | undefined) => {
     const formattedStartDate = range?.from ? formatDate(range.from) : '';
     const formattedEndDate = range?.to ? formatDate(range.to) : '';
-    setSelectedRange(range); 
+    setSelectedRange(range);
     setPromoStartDate(formattedStartDate);
     setPromoEndDate(formattedEndDate);
   };
@@ -390,7 +392,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
                   </div>
                 </div>
                 <Button className="btn-cyan" onClick={CreatePdfFile}>
-                  Create Pdf File
+                  <FontAwesomeIcon icon={faPrint} className="mr-2" />
+                  Print
                 </Button>
               </div>
 
@@ -460,7 +463,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
           <div className="ml-auto">
             <CardContent className="w-9/12 ">
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
-                <HtmlToPdf data={dataForPdf} barcode={showBarcodeButton} startDate={promoStartDate} endDate={promoEndDate} /></div>}
+                <PromoCard data={dataForPdf} barcode={showBarcodeButton} startDate={promoStartDate} endDate={promoEndDate} /></div>}
             </CardContent>
           </div>
 

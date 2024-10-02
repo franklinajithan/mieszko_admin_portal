@@ -4,9 +4,9 @@ import { Card, Container, Nav } from "react-bootstrap";
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
 
-import { VectorMap } from "@react-jvectormap/core";
-import { worldMill } from "@react-jvectormap/world";
-import { usAea } from "@react-jvectormap/unitedstates";
+// import { VectorMap } from "@react-jvectormap/core";
+// import { worldMill } from "@react-jvectormap/world";
+// import { usAea } from "@react-jvectormap/unitedstates";
 
 export default function MapVector() {
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function MapVector() {
           <Card className="card-example">
             <Card.Body>
               <div className="ht-350">
-                <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} />
+                {/* <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} /> */}
               </div>
             </Card.Body>  
             <Card.Footer>
@@ -55,7 +55,7 @@ export default function MapVector() {
           <Card className="card-example">
             <Card.Body>
               <div className="ht-350">
-                <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} />
+                {/* <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} /> */}
               </div>
             </Card.Body>
             <Card.Footer>
@@ -71,7 +71,7 @@ export default function MapVector() {
           <Card className="card-example">
             <Card.Body>
               <div className="ht-350">
-                <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} />
+                {/* <VectorMap map={worldMill} backgroundColor="#fff" regionStyle={regStyle} /> */}
               </div>
             </Card.Body>
             <Card.Footer>
@@ -87,7 +87,7 @@ export default function MapVector() {
           <Card className="card-example">
             <Card.Body>
               <div className="ht-350">
-                <VectorMap map={usAea} backgroundColor="#fff" regionStyle={regStyle} />
+                {/* <VectorMap map={usAea} backgroundColor="#fff" regionStyle={regStyle} /> */}
               </div>
             </Card.Body>
             <Card.Footer>
@@ -103,7 +103,7 @@ export default function MapVector() {
           <Card className="card-example">
             <Card.Body>
               <div className="ht-350">
-                <VectorMap map={usAea} backgroundColor="#fff" regionStyle={regStyle} selectedRegions={["US-CA","US-TX", "US-MO", "US-CO"]} />
+                {/* <VectorMap map={usAea} backgroundColor="#fff" regionStyle={regStyle} selectedRegions={["US-CA","US-TX", "US-MO", "US-CO"]} /> */}
               </div>
             </Card.Body>
             <Card.Footer>

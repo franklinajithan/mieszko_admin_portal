@@ -39,8 +39,8 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<AuthRoute><Toaster />
-            <Header onSkin={setSkin} />
-            <Main /> 
+              <Header onSkin={setSkin} />
+              <Main />
             </AuthRoute>}>
               {protectedRoutes.map((route, index) => (
                 <Route

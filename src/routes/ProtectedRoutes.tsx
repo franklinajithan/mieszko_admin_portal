@@ -82,8 +82,10 @@ import CompanyList from "@/apps/storeManagement/CompanyList";
 import AddEditCompany from "@/apps/storeManagement/AddEditCompany";
 import StoreList from "@/apps/storeManagement/StoreList";
 import AddEditStore from "@/apps/storeManagement/AddEditStore";
-import LabelList from "@/apps/PromoManagement/LabelList";
-import CreateLabel from "@/apps/PromoManagement/CreateLabel";
+import LabelList from "@/apps/LabelManagement/LabelList";
+import DeliLabel from "@/apps/LabelManagement/DeliLabel";
+import BakeryLabel from "@/apps/LabelManagement/BakeryLabel";
+import FruitVegLabel from "@/apps/LabelManagement/FruitVegLabel";
 
 const protectedRoutes = [
 
@@ -151,8 +153,13 @@ const protectedRoutes = [
 
   { path: "promotion/promotion-list", element: <PromotionList icon={FaTags} title="Promotion List" /> },
   { path: "promotion/create-promotion", element: <CreatePromotion icon={FaPlus} title="Create Promotion" /> },
-  { path: "promotion/label-list", element: <LabelList icon={FaFire} title="Label List" /> },
-  { path: "promotion/create-label", element: <CreateLabel icon={FaChartLine} title="Create Label" /> },
+  // { path: "promotion/label-list", element: <LabelList icon={FaFire} title="Label List" /> },
+  // { path: "promotion/create-label", element: <CreateLabel icon={FaChartLine} title="Create Label" /> },
+
+  { path: "label/deli-label", element: <DeliLabel icon={FaTags} title="Create Deli Label" /> },
+  { path: "label/fruit-veg-label", element: <FruitVegLabel icon={FaPlus} title="Create Fruit & Veg Label" /> },
+  { path: "label/bakery-label", element: <BakeryLabel icon={FaFire} title="Create Bakery Label" /> },
+  // { path: "label/create-label", element: <CreateLabel icon={FaChartLine} title="Create Label" /> },
 
   { path: "rota/list", element: <RotaList icon={FaCalendarAlt} title="Rota List" /> },
   { path: "rota/new", element: <CreateRota icon={FaPlusCircle} title="Create Rota" /> },

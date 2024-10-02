@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { Button, Card, Col, Nav, OverlayTrigger, ProgressBar, Row, Table, Tooltip } from "react-bootstrap";
 import { dp1, dp2 } from "../data/DashboardData";
 import ReactApexChart from "react-apexcharts";
-import { VectorMap } from "@react-jvectormap/core";
-import { worldMill } from "@react-jvectormap/world";
+// import { VectorMap } from "@react-jvectormap/core";
+// import { worldMill } from "@react-jvectormap/world";
 
 export default function WebsiteAnalytics({ title, icon }: any) {
 
@@ -580,7 +580,7 @@ export default function WebsiteAnalytics({ title, icon }: any) {
                     <Button variant="white" className="btn-sm">Show Full Report</Button>
                   </Col>
                   <Col md="8" className="mt-5 mt-md-0">
-                    <VectorMap map={worldMill} backgroundColor={(skin === "dark") ? "#192030" : "#fff"} regionStyle={regStyle} selectedRegions={["US", "IN", "AU", "BR", "CN", "JP", "SA"]} className="vmap-one" />
+                    {/* <VectorMap map={worldMill} backgroundColor={(skin === "dark") ? "#192030" : "#fff"} regionStyle={regStyle} selectedRegions={["US", "IN", "AU", "BR", "CN", "JP", "SA"]} className="vmap-one" /> */}
                   </Col>
                 </Row>
               </Card.Body>

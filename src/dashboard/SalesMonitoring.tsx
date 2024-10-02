@@ -7,8 +7,8 @@ import Avatar from "../components/Avatar";
 import ReactApexChart from "react-apexcharts";
 import { Bar } from 'react-chartjs-2';
 import { dp1, dp2, dp3 } from "../data/DashboardData";
-import { VectorMap } from "@react-jvectormap/core";
-import { usAea } from "@react-jvectormap/unitedstates";
+// import { VectorMap } from "@react-jvectormap/core";
+// import { usAea } from "@react-jvectormap/unitedstates";
 
 import img6 from "../assets/img/img6.jpg";
 import img7 from "../assets/img/img7.jpg";
@@ -522,7 +522,7 @@ export default function SalesMonitoring({ title, icon }: any) {
                 </Nav>
               </Card.Header>
               <Card.Body className="p-3 p-xl-4">
-                <VectorMap map={usAea} backgroundColor={(skin === "dark")? "#192030" : "#fff"} regionStyle={regStyle} selectedRegions={["US-CA", "US-TX", "US-MO", "US-CO", "US-NY"]} className="ht-200 mb-4" />
+                {/* <VectorMap map={usAea} backgroundColor={(skin === "dark")? "#192030" : "#fff"} regionStyle={regStyle} selectedRegions={["US-CA", "US-TX", "US-MO", "US-CO", "US-NY"]} className="ht-200 mb-4" /> */}
 
                 <Table className="table-one">
                   <thead>

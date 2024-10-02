@@ -20,8 +20,11 @@ import { Button } from "@/components/ui/button";
 import { RotatingSquaresLoader } from "@/components/elements/SquaresLoader";
 import { Tooltip } from "@mui/material";
 import { Dialog, DialogTitle, DialogActions } from '@mui/material';
-import HtmlToPdf from "@/components/elements/HtmlToPdf";
+import PromoCard from "@/components/elements/PromoCard";
 import IOSSwitch from "@/components/elements/toggleTheme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { imageUrlDev } from "@/_config";
 
 const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }) => {
   const { t } = useTranslation("global");
@@ -32,7 +35,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
   const [currentRowId, setCurrentRowId] = useState(null);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [reloadFrame, setReloadFrame] = useState(true);
-  const [imageUrl, setImageUrl] = useState<any>('http://192.168.128.126:5000/api/img/');
+  const imageUrl = imageUrlDev;
   // useEffect(() => {
   //   const fetchPromotions = async () => {
   //     setIsLoading(true);
@@ -54,7 +57,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
   // }, []);
 
   const headers = [
-    'barcode', 'brand', 'uom', 'size', 'itemName', 'price', 'image', 'date'
+    'barcode', 'brand', 'uom', 'size', 'itemName', 'price', 'date'
 
   ];
 
@@ -82,7 +85,9 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         return rowData;
       });
 
-
+      formattedData.forEach((element: any) => {
+        element.image = element.barcode + '.webp';
+      });
       updatePromotions(formattedData);
       setRows(formattedData); // Update rows with the formatted data
     };
@@ -102,6 +107,10 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
       }
       const promotionResponse = await uploadPromotionList(data);
       if (promotionResponse.status === 200 || promotionResponse.status === 201) {
+        promotionResponse.data.data.updated_label_details
+        .forEach((element: any) => {
+          element.image = element.barcode + '.webp';
+        });
         setRows(promotionResponse.data.data.updated_label_details);
       } else {
         console.error(promotionResponse.data);
@@ -122,13 +131,14 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
       { header: 'Unit of Measure', key: 'uom' },
       { header: 'Size', key: 'size' },
       { header: 'Item Name', key: 'itemName' },
-      { header: 'Translated Name', key: 'translatedName' },
-      { header: 'Ingredients', key: 'ingredients' },
-      { header: 'Translated Ingredients', key: 'translatedIngredients' },
-      { header: 'Allergic Details', key: 'allergicDetails' },
-      { header: 'Translated Allergic Details', key: 'translatedAllergicDetails' },
-      { header: 'Status', key: 'status' },
-      { header: 'Price', key: 'price' }
+      // { header: 'Translated Name', key: 'translatedName' },
+      // { header: 'Ingredients', key: 'ingredients' },
+      // { header: 'Translated Ingredients', key: 'translatedIngredients' },
+      // { header: 'Allergic Details', key: 'allergicDetails' },
+      // { header: 'Translated Allergic Details', key: 'translatedAllergicDetails' },
+      // { header: 'Status', key: 'status' },
+      { header: 'Price', key: 'price' },
+      { header: 'Date', key: 'date' }
     ];
 
     // Create a new workbook and worksheet
@@ -193,15 +203,17 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
       editable: false,
       renderCell: (params) => {
         //  const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; // Append timestamp
-        const imageUrlWithNoCache = `${imageUrl}${params.row.barcode}.webp`; // Append timestamp
+        const imageUrlWithNoCache = `${imageUrl}${params.row.image}`;
+
         return (
           <Tooltip
             title={
               <img
-                src={imageUrlWithNoCache}
-                alt="Enlarged Product"
-                className="w-70 h-auto max-w-xs object-contain"
-              />
+              src={imageUrlWithNoCache}
+              alt="Product"
+              className="w-30 h-auto object-contain"
+             
+            />
             }
             arrow
             placement="top"
@@ -211,6 +223,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
               src={imageUrlWithNoCache}
               alt="Product"
               className="w-30 h-auto object-contain"
+              
             />
           </Tooltip>
         );
@@ -392,7 +405,8 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
                   </span>
                 </label>
                 <Button className="btn-cyan" onClick={CreatePdfFile}>
-                  Create Pdf File
+                  <FontAwesomeIcon icon={faPrint} className="mr-2" />
+                  Print
                 </Button>
                 <div className="flex items-end h-full">
                   <div className="w-full">
@@ -455,7 +469,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <div className="ml-auto">
             <CardContent className="w-9/12 ">
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
-                <HtmlToPdf data={rows} barcode={showBarcodeButton} /></div>}
+                <PromoCard data={rows} barcode={showBarcodeButton} /></div>}
             </CardContent>
           </div>
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
-import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog, FaRecycle, FaFileInvoiceDollar, FaTruckLoading, FaTags, FaUserShield, FaClipboardList, FaStoreAlt, FaChartLine, FaTruck, FaBullhorn, FaUserTie, FaRegClock, FaCalendarCheck } from 'react-icons/fa';
+import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog, FaRecycle, FaFileInvoiceDollar, FaTruckLoading, FaTags, FaUserShield, FaClipboardList, FaStoreAlt, FaChartLine, FaTruck, FaBullhorn, FaUserTie, FaRegClock, FaCalendarCheck, FaCogs, FaGrinBeamSweat } from 'react-icons/fa';
 
 import {
     dashboardMenu, OrderManagementMenu, storeManagementMenu,
@@ -11,13 +11,14 @@ import {
     invoiceManagementMenu, wasteManagementMenu,
     deliveryManagementMenu,
     promotionManagementMenu,
+    labelManagementMenu,
     rotaManagementMenu,
     leaveManagementMenu,
     staffManagementMenu,
 } from "../data/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Make sure to import FontAwesomeIcon
 type MenuGroupKey = 'dashboard' | 'orderManagement' | 'storeManagement' | 'productManagement' | 'supplierManagement' | 'stockManagement' |
-    'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' | 'rotaManagement' | 'leaveManagement' | 'staffManagement';
+    'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' |'labelManagement'| 'rotaManagement' | 'leaveManagement' | 'staffManagement';
 
 interface MenuItem {
     label: string;
@@ -55,31 +56,7 @@ class Sidebar extends Component<{}, SidebarState> {
                 <PerfectScrollbar className="sidebar-body" ref={ref => this._scrollBarRef = ref}>
                     <SidebarMenu />
                 </PerfectScrollbar>
-                <div className="sidebar-footer">
-                    {/* <div className="sidebar-footer-top"> */}
-                    {/* <div className="sidebar-footer-thumb">
-                            <img src={userAvatar} alt="" />
-                        </div> */}
-                    {/* <div className="sidebar-footer-body"> */}
-                    {/* <h6><Link to="../pages/profile.html">Shaira Diaz</Link></h6>
-                            <p>Premium Member</p> */}
-                    {/* </div> */}
-                    {/* <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link> */}
-                    {/* </div> */}
-                    <div className={`sidebar-footer-menu ${this.state.footerMenuOpen ? 'footer-menu-show' : ''}`}>
-                        <nav className="nav">
-                            <Link to=""><i className="ri-edit-2-line"></i> Edit Profile</Link>
-                            <Link to=""><i className="ri-profile-line"></i> View Profile</Link>
-                        </nav>
-                        <hr />
-                        <nav className="nav">
-                            <Link to=""><i className="ri-question-line"></i> Help Center</Link>
-                            <Link to=""><i className="ri-lock-line"></i> Privacy Settings</Link>
-                            <Link to=""><i className="ri-user-settings-line"></i> Account Settings</Link>
-                            <Link to=""><i className="ri-logout-box-r-line"></i> Log Out</Link>
-                        </nav>
-                    </div>
-                </div>
+               
             </div>
         );
     }
@@ -104,6 +81,7 @@ const SidebarMenu: React.FC = () => {
         rotaManagement: false,
         leaveManagement: false,
         staffManagement: false,
+        labelManagement: false
 
     });
 
@@ -178,6 +156,12 @@ const SidebarMenu: React.FC = () => {
                 '/promotion/create-promotion': 'promotionManagement',
                 '/promotion/Label-list': 'promotionManagement',
                 '/promotion/create-label': 'promotionManagement',
+
+                  // Promotion Management Menu
+                  '/label/deli-label': 'labelManagement',
+                  '/label/fruit-veg-label': 'labelManagement',
+                  '/label/bakery-label': 'labelManagement',
+                
 
                 // Rota Management Menu
                 '/rota/list': 'rotaManagement',
@@ -411,6 +395,17 @@ const SidebarMenu: React.FC = () => {
                     <span>Promo Management</span>
                 </div>
                 <div className="pl-2">{populateMenu(promotionManagementMenu)}</div>
+            </div>
+
+            <div className={`nav-group ${menuGroups.labelManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+                <div
+                    className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
+                    onClick={() => toggleMenu('labelManagement')}
+                >
+                    <FaGrinBeamSweat   className="nav-icon" size={20} />
+                    <span>Label Management</span>
+                </div>
+                <div className="pl-2">{populateMenu(labelManagementMenu)}</div>
             </div>
 
             <div className={`nav-group ${menuGroups.invoiceManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
