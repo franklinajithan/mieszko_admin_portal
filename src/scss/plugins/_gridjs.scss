@@ -18,7 +18,7 @@
 
 .gridjs-pages button {
   @extend .btn;
-  border: 1px solid $gray-400;
+  border: 1px solid $zinc-400;
 
   + button { margin-left: 5px; }
 
@@ -52,7 +52,7 @@
       font-family: 'remixicon';
       font-size: 14px;
       position: absolute;
-      color: $gray-500;
+      color: $zinc-500;
     }
 
     &::before {
@@ -85,5 +85,5 @@
   width: 3px;
   cursor: ew-resize;
 
-  &:hover { background-color: $gray-200; }
+  &:hover { background-color: $zinc-200; }
 }

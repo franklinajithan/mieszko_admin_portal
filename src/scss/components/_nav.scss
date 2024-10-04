@@ -16,7 +16,7 @@
   }
 
   .nav-link {
-    color: $gray-700;
+    color: $zinc-700;
     display: flex;
     align-items: center;
 
@@ -37,7 +37,7 @@
         font-family: 'remixicon';
         font-size: 14px;
         font-weight: 400;
-        color: $gray-500;
+        color: $zinc-500;
         position: absolute;
         top: 50%;
         right: 15px;
@@ -77,7 +77,7 @@
       left: 26px;
       width: 5px;
       height: 1.5px;
-      background-color: $gray-500;
+      background-color: $zinc-500;
       @include transition(all 0.25s);
     }
 
@@ -103,7 +103,7 @@
 }
 
 .nav-line {
-  border-bottom: 1px solid $gray-300;
+  border-bottom: 1px solid $zinc-300;
   flex-wrap: nowrap;
   overflow: hidden;
 
@@ -131,7 +131,7 @@
       @include media-breakpoint-up(sm) { bottom: -1px; }
     }
 
-    &:hover { color: $gray-800; }
+    &:hover { color: $zinc-800; }
 
     + .nav-link { margin-left: 25px; }
 

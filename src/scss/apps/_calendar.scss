@@ -3,7 +3,7 @@
     width: 100%;
     border-width: 0;
     border-radius: 6px;
-    @include shadow-dreamy($gray-400);
+    @include shadow-dreamy($zinc-400);
   }
 
   .react-datepicker__header {
@@ -330,7 +330,7 @@
     padding-bottom: 5px;
 
     a {
-      color: $gray-700;
+      color: $zinc-700;
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -362,7 +362,7 @@
     color: $secondary;
     border-radius: 2px;
 
-    &:hover { background-color: $gray-300; }
+    &:hover { background-color: $zinc-300; }
   }
 
   .fc-daygrid-day.fc-day-today {
@@ -377,7 +377,7 @@
   }
 
   .fc-timegrid-event .fc-event-time {
-    color: $gray-700;
+    color: $zinc-700;
     font-family: $font-family-sans-serif;
   }
 }

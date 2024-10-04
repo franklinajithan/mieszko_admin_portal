@@ -179,7 +179,7 @@
 .card-album {
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   @include media-breakpoint-up(md) { width: 230px; }
 
@@ -253,7 +253,7 @@
 
   tbody tr {
     border-radius: 6px;
-    @include shadow-dreamy($gray-400);
+    @include shadow-dreamy($zinc-400);
 
     &:hover td { border-color: $primary; }
   }
@@ -338,7 +338,7 @@
   display: flex;
   align-items: center;
   border-radius: 6px;
-  @include shadow-dreamy($gray-500);
+  @include shadow-dreamy($zinc-500);
 
   .media-music {
     .media-img {
@@ -370,7 +370,7 @@
     margin-right: 8px;
     height: 5px;
     flex: 1;
-    background-color: $gray-300;
+    background-color: $zinc-300;
   }
 
   > span {
@@ -436,7 +436,7 @@
     flex: 1;
     height: 3px;
     display: none;
-    background-color: $gray-300;
+    background-color: $zinc-300;
 
     @include media-breakpoint-up(sm) { display: flex; }
   }

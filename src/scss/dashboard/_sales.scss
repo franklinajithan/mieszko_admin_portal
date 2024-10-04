@@ -2,10 +2,10 @@
   height: 100%;
   border-width: 0;
   border-radius: 6px;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
 
   .card-header {
-    border-bottom-color: rgba($gray-300, .55);
+    border-bottom-color: rgba($zinc-300, .55);
     background-color: transparent;
     padding: 15px;
     display: flex;
@@ -38,8 +38,8 @@
       padding: 4px 15px;
 
       &.active {
-        background-color: $gray-300;
-        color: $gray-700;
+        background-color: $zinc-300;
+        color: $zinc-700;
       }
     }
   }
@@ -104,7 +104,7 @@
 
     + .people-item {
       margin-top: 0;
-      border-top: 1px solid $gray-200;
+      border-top: 1px solid $zinc-200;
     }
 
     .avatar {
@@ -117,10 +117,10 @@
   .card-footer {
     padding: 15px;
     background-color: transparent;
-    border-top-color: $gray-200;
+    border-top-color: $zinc-200;
   }
 
-  .list-group-item { border-color: $gray-200; }
+  .list-group-item { border-color: $zinc-200; }
 }
 
 .card-value {
@@ -159,7 +159,7 @@
 
   .flot-y-axis .flot-tick-label {
     font-size: 10px;
-    color: $gray-500;
+    color: $zinc-500;
   }
 }
 
@@ -181,7 +181,7 @@
     &:not(:first-child) { text-align: right; }
   }
 
-  tbody td { border-color: $gray-200; }
+  tbody td { border-color: $zinc-200; }
 
   tbody tr:last-child td {
     border-bottom-width: 0;
@@ -207,7 +207,7 @@
   }
 
   tbody td {
-    border-color: $gray-200;
+    border-color: $zinc-200;
     font-family: $ff-numerals;
   }
 }

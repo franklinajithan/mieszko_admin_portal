@@ -27,7 +27,7 @@
   }
 
   &.online::after { background-color: $success; }
-  &.offline::after { background-color: $gray-400; }
+  &.offline::after { background-color: $zinc-400; }
 }
 
 .avatar-rounded {

@@ -23,7 +23,7 @@
     font-family: 'remixicon' !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: zincscale;
   }
   
   .ri-lg { font-size: 1.3333em; line-height: 0.75em; vertical-align: -.0667em; }
@@ -1673,8 +1673,8 @@
   .ri-record-mail-line:before { content: "\f05c"; }
   .ri-recycle-fill:before { content: "\f05d"; }
   .ri-recycle-line:before { content: "\f05e"; }
-  .ri-red-packet-fill:before { content: "\f05f"; }
-  .ri-red-packet-line:before { content: "\f060"; }
+  .ri-cyan-packet-fill:before { content: "\f05f"; }
+  .ri-cyan-packet-line:before { content: "\f060"; }
   .ri-reddit-fill:before { content: "\f061"; }
   .ri-reddit-line:before { content: "\f062"; }
   .ri-refresh-fill:before { content: "\f063"; }

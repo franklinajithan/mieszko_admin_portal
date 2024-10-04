@@ -3,7 +3,7 @@
 
   > .ps__rail-y {
     width: 3px;
-    background-color: rgba(darken($gray-100, 60%), .06);
+    background-color: rgba(darken($zinc-100, 60%), .06);
     z-index: 10;
     position: absolute;
     left: auto !important;
@@ -17,7 +17,7 @@
       @include border-radius(0);
       width: 3px;
       left: 0;
-      background-color: $gray-500;
+      background-color: $zinc-500;
     }
   }
 
@@ -51,6 +51,6 @@
 
 .scrollbar-dark {
   > .ps__rail-y {
-    > .ps__thumb-y { background-color: $gray-900; }
+    > .ps__thumb-y { background-color: $zinc-900; }
   }
 }

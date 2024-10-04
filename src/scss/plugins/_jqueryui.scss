@@ -121,7 +121,7 @@
       &:last-child { border-right: 0; }
 
       &.ui-datepicker-other-month {
-        .ui-state-default { color: $gray-500; }
+        .ui-state-default { color: $zinc-500; }
       }
     }
 
@@ -153,8 +153,8 @@
     }
 
     .ui-state-disabled .ui-state-default {
-      color: $gray-500;
-      background-color: $gray-200;
+      color: $zinc-500;
+      background-color: $zinc-200;
     }
   }
 }

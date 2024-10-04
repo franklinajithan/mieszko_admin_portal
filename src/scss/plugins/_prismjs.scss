@@ -74,7 +74,7 @@
  .token.prolog,
  .token.doctype,
  .token.cdata {
-     color: slategray;
+     color: slatezinc;
  }
  
  .token.punctuation {
@@ -146,12 +146,12 @@
  /* Prism editor */
  :not(pre) > code[class*="language-"],
  pre[class*="language-"] {
-     background: $gray-200;
+     background: $zinc-200;
  }
  
  code[class*="language-"],
  pre[class*="language-"] {
-     color: $gray-600;
+     color: $zinc-600;
      text-shadow: none;
  }
  

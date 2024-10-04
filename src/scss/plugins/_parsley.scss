@@ -4,7 +4,7 @@ textarea.parsley-error {
   &,
   &:focus {
     box-shadow: none !important;
-    border-color: $red;
+    border-color: $cyan;
   }
 }
 
@@ -25,7 +25,7 @@ textarea.parsley-success {
     @include border-radius();
   }
 
-  &.parsley-error { border: 1px solid $red; }
+  &.parsley-error { border: 1px solid $cyan; }
   &.parsley-success { border: 1px solid $green; }
 }
 
@@ -33,13 +33,13 @@ textarea.parsley-success {
   &.parsley-error,
   &.parsley-success { box-shadow: none !important; }
 
-  &.parsley-error { border-color: $red; }
+  &.parsley-error { border-color: $cyan; }
   &.parsley-success { border-color: $green; }
 }
 
 
 .parsley-errors-list {
-  color: $red;
+  color: $cyan;
   list-style: none;
   font-size: 12px;
   padding: 0;

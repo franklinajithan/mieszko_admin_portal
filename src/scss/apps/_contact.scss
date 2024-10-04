@@ -59,7 +59,7 @@
       border-radius: 4px;
 
       &:hover {
-        background-color: $gray-200;
+        background-color: $zinc-200;
       }
 
       &.active { background-color: rgba($primary, .08); }
@@ -71,7 +71,7 @@
         font-family: $font-family-sans-serif;
         font-size: 12px;
         font-weight: 400;
-        color: $gray-500;
+        color: $zinc-500;
       }
     }
   }
@@ -97,7 +97,7 @@
   flex: 1;
   height: 100%;
   background-color: #fff;
-  @include shadow-dreamy($gray-400);
+  @include shadow-dreamy($zinc-400);
   border-radius: 6px;
   position: relative;
   @include transition(all 0.25s);
@@ -177,12 +177,12 @@
 
   .nav-link {
     font-size: 16px;
-    color: $gray-500;
+    color: $zinc-500;
     padding: 0;
 
     + .nav-link { margin-left: 5px; }
 
-    &:hover { color: $gray-700; }
+    &:hover { color: $zinc-700; }
   }
 }
 
@@ -227,7 +227,7 @@
   font-size: 24px;
   color: $secondary;
 
-  &:hover { color: $gray-700; }
+  &:hover { color: $zinc-700; }
 
   @include media-breakpoint-up(md) { display: none; }
 }

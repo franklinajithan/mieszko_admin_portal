@@ -4,7 +4,7 @@
   border-radius: 6px;
   position: relative;
   height: calc(100vh - 145px);
-  @include shadow-dreamy(darken($gray-400, 3%));
+  @include shadow-dreamy(darken($zinc-400, 3%));
 
   @include media-breakpoint-up(lg) {
     height: calc(100vh - 155px);
@@ -86,7 +86,7 @@
     @include transition(all 0.25s);
 
     &:hover {
-      background-color: $gray-200;
+      background-color: $zinc-200;
       cursor: pointer;
     }
 
@@ -129,7 +129,7 @@
   }
 
   .avatar-initial {
-    background-color: $gray-400;
+    background-color: $zinc-400;
     color: $body-color;
   }
 
@@ -269,7 +269,7 @@
   position: relative;
 
   .form-control {
-    background-color: $gray-200;
+    background-color: $zinc-200;
     border-color: transparent;
     border-radius: 4px;
     padding-right: 24px;
@@ -343,7 +343,7 @@
 
 .msg-bubble {
   padding: 12px 15px;
-  background-color: $gray-200;
+  background-color: $zinc-200;
   border-radius: 6px;
   line-height: 1.42;
 
@@ -352,7 +352,7 @@
     margin-top: 5px;
     font-size: $font-size-xs;
     font-family: $font-family-sans-serif;
-    color: $gray-500;
+    color: $zinc-500;
     text-align: right;
   }
 }
