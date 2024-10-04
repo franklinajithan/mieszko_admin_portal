@@ -9,3 +9,5 @@ export const uploadLabelImage = (data:any) => axiosInstance.post(`/image/upload-
 export const updateProductList = (id:any,data:any) => axiosInstance.put(`/label/${id}`,data);
 
 export const UpdateLabelList = (data:any) => axiosInstance.post(`/default-label`,data);
+
+export const printLog = (data:any) => axiosInstance.post(`/label-print-log`,data);

@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000, // Custom port for development server
+    port: 5173, // Custom port for development server
     open: true, // Opens the browser automatically
     proxy: {
       '/api': {

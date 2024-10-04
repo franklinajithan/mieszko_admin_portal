@@ -3,10 +3,10 @@ import HeaderComponents from "@/components/elements/HeaderSection";
 import { Card } from "react-bootstrap";
 import { CardContent } from "@/components/ui/card";
 import CardTitle from "@/components/elements/CardTitle";
-import { GridActionsCellItem, DataGrid, GridColDef, GridRowId, GridRowModes, GridRowModesModel, GridToolbar } from '@mui/x-data-grid';
+import { GridActionsCellItem, DataGrid, GridColDef, GridRowId, GridRowModes, GridRowModesModel, GridToolbar, GridRowSelectionModel, GridColumnVisibilityModel } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/components/elements/GridTheme';
-import { getPromotionProductList, uploadLabelImage, uploadPromotionList } from "@/service/promotion.service";
+import { getPromotionProductList, printLog, uploadLabelImage, uploadPromotionList } from "@/service/promotion.service";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from 'lucide-react';
 import * as XLSX from 'xlsx';
@@ -23,38 +23,55 @@ import { Dialog, DialogTitle, DialogActions } from '@mui/material';
 import PromoCard from "@/components/elements/PromoCard";
 import IOSSwitch from "@/components/elements/toggleTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPrint, faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import { imageUrlDev } from "@/_config";
-
+import { DatePickerWithRange } from "@/components/elements/DatePickerWithRange";
+import { DateRange } from "react-day-picker";
+import { formatDate } from "@/lib/formatDate";
+import SelectField from "@/components/elements/SelectField";
+import { sample } from "@/data/constants";
+import { getStore } from "@/service/store.service";
 const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }) => {
   const { t } = useTranslation("global");
   const navigate = useNavigate();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState<any[]>([]);
+  const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
+  const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({});
   const [currentRowId, setCurrentRowId] = useState(null);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [reloadFrame, setReloadFrame] = useState(true);
+  const [storeList, setStoreList] = useState([]);
+  const [selectedStore, setSelectedStore] = useState(null);
   const imageUrl = imageUrlDev;
-  // useEffect(() => {
-  //   const fetchPromotions = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const promotionResponse = await getPromotionProductList();
-  //       if (promotionResponse.status === 200) {
-  //         //   setRows(promotionResponse.data.data);
-  //       } else {
-  //         console.error(promotionResponse.data);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
 
-  //   fetchPromotions();
-  // }, []);
+
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      try {
+
+        const store = await getStore();
+        if (store.status !== 200) {
+          console.error(store.data);
+          return;
+        };
+        setStoreList(store.data.data.map((item: any) => ({
+          value: item.storeId.toString(),
+          label: item.storeName
+        })));
+
+
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
+    };
+
+    fetchStore();
+  }, [])
 
   const headers = [
     'barcode', 'brand', 'uom', 'size', 'itemName', 'price', 'date'
@@ -89,38 +106,84 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         element.image = element.barcode + '.webp';
       });
       updatePromotions(formattedData);
-      setRows(formattedData); // Update rows with the formatted data
+      //setRows(formattedData); 
     };
     reader.readAsBinaryString(file);
   };
 
 
   const updatePromotions = async (formattedData: any) => {
+    const batchSize = 100;  // Define a manageable batch size
+    const maxRetries = 3;  // Maximum retries for failed batches
     setIsLoading(true);
-    try {
 
-
-
-      let data = {
-        "canUpdateDuplicates": true,
-        "item_details": formattedData
+    // Function to split data into smaller chunks
+    const chunkData = (data: any[], size: number) => {
+      const chunks = [];
+      for (let i = 0; i < data.length; i += size) {
+        chunks.push(data.slice(i, i + size));
       }
-      const promotionResponse = await uploadPromotionList(data);
-      if (promotionResponse.status === 200 || promotionResponse.status === 201) {
-        promotionResponse.data.data.updated_label_details
-        .forEach((element: any) => {
-          element.image = element.barcode + '.webp';
-        });
-        setRows(promotionResponse.data.data.updated_label_details);
+      return chunks;
+    };
+
+    // Retry function
+    const retry = async (fn: Function, retries: number) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          return await fn();
+        } catch (error) {
+          if (i === retries - 1) throw error;  // If it's the last attempt, throw the error
+        }
+      }
+    };
+
+    const batches: any = chunkData(formattedData, batchSize);
+    let allUploadedRows: any[] = [];
+
+    try {
+      for (const [index, batch] of batches.entries()) {
+        const uploadBatch = async () => {
+          const data = {
+            "canUpdateDuplicates": true,
+            "item_details": batch
+          };
+
+          const promotionResponse: any = await uploadPromotionList(data);
+
+          if (promotionResponse.status === 200 || promotionResponse.status === 201) {
+            promotionResponse.data.data.updated_label_details.forEach((element: any) => {
+              element.image = element.barcode + '.webp';
+            });
+            return promotionResponse.data.data.updated_label_details;
+          } else {
+            throw new Error('Failed batch upload');
+          }
+        };
+
+        // Attempt to upload the batch with retry logic
+        const uploadedRows = await retry(uploadBatch, maxRetries);
+        allUploadedRows = [...allUploadedRows, ...uploadedRows];  // Accumulate successful uploads
+        console.log(`Batch ${index + 1} uploaded successfully.`);
+      }
+
+      // Update the UI with all uploaded rows after all batches are processed
+      setRows(allUploadedRows);
+
+      // Final validation to ensure all data was uploaded
+      if (allUploadedRows.length === formattedData.length) {
+        console.log('All data uploaded successfully.');
       } else {
-        console.error(promotionResponse.data);
+        console.warn(`Uploaded ${allUploadedRows.length} out of ${formattedData.length} records.`);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error uploading promotions:', error);
     } finally {
       setIsLoading(false);
     }
   };
+
+
+
 
 
   const createExcelWithHeaders = () => {
@@ -209,11 +272,11 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <Tooltip
             title={
               <img
-              src={imageUrlWithNoCache}
-              alt="Product"
-              className="w-30 h-auto object-contain"
-             
-            />
+                src={imageUrlWithNoCache}
+                alt="Product"
+                className="w-70 h-auto object-contain"
+
+              />
             }
             arrow
             placement="top"
@@ -223,17 +286,18 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
               src={imageUrlWithNoCache}
               alt="Product"
               className="w-30 h-auto object-contain"
-              
+
             />
           </Tooltip>
         );
       },
     },
     { field: 'barcode', headerName: 'Barcode', flex: 1 },
+    { field: 'itemName', headerName: 'Item Name', flex: 2 },
     { field: 'brand', headerName: 'Brand', flex: 1 },
     { field: 'uom', headerName: 'Unit of Measure', flex: 1 },
     { field: 'size', headerName: 'Size', flex: 1 },
-    { field: 'itemName', headerName: 'Item Name', flex: 2 },
+
     // { field: 'translatedName', headerName: 'Translated Name', flex: 1 },
     // { field: 'ingredients', headerName: 'Ingredients', flex: 1 },
     // { field: 'translatedIngredients', headerName: 'Translated Ingredients', flex: 1 },
@@ -316,9 +380,24 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
     }, 1000);
 
   };
-
+  const updatePrintLog = async (data: any) => {
+    const log = await printLog(data);
+    if (log.status !== 200) {
+      console.error(log.data);
+      return;
+    };
+  }
 
   const CreatePdfFile = () => {
+    let data = {
+      "storeId": selectedStore,
+      "labelType": "Promotion",
+      "comment": ""
+
+    }
+    updatePrintLog(data)
+
+
     const pdfContent = document.getElementById("pdf")?.innerHTML;
 
     if (pdfContent) {
@@ -329,7 +408,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+           <script src="https://cdn.tailwindcss.com"></script>
    
           </head>
           <body class="">
@@ -353,9 +432,30 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
     }
   };
 
+  const [dataForPdf, setDataForPdf] = useState([]);
+  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>();
+  const [promoStartDate, setPromoStartDate] = useState<string | null>(null);
+  const [promoEndDate, setPromoEndDate] = useState<string | null>(null);
+  const handleDateRangeSelect = (range: DateRange | undefined) => {
+    const formattedStartDate = range?.from ? formatDate(range.from) : '';
+    const formattedEndDate = range?.to ? formatDate(range.to) : '';
+    setSelectedRange(range);
+    setPromoStartDate(formattedStartDate);
+    setPromoEndDate(formattedEndDate);
+  };
 
+  useEffect(() => {
+    setReloadFrame(false)
+    if (rows.length > 0) {
+      const selectedRows: any = rows.filter((row) =>
+        rowSelectionModel.includes(row.labelId)
+      );
 
+      setDataForPdf(selectedRows);
+    }
 
+    setReloadFrame(true)
+  }, [rowSelectionModel]);
 
 
   return (
@@ -390,42 +490,72 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <CardTitle title="Upload Excel" />
           <CardContent>
 
-            <div className="flex justify-between items-center mt-2 mb-2">
-              {/* Left side buttons */}
-              <div className="flex items-center space-x-4">
-                <label className="flex items-center cursor-pointer">
+            <div className="grid grid-cols-6 gap-4 items-end mb-3">
+              {/* Upload Excel Button */}
+              <div className="col-span-1">
+                <label className="flex">
                   <input
                     type="file"
                     accept=".xlsx, .xls"
                     onChange={handleExcelUpload}
                     className="hidden"
                   />
-                  <span className="btn-cyan">
+                  <span className="btn-cyan w-full items-center">
+                    <FontAwesomeIcon icon={faFileExcel} className="mr-2" />
                     Upload Promotion Excel
                   </span>
                 </label>
-                <Button className="btn-cyan" onClick={CreatePdfFile}>
+              </div>
+
+              {/* Date Picker */}
+              <div className="col-span-1">
+                <DatePickerWithRange
+                  dateRange={selectedRange}
+                  onSelectDateRange={handleDateRangeSelect}
+                  className="w-full custom-class"
+                />
+              </div>
+
+              {/* Barcode Toggle */}
+              <div className="col-span-1 ">
+                <div className="btn-toggle-cyan ml-1">
+                  <div className="mr-16 ml-2">
+                    <span>Show Barcode</span>
+                  </div>
+                  <IOSSwitch
+                    checked={showBarcodeButton}
+                    onChange={toggleSwitchBarcode}
+                    className="ml-2"
+                  />
+                </div>
+
+              </div>
+
+              {/* Store Select Field */}
+              <div className="col-span-1">
+                <SelectField
+                  label="Store"
+                  name="store"
+                  options={storeList}
+                  onChange={(store:any) => setSelectedStore(store)}
+
+                />
+              </div>
+
+              {/* Print Button */}
+              <div className="col-span-1">
+                <Button className="btn-cyan w-full" onClick={CreatePdfFile} disabled={!selectedStore}>
                   <FontAwesomeIcon icon={faPrint} className="mr-2" />
                   Print
                 </Button>
-                <div className="flex items-end h-full">
-                  <div className="w-full">
-                    <div className="btn-toggle-cyan flex items-center">
-                      <div className="mr-2">
-                        <span>Barcode</span>
-                      </div>
-                      <div className="ml-auto">
-                        <IOSSwitch checked={showBarcodeButton} onChange={toggleSwitchBarcode} className="ml-2" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
 
-              {/* Right side button */}
-              <Button className="btn-cyan" onClick={createExcelWithHeaders}>
-                Download Excel Template
-              </Button>
+              {/* Download Excel Template Button */}
+              <div className="col-span-1">
+                <Button className="btn-cyan w-full" onClick={createExcelWithHeaders}>
+                  <FontAwesomeIcon icon={faFileExcel} className="mr-2" />   Download Excel Template
+                </Button>
+              </div>
             </div>
 
 
@@ -441,20 +571,43 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
               <RotatingSquaresLoader />
             ) : (
               <ThemeProvider theme={theme}>
-                <DataGrid
-                  style={{ height: 650, width: '100%' }}
+                <DataGrid autoHeight
+                  // disableColumnFilter
+                  // disableColumnSelector
+                  // disableDensitySelector
+                  checkboxSelection
+
+                  editMode="row"
+                  rowModesModel={rowModesModel}
+                  // onRowModesModelChange={handleRowModesModelChange}
+                  //  onRowEditStop={handleRowEditStop}
+                  onRowSelectionModelChange={(newRowSelectionModel) => {
+                    setRowSelectionModel(newRowSelectionModel);
+                  }}
+                  // columnVisibilityModel={columnVisibility}
+                  // onColumnVisibilityModelChange={(newModel) =>
+                  //   setColumnVisibility(newModel)
+                  // }
+                  //   processRowUpdate={processRowUpdate}
+                  getRowId={(row) => row.labelId}
                   rowHeight={35}
                   rows={rows}
                   columns={columns}
-                  getRowId={(row) => row.labelId}
-                  pagination
                   initialState={{
                     pagination: {
                       paginationModel: { pageSize: 15, page: 0 },
                     },
                   }}
                   pageSizeOptions={[15, 25, 50]}
+
                   slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                    },
+                  }
+
+                  }
                 />
               </ThemeProvider>
             )}
@@ -469,7 +622,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <div className="ml-auto">
             <CardContent className="w-9/12 ">
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
-                <PromoCard data={rows} barcode={showBarcodeButton} /></div>}
+                <PromoCard data={(dataForPdf.length == 0) ? rows : dataForPdf} barcode={showBarcodeButton} /></div>}
             </CardContent>
           </div>
 

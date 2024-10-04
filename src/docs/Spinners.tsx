@@ -154,8 +154,8 @@ export default function Spinners() {
 
           <Card className="card-example">
             <Card.Body className="d-flex gap-1">
-              <Spinner animation="border" size="lg" />
-              <Spinner animation="grow" size="lg" />
+              <Spinner animation="border" />
+              <Spinner animation="grow" />
             </Card.Body>
             <Card.Footer>
               <pre><code className="language-html">{`<Spinner animation="border" size="lg" />
@@ -176,7 +176,7 @@ export default function Spinners() {
                   animation="border"
                   size="sm"
                   role="status"
-                  aria-hidden="true"
+
                 />
                 <span className="visually-hidden">Loading...</span>
               </Button>{' '}
@@ -186,7 +186,7 @@ export default function Spinners() {
                   animation="grow"
                   size="sm"
                   role="status"
-                  aria-hidden="true"
+
                 />
                 Loading...
               </Button>
@@ -198,7 +198,7 @@ export default function Spinners() {
     animation="border"
     size="sm"
     role="status"
-    aria-hidden="true"
+
   />
   <span className="visually-hidden">Loading...</span>
 </Button>{' '}
@@ -208,7 +208,7 @@ export default function Spinners() {
     animation="grow"
     size="sm"
     role="status"
-    aria-hidden="true"
+
   />
   Loading...
 </Button>`}</code></pre>

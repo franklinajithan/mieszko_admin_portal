@@ -17,7 +17,7 @@ interface DataItem {
 }
 
 interface PromoCardProps {
-    data:any;
+    data: any;
     barcode: boolean;
     startDate?: string | null;
     endDate?: string | null;
@@ -31,7 +31,7 @@ const formattedDate = `${day}-${month}-${year}`;
 
 
 const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
- 
+
     if (startDate == null) { startDate = formattedDate }
     if (endDate == null || endDate == "") { endDate = "Until Further Notice" }
 
@@ -50,6 +50,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
             {data.map((item, index) => {
                 const formattedPrice = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 2 }).format(Number(item.price));
                 const textSizeClass = String(item.price).length <= 4 ? 'text-[100px]' : 'text-[93px]';
+                const cleanItemNameRegex = /(\d+\s*[gG]|(\b\d+\s*[lL]\b)|\.+|\s{2,}|\b\d+\s*ml\b)/g;
 
                 return (
 
@@ -64,27 +65,27 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                                     <img className="mt-2 w-[166px] ml-2" src={logo} alt="Logo" />
                                 </div>
                                 <div className="w-5/12 text-center relative">
-                                  
-                                    
-
-                                        <div className="text-[#c23b32] text-[30px] font-extrabold font-sans">POLSKIE SUPERMARKETY</div>
-                                        <div className="text-[#c23b32] text-[73px] font-extrabold mt-[-30px] font-serif">MIESZKO</div>
 
 
-                                   
-                                
+
+                                    <div className="text-[#c23b32] text-[30px] font-extrabold font-sans">POLSKIE SUPERMARKETY</div>
+                                    <div className="text-[#c23b32] text-[73px] font-extrabold mt-[-30px] font-serif">MIESZKO</div>
+
+
+
+
                                     <div className=" border-b-4 border-[#c23b32] w-full mx-auto" />
                                 </div>
                                 <div className="w-5/12 ">
-                                    <div className="mr-2 ml-2 text-center"> 
+                                    <div className="mr-2 ml-2 text-center">
                                         <div className="border-5 border-[#c23b32] bg-[#c23b32] mt-2 rounded-[15px] self-end">
                                             <div className="text-center text-[40px] font-bold text-white">Promotional Period</div>
 
                                             {(item.date == '' || item.date == null) && <div className="text-center mt-[-3px] text-[25px] font-bold text-white">
-                                                {startDate} {startDate?'- ': ''}{endDate}
+                                                {startDate} {startDate ? '- ' : ''}{endDate}
                                             </div>}
 
-                                            {(item.date != '' && item.date != null) && <div className="text-center mt-[-3px] text-[30px] font-bold text-white">
+                                            {(item.date != '' && item.date != null) && <div className="text-center mt-[-3px] text-[25px] font-bold text-white">
                                                 {item.date}
                                             </div>}
 
@@ -95,12 +96,12 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                             <div className="flex flex-wrap">
                                 <div className="w-6/12">
                                     <div className="h-[425px] w-[550px] ml-2 flex justify-center items-center">
-                                       
-                                        
-                                        {item.barcode && (
-                                           <ImageProcessor imageUrl={imageUrl + item.barcode + '.webp'} maxHeight={420} maxWidth={550} />
 
-                                            
+
+                                        {item.barcode && (
+                                            <ImageProcessor imageUrl={imageUrl + item.barcode + '.webp'} maxHeight={420} maxWidth={550} />
+
+
                                         )}
                                     </div>
                                 </div>
@@ -124,8 +125,8 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
 
                                         {String(item.price).toLowerCase().includes("for") && (
                                             <div className="absolute text-black">
-                                                <div className="text-[80px] font-bold text-center " style={{marginBottom:'-35px'}}>{(item.price).split(' ')[0]}</div>
-                                                <div className="text-[51px] font-bold text-center" style={{marginBottom:'-35px'}}>{`FOR`}</div>
+                                                <div className="text-[80px] font-bold text-center " style={{ marginBottom: '-35px' }}>{(item.price).split(' ')[0]}</div>
+                                                <div className="text-[51px] font-bold text-center" style={{ marginBottom: '-35px' }}>{`FOR`}</div>
                                                 <div className="text-[70px] font-bold text-center" >{(item.price).split(' ')[2]}</div>
                                             </div>
                                         )}
@@ -159,15 +160,30 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                                         )}
                                     </div>
 
-                                    <div className={`w-9/12 self-end  `}>
+                                    <div className={`w-9/12 self-end`}>
                                         <div className="mt-0 mr-4">
                                             <div
                                                 className={`text-[#000] font-bold whitespace-nowrap text-right 
-                                                    ${item.itemName.length < 20 ? 'text-[40px]' : item.itemName.length < 30 ? 'text-[35px]' : item.itemName.length < 40 ? 'text-[35px]' : item.itemName.length < 50 ? 'text-[30px]' : 'text-[24px]'}`}
+                ${item.itemName.length < 20 ? 'text-[40px]' : item.itemName.length < 30 ? 'text-[35px]' : item.itemName.length < 40 ? 'text-[35px]' : item.itemName.length < 50 ? 'text-[30px]' : 'text-[24px]'} 
+                uppercase`}
                                             >
-                                                {item.itemName}
+                                                {(() => {
+                                                    // Clean item name
+                                                    let cleanedItemName = item.itemName
+                                                        .replace(cleanItemNameRegex, '') // Remove weight/liter indicators, periods, and extra spaces
+                                                        .replace(/\s+/g, ' ') // Normalize remaining spaces to a single space
+                                                        .trim(); // Remove leading and trailing spaces
+
+                                                    // Remove brand name from item name if it exists
+                                                    if (item.brand) {
+                                                        const brandRegex = new RegExp(`\\b${item.brand}\\b`, 'i'); // Create a regex for the brand name
+                                                        cleanedItemName = cleanedItemName.replace(brandRegex, '').trim(); // Remove brand and trim again
+                                                    }
+
+                                                    return cleanedItemName; // Return the cleaned item name
+                                                })()}
                                             </div>
-                                            <div className="text-[#000] font-bold text-right mt-2 text-[31px]">
+                                            <div className="text-[#000] font-bold text-right mt-2 text-[31px] uppercase">
                                                 {item.size} {item.size && "/"} {item.brand}
                                             </div>
                                         </div>

@@ -273,6 +273,8 @@ const FruitVegLabel = ({ title, icon }: any) => {
             </label>
           </DialogActions>
         </Dialog>
+
+        
         <Card className="card-one mt-2">
           <CardTitle title="Upload Excel" />
           <CardContent>

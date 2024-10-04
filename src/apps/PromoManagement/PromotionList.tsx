@@ -27,9 +27,11 @@ import { DatePickerWithRange } from "@/components/elements/DatePickerWithRange";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/lib/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel, faPrint } from "@fortawesome/free-solid-svg-icons";
 import ImageProcessor from "@/components/elements/ImageProcessor";
 import { imageUrlDev } from "@/_config";
+import SelectField from "@/components/elements/SelectField";
+import { getStore } from "@/service/store.service";
 
 const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) => {
   const { t } = useTranslation("global");
@@ -41,7 +43,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   const [uploadImageId, setUploadImageId] = useState(false);
   const [currentRowId, setCurrentRowId] = useState(null);
   const random = Math.floor(Math.random() * 100000);
-  const imageUrl =imageUrlDev;
+  const imageUrl = imageUrlDev;
   const timestamp = new Date().getTime();
   const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({});
@@ -49,6 +51,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   const [dataForPdf, setDataForPdf] = useState([]);
   const [promoStartDate, setPromoStartDate] = useState<string | null>(null);
   const [promoEndDate, setPromoEndDate] = useState<string | null>(null);
+  const [selectedStore, setSelectedStore] = useState(null);
+  const [storeList, setStoreList] = useState([]);
   const fetchPromotions = async () => {
     setIsLoading(true);
     try {
@@ -68,13 +72,32 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
       setIsLoading(false);
     }
   };
-
-
   useEffect(() => {
+    const fetchStore = async () => {
+      try {
+        fetchPromotions();
+        const store = await getStore();
+        if (store.status !== 200) {
+          console.error(store.data);
+          return;
+        };
+        setStoreList(store.data.data.map((item: any) => ({
+          value: item.storeId.toString(),
+          label: item.storeName
+        })));
 
 
-    fetchPromotions();
-  }, []);
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
+    };
+
+    fetchStore();
+  }, [])
+
+
 
   useEffect(() => {
     setReloadFrame(false)
@@ -140,14 +163,14 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
       width: 150,
       editable: false,
       renderCell: (params) => {
-       
-       // const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; 
+
+        // const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; 
         const imageUrlWithNoCache = `${imageUrl}${params.row.image}`;
         return (
           <Tooltip
             title={
-              <ImageProcessor imageUrl={imageUrlWithNoCache} maxHeight={300} maxWidth={300} backgroundWhite/>
-            
+              <ImageProcessor imageUrl={imageUrlWithNoCache} maxHeight={300} maxWidth={300} backgroundWhite />
+
             }
             arrow
             placement="top"
@@ -369,8 +392,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
           <CardTitle title="Upload Excel" />
           <CardContent>
 
-            <div className="flex justify-between items-center mt-2 mb-2">
-              {/* Left side buttons */}
+            {/* <div className="flex justify-between items-center mt-2 mb-2">
+            
               <div className="flex items-center space-x-4">
 
                 <DatePickerWithRange
@@ -398,8 +421,57 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
               </div>
 
 
-            </div>
+            </div> */}
 
+
+            <div className="grid grid-cols-6 gap-4 items-end mb-3">
+           
+
+              {/* Date Picker */}
+              <div className="col-span-1">
+                <DatePickerWithRange
+                  dateRange={selectedRange}
+                  onSelectDateRange={handleDateRangeSelect}
+                  className="w-full custom-class"
+                />
+              </div>
+
+              {/* Barcode Toggle */}
+              <div className="col-span-1 ">
+                <div className="btn-toggle-cyan ml-1">
+                  <div className="mr-16 ml-2">
+                    <span>Show Barcode</span>
+                  </div>
+                  <IOSSwitch
+                    checked={showBarcodeButton}
+                    onChange={toggleSwitchBarcode}
+                    className="ml-2"
+                  />
+                </div>
+
+              </div>
+
+              {/* Store Select Field */}
+              <div className="col-span-1">
+                <SelectField
+                  label="Store"
+                  name="store"
+                  options={storeList}
+                  onChange={(store: any) => setSelectedStore(store)}
+
+                />
+              </div>
+
+              {/* Print Button */}
+              <div className="col-span-1">
+                <Button className="btn-cyan w-full" onClick={CreatePdfFile} disabled={!selectedStore}>
+                  <FontAwesomeIcon icon={faPrint} className="mr-2" />
+                  Print
+                </Button>
+              </div>
+
+          
+            </div>
 
 
 

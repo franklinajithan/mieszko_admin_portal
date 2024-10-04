@@ -6,7 +6,7 @@ import { Form } from '@/components/ui/form'
 import { ModeType } from '@/data/enum'
 import { toast } from '@/hooks/use-toast'
 import { storeFormSchema } from '@/lib/utils'
-import { addCompany, getCompanyById, updateCompany } from '@/service/store.service'
+import { addCompany, addStore, getCompanyById, updateCompany, updateStore } from '@/service/store.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 
@@ -68,9 +68,9 @@ const StoreForm = ({ type, id }: any) => {
         let result :any
         try {
             if (type == ModeType.Edit) {
-                result = await updateCompany(id, data);
+                result = await updateStore(id, data);
             } else {
-                result = await addCompany(data);
+                result = await addStore(data);
             }
 
 

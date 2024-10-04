@@ -9,7 +9,7 @@ export const getCompanyById = (id:any) => axiosInstance.get(`/company/${id}`);
 
 export const getStore = () => axiosInstance.get(`/store`);
 export const addStore = (store:any) => axiosInstance.post(`/store`, store);
-export const updateStore = (id:any,store:any) => axiosInstance.put(`/company/${id}`, store);
+export const updateStore = (id:any,store:any) => axiosInstance.put(`/store/${id}`, store);
 export const deleteStore = (id:any) => axiosInstance.delete(`/store/${id}`);
 export const getStoreById = (id:any) => axiosInstance.get(`/store/${id}`);
 
