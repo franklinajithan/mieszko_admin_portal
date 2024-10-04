@@ -502,13 +502,13 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
                   />
                   <span className="btn-cyan w-full items-center">
                     <FontAwesomeIcon icon={faFileExcel} className="mr-2" />
-                    Upload Promotion Excel
+                    Upload Excel
                   </span>
                 </label>
               </div>
 
               {/* Date Picker */}
-              <div className="col-span-1">
+              <div className="col-span-2">
                 <DatePickerWithRange
                   dateRange={selectedRange}
                   onSelectDateRange={handleDateRangeSelect}
@@ -517,10 +517,10 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
               </div>
 
               {/* Barcode Toggle */}
-              <div className="col-span-1 ">
-                <div className="btn-toggle-cyan ml-1">
-                  <div className="mr-16 ml-2">
-                    <span>Show Barcode</span>
+              <div className="col-span-1">
+                <div className="btn-toggle-cyan flex justify-between items-center">
+                  <div>
+                    <span>Barcode</span>
                   </div>
                   <IOSSwitch
                     checked={showBarcodeButton}
@@ -528,16 +528,17 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
                     className="ml-2"
                   />
                 </div>
-
               </div>
+
 
               {/* Store Select Field */}
               <div className="col-span-1">
                 <SelectField
                   label="Store"
                   name="store"
+                  placeholder="Select Store"
                   options={storeList}
-                  onChange={(store:any) => setSelectedStore(store)}
+                  onChange={(store: any) => setSelectedStore(store)}
 
                 />
               </div>
@@ -553,7 +554,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
               {/* Download Excel Template Button */}
               <div className="col-span-1">
                 <Button className="btn-cyan w-full" onClick={createExcelWithHeaders}>
-                  <FontAwesomeIcon icon={faFileExcel} className="mr-2" />   Download Excel Template
+                  <FontAwesomeIcon icon={faFileExcel} className="mr-2" />Template
                 </Button>
               </div>
             </div>
@@ -620,7 +621,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         <Card className="card-one mt-2">
           <CardTitle title="Uploaded Excel" />
           <div className="ml-auto">
-            <CardContent className="w-9/12 ">
+            <CardContent className="w-full">
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
                 <PromoCard data={(dataForPdf.length == 0) ? rows : dataForPdf} barcode={showBarcodeButton} /></div>}
             </CardContent>

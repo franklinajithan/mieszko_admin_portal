@@ -127,7 +127,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                                             <div className="absolute text-black">
                                                 <div className="text-[80px] font-bold text-center " style={{ marginBottom: '-35px' }}>{(item.price).split(' ')[0]}</div>
                                                 <div className="text-[51px] font-bold text-center" style={{ marginBottom: '-35px' }}>{`FOR`}</div>
-                                                <div className="text-[70px] font-bold text-center" >{(item.price).split(' ')[2]}</div>
+                                                <div className="text-[70px] font-bold text-center" >£ {(item.price).split(' ')[2]}</div>
                                             </div>
                                         )}
                                     </div>
