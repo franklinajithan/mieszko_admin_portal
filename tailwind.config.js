@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -20,8 +22,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        
         'custom-cyan': '#0891b2',
         border: "hsl(var(--border))",
+        cyan: colors.cyan,
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",

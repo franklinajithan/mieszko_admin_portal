@@ -424,23 +424,23 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
             </div> */}
 
 
-            <div className="grid grid-cols-6 gap-4 items-end mb-3">
-           
+            <div className="grid grid-cols-6 gap-4 items-end mb-3 mt-1">
+
 
               {/* Date Picker */}
-              <div className="col-span-1">
+              <div className="col-span-2">
                 <DatePickerWithRange
                   dateRange={selectedRange}
                   onSelectDateRange={handleDateRangeSelect}
-                  className="w-full custom-class"
+
                 />
               </div>
 
               {/* Barcode Toggle */}
-              <div className="col-span-1 ">
-                <div className="btn-toggle-cyan ml-1">
-                  <div className="mr-16 ml-2">
-                    <span>Show Barcode</span>
+              <div className="col-span-1">
+                <div className="btn-toggle-cyan flex justify-between items-center">
+                  <div>
+                    <span>Barcode</span>
                   </div>
                   <IOSSwitch
                     checked={showBarcodeButton}
@@ -448,7 +448,6 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
                     className="ml-2"
                   />
                 </div>
-
               </div>
 
               {/* Store Select Field */}
@@ -456,6 +455,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
                 <SelectField
                   label="Store"
                   name="store"
+                  placeholder="Select Store"
                   options={storeList}
                   onChange={(store: any) => setSelectedStore(store)}
 
@@ -470,7 +470,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
                 </Button>
               </div>
 
-          
+
             </div>
 
 
@@ -533,7 +533,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
         <Card className="card-one mt-2">
           <CardTitle title="Uploaded Excel" />
           <div className="ml-auto">
-            <CardContent className="w-9/12 ">
+            <CardContent className="w-full">
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
                 <PromoCard data={dataForPdf} barcode={showBarcodeButton} startDate={promoStartDate} endDate={promoEndDate} /></div>}
             </CardContent>
