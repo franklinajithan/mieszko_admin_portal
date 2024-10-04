@@ -1,0 +1,17 @@
+services:
+  frontend-prod:
+    image: mathulamieszko/mieszko-admin-frontend:latest 
+    container_name: mieszko-admin-frontend
+    ports:
+      - "8000:80"
+    environment:
+      NODE_ENV: production
+    env_file:
+      - ./.env
+    networks:
+      - mieszko-nodejs-network
+    
+networks:
+  mieszko-nodejs-network:
+    driver: bridge 
+
