@@ -28,7 +28,7 @@ import {
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 
 
-export const dashboardMenu = [
+export const dashboardMenu:any = [
   { label: "Finance Monitoring", link: "/dashboard/finance", icon: faChartLine },
   { label: "Sales Monitoring", link: "/dashboard/sales", icon: faChartBar },
   { label: "Website Analytics", link: "/dashboard/analytics", icon: faChartPie },
@@ -36,7 +36,7 @@ export const dashboardMenu = [
 ];
 
 
-export const OrderManagementMenu = [
+export const OrderManagementMenu:any = [
   { label: "New Purchase Planning", link: "/order/new-purchase-planning", icon: faShoppingBag },
   { label: "Purchase Planning", link: "/order/purchase-planning", icon: faCalendarDay },
   { label: "Purchase Order", link: "/order/purchase-order", icon: faFileAlt },
@@ -44,7 +44,7 @@ export const OrderManagementMenu = [
 ];
 
 
-export const storeManagementMenu = [
+export const storeManagementMenu:any = [
   { label: "Company List", link: "/store/company-list", icon: faBuilding },
   // { label: "New Company", link: "/store/new-company", icon: faPlusSquare },
   { label: "Store List", link: "/store/store-list", icon: faShop },
@@ -54,7 +54,7 @@ export const storeManagementMenu = [
 ];
 
 
-export const productManagementMenu = [
+export const productManagementMenu:any = [
   { label: "Product List", link: "/product/product-list", icon: faShoppingBag },
   { label: "New Product", link: "/product/new-product", icon: faPlusSquare },
   { label: "Product Category", link: "/product/product-category", icon: faFolder },
@@ -64,7 +64,7 @@ export const productManagementMenu = [
 ];
 
 
-export const supplierManagementMenu = [
+export const supplierManagementMenu:any = [
   { label: "Supplier List", link: "/supplier/supplier-list", icon: faAddressBook },
   { label: "New Supplier", link: "/supplier/new-supplier", icon: faUserPlus },
   { label: "Supplier Contracts", link: "/supplier/contracts", icon: faFileContract },
@@ -72,7 +72,7 @@ export const supplierManagementMenu = [
 ];
 
 
-export const userManagementMenu = [
+export const userManagementMenu:any = [
   { label: "User List", link: "/user/user-list", icon: faUsers },
   { label: "New User", link: "/user/new-user", icon: faUserPlus },
   { label: "Roles And Rights", link: "/user/roles-and-rights", icon: faShieldAlt },
@@ -81,7 +81,7 @@ export const userManagementMenu = [
 ];
 
 
-export const stockManagementMenu = [
+export const stockManagementMenu:any = [
   { label: "Stock Overview", link: "/stock/overview", icon: faWarehouse },
   { label: "Stock Adjustments", link: "/stock/adjustments", icon: faTools },
   { label: "Stock Transfers", link: "/stock/transfers", icon: faExchangeAlt },
@@ -89,7 +89,7 @@ export const stockManagementMenu = [
 ];
 
 
-export const wasteManagementMenu = [
+export const wasteManagementMenu:any = [
   { label: "Waste Tracking", link: "/waste/tracking", icon: faTrashAlt },
   { label: "Waste Reports", link: "/waste/reports", icon: faFileAlt },
   { label: "New Waste Entry", link: "/waste/new", icon: faFileAlt },
@@ -97,48 +97,48 @@ export const wasteManagementMenu = [
 ];
 
 
-export const invoiceManagementMenu = [
+export const invoiceManagementMenu:any = [
   { label: "Invoice List", link: "/invoice/list", icon: faFileAlt },
   { label: "Create Invoice", link: "/invoice/new", icon: faFileInvoice },
   { label: "Payment Status", link: "/invoice/payment-status", icon: faMoneyBillWave },
   { label: "Invoice Reports", link: "/invoice/reports", icon: faChartBar }
 ];
 
-export const deliveryManagementMenu = [
+export const deliveryManagementMenu:any = [
   { label: "Delivery List", link: "/delivery/list", icon: faBox },
   { label: "Create Delivery", link: "/delivery/new", icon: faPlusSquare },
   { label: "Delivery Status", link: "/delivery/status", icon: faTruck },
   { label: "Delivery Reports", link: "/delivery/reports", icon: faFileAlt }
 ];
 
-export const promotionManagementMenu = [
+export const promotionManagementMenu:any = [
   { label: "Promotion List", link: "/promotion/promotion-list", icon: faTags },
   { label: "Create Promotion", link: "/promotion/create-promotion", icon: faPlus },
   // { label: "Label List", link: "/promotion/label-list", icon: faTag  },
   // { label: "Create Label", link: "/promotion/create-label", icon: faClipboardList  }
 ];
 
-export const labelManagementMenu = [
+export const labelManagementMenu:any = [
   { label: "Deli Label", link: "/label/deli-label", icon: faUtensils },
   { label: "Fruit & Veg Label", link: "/label/fruit-veg-label", icon: faAppleAlt },
-  { label: "Bakery Label", link: "/label/bakery-label", icon: faBreadSlice },
+  // { label: "Bakery Label", link: "/label/bakery-label", icon: faBreadSlice },
 ];
 
-export const rotaManagementMenu = [
+export const rotaManagementMenu:any = [
   { label: "Rota List", link: "/rota/list", icon: faCalendarAlt },
   { label: "Create Rota", link: "/rota/new", icon: faPlusCircle },
   { label: "Rota Schedule", link: "/rota/schedule", icon: faClock },
   { label: "Rota Reports", link: "/rota/reports", icon: faChartPie }
 ];
 
-export const leaveManagementMenu = [
+export const leaveManagementMenu:any = [
   { label: "Leave Requests", link: "/leave/requests", icon: faClipboardList },
   { label: "Apply for Leave", link: "/leave/apply", icon: faPaperPlane },
   { label: "Leave Status", link: "/leave/status", icon: faCalendarCheck },
   { label: "Leave Reports", link: "/leave/reports", icon: faFileAlt }
 ];
 
-export const staffManagementMenu = [
+export const staffManagementMenu:any = [
   { label: "Staff List", link: "/staff/list", icon: faUsers },
   { label: "New Staff", link: "/staff/new", icon: faUserPlus },
   { label: "Staff Roles", link: "/staff/roles", icon: faUserTag },
@@ -146,7 +146,7 @@ export const staffManagementMenu = [
 ];
 
 
-export const ManagementMenu = [
+export const ManagementMenu:any = [
   {
     label: "Order Management",
     link: "/order/order-management",

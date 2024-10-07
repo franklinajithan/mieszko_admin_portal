@@ -1,8 +1,8 @@
-import { baseUrlDev } from '@/_config';
+import { baseUrl } from '@/_config';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: baseUrlDev, // Ensure the server is up and accessible
+  baseURL: baseUrl, // Ensure the server is up and accessible
 });
 
 axiosInstance.interceptors.request.use(

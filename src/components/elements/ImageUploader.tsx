@@ -94,7 +94,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             id="file-input"
             className="hidden"
           />
-          <label htmlFor="file-input" className="btn-cyan">Upload Product Image</label>
+          <label htmlFor="file-input" className="btn-cyan w-full">Upload Product Image</label>
         </div>
 
         {/* Hidden canvas for image processing */}

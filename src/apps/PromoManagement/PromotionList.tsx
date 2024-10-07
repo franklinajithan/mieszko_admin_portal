@@ -29,7 +29,7 @@ import { formatDate } from "@/lib/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel, faPrint } from "@fortawesome/free-solid-svg-icons";
 import ImageProcessor from "@/components/elements/ImageProcessor";
-import { imageUrlDev } from "@/_config";
+import { imageUrl } from "@/_config";
 import SelectField from "@/components/elements/SelectField";
 import { getStore } from "@/service/store.service";
 
@@ -43,7 +43,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
   const [uploadImageId, setUploadImageId] = useState(false);
   const [currentRowId, setCurrentRowId] = useState(null);
   const random = Math.floor(Math.random() * 100000);
-  const imageUrl = imageUrlDev;
+  const imgUrl:any = imageUrl
   const timestamp = new Date().getTime();
   const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({});

@@ -1,10 +1,15 @@
+// Check if we are in production or development mode
+const isProduction = import.meta.env.MODE === 'production';
 
-export const baseUrlDev = import.meta.env.VITE_BASE_URL_DEV;
-export const imageUrlDev = import.meta.env.VITE_IMAGE_DEV;
-export const baseUrlProd = import.meta.env.VITE_BASE_URL_PROD;
+// Use the appropriate URLs based on the environment
+export const baseUrl = isProduction
+  ? import.meta.env.VITE_BASE_URL_PROD // Production URL
+  : import.meta.env.VITE_BASE_URL_DEV;  // Development URL
 
+export const imageUrl = isProduction
+  ? import.meta.env.VITE_IMAGE_PROD // Production Image URL
+  : import.meta.env.VITE_IMAGE_DEV;  // Development Image URL
 
-// console.log('Development Base URL:', baseUrlDev);
-// console.log('Development Image URL:', imageDev);
-// console.log('Production Base URL:', baseUrlProd);
-
+// Optional: Logging for debugging
+// console.log('Base URL:', baseUrl);
+// console.log('Image URL:', imageUrl);

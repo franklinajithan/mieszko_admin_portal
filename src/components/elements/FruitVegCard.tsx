@@ -4,7 +4,7 @@ import circle from '../../assets/img/yellow-circle.png';
 import logo from '../../assets/img/logo.png';
 import { StringDecoder } from 'string_decoder';
 import ImageProcessor from './ImageProcessor';
-import { imageUrlDev } from '@/_config';
+import { imageUrl } from '@/_config';
 interface DataItem {
     date: string;
     price: number | string;
@@ -35,7 +35,7 @@ const FruitVegCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => 
     if (startDate == null) { startDate = formattedDate }
     if (endDate == null || endDate == "") { endDate = "Until Further Notice" }
 
-    const imageUrl = imageUrlDev
+    const imgUrl:any = imageUrl
     const [barcodeShow, setBarcodeShow] = useState(barcode);
     if (!Array.isArray(data) || data.length === 0) {
         return (

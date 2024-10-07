@@ -4,7 +4,7 @@ import circle from '../../assets/img/yellow-circle.png';
 import logo from '../../assets/img/logo.png';
 import { StringDecoder } from 'string_decoder';
 import ImageProcessor from './ImageProcessor';
-import { imageUrlDev } from '@/_config';
+import { imageUrl } from '@/_config';
 interface DataItem {
     date: string;
     price: number | string;
@@ -35,7 +35,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
     if (startDate == null) { startDate = formattedDate }
     if (endDate == null || endDate == "") { endDate = "Until Further Notice" }
 
-    const imageUrl = imageUrlDev
+    const imgUrl:any = imageUrl
     const [barcodeShow, setBarcodeShow] = useState(barcode);
     if (!Array.isArray(data) || data.length === 0) {
         return (
@@ -55,10 +55,8 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                 return (
 
 
-                    <div
-                        className="border-8  border-[#c23b32] mb-2 h-[100%] w-[100%] bg-white rounded-[15px] shadow-md overflow-hidden mx-auto"
-                        key={item.barcode + item.date + index}
-                    >
+                    <div className="border-8  border-[#c23b32] mb-2 h-[100%] w-[100%] bg-white rounded-[15px] shadow-md overflow-hidden mx-auto"
+                        key={item.barcode + item.date + index}>
                         <div>
                             <div className="flex flex-wrap items-center justify-between mb-2">
                                 <div className="w-1/6 p-2">
