@@ -19,7 +19,7 @@ import { UpdateLabelList, uploadLabelImage } from "@/service/promotion.service";
 import { Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
-import { imageUrlDev } from "@/_config";
+import { imageUrl } from "@/_config";
 import FruitVegCard from "@/components/elements/FruitVegCard";
 
 
@@ -29,7 +29,7 @@ const FruitVegLabel = ({ title, icon }: any) => {
   const [rows, setRows] = useState<any[]>([]);
   const [showBarcodeButton, setShowBarcodeButton] = useState(false);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const imageUrl = imageUrlDev;
+  const imgUrl:any = imageUrl
   const [currentRowId, setCurrentRowId] = useState(null);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const columns: GridColDef[] = [

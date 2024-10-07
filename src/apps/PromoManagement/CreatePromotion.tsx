@@ -24,7 +24,7 @@ import PromoCard from "@/components/elements/PromoCard";
 import IOSSwitch from "@/components/elements/toggleTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faFileExcel } from "@fortawesome/free-solid-svg-icons";
-import { imageUrlDev } from "@/_config";
+import { imageUrl } from "@/_config";
 import { DatePickerWithRange } from "@/components/elements/DatePickerWithRange";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/lib/formatDate";
@@ -44,8 +44,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
   const [reloadFrame, setReloadFrame] = useState(true);
   const [storeList, setStoreList] = useState([]);
   const [selectedStore, setSelectedStore] = useState(null);
-  const imageUrl = imageUrlDev;
-
+  
 
 
   useEffect(() => {
@@ -490,8 +489,9 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
           <CardTitle title="Upload Excel" />
           <CardContent>
 
-            <div className="grid grid-cols-6 gap-4 items-end mb-3">
+            <div className="grid grid-cols-6 gap-4 items-end mb-2 mt-2">
               {/* Upload Excel Button */}
+              
               <div className="col-span-1">
                 <label className="flex">
                   <input
@@ -506,6 +506,18 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
                   </span>
                 </label>
               </div>
+              
+              <div className="col-span-1">
+                <Button className="btn-cyan w-full" onClick={createExcelWithHeaders}>
+                  <FontAwesomeIcon icon={faFileExcel} className="mr-2" />Template
+                </Button>
+              </div>
+            </div>
+
+
+
+            <div className="grid grid-cols-6 gap-4 items-end mb-3">
+     
 
               {/* Date Picker */}
               <div className="col-span-2">
@@ -551,12 +563,6 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
                 </Button>
               </div>
 
-              {/* Download Excel Template Button */}
-              <div className="col-span-1">
-                <Button className="btn-cyan w-full" onClick={createExcelWithHeaders}>
-                  <FontAwesomeIcon icon={faFileExcel} className="mr-2" />Template
-                </Button>
-              </div>
             </div>
 
 

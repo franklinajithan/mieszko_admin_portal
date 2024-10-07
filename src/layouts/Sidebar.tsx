@@ -273,7 +273,7 @@ const SidebarMenu: React.FC = () => {
                                 <NavLink
                                     to={item.link || '#'}
                                     className={({ isActive }) =>
-                                        `nav-link flex items-center rounded-md transition duration-300 ${isActive ? 'bg-cyan-500 text-white hover:text-white' : 'text-zinc-300 hover:text-white hover:bg-cyan-400'
+                                        `nav-link flex items-center rounded-md transition duration-300 ${isActive ? 'bg-black text-white hover:text-white' : 'text-zinc-300 hover:text-white hover:bg-cyan-400'
                                         }`
                                     }
                                 >
