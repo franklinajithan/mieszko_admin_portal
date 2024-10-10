@@ -3,7 +3,8 @@ import SelectField from '@/components/elements/SelectField'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
-import { ModeType } from '@/data/enum'
+import { status } from '@/data/constants'
+import { countries, ModeType } from '@/data/enum'
 import { toast } from '@/hooks/use-toast'
 import { storeFormSchema } from '@/lib/utils'
 import { addCompany, getCompanyById, updateCompany } from '@/service/store.service'
@@ -104,12 +105,12 @@ const CompanyForm = ({ type, id }: any) => {
                             <InputField control={form.control} label="City" name="city" type="text" placeholder='Enter city' />
                             <InputField control={form.control} label="State" name="state" type="text" placeholder='Enter state' />
                             <InputField control={form.control} label="Postcode" name="postcode" type="text" placeholder='Enter postcode' />
-                            <InputField control={form.control} label="Country" name="country" type="text" placeholder='Enter country' />
+                            <SelectField control={form.control} label="Country" name="country" options={countries} />
                             <InputField control={form.control} label="Phone" name="phone" type="text" placeholder='Enter phone number' />
                             <InputField control={form.control} label="Email" name="email" type="email" placeholder='Enter email' />
                             <InputField control={form.control} label="Website" name="website" type="url" placeholder='Enter website' />
                             <InputField control={form.control} label="Logo" name="logo" type="text" placeholder='Enter logo URL' />
-                            {/* <SelectField control={form.control} label="Status" name="status" options={statusOptions} /> */}
+                            <SelectField control={form.control} label="Status" name="status" options={status} />
 
 
                         </div>

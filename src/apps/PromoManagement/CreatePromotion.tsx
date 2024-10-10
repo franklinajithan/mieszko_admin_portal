@@ -105,7 +105,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         element.image = element.barcode + '.webp';
       });
       updatePromotions(formattedData);
-      //setRows(formattedData); 
+      setRows(formattedData); 
     };
     reader.readAsBinaryString(file);
   };

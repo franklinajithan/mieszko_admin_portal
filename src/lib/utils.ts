@@ -512,7 +512,7 @@ export const companySearchFormSchema = z.object({
   updatedAt: z.date().optional(),
   updatedBy: z.number().optional(),
   website: z.string().url().optional(),
-  logo: z.string().nullable().optional(),  
+  logo: z.string().nullable().optional(),
 });
 
 
@@ -552,7 +552,27 @@ export const storeSearchFormSchema = z.object({
   status: z.boolean().optional(),
 });
 
+export const vatFormSchema = z.object({
+  vatId: z.string().optional(), // Optional, in case it's not required for new entries
+  vatCode: z.string().min(1, "VAT code is required"), // New field
+  vatRate: z.number().min(0, "VAT rate must be at least 0").max(100, "VAT rate cannot exceed 100"),
+  description: z.string().nullable().optional(), // Allow null values
+  effectiveFrom: z.date().refine(date => date <= new Date(), {
+    message: "Effective date must be in the past or today",
+  }), // Changed from effectiveDate to effectiveFrom
+  effectiveTo: z.date().nullable().optional(), // New field, allow null
+  countryCode: z.string().nullable().optional(), // New field, allow null
+  status: z.boolean().optional(), // New field, optional
+});
 
+
+export const mspStockFormSchema = z.object({
+  itemCode: z.string().optional(),
+  ip: z.string().optional(),
+  module: z.string().nullable().optional(),
+  startDate: z.date().nullable().optional(),
+  endDate: z.date().nullable().optional(),
+});
 
 
 

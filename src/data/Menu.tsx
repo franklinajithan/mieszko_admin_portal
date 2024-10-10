@@ -85,7 +85,8 @@ export const stockManagementMenu:any = [
   { label: "Stock Overview", link: "/stock/overview", icon: faWarehouse },
   { label: "Stock Adjustments", link: "/stock/adjustments", icon: faTools },
   { label: "Stock Transfers", link: "/stock/transfers", icon: faExchangeAlt },
-  { label: "Stock Alerts", link: "/stock/alerts", icon: faBell }
+  { label: "Stock Alerts", link: "/stock/alerts", icon: faBell },
+  { label: "MSP Stock Take", link: "/stock/MSP-Stock-Take", icon: faBell }
 ];
 
 
@@ -143,6 +144,12 @@ export const staffManagementMenu:any = [
   { label: "New Staff", link: "/staff/new", icon: faUserPlus },
   { label: "Staff Roles", link: "/staff/roles", icon: faUserTag },
   { label: "Staff Reports", link: "/staff/reports", icon: faFileSignature }
+];
+
+export const configurationMenu: any = [
+  { label: "VAT Overview", link: "/vat/vat-overview", icon: faMoneyBillWave },
+  { label: "New VAT Entry", link: "/vat/new-vat", icon: faFileInvoice },
+ 
 ];
 
 

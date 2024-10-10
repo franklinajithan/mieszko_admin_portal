@@ -22,8 +22,8 @@ interface SelectFieldProps<T extends FieldValues> {
   label: string;
   placeholder?: string;
   disabled?: boolean;
-  onChange?: (value: string) => void; // Ensuring this is a string
-  options: { value: string; label: string }[];
+  onChange?: (value: string | number | boolean) => void;
+  options: { value: string | number | boolean; label: string }[];
 }
 
 const SelectField = <T extends FieldValues>({
@@ -35,12 +35,21 @@ const SelectField = <T extends FieldValues>({
   onChange,
   options
 }: SelectFieldProps<T>) => {
-  const [internalValue, setInternalValue] = useState<string>(''); // Internal state for non-form usage
+  const [internalValue, setInternalValue] = useState<string | number | boolean>(''); // Internal state for non-form usage
   const id = `select-${name}`;
 
   const handleChange = (val: string) => {
-    if (onChange) onChange(val); // Ensure onChange receives a string
-    setInternalValue(val); // Update internal state for standalone use
+    // Parse the value back to its original type
+    const parsedValue = options.find(option => String(option.value) === val)?.value;
+    if (onChange && parsedValue !== undefined) {
+      onChange(parsedValue); // Return the correct type (string, number, or boolean)
+    }
+    setInternalValue(parsedValue!); // Update internal state for standalone use
+  };
+
+  const formatValue = (value: string | number | boolean): string => {
+    // For display, always convert to string
+    return typeof value === 'boolean' || typeof value === 'number' ? String(value) : value;
   };
 
   if (control) {
@@ -50,11 +59,14 @@ const SelectField = <T extends FieldValues>({
         name={name as FieldPath<T>}
         render={({ field, fieldState }) => {
           const { onChange: formOnChange, value } = field;
-          const selectedValue = typeof value === 'string' ? value : '';
+          const selectedValue = typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' ? value : '';
 
           const handleFormChange = (val: string) => {
-            formOnChange(val);
-            if (onChange) onChange(val); // Ensure onChange receives a string
+            const parsedValue = options.find(option => String(option.value) === val)?.value;
+            if (parsedValue !== undefined) {
+              formOnChange(parsedValue);
+              if (onChange) onChange(parsedValue);
+            }
           };
 
           return (
@@ -63,7 +75,7 @@ const SelectField = <T extends FieldValues>({
                 <LabelField label={label} htmlFor={id} />
                 <FormControl>
                   <Select
-                    value={selectedValue}
+                    value={formatValue(selectedValue)}
                     onValueChange={handleFormChange}
                     disabled={disabled}
                   >
@@ -72,7 +84,7 @@ const SelectField = <T extends FieldValues>({
                     </SelectTrigger>
                     <SelectContent>
                       {options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
+                        <SelectItem key={String(option.value)} value={String(option.value)}>
                           {name === 'country' && (
                             <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
                           )}
@@ -99,8 +111,8 @@ const SelectField = <T extends FieldValues>({
       <div className='w-full'>
         <LabelField label={label} htmlFor={id} />
         <Select
-          value={internalValue}
-          onValueChange={handleChange}
+          value={formatValue(internalValue)}
+          onValueChange={(val) => handleChange(val)}
           disabled={disabled}
         >
           <SelectTrigger id={id} aria-label={label} aria-disabled={disabled}>
@@ -108,7 +120,7 @@ const SelectField = <T extends FieldValues>({
           </SelectTrigger>
           <SelectContent>
             {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem key={String(option.value)} value={String(option.value)}>
                 {name === 'country' && (
                   <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
                 )}

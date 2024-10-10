@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { FormField, FormControl, FormMessage } from "@/components/ui/form";
 import React from "react";
+import LabelField from "./LabelField";
 
 interface CalendarInputProps {
   onChange?: (date: Date | undefined) => void;
@@ -18,6 +19,7 @@ interface CalendarInputProps {
   description?: string;
   control?: any; // control prop from the form library (e.g., react-hook-form)
   name: string; // field name in the form
+  required?: boolean;
 }
 
 export function CalendarInput({
@@ -26,6 +28,7 @@ export function CalendarInput({
   description,
   control,
   name,
+  required = false,
 }: CalendarInputProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,12 +40,12 @@ export function CalendarInput({
         <div className='form-item w-full'>
           <FormControl className="relative">
             <div className="flex flex-col">
-              <label>{label}</label>
+            <LabelField label={label} htmlFor={name} required={required}/>
               <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
-                    className={cn("w-[240px] justify-between text-left font-normal", !field.value && "text-muted-foreground")}
+                    className={cn("w-full justify-between text-left font-normal", !field.value && "text-muted-foreground")}
                   >
                     <span className="flex-grow">{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}</span>
                     <CalendarIcon className="h-4 w-4" />

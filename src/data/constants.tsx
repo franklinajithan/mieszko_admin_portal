@@ -7,9 +7,9 @@ export const sample = [
 ];
 
 export const category = [
-  { value:'parent', label: 'Parent Category' },
-  { value:'child', label: 'Child Category' },
-  { value:'grandchild', label: 'Grandchild Category' },
+  { value: 'parent', label: 'Parent Category' },
+  { value: 'child', label: 'Child Category' },
+  { value: 'grandchild', label: 'Grandchild Category' },
 ];
 
 
@@ -33,11 +33,11 @@ export const OrderQty = [
 export const YesOrNO = [
   { value: 'Yes', label: 'Yes' },
   { value: 'No', label: 'No' },
-
 ];
+
 export const status = [
-  { value: 'Active', label: 'Active' },
-  { value: 'Inactive', label: 'Inactive' },
+  { value: true, label: 'Active' },
+  { value: false, label: 'Inactive' },
 
 ];
 
@@ -66,6 +66,14 @@ export const Month = [
   { value: 'December', label: 'December' }
 ];
 
+
+export const MSPModule = [
+  { value: 'D', label: 'Delivery' },
+  { value: 'S', label: 'Sales' },
+  { value: 'ST', label: 'StockTake' },
+  { value: 'SA', label: 'StockAdjustment' },
+  { value: 'null', label: 'null' },
+];
 
 // FORMAT DATE TIME
 export const formatDateTime = (dateString: Date) => {
@@ -149,7 +157,7 @@ interface UrlQueryParams {
 
 
 
-export function getAccountTypeColors(type:any) {
+export function getAccountTypeColors(type: any) {
   switch (type) {
     case "depository":
       return {

@@ -7,7 +7,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import CancelIcon from '@mui/icons-material/Cancel'; // Updated import
+import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -47,19 +47,19 @@ const InputField = <T extends FieldValues>({
     showPasswordToggle = false,
     clearInput = false,
     required = false,
-    canView = true, // Default: can view the field
-    canEdit = true, // Default: can edit the field
+    canView = true,
+    canEdit = true,
 }: InputFieldProps<T>) => {
     const [copied, setCopied] = useState(false);
     const [showPassword, setShowPassword] = useState(type === 'password');
 
     const { field } = useController({
-        name: name as FieldPath<T>, 
+        name: name as FieldPath<T>,
         control,
     });
 
     const handleCopy = (value: string | number) => {
-        navigator.clipboard.writeText(value?.toString() || '');
+        navigator.clipboard.writeText(value.toString());
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -69,7 +69,12 @@ const InputField = <T extends FieldValues>({
     };
 
     const handleClear = () => {
-        field.onChange(''); // Clear the input field
+        field.onChange(type === 'number' ? 0 : ''); // Clear based on type
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = type === 'number' ? Number(e.target.value) : e.target.value;
+        field.onChange(value); // Ensure the value is number if type is 'number'
     };
 
     if (!canView) {
@@ -91,11 +96,11 @@ const InputField = <T extends FieldValues>({
                                 placeholder={placeholder}
                                 autoComplete='off'
                                 className='input-class pr-24 form-control'
-                                disabled={disabled || !canEdit} // Disable if no edit permission
-                                readOnly={readonly || !canEdit} // Make read-only if no edit permission
+                                disabled={disabled || !canEdit}
+                                readOnly={readonly || !canEdit}
                                 type={showPassword ? 'text' : type}
-                                {...field}
-                                value={field.value ?? ''}
+                                value={field.value ?? (type === 'number' ? 0 : '')}
+                                onChange={handleChange} // Use custom handleChange for number inputs
                                 style={{ paddingRight: '40px' }}
                             />
                             {clipboard && (
@@ -162,7 +167,7 @@ const InputField = <T extends FieldValues>({
                                             padding: '0',
                                         }}
                                     >
-                                        <CancelIcon /> {/* Updated icon */}
+                                        <CancelIcon />
                                     </IconButton>
                                 </Tooltip>
                             )}

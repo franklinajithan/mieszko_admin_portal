@@ -8,7 +8,7 @@ import SelectField from "@/components/elements/SelectField";
 import InputField from "@/components/elements/InputField";
 import MultiInputField from "@/components/elements/MultiInputField";
 import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
-import { groceryDepartments, OrderQty, sample, YesOrNO } from "../../data/constants";
+import { groceryDepartments, OrderQty, sample, status, YesOrNO } from "../../data/constants";
 import CardTitle from "@/components/elements/CardTitle";
 import { Form } from "@/components/ui/form";
 import { CardContent } from "@/components/ui/card";
@@ -199,7 +199,7 @@ export default function PurchasePlanning({ title,icon}:any) {
                                         <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />
                                         <InputField control={form.control} label="Order Date" type="date" name="orderDate" />
                                         <SelectField control={form.control} label="Plan Type" name="planType" options={sample} />
-                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={status} />
                                         <SelectField control={form.control} label="Store" name="store" options={sample} />
                                         <InputField control={form.control} label="Total Line Items" type="number" name="totalLineItems" />
                                         <InputField control={form.control} label="Expected Delivery Date" type="date" name="expectedDeliveryDate" />

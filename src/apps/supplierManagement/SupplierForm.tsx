@@ -16,7 +16,7 @@ import SelectField from '@/components/elements/SelectField';
 import { City, countries, Country, countryToCities, invoiceTypes, ModeType, supplierCreditScores, supplierTypes, uomList } from '@/data/enum';
 import { useNavigate } from 'react-router-dom';
 import { addSupplier, getSupplierById, updateSupplier } from '@/service/supplier.service';
-import { sample } from '@/data/constants';
+import { sample, status } from '@/data/constants';
 
 
 export const SupplierForm = ({ id, type }: any) => {
@@ -353,7 +353,8 @@ export const SupplierForm = ({ id, type }: any) => {
                                                     <SelectField control={form.control} label="Supplier Type" name="supplierType" options={supplierTypes} />
                                                     <InputField control={form.control} label="Posting Group" name="postingGroup" type="text" placeholder="Enter Posting Group" />
                                                     <SelectField control={form.control} label="Credit Score" name="creditScore" options={supplierCreditScores} />
-                                                    <CheckboxField control={form.control} label="Supplier Status" name="status" />
+                                                    <SelectField control={form.control} label="Supplier Status" name="status" options={status} />
+                                                  
                                                 </div>
                                             </>
                                         )}

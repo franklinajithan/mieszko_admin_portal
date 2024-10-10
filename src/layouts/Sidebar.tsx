@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
-import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog, FaRecycle, FaFileInvoiceDollar, FaTruckLoading, FaTags, FaUserShield, FaClipboardList, FaStoreAlt, FaChartLine, FaTruck, FaBullhorn, FaUserTie, FaRegClock, FaCalendarCheck, FaCogs, FaGrinBeamSweat } from 'react-icons/fa';
+import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog, FaRecycle, FaFileInvoiceDollar, FaTruckLoading, FaTags, FaUserShield, FaClipboardList, FaStoreAlt, FaChartLine, FaTruck, FaBullhorn, FaUserTie, FaRegClock, FaCalendarCheck, FaCogs, FaGrinBeamSweat, FaCog } from 'react-icons/fa';
 
 import {
     dashboardMenu, OrderManagementMenu, storeManagementMenu,
@@ -15,10 +15,12 @@ import {
     rotaManagementMenu,
     leaveManagementMenu,
     staffManagementMenu,
+    configurationMenu
 } from "../data/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Make sure to import FontAwesomeIcon
+import { config } from "process";
 type MenuGroupKey = 'dashboard' | 'orderManagement' | 'storeManagement' | 'productManagement' | 'supplierManagement' | 'stockManagement' |
-    'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' |'labelManagement'| 'rotaManagement' | 'leaveManagement' | 'staffManagement';
+    'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' |'labelManagement'| 'rotaManagement' | 'leaveManagement' | 'staffManagement' | 'configuration';
 
 interface MenuItem {
     label: string;
@@ -81,8 +83,8 @@ const SidebarMenu: React.FC = () => {
         rotaManagement: false,
         leaveManagement: false,
         staffManagement: false,
-        labelManagement: false
-
+        labelManagement: false,
+        configuration: false
     });
 
     React.useEffect(() => {
@@ -132,6 +134,7 @@ const SidebarMenu: React.FC = () => {
                 '/stock/adjustments': 'stockManagement',
                 '/stock/transfers': 'stockManagement',
                 '/stock/alerts': 'stockManagement',
+                '/stock/MSP-Stock-Take': 'stockManagement',
 
                 // Waste Management Menu
                 '/waste/tracking': 'wasteManagement',
@@ -180,6 +183,9 @@ const SidebarMenu: React.FC = () => {
                 '/staff/new': 'staffManagement',
                 '/staff/roles': 'staffManagement',
                 '/staff/reports': 'staffManagement',
+
+                '/vat/overview': 'configuration',
+                '/vat/new': 'configuration',
 
 
             };
@@ -441,7 +447,7 @@ const SidebarMenu: React.FC = () => {
                 <div className="pl-2">{populateMenu(userManagementMenu)}</div>
             </div>
 
-            <div className={`nav-group ${menuGroups.rotaManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+            {/* <div className={`nav-group ${menuGroups.rotaManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div
                     className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
                     onClick={() => toggleMenu('rotaManagement')}
@@ -450,9 +456,9 @@ const SidebarMenu: React.FC = () => {
                     <span>Rota Management</span>
                 </div>
                 <div className="pl-2">{populateMenu(rotaManagementMenu)}</div>
-            </div>
+            </div> */}
 
-            <div className={`nav-group ${menuGroups.leaveManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+            {/* <div className={`nav-group ${menuGroups.leaveManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div
                     className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
                     onClick={() => toggleMenu('leaveManagement')}
@@ -461,9 +467,9 @@ const SidebarMenu: React.FC = () => {
                     <span>Leave Management</span>
                 </div>
                 <div className="pl-2">{populateMenu(leaveManagementMenu)}</div>
-            </div>
+            </div> */}
 
-            <div className={`nav-group ${menuGroups.staffManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+            {/* <div className={`nav-group ${menuGroups.staffManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div
                     className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
                     onClick={() => toggleMenu('staffManagement')}
@@ -472,6 +478,18 @@ const SidebarMenu: React.FC = () => {
                     <span>Staff Management</span>
                 </div>
                 <div className="pl-2">{populateMenu(staffManagementMenu)}</div>
+            </div> */}
+
+
+            <div className={`nav-group ${menuGroups.configuration ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+                <div
+                    className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
+                    onClick={() => toggleMenu('configuration')}
+                >
+                    <FaCog className="nav-icon" size={20} />
+                    <span>configuration</span>
+                </div>
+                <div className="pl-2">{populateMenu(configurationMenu)}</div>
             </div>
         </>
 

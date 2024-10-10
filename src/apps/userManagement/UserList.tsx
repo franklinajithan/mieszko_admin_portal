@@ -20,7 +20,7 @@ import { Loader2, SaveIcon } from "lucide-react";
 
 import { z } from "zod";
 import SelectField from "@/components/elements/SelectField";
-import { sample } from "@/data/constants";
+import { sample, status } from "@/data/constants";
 import CheckboxField from "@/components/elements/CheckboxField";
 import { userSearchSchema } from "@/lib/utils";
 import AddIcon from '@mui/icons-material/Add';
@@ -276,7 +276,7 @@ export default function UserList({ title, icon }: any) {
                                         <SelectField control={form.control} label="Role" name="role" options={sample} />
                                         <SelectField control={form.control} label="Type" name="type" options={sample} />
                                         <SelectField control={form.control} label="Reporting" name="reporting" options={sample} />
-                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={status} />
                                         <CheckboxField control={form.control} id="posAccess" label="Users Access to POS" name="usersAccessToPOS" />
                                         <CheckboxField control={form.control} id="mobileAccess" label="User Access to Mobile" name="userAccessToMobile" />
 
