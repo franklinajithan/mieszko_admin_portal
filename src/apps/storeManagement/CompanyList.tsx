@@ -29,6 +29,7 @@ import theme from '@/components/elements/GridTheme';
 import { getCompany } from "@/service/store.service";
 import { useNavigate } from "react-router-dom";
 import { on } from "events";
+import { countries } from "@/data/enum";
 
 const CompanyList = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
@@ -248,7 +249,7 @@ const handleCancelClick = (id: GridRowId) => () => {
                     <SelectField control={form.control} label="Owner Name" name="ownerName" options={sample} />
                     <SelectField control={form.control} label="Postcode" name="postcode" options={sample} />
                     <SelectField control={form.control} label="City" name="city" options={sample} />
-                    <SelectField control={form.control} label="Country" name="country" options={sample} />
+                    <SelectField control={form.control} label="Country" name="country" options={countries} />
                     <SelectField control={form.control} label="Tax Number" name="taxNo" options={sample} />
                     <InputField control={form.control} label="Email" name="email" type="email" />
                     <InputField control={form.control} label="Phone" name="phone" type="text" />

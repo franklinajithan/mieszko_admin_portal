@@ -167,7 +167,7 @@ const BrandNewPage = ({ title,icon}:any) => {
                     <InputField control={form.control} label="Brand name" type="text" name="brandName" />
                     <InputField control={form.control} label="Description" type="text" name="description" />
                     <InputField control={form.control} label="website" type="text" name="website" />
-                    {/* <SelectField control={form.control} label="Status" name="status" options={status} /> */}
+                    <SelectField control={form.control} label="Status" name="status" options={status} />
                   </div>
                   <hr className="border-t border-zinc-300 " />
                   <div className="flex justify-end space-x-4  mt-2 pr-4">

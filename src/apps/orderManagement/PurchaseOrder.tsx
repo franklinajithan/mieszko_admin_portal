@@ -9,7 +9,7 @@ import SelectField from "@/components/elements/SelectField";
 import InputField from "@/components/elements/InputField";
 import MultiInputField from "@/components/elements/MultiInputField";
 import MultiDateField from "@/components/elements/MultiDateField";
-import { groceryDepartments, sample } from "../../data/constants";
+import { groceryDepartments, sample, status } from "../../data/constants";
 import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
@@ -124,7 +124,7 @@ const PurchaseOrder = ({ title,icon}:any) => {
                                 <CardContent>
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
                                         <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />
-                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={status} />
                                         <SelectField control={form.control} label="Order Way" name="orderWay" options={sample} />
                                         <SelectField control={form.control} label="Store" name="store" options={sample} />
                                         <SelectField control={form.control} label="Order Number" name="orderNumber" options={sample} />

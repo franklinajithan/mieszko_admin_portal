@@ -5,3 +5,4 @@ export const addCategory = (data:any) => axiosInstance.post(`/category/create`, 
 export const addCategoryById = (categoryId:number) => axiosInstance.get(`/category/${categoryId}`);
 export const updateCategoryById = (categoryId:number,data:any) => axiosInstance.get(`/category/edit/${categoryId}`, data);
 export const getParentCategory = () => axiosInstance.get(`/category/parent`);
+export const getParentByCategory = (id:any) => axiosInstance.get(`/category/category-items/${id}`);

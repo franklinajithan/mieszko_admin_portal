@@ -29,10 +29,10 @@ export default function Signin2() {
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
     setIsLoading(true);
     try {
-      const result = await userLogin({
-        email: data.email,
-        password: data.password,
-      });
+
+      // let user = { email: data.email, password: data.password }
+      let user = { email: "admin@mieszko.uk", password: "123456" }
+      const result = await userLogin(user);
 
       if (result.status !== 200) {
         console.error(result.data);

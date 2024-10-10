@@ -29,6 +29,7 @@ import theme from '@/components/elements/GridTheme';
 import { getCompany, getStore } from "@/service/store.service";
 import { useNavigate } from "react-router-dom";
 import { on } from "events";
+import { countries } from "@/data/enum";
 
 const StoreList = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
@@ -253,16 +254,13 @@ const onClickAddStore = () =>  {
                     <InputField control={form.control} label="City" name="city" type="text" />
                     <InputField control={form.control} label="State" name="state" type="text" />
                     <InputField control={form.control} label="Postcode" name="postcode" type="text" />
-                    <SelectField control={form.control} label="Country" name="country" options={countryOptions} />
+                    <SelectField control={form.control} label="Country" name="country" options={countries} />
                     <InputField control={form.control} label="Phone" name="phone" type="text" />
                     <InputField control={form.control} label="Email" name="email" type="email" />
                     <InputField control={form.control} label="Website" name="website" type="url" />
                     <InputField control={form.control} label="Logo" name="logo" type="text" />
                     <SelectField control={form.control} label="Store Type" name="storeType" options={storeTypeOptions} />
-                    <SelectField control={form.control} label="Status" name="status" options={[
-                      { value: true.toString(), label: 'Active' },
-                      { value: false.toString(), label: 'Inactive' },
-                    ]} />
+                    <SelectField control={form.control} label="Status" name="status" options={status} />
                   </div>
 
 

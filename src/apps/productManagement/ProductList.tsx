@@ -11,7 +11,7 @@ import HeaderComponents from "@/components/elements/HeaderSection";
 import CardTitle from "@/components/elements/CardTitle";
 import InputField from "@/components/elements/InputField";
 import SelectField from "@/components/elements/SelectField";
-import { sample } from "../../data/constants";
+import { sample, status } from "../../data/constants";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Form } from "@/components/ui/form";
@@ -402,6 +402,10 @@ const ProductList = ({ title, icon }: any) => {
         navigate('/product/new-product'); // Redirect to the desired path
     };
 
+    const handleProductByCategory = () => {
+        navigate('/product/product-by-category'); // Redirect to the desired path
+    };
+
 
 
     return (
@@ -423,7 +427,7 @@ const ProductList = ({ title, icon }: any) => {
                                         <SelectField control={form.control} label="Barcode/Plu" name="barcodePlu" options={barcodePluOptions} />
                                         <SelectField control={form.control} label="Item Code" name="itemCode" options={itemCodeOptions} />
                                         <SelectField control={form.control} label="Item Name" name="itemName" options={itemNameOptions} />
-                                        <SelectField control={form.control} label="Status" name="status" options={statusOptions} />
+                                        <SelectField control={form.control} label="Status" name="status" options={status} />
                                         <SelectField control={form.control} label="Brand" name="brand" options={brandOptions} />
                                         <SelectField control={form.control} label="Price Marked Item" name="priceMarkedItem" options={priceMarkedItemOptions} />
                                         <SelectField control={form.control} label="Case Size" name="caseSize" options={caseSizeOptions} />
@@ -456,6 +460,9 @@ const ProductList = ({ title, icon }: any) => {
                             <div className="flex justify-start space-x-4  mt-2 pr-4">
                                 <Button type="submit" className='btn-cyan' onClick={handleRedirect}>
                                     New Product
+                                </Button>
+                                <Button type="submit" className='btn-cyan' onClick={handleProductByCategory}>
+                                   Product by Category
                                 </Button>
                             </div>
                             <div className="w-full mt-3"> {/* TailwindCSS classes for height and width */}

@@ -234,7 +234,7 @@ const NewPurchasePlanning = ({ title, icon }: any) => {
                                         <SelectField control={form.control} label="Consider Agent Price" name="considerAgentPrice" options={sample} />
                                         <InputField control={form.control} label="Expected Delivery Date" name="expectedDeliveryDate" type="text" placeholder='Enter your expected delivery date' />
                                         <SelectField control={form.control} label="Brand" name="brand" options={sample} />
-                                        <SelectField control={form.control} label="Status" name="status" options={sample} />
+                                        <SelectField control={form.control} label="Status" name="status" options={status} />
                                         <InputField control={form.control} label="Comments" name="Comments" type="text" placeholder='Enter your comments' />
                                         {/* <MultiSelectDropdown label="Department" options={groceryDepartments} /> */}
                                     </div>

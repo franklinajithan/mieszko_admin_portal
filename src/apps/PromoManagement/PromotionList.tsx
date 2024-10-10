@@ -480,6 +480,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
         <Card className="card-one mt-2">
           <CardTitle title="Promotion List" />
           <CardContent>
+
+            
             <div className="mt-3">
               {isLoading ? (
                 <RotatingSquaresLoader />
@@ -533,8 +535,8 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
         <Card className="card-one mt-2">
           <CardTitle title="Uploaded Excel" />
           <div className="ml-auto">
-            <CardContent className="w-full">
-              {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
+            <CardContent className="w-full" style={{ transform: 'scale(0.5)', transformOrigin: 'top left' }}>
+              {reloadFrame && <div> <iframe  id="theFrame" name="theFrame"></iframe>
                 <PromoCard data={dataForPdf} barcode={showBarcodeButton} startDate={promoStartDate} endDate={promoEndDate} /></div>}
             </CardContent>
           </div>

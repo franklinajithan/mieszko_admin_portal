@@ -31,7 +31,6 @@ const formattedDate = `${day}-${month}-${year}`;
 
 
 const FruitVegCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
- debugger;
     if (startDate == null) { startDate = formattedDate }
     if (endDate == null || endDate == "") { endDate = "Until Further Notice" }
 

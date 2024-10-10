@@ -1,7 +1,7 @@
 import React from "react";
-import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag,  } from 'react-icons/fi'; 
+import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag, } from 'react-icons/fi';
 import { BsFillBagPlusFill } from "react-icons/bs";
-import { FaFileAlt, FaHistory, FaStore, FaCube, FaArrowsAltH, FaFolder, FaTrademark, FaShoppingBag, FaAddressBook, FaUserPlus,FaUsers, FaUser, FaShieldAlt, FaUserCog, FaWarehouse, FaTools, FaExchangeAlt, FaBell, FaTrashAlt, FaFileInvoice, FaMoneyBillWave, FaTruck, FaBoxes, FaRecycle, FaFileInvoiceDollar, FaPlus, FaFire, FaCalendarAlt, FaPlusCircle, FaClock, FaClipboardList, FaPaperPlane, FaCalendarCheck,  FaUserTag, FaFileSignature, FaPlusSquare, FaTags, FaChartPie, FaBitcoin, FaHeadphones, FaDatabase } from 'react-icons/fa';
+import { FaFileAlt, FaHistory, FaStore, FaCube, FaArrowsAltH, FaFolder, FaTrademark, FaShoppingBag, FaAddressBook, FaUserPlus, FaUsers, FaUser, FaShieldAlt, FaUserCog, FaWarehouse, FaTools, FaExchangeAlt, FaBell, FaTrashAlt, FaFileInvoice, FaMoneyBillWave, FaTruck, FaBoxes, FaRecycle, FaFileInvoiceDollar, FaPlus, FaFire, FaCalendarAlt, FaPlusCircle, FaClock, FaClipboardList, FaPaperPlane, FaCalendarCheck, FaUserTag, FaFileSignature, FaPlusSquare, FaTags, FaChartPie, FaBitcoin, FaHeadphones, FaDatabase, FaPercentage } from 'react-icons/fa';
 
 // Dashboard
 import EventManagement from "../dashboard/EventManagement";
@@ -86,6 +86,10 @@ import LabelList from "@/apps/LabelManagement/LabelList";
 import DeliLabel from "@/apps/LabelManagement/DeliLabel";
 import BakeryLabel from "@/apps/LabelManagement/BakeryLabel";
 import FruitVegLabel from "@/apps/LabelManagement/FruitVegLabel";
+import ProductByCategory from "@/apps/productManagement/ProductByCategory";
+import VatOverview from "@/apps/Configuration/VatOverview";
+import VatNewEntry from "@/apps/Configuration/VatNewEntry";
+import MSPStockTake from "@/apps/orderManagement/MSPStockTake";
 
 const protectedRoutes = [
 
@@ -115,6 +119,7 @@ const protectedRoutes = [
   { path: "product/product-list", element: <ProductList icon={FaShoppingBag} title="Product List" /> },
   { path: "product/new-product", element: <NewProduct icon={FaPlusSquare} title="New Product" /> },
   { path: "product/product-category", element: <ProductCategory icon={FaFolder} title="Product Category" /> },
+  { path: "product/product-by-category", element: <ProductByCategory icon={FaFolder} title="Product By Category" /> },
   { path: "product/product-brand", element: <ProductBrand icon={FaTrademark} title="Product Brand" /> },
   { path: "product/edit-product/:id", element: <EditProduct icon={FiEdit} title="Edit Product" /> },
 
@@ -135,6 +140,7 @@ const protectedRoutes = [
   { path: "stock/adjustments", element: <StockAdjustments icon={FaTools} title="Stock Adjustments" /> },
   { path: "stock/transfers", element: <StoreTransfers icon={FaExchangeAlt} title="Stock Transfers" /> },
   { path: "stock/alerts", element: <StockAlerts icon={FaBell} title="Stock Alerts" /> },
+  { path: "stock/MSP-Stock-Take", element: <MSPStockTake icon={FaBell} title="Stock Alerts" /> },
 
   { path: "waste/tracking", element: <WasteTracking icon={FaTrashAlt} title="Waste Tracking" /> },
   { path: "waste/reports", element: <WasteReports icon={FaFileAlt} title="Waste Reports" /> },
@@ -166,7 +172,8 @@ const protectedRoutes = [
   { path: "rota/schedule", element: <RotaSchedule icon={FaClock} title="Rota Schedule" /> },
   { path: "rota/reports", element: <RotaReports icon={FaChartPie} title="Rota Reports" /> },
 
-
+  { path: "vat/vat-overview", element: <VatOverview icon={FaPercentage} title="VAT Overview" /> },
+  { path: "vat/new-vat", element: <VatNewEntry icon={FaFileInvoice} title="New VAT Entry" /> },
 
 
 
