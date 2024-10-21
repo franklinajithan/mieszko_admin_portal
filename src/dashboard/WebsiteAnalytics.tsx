@@ -2,15 +2,93 @@ import React, { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { Link } from "react-router-dom";
-import { Button, Card, Col, Nav, OverlayTrigger, ProgressBar, Row, Table, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, Nav, OverlayTrigger, ProgressBar, Row, Table } from "react-bootstrap";
 import { dp1, dp2 } from "../data/DashboardData";
 import ReactApexChart from "react-apexcharts";
-// import { VectorMap } from "@react-jvectormap/core";
-// import { worldMill } from "@react-jvectormap/world";
-
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 export default function WebsiteAnalytics({ title, icon }: any) {
 
   var data = [[0, 9], [1, 7], [2, 4], [3, 8], [4, 4], [5, 12], [6, 4], [7, 6], [8, 5], [9, 10], [10, 4], [11, 5], [12, 10], [13, 2], [14, 6]];
+  const chartData = {
+    labels: Array.from({ length: 50 }, (_, i) => `Entry ${i + 1}`),
+    datasets: [
+      {
+        label: "Ball 1",
+        data: [2, 16, 7, 4, 8, 7, 18, 16, 20, 10, 6, 12, 7, 3, 1, 9, 7, 15, 15, 21, 1, 5, 9, 4, 4, 15, 2, 12, 6, 11, 2, 10, 14, 3, 3, 2, 7, 15, 15, 6, 4, 16, 9, 11, 18, 2, 13, 35, 6, 13, 2, 6, 10],
+        borderColor: "rgba(75,192,192,1)",
+        fill: false,
+      },
+      {
+        label: "Ball 2",
+        data: [15, 23, 14, 8, 22, 20, 20, 25, 30, 15, 29, 14, 9, 24, 8, 15, 10, 17, 16, 23, 18, 7, 25, 19, 8, 22, 32, 18, 15, 13, 7, 16, 16, 4, 11, 13, 15, 16, 16, 7, 7, 18, 12, 13, 31, 8, 28, 36, 9, 22, 20, 9, 20],
+        borderColor: "rgba(153,102,255,1)",
+        fill: false,
+      },
+      {
+        label: "Ball 3",
+        data: [32, 32, 19, 16, 29, 21, 21, 29, 32, 17, 46, 34, 11, 27, 11, 24, 13, 29, 39, 25, 27, 12, 28, 23, 10, 35, 35, 24, 19, 29, 34, 18, 37, 7, 33, 16, 34, 26, 26, 9, 16, 35, 18, 14, 32, 17, 29, 41, 10, 24, 39, 11, 40],
+        borderColor: "rgba(255,159,64,1)",
+        fill: false,
+      },
+      {
+        label: "Ball 4",
+        data: [36, 46, 34, 17, 41, 27, 36, 34, 41, 31, 47, 41, 16, 33, 42, 47, 18, 45, 40, 33, 41, 33, 37, 35, 16, 44, 36, 25, 28, 31, 35, 22, 45, 11, 34, 24, 45, 30, 30, 14, 33, 36, 22, 34, 41, 28, 44, 42, 30, 33, 40, 32, 44],
+        borderColor: "rgba(255,99,132,1)",
+        fill: false,
+      },
+      {
+        label: "Ball 5",
+        data: [48, 49, 40, 20, 42, 38, 49, 37, 44, 42, 48, 47, 45, 42, 47, 50, 26, 49, 47, 44, 50, 46, 38, 37, 34, 48, 39, 39, 39, 47, 46, 35, 49, 17, 36, 32, 48, 37, 37, 43, 34, 41, 50, 48, 46, 35, 48, 45, 49, 47, 47, 49, 46],
+        borderColor: "rgba(255,206,86,1)",
+        fill: false,
+      },
+      {
+        label: "Lucky Star 1",
+        data: [3, 4, 6, 1, 9, 5, 3, 3, 1, 4, 2, 3, 2, 4, 4, 8, 3, 1, 1, 4, 2, 3, 2, 4, 4, 6, 7, 8, 7, 1, 6, 1, 5, 3, 1, 1, 7, 5, 5, 3, 7, 6, 1, 7, 1, 7, 4, 6, 3, 1, 4, 2, 1],
+        borderColor: "rgba(54,162,235,1)",
+        fill: false,
+      },
+      {
+        label: "Lucky Star 2",
+        data: [9, 5, 8, 6, 11, 12, 5, 7, 10, 12, 9, 4, 5, 6, 11, 9, 12, 10, 6, 10, 12, 12, 8, 8, 8, 7, 8, 10, 11, 11, 8, 10, 7, 12, 12, 7, 9, 8, 8, 4, 8, 7, 3, 9, 10, 9, 12, 11, 4, 5, 8, 10, 3],
+        borderColor: "rgba(75,192,192,1)",
+        fill: false,
+      },
+    ],
+  };
+
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Lottery Balls and Lucky Stars",
+      },
+    },
+  };
 
   const chart = {
     parentHeightOffset: 0,
@@ -265,17 +343,7 @@ export default function WebsiteAnalytics({ title, icon }: any) {
             <h4 className="main-title mb-0">Welcome to Dashboard</h4>
           </div>
 
-          <Nav as="nav" className="nav-icon nav-icon-lg">
-            <OverlayTrigger overlay={<Tooltip>Share</Tooltip>}>
-              <Nav.Link href=""><i className="ri-share-line"></i></Nav.Link>
-            </OverlayTrigger>
-            <OverlayTrigger overlay={<Tooltip>Print</Tooltip>}>
-              <Nav.Link href=""><i className="ri-printer-line"></i></Nav.Link>
-            </OverlayTrigger>
-            <OverlayTrigger overlay={<Tooltip>Report</Tooltip>}>
-              <Nav.Link href=""><i className="ri-bar-chart-2-line"></i></Nav.Link>
-            </OverlayTrigger>
-          </Nav>
+          
         </div>
 
         <Row className="g-3 justify-content-center">
@@ -590,101 +658,7 @@ export default function WebsiteAnalytics({ title, icon }: any) {
 
         <Card className="card-one mt-3">
           <Card.Body>
-            <Table className="table-four table-bordered">
-              <thead>
-                <tr>
-                  <th>&nbsp;</th>
-                  {/* <th colSpan="3">Acquisition</th>
-                  <th colSpan="3">Behavior</th>
-                  <th colSpan="3">Conversions</th> */}
-                </tr>
-                <tr>
-                  <th>Source</th>
-                  <th>Users</th>
-                  <th>New Users</th>
-                  <th>Sessions</th>
-                  <th>Bounce Rate</th>
-                  <th>Pages/Session</th>
-                  <th>Avg. Session</th>
-                  <th>Transactions</th>
-                  <th>Revenue</th>
-                  <th>Rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    "source": "Organic search",
-                    "users": "350",
-                    "new": "22",
-                    "sessions": "5,628",
-                    "bounce": "25.60%",
-                    "pages": "1.92",
-                    "avg": "00:01:05",
-                    "trans": "340,103",
-                    "revenue": "$2.65M",
-                    "rate": "4.50%"
-                  }, {
-                    "source": "Social media",
-                    "users": "276",
-                    "new": "18",
-                    "sessions": "5,100",
-                    "bounce": "23.66%",
-                    "pages": "1.89",
-                    "avg": "00:01:03",
-                    "trans": "321,960",
-                    "revenue": "$2.51M",
-                    "rate": "4.36%"
-                  }, {
-                    "source": "Referral",
-                    "users": "246",
-                    "new": "17",
-                    "sessions": "4,880",
-                    "bounce": "26.22%",
-                    "pages": "1.78",
-                    "avg": "00:01:09",
-                    "trans": "302,767",
-                    "revenue": "$2.1M",
-                    "rate": "4.34%"
-                  }, {
-                    "source": "Email",
-                    "users": "187",
-                    "new": "14",
-                    "sessions": "4,450",
-                    "bounce": "24.97%",
-                    "pages": "1.35",
-                    "avg": "00:02:07",
-                    "trans": "279,300",
-                    "revenue": "$1.86M",
-                    "rate": "3.99%"
-                  }, {
-                    "source": "Other",
-                    "users": "125",
-                    "new": "13",
-                    "sessions": "3,300",
-                    "bounce": "21.67%",
-                    "pages": "1.14",
-                    "avg": "00:02:01",
-                    "trans": "240,200",
-                    "revenue": "$1.51M",
-                    "rate": "2.84%"
-                  }
-                ].map((item, index) => (
-                  <tr key={index}>
-                    <td><Link to="">{item.source}</Link></td>
-                    <td>350</td>
-                    <td>22</td>
-                    <td>5,628</td>
-                    <td>25.60%</td>
-                    <td>1.92</td>
-                    <td>00:01:05</td>
-                    <td>340,103</td>
-                    <td>$2.65M</td>
-                    <td>4.50%</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+          <Line data={chartData} options={options} />
           </Card.Body>
         </Card>
 

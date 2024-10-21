@@ -172,3 +172,11 @@
 #theFrame {
   display: none;
 }
+
+.truncate-three-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  max-height: 4.5em; /* Adjust according to line height */
+}

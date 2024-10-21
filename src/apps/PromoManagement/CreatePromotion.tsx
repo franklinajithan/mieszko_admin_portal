@@ -29,7 +29,6 @@ import { DatePickerWithRange } from "@/components/elements/DatePickerWithRange";
 import { DateRange } from "react-day-picker";
 import { formatDate } from "@/lib/formatDate";
 import SelectField from "@/components/elements/SelectField";
-import { sample } from "@/data/constants";
 import { getStore } from "@/service/store.service";
 const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }) => {
   const { t } = useTranslation("global");
@@ -81,7 +80,6 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
 
     const file = event.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (e) => {
       const binaryStr = e.target?.result;
@@ -265,7 +263,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
       editable: false,
       renderCell: (params) => {
         //  const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; // Append timestamp
-        const imageUrlWithNoCache = `${imageUrl}${params.row.image}`;
+        const imageUrlWithNoCache = `${imageUrl}label/${params.row.image}`;
 
         return (
           <Tooltip
@@ -627,7 +625,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         <Card className="card-one mt-2">
           <CardTitle title="Uploaded Excel" />
           <div className="ml-auto">
-            <CardContent className="w-full">
+          <CardContent className="w-full" style={{ transform: 'scale(0.5)', transformOrigin: 'top left' }}>
               {reloadFrame && <div> <iframe className="bg-white" id="theFrame" name="theFrame"></iframe>
                 <PromoCard data={(dataForPdf.length == 0) ? rows : dataForPdf} barcode={showBarcodeButton} /></div>}
             </CardContent>

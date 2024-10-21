@@ -167,12 +167,15 @@ const ProductList = ({ title, icon }: any) => {
                     console.error(result.data);
                     return;
                 };
-                setBrandList(result.data.data.map((item: any) => ({
-                    value: item.brand_id.toString(),
-                    label: item.brand_name,
-                })));
+                if(result.data.data.length > 0){
+                    setBrandList(result.data.data.map((item: any) => ({
+                        value: item.brand_id.toString(),
+                        label: item.brand_name,
+                    })));
+                }
+          
 
-                const ItemId: any = await getItemCode();
+                // const ItemId: any = await getItemCode();
 
                 // setItemCode(ItemId.data.data.item_code)
                 // setValue('itemCode', ItemId.data.data.item_code);

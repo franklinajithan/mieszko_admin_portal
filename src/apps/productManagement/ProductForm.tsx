@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import MenuItem from '@/components/elements/MenuItem'
 import { Form } from "@/components/ui/form";
-import { editProductFormSchema } from '@/lib/utils'
+import { productFormSchema } from '@/lib/utils'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,30 +13,50 @@ import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 import { z } from 'zod'
-import { addProduct, getItemDetail } from '@/service/product.service'
+import { addProduct, getItemDetail, uploadProductImage } from '@/service/product.service'
 import IOSSwitch from '@/components/elements/toggleTheme'
 import ImageUploader from '@/components/elements/ImageUploader'
 import { Card } from '@mui/material';
 import { CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ProductDetails } from '@/interface/productInterfaces';
-import { countries, ModeType, reorderingPolicies, reschedulePeriods } from '@/data/enum';
+import { countries, ModeType, reorderingPolicies, reorderLevelType, reschedulePeriods } from '@/data/enum';
 import SelectField from '@/components/elements/SelectField';
+import { getCategory } from '@/service/category.service';
+import { uploadLabelImage } from '@/service/promotion.service';
+import { imageUrl } from '@/_config';
+import { getBrand } from '@/service/brand.service';
+
 const ProductForm = ({ id, type }: any) => {
     const [activeItem, setActiveItem] = useState("Product");
-
+    const [parentCategories, setParentCategories] = useState<any[]>([]);
+    const [childCategories, setChildCategories] = useState<any[]>([]);
+    const [grandchildCategories, setGrandChildCategories] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedParent, setSelectedParent] = useState(null);
+    const [brandList, setBrandList] = useState([]);
     const { toast } = useToast();
     const [showPromotionButton, setShowPromotionButton] = useState(false);
     const [showActiveButton, setShowActiveButton] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [list, setList] = useState<any[]>([]);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+    const imgUrl: any = imageUrl
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [selectedImageFile, setSelectedImageFile] = useState(null);
+    const [productDetails, setProductDetails] = useState<ProductDetails | null>(null); // Initialize with null
 
 
-    const form = useForm<z.infer<typeof editProductFormSchema>>({
-        resolver: zodResolver(editProductFormSchema),
+
+    const form = useForm<z.infer<typeof productFormSchema>>({
+        resolver: zodResolver(productFormSchema),
         defaultValues: {
-            itemName: "",
-            englishName: "",
+            id: 0,
             itemCode: "",
+            itemName: "",
+            translatedName: "",
             description: "",
             labelName: "",
             invoiceName: "",
@@ -48,66 +68,24 @@ const ProductForm = ({ id, type }: any) => {
             item_image: "",
             uom: "",
             retailUom: "",
-            wastagePercentage: "0",
+            wastagePercentage: "0.00000",
             itemType: "",
-            minOrderQty: "0",
-            maxOrderQty: "0",
+            minOrderQty: "0.00000",
+            maxOrderQty: "0.00000",
             leadTime: "0",
-            reorderLevel: "0",
+            reorderLevel: "0.00000",
             reorderLevelType: "",
-            safetyStock: "0",
+            safetyStock: "0.00000",
             shelfLife: 0,
             shelfLifeType: "",
             countryOfOrigin: "",
-            selfNo: "",
-            inventory: "0",
-            qtyOnPurchaseOrder: "0",
-            stockOutWarning: "",
-            standardCost: 0,
-            unitCost: 0,
-            reorderingPolicy: "",
-            safetyLeadTime: "",
-            safetyStockQuantity: "0",
-            includeInventory: "",
-            reschedulePeriod: "",
-            reorderQuantity: "0",
-            maximumInventory: "0",
-            minimumOrderQuantity: "0",
-            maximumOrderQuantity: "0",
-            orderMultiple: "1",
-            baseUnitOfMeasure: "",
-            caseSize: "0",
-            pcsPerPallet: "0",
-            pcsPerLayers: "0",
-            itemCategoryCode: "",
-            retailPrice: "0",
-            promotionalRetail: "0",
-            margin: "0",
-            vat: {
-                vatId: "",
-                vatCode: "",
-                vatRate: 0,
-                countryCode: null,
-                description: null,
-                effectiveTo: null,
-                effectiveFrom: "",
-            },
-            brand: {
-                image: "",
-                website: "",
-                brandName: "",
-                description: "",
-            },
-            category: {
-                image: "",
-                isPLU: false,
-                pluCode: "",
-                parentId: 0,
-                categoryName: "",
-                translatedName: "",
-            },
+            vatId: null,
+            brandId: null,
+            parentCategory: "",
+            childCategory: "",
+            categoryId: "",
             item_details: {
-                tags: [],
+                tags: null,
                 isPluCoded: false,
                 isSeasoned: false,
                 isStoreUse: false,
@@ -118,11 +96,11 @@ const ProductForm = ({ id, type }: any) => {
                 canStockTake: false,
                 isOutOfStock: false,
                 needPreOrder: false,
-                splitSellQty: 0,
+                splitSellQty: null,
                 hasBoxBarcode: false,
                 hasLinkedItem: false,
                 isPriceMarked: false,
-                minSellingQty: 0,
+                minSellingQty: null,
                 isDiscontinued: false,
                 isDiscountable: false,
                 isStoreVisible: false,
@@ -133,35 +111,34 @@ const ProductForm = ({ id, type }: any) => {
                 hasPalletBarcode: false,
                 canPurchaseLocally: false,
                 isStoreTransferable: false,
-                isConsideredForPurchasePlan: false,
-            }
+                isConsideredForPurchasePlan: false
+            },
+            // linked_items: [],
+            // item_barcodes: []
         }
     });
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
     const { handleSubmit, formState, reset, setValue } = form;
     const { isValid, isDirty, errors } = formState;
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const [productDetails, setProductDetails] = useState<ProductDetails | null>(null); // Initialize with null
-    const onSubmit = async (values: z.infer<typeof editProductFormSchema>) => {
+    const onSubmit = async (data: z.infer<typeof productFormSchema>) => {
         setIsLoading(true);
         try {
-            const data = {
-                ...values,
-                categoryId: "1",
-                retailUom: "unit",
-                itemType: "perishable",
-                reorderLevel: "20",
-                reorderLevelType: "absolute",
-                shelfLife: 30,
-                shelfLifeType: "d",
-                brandId: 1,
-                vatId: 1
-            };
 
-            const result = await addProduct(data);
+            let result: any
+            if (type == ModeType.Add) {
+                result = await addProduct(data);
+            } else {
+                // result = await updateProduct(data);
+            }
+
 
             if (result.status === 201) {
+              
+
+                if (selectedImageFile !== null) {
+                    uploadImage(result.data.data);
+                }
+
                 toast({ variant: "success", title: result.data.status, description: result.data.message, duration: 800 });
             } else {
                 toast({ variant: "destructive", title: result.data.status, description: result.data.message, duration: 800 });
@@ -177,9 +154,11 @@ const ProductForm = ({ id, type }: any) => {
 
 
     useEffect(() => {
-
+        fetchCategory();
+        fetchBrand();
         const fetch = async () => {
             try {
+
 
                 const result = await getItemDetail(id);
 
@@ -189,6 +168,9 @@ const ProductForm = ({ id, type }: any) => {
                     console.error(result.data);
                     return;
                 }
+
+               
+
 
 
             } catch (e) {
@@ -201,88 +183,150 @@ const ProductForm = ({ id, type }: any) => {
 
     }, [])
 
+
+    function extractLevelCategories(categories: any[], level: number): any[] {
+        const levelCategories: any[] = [];
+
+        for (const category of categories) {
+            if (category.level === level) {
+                levelCategories.push(category);
+            } else if (category.children.length > 0) {
+                levelCategories.push(...extractLevelCategories(category.children, level));
+            }
+        }
+
+        return levelCategories;
+    }
+
+
+    const fetchCategory = () => {
+        const fetchData = async () => {
+            try {
+                const result = await getCategory();
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                }
+                setParentCategories(result.data.data.map((category: any) => ({
+                    value: category.category_id.toString(),
+                    label: category.category_name,
+                    level: category.level,
+                    children: category.children
+                })));
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchData();
+    }
+
+
+
+    const fetchBrand = () => {
+        const fetchData = async () => {
+            try {
+                const result = await getBrand();
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                };
+                setBrandList(result.data.data.map((brand: any) => ({
+                    value: brand.id.toString(),
+                    label: brand.brandName, 
+                })));
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        fetchData();
+    }
+
+
+
     useEffect(() => {
         if (productDetails != null) {
-            const formValues = {
-                itemName: productDetails.itemName || '',
-                englishName: productDetails.englishName || '',
-                itemCode: productDetails.itemCode || '',
-                description: productDetails.description || '',
-                labelName: productDetails.labelName || '',
-                invoiceName: productDetails.invoiceName || '',
-                tillMessage: productDetails.tillMessage || '',
-                ingredients: productDetails.ingredients || '',
-                translatedIngredients: productDetails.translatedIngredients || '',
-                allergicDetails: productDetails.allergicDetails || '',
-                translatedAllergicDetails: productDetails.translatedAllergicDetails || '',
-                item_image: productDetails.item_image || '',
-                uom: productDetails.uom || '',
-                retailUom: productDetails.retailUom || '',
-                wastagePercentage: productDetails.wastagePercentage || '',
-                itemType: productDetails.itemType || '',
-                minOrderQty: productDetails.minOrderQty || '',
-                maxOrderQty: productDetails.maxOrderQty || '',
-                leadTime: productDetails.leadTime || '',
-                reorderLevel: productDetails.reorderLevel || '',
-                reorderLevelType: productDetails.reorderLevelType || '',
-                safetyStock: productDetails.safetyStock || '',
-                shelfLife: productDetails.shelfLife || 0, // assuming shelfLife is a number
-                shelfLifeType: productDetails.shelfLifeType || '',
-                countryOfOrigin: productDetails.countryOfOrigin || '',
-                vat: {
-                    vatCode: productDetails.vat?.vatCode || '',
-                    vatRate: productDetails.vat?.vatRate || 0, // assuming vatRate is a number
-                    countryCode: productDetails.vat?.countryCode || null,
-                    description: productDetails.vat?.description || null,
-                    effectiveTo: productDetails.vat?.effectiveTo || null,
-                    effectiveFrom: productDetails.vat?.effectiveFrom || '',
-                },
-                brand: {
-                    image: productDetails.brand?.image || '',
-                    website: productDetails.brand?.website || '',
-                    brandName: productDetails.brand?.brandName || '',
-                    description: productDetails.brand?.description || '',
-                },
-                category: {
-                    image: productDetails.category?.image || '',
-                    isPLU: productDetails.category?.isPLU || false, // assuming isPLU is a boolean
-                    pluCode: productDetails.category?.pluCode || '',
-                    parentId: productDetails.category?.parentId || 0, // assuming parentId is a number
-                    categoryName: productDetails.category?.categoryName || '',
-                    translatedName: productDetails.category?.translatedName || '',
-                },
-                item_details: {
-                    tags: productDetails.item_details?.tags || ['', ''],
-                    isPluCoded: productDetails.item_details?.isPluCoded || false,
-                    isSeasoned: productDetails.item_details?.isSeasoned || false,
-                    isStoreUse: productDetails.item_details?.isStoreUse || false,
-                    isWeighted: productDetails.item_details?.isWeighted || false,
-                    hasLeadTime: productDetails.item_details?.hasLeadTime || false,
-                    canBeInPromo: productDetails.item_details?.canBeInPromo || false,
-                    canSplitSell: productDetails.item_details?.canSplitSell || false,
-                    canStockTake: productDetails.item_details?.canStockTake || false,
-                    isOutOfStock: productDetails.item_details?.isOutOfStock || false,
-                    needPreOrder: productDetails.item_details?.needPreOrder || false,
-                    splitSellQty: productDetails.item_details?.splitSellQty || 0, // assuming it's a number
-                    hasBoxBarcode: productDetails.item_details?.hasBoxBarcode || false,
-                    hasLinkedItem: productDetails.item_details?.hasLinkedItem || false,
-                    isPriceMarked: productDetails.item_details?.isPriceMarked || false,
-                    minSellingQty: productDetails.item_details?.minSellingQty || 0, // assuming it's a number
-                    isDiscontinued: productDetails.item_details?.isDiscontinued || false,
-                    isDiscountable: productDetails.item_details?.isDiscountable || false,
-                    isStoreVisible: productDetails.item_details?.isStoreVisible || false,
-                    hasOuterBarcode: productDetails.item_details?.hasOuterBarcode || false,
-                    isAgeRestricted: productDetails.item_details?.isAgeRestricted || false,
-                    canOrderInPallet: productDetails.item_details?.canOrderInPallet || false,
-                    hasMinSellingQty: productDetails.item_details?.hasMinSellingQty || false,
-                    hasPalletBarcode: productDetails.item_details?.hasPalletBarcode || false,
-                    canPurchaseLocally: productDetails.item_details?.canPurchaseLocally || false,
-                    isStoreTransferable: productDetails.item_details?.isStoreTransferable || false,
-                    isConsideredForPurchasePlan: productDetails.item_details?.isConsideredForPurchasePlan || false,
-                },
-            };
+            // const formValues = {
+            //     itemName: productDetails.itemName || '',
+            //     englishName: productDetails.englishName || '',
+            //     itemCode: productDetails.itemCode || '',
+            //     description: productDetails.description || '',
+            //     labelName: productDetails.labelName || '',
+            //     invoiceName: productDetails.invoiceName || '',
+            //     tillMessage: productDetails.tillMessage || '',
+            //     ingredients: productDetails.ingredients || '',
+            //     translatedIngredients: productDetails.translatedIngredients || '',
+            //     allergicDetails: productDetails.allergicDetails || '',
+            //     translatedAllergicDetails: productDetails.translatedAllergicDetails || '',
+            //     item_image: productDetails.item_image || '',
+            //     uom: productDetails.uom || '',
+            //     retailUom: productDetails.retailUom || '',
+            //     wastagePercentage: productDetails.wastagePercentage || '',
+            //     itemType: productDetails.itemType || '',
+            //     minOrderQty: productDetails.minOrderQty || '',
+            //     maxOrderQty: productDetails.maxOrderQty || '',
+            //     leadTime: productDetails.leadTime || '',
+            //     reorderLevel: productDetails.reorderLevel || '',
+            //     reorderLevelType: productDetails.reorderLevelType || '',
+            //     safetyStock: productDetails.safetyStock || '',
+            //     shelfLife: productDetails.shelfLife || 0, // assuming shelfLife is a number
+            //     shelfLifeType: productDetails.shelfLifeType || '',
+            //     countryOfOrigin: productDetails.countryOfOrigin || '',
+            //     vat: {
+            //         vatCode: productDetails.vat?.vatCode || '',
+            //         vatRate: productDetails.vat?.vatRate || 0, // assuming vatRate is a number
+            //         countryCode: productDetails.vat?.countryCode || null,
+            //         description: productDetails.vat?.description || null,
+            //         effectiveTo: productDetails.vat?.effectiveTo || null,
+            //         effectiveFrom: productDetails.vat?.effectiveFrom || '',
+            //     },
+            //     brand: {
+            //         image: productDetails.brand?.image || '',
+            //         website: productDetails.brand?.website || '',
+            //         brandName: productDetails.brand?.brandName || '',
+            //         description: productDetails.brand?.description || '',
+            //     },
+            //     category: {
+            //         image: productDetails.category?.image || '',
+            //         isPLU: productDetails.category?.isPLU || false, // assuming isPLU is a boolean
+            //         pluCode: productDetails.category?.pluCode || '',
+            //         parentId: productDetails.category?.parentId || 0, // assuming parentId is a number
+            //         categoryName: productDetails.category?.categoryName || '',
+            //         translatedName: productDetails.category?.translatedName || '',
+            //     },
+            //     item_details: {
+            //         tags: productDetails.item_details?.tags || ['', ''],
+            //         isPluCoded: productDetails.item_details?.isPluCoded || false,
+            //         isSeasoned: productDetails.item_details?.isSeasoned || false,
+            //         isStoreUse: productDetails.item_details?.isStoreUse || false,
+            //         isWeighted: productDetails.item_details?.isWeighted || false,
+            //         hasLeadTime: productDetails.item_details?.hasLeadTime || false,
+            //         canBeInPromo: productDetails.item_details?.canBeInPromo || false,
+            //         canSplitSell: productDetails.item_details?.canSplitSell || false,
+            //         canStockTake: productDetails.item_details?.canStockTake || false,
+            //         isOutOfStock: productDetails.item_details?.isOutOfStock || false,
+            //         needPreOrder: productDetails.item_details?.needPreOrder || false,
+            //         splitSellQty: productDetails.item_details?.splitSellQty || 0, // assuming it's a number
+            //         hasBoxBarcode: productDetails.item_details?.hasBoxBarcode || false,
+            //         hasLinkedItem: productDetails.item_details?.hasLinkedItem || false,
+            //         isPriceMarked: productDetails.item_details?.isPriceMarked || false,
+            //         minSellingQty: productDetails.item_details?.minSellingQty || 0, // assuming it's a number
+            //         isDiscontinued: productDetails.item_details?.isDiscontinued || false,
+            //         isDiscountable: productDetails.item_details?.isDiscountable || false,
+            //         isStoreVisible: productDetails.item_details?.isStoreVisible || false,
+            //         hasOuterBarcode: productDetails.item_details?.hasOuterBarcode || false,
+            //         isAgeRestricted: productDetails.item_details?.isAgeRestricted || false,
+            //         canOrderInPallet: productDetails.item_details?.canOrderInPallet || false,
+            //         hasMinSellingQty: productDetails.item_details?.hasMinSellingQty || false,
+            //         hasPalletBarcode: productDetails.item_details?.hasPalletBarcode || false,
+            //         canPurchaseLocally: productDetails.item_details?.canPurchaseLocally || false,
+            //         isStoreTransferable: productDetails.item_details?.isStoreTransferable || false,
+            //         isConsideredForPurchasePlan: productDetails.item_details?.isConsideredForPurchasePlan || false,
+            //     },
+            // };
 
-            reset(formValues); // Assuming reset is your form reset function
+            
+            setImagePreview(`${imageUrl + 'items/'}${productDetails.item_image}`)
+            reset(productDetails); // Assuming reset is your form reset function
         }
     }, [productDetails]);
 
@@ -300,11 +344,12 @@ const ProductForm = ({ id, type }: any) => {
 
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+        const file: any = event.target.files?.[0];
+        setSelectedImageFile(file)
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                // Ensure the result is a string or null
+
                 if (typeof reader.result === 'string' || reader.result === null) {
                     setImagePreview(reader.result);
                 }
@@ -312,6 +357,36 @@ const ProductForm = ({ id, type }: any) => {
             reader.readAsDataURL(file);
         }
     };
+
+
+    const uploadImage = async (id: any) => {
+        try {
+
+            const itemCode = form.getValues("itemCode");
+            const formData = new FormData();
+            // formData.append('imageName', id || '');
+
+            formData.append('imageFor', 'items');
+            formData.append('id', id || '');
+            formData.append('image', selectedImageFile || '');
+            const result = await uploadProductImage(formData);
+            if (result.status === 200) {
+
+
+
+
+            } else {
+                console.error(result.data);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            //   setIsLoading(false);
+        }
+    };
+
+    // uploadImage();
+
 
     const handleImageClick = () => {
         setSelectedImage(imagePreview);
@@ -323,6 +398,26 @@ const ProductForm = ({ id, type }: any) => {
         setSelectedImage(null);
     };
 
+    const handleParentCategoryChange = (e: any) => {
+        setSelectedParent(e)
+        let children = parentCategories.find((x: any) => x.value == e).children
+        setChildCategories(children.map((category: any) => ({
+            value: category.category_id.toString(),
+            label: category.category_name,
+            level: category.level,
+            children: category.children
+        })));
+    }
+    const handleChildCategoryChange = (e: any) => {
+        let parent = parentCategories.find((x: any) => x.value == selectedParent).children
+        let grandChildren = parent.find((x: any) => x.category_id == e).children
+        setGrandChildCategories(grandChildren.map((category: any) => ({
+            value: category.category_id.toString(),
+            label: category.category_name,
+            level: category.level,
+            children: category.children
+        })));
+    }
     return (
         <div>
             <Card className="card-one mt-2">
@@ -336,11 +431,11 @@ const ProductForm = ({ id, type }: any) => {
                                     <ul className="flex-column space-y space-y-4 text-sm font-medium text-zinc-500 dark:text-zinc-400 md:me-4 mb-4 md:mb-0">
                                         <MenuItem href="#" text="Product" isActive={activeItem === "Product"} onClick={() => handleMenuItemClick("Product")} />
                                         <MenuItem href="#" text="Specification" isActive={activeItem === "Specification"} onClick={() => handleMenuItemClick("Specification")} />
-                                        <MenuItem href="#" text="Inventory" isActive={activeItem === "Inventory"} onClick={() => handleMenuItemClick("Inventory")} />
+                                        {/* <MenuItem href="#" text="Inventory" isActive={activeItem === "Inventory"} onClick={() => handleMenuItemClick("Inventory")} /> */}
                                         <MenuItem href="#" text="Cost " isActive={activeItem === "Cost"} onClick={() => handleMenuItemClick("Cost")} />
                                         <MenuItem href="#" text="Price & Sales" isActive={activeItem === "PriceAndSales"} onClick={() => handleMenuItemClick("PriceAndSales")} />
                                         {/* <MenuItem href="#" text="Replenishment" isActive={activeItem === "Replenishment"} onClick={() => handleMenuItemClick("Replenishment")} /> */}
-                                        <MenuItem href="#" text="Planning" isActive={activeItem === "Planning"} onClick={() => handleMenuItemClick("Planning")} />
+                                        {/* <MenuItem href="#" text="Planning" isActive={activeItem === "Planning"} onClick={() => handleMenuItemClick("Planning")} /> */}
 
 
                                         {/* <MenuItem href="#" text="Disabled" isActive={activeItem === "disabled"} onClick={() => handleMenuItemClick("disabled")} /> */}
@@ -350,42 +445,40 @@ const ProductForm = ({ id, type }: any) => {
                                         {activeItem === "Product" && (
                                             <>
                                                 <div className="flex w-full gap-4">
-                                                    {/* Form Fields */}
+
                                                     <div className="grid w-5/6 grid-cols-1 gap-6">
-                                                        {/* General Information */}
                                                         <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full">
-                                                            <div className="flex items-end h-full">
-                                                                <InputField control={form.control} label="Item Code" placeholder="Enter item code" name="itemCode" type="text" readonly clipboard={true} />
+                                                            <div className="col-span-1">
+                                                                <InputField control={form.control} label="Item Code" placeholder="Enter item code" name="itemCode" type="text" clipboard={true} />
                                                             </div>
                                                             <div className="col-span-2">
                                                                 <InputField control={form.control} label="Product Name" placeholder="Enter product name" name="itemName" type="text" clipboard={true} />
                                                             </div>
                                                             <div className="col-span-2">
-                                                                <InputField control={form.control} label="English Name" placeholder="Enter product English name" name="englishName" type="text" clipboard={true} />
+                                                                <InputField control={form.control} label="English Name" placeholder="Enter product English name" name="translatedName" type="text" clipboard={true} />
                                                             </div>
                                                             <div className="col-span-2">
                                                                 <InputField control={form.control} label="Description" placeholder="Enter description" name="description" type="text" clipboard={true} />
                                                             </div>
-                                                            <div>
+                                                            {/* <div>
                                                                 <InputField control={form.control} label="Item Category Code" placeholder="Enter category code" name="itemCategoryCode" type="text" />
-                                                            </div>
+                                                            </div> */}
                                                         </div>
 
-                                                        {/* Pricing Information */}
                                                         <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full ">
-                                                            <div className="flex items-end h-full">
-                                                                <InputField control={form.control} label="Retail Price" placeholder="Enter retail price" name="retailPrice" type="text" clipboard={true} />
-                                                            </div>
-                                                            <div className="flex items-end h-full">
+                                                            {/* <div className="flex items-end h-full">
+                                                               <InputField control={form.control} label="Retail Price" placeholder="Enter retail price" name="retailPrice" type="number" clipboard={true} /> 
+                                                            </div> */}
+                                                            {/* <div className="flex items-end h-full">
                                                                 <InputField control={form.control} label="Promotional Retail" placeholder="Enter promotional price" name="promotionalRetail" type="text" />
                                                             </div>
                                                             <div className="flex items-end h-full">
-                                                                <InputField control={form.control} label="Margin" placeholder="Enter margin" name="margin" type="text" />
-                                                            </div>
+                                                                <InputField control={form.control} label="Margin" placeholder="Enter margin" name="margin" type="number" />
+                                                            </div> */}
                                                             <div className="flex items-end h-full">
-                                                                <InputField control={form.control} label="Retail UOM" placeholder="Enter retail UOM" name="retailUom" type="text" />
+                                                                <InputField control={form.control} label="Retail UOM" placeholder="Enter retail UOM" name="retailUom" type="text" required={true} />
                                                             </div>
-                                                            <div className="flex items-end h-full">
+                                                            <div className="flex mt-4 h-full">
                                                                 <div className="w-full">
                                                                     <div className="btn-toggle-zinc flex items-center">
                                                                         <div className="mr-2">
@@ -400,41 +493,34 @@ const ProductForm = ({ id, type }: any) => {
                                                         </div>
                                                     </div>
 
-                                                    {/* Image Uploader */}
+
                                                     <div className="w-1/6">
                                                         <ImageUploader imagePreview={imagePreview} onImageChange={handleImageChange} onImageClick={handleImageClick} isPopupOpen={isPopupOpen} onClosePopup={handleClosePopup} selectedImage={selectedImage} />
                                                     </div>
                                                 </div>
 
-                                                {/* Packaging Details */}
-                                                <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full mt-4">
 
+                                                {/* <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full mt-4">
                                                     <InputField control={form.control} label="Base Unit of Measure" placeholder="Enter base unit of measure" name="baseUnitOfMeasure" type="text" />
-
                                                     <InputField control={form.control} label="Case Size" placeholder="Enter case size" name="caseSize" type="text" />
-
                                                     <InputField control={form.control} label="Pcs per Pallet" placeholder="Enter pcs per pallet" name="pcsPerPallet" type="text" />
-
                                                     <InputField control={form.control} label="Pcs per Layers" placeholder="Enter pcs per layers" name="pcsPerLayers" type="text" />
 
-                                                </div>
+                                                </div> */}
 
-                                                {/* Additional Details */}
+
                                                 <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full mt-4">
-
                                                     <InputField control={form.control} label="Allergic Details" placeholder="Enter allergic details" name="allergicDetails" type="text" />
-
                                                     <InputField control={form.control} label="Ingredients" placeholder="Enter ingredients" name="ingredients" type="text" />
-
                                                     <InputField control={form.control} label="Translated Ingredients" placeholder="Enter translated ingredients" name="translatedIngredients" type="text" />
-
                                                     <InputField control={form.control} label="Translated Allergic Details" placeholder="Enter translated allergic details" name="translatedAllergicDetails" type="text" />
-
-                                                    <InputField control={form.control} label="UOM" placeholder="Enter UOM" name="uom" type="text" />
-
-
-                                                    <InputField control={form.control} label="Item Type" placeholder="Enter item type" name="itemType" type="text" />
-
+                                                    <SelectField control={form.control} label="UOM" placeholder="Enter UOM" name="uom" options={reorderLevelType} required={true} />
+                                                    <SelectField control={form.control} label="Reorder Level Type" placeholder="Enter reorder level type" name="reorderLevelType" options={reorderLevelType} required={true} />
+                                                    <SelectField control={form.control} label="Item Type" placeholder="Enter item type" name="itemType" options={[{ value: 'case', label: 'Case' }, { value: 'unit', label: 'Unit' }]} required={true} />
+                                                    <SelectField control={form.control} label="Parent Category" name="parentCategory" options={parentCategories} onChange={handleParentCategoryChange} required={true} />
+                                                    <SelectField control={form.control} label="Child Category" name="childCategory" options={childCategories} onChange={handleChildCategoryChange} required={true} />
+                                                    <SelectField control={form.control} label="Grand Child Category" name="categoryId" options={grandchildCategories} required={true} />
+                                                    <SelectField control={form.control} label="Brand" name="brandId" options={brandList} required={true} />
                                                 </div>
 
 
@@ -444,12 +530,8 @@ const ProductForm = ({ id, type }: any) => {
 
                                         {activeItem === "Specification" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
-                                                {/* Category Information */}
 
-                                                <CheckboxField control={form.control} label="PLU" name="category.isPLU" />
-                                                <InputField control={form.control} label="PLU Code" placeholder="Enter PLU code" name="category.pluCode" type="text" />
-                                                <InputField control={form.control} label="Parent ID" placeholder="Enter parent ID" name="category.parentId" type="number" />
-                                                <InputField control={form.control} label="Category Name" placeholder="Enter category name" name="category.categoryName" type="text" />
+
 
                                                 {/* Item Details */}
 
@@ -482,7 +564,7 @@ const ProductForm = ({ id, type }: any) => {
                                             </div>
                                         )}
 
-                                        {activeItem === "Inventory" && (
+                                        {/* {activeItem === "Inventory" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
                                                 <InputField control={form.control} label="Self No" placeholder="Enter self no" name="selfNo" type="text" />
                                                 <InputField control={form.control} label="Inventory" placeholder="Enter inventory" name="inventory" type="text" />
@@ -490,42 +572,26 @@ const ProductForm = ({ id, type }: any) => {
                                                 <InputField control={form.control} label="Stock out Warning" placeholder="Enter stock out warning" name="stockOutWarning" type="text" />
                                                 <InputField control={form.control} label="Wastage Percentage" placeholder="Enter wastage percentage" name="wastagePercentage" type="text" />
                                             </div>
-                                        )}
+                                        )} */}
 
                                         {activeItem === "Cost" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
-                                                <InputField control={form.control} label="Standard Cost" placeholder="Enter standard cost" name="standardCost" type="number" />
-                                                <InputField control={form.control} label="Unit Cost" placeholder="Enter unit cost" name="unitCost" type="number" />
+                                                {/* <InputField control={form.control} label="Standard Cost" placeholder="Enter standard cost" name="standardCost" type="number" />
+                                                <InputField control={form.control} label="Unit Cost" placeholder="Enter unit cost" name="unitCost" type="number" /> */}
                                                 <InputField control={form.control} label="Safety Stock" placeholder="Enter safety stock" name="safetyStock" type="number" />
                                                 <InputField control={form.control} label="Min Order Qty" placeholder="Enter min order qty" name="minOrderQty" type="number" />
                                                 <InputField control={form.control} label="Max Order Qty" placeholder="Enter max order qty" name="maxOrderQty" type="number" />
                                                 <InputField control={form.control} label="Lead Time" placeholder="Enter lead time" name="leadTime" type="text" />
                                                 <InputField control={form.control} label="Reorder Level" placeholder="Enter reorder level" name="reorderLevel" type="text" />
-                                                <InputField control={form.control} label="Reorder Level Type" placeholder="Enter reorder level type" name="reorderLevelType" type="text" />
+
+
                                                 <InputField control={form.control} label="Safety Stock" placeholder="Enter safety stock" name="safetyStock" type="number" />
                                                 <InputField control={form.control} label="Shelf Life" placeholder="Enter shelf life" name="shelfLife" type="number" />
                                                 <InputField control={form.control} label="Shelf Life Type" placeholder="Enter shelf life type" name="shelfLifeType" type="text" />
                                                 <SelectField control={form.control} label="Country of Origin" name="countryOfOrigin" options={countries} />
                                             </div>
                                         )}
-                                        {activeItem === "PriceAndSales" && (
-                                            <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
 
-                                                <InputField control={form.control} label="VAT id" placeholder="Enter VAT ID" name="vat.vatId" type="text" />
-                                                <InputField control={form.control} label="VAT Code" placeholder="Enter VAT code" name="vat.vatCode" type="text" />
-                                                <InputField control={form.control} label="VAT Rate" placeholder="Enter VAT rate" name="vat.vatRate" type="number" />
-                                                <SelectField control={form.control} label="VAT Country Code" name="vat.countryCode" options={countries} />
-                                                <InputField control={form.control} label="VAT Description" placeholder="Enter VAT description" name="vat.description" type="text" />
-                                                <CalendarInput control={form.control} label="Effective From" name="vat.effectiveFrom"  />
-                                                <CalendarInput control={form.control} label="Effective To" name="vat.effectiveTo"  />
-                                                <InputField control={form.control} label="Brand Image" placeholder="Enter brand image URL" name="brand.image" type="text" />
-                                                <InputField control={form.control} label="Brand Website" placeholder="Enter brand website" name="brand.website" type="url" />
-                                                <InputField control={form.control} label="Brand Name" placeholder="Enter brand name" name="brand.brandName" type="text" />
-                                                <InputField control={form.control} label="Brand Description" placeholder="Enter brand description" name="brand.description" type="text" />
-
-
-                                            </div>
-                                        )}
 
                                         {activeItem === "Replenishment" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
@@ -533,13 +599,13 @@ const ProductForm = ({ id, type }: any) => {
                                             </div>
                                         )}
 
-                                        {activeItem === "Planning" && (
+                                        {/* {activeItem === "Planning" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
                                                 <SelectField control={form.control} label="Reordering Policy" name="reorderingPolicy" options={reorderingPolicies} />
                                                 <InputField control={form.control} label="Safety Lead time" placeholder="Enter safety lead time" name="safetyLeadTime" type="text" />
                                                 <InputField control={form.control} label="Safety Stock Quantity" placeholder="Enter safety stock quantity" name="safetyStockQuantity" type="text" />
                                                 <CheckboxField control={form.control} label="Include Inventory" name="includeInventory" />
-                                              
+
                                                 <SelectField control={form.control} label="Reschedule Period" name="reschedulePeriod" options={reschedulePeriods} />
                                                 <InputField control={form.control} label="Reorder Quantity" placeholder="Enter reorder quantity" name="reorderQuantity" type="text" />
                                                 <InputField control={form.control} label="Maximum Inventory" placeholder="Enter maximum inventory" name="maximumInventory" type="text" />
@@ -547,7 +613,7 @@ const ProductForm = ({ id, type }: any) => {
                                                 <InputField control={form.control} label="Maximum Order Quantity" placeholder="Enter maximum order quantity" name="maximumOrderQuantity" type="text" />
                                                 <InputField control={form.control} label="Order Multiple" placeholder="Enter order multiple" name="orderMultiple" type="text" />
                                             </div>
-                                        )}
+                                        )} */}
 
                                         {activeItem === "Till" && (
                                             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
@@ -572,7 +638,7 @@ const ProductForm = ({ id, type }: any) => {
                                         <>
                                             <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
                                         </>
-                                    ) : "Submit"}
+                                    ) : (type == ModeType.Edit) ? "Update" : "Submit"}
                                 </Button>
                             </div>
                         </form>

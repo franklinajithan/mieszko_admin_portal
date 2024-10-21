@@ -26,6 +26,15 @@ import { RotatingSquaresLoader } from "@/components/elements/SquaresLoader";
 
 const MSPStockTake = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
+  const [stockTake, setStockTake] = useState(0);
+  const [delivery, setDelivery] = useState(0);
+  const [wastage, setWastage] = useState(0);
+  const [salesBeforeRefund, setSalesBeforeRefund] = useState(0);
+  const [refund, setRefund] = useState(0);
+  const [salesAfterRefund, setSalesAfterRefund] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [sales, setSales] = useState(0);
+  const [systemBookStock, setSystemBookStock] = useState(0);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenGrid, setIsOpenGrid] = useState(true);
@@ -47,6 +56,20 @@ const MSPStockTake = ({ title, icon }: any) => {
   const toggleCardBody = () => {
     setIsOpenGrid(!isOpenGrid);
   };
+
+  useEffect(() => {
+    setSalesAfterRefund(salesBeforeRefund - refund);
+  }, [salesBeforeRefund, refund]);
+
+  // Calculate the total whenever stockTake, delivery, salesAfterRefund, or wastage changes
+  useEffect(() => {
+    
+    console.log('stockTake '+ stockTake);
+    let total = (delivery + stockTake) - (salesAfterRefund + wastage)
+    salesForm.reset({ total: total });
+    console.log('total '+total);
+   // setTotal(total);
+  }, [stockTake, delivery, salesAfterRefund, wastage]);
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Title', flex: 3 },
@@ -92,10 +115,10 @@ const MSPStockTake = ({ title, icon }: any) => {
   const onSearchSubmit = async (data: any) => {
     setIsLoading(true);
     try {
-      
-      const res = await getProductId({ itemCode:data.itemCode, ip:data.ip} );
 
-      if(res.status==200){
+      const res = await getProductId({ itemCode: data.itemCode, ip: data.ip });
+
+      if (res.status == 200) {
         let dataItem = {
           ...data,
           productId: res.data.data.productId,
@@ -103,13 +126,24 @@ const MSPStockTake = ({ title, icon }: any) => {
           startDate: data.startDate ? formatDate(new Date(data.startDate), 'yyyy-MM-dd') : null,
           endDate: data.endDate ? formatDate(new Date(data.endDate), 'yyyy-MM-dd') : null
         };
+        let stockUrl = `http://${data.ip}/api/Product/ProductAuditTrailData?ProdID=${res.data.data.productId}&SearchStartDate=${dataItem.startDate}&SearchEndDate=${dataItem.endDate}`;
+        console.log(stockUrl);
         const result = await getMSPStockTake(dataItem);
         setMSPdata(result.data.data);
         setRows(result.data.data.salesData);
         salesForm.reset(result.data.data.total);
+        setDelivery(result.data.data.total.delivery);
+        setSalesBeforeRefund(result.data.data.total.salesBeforeRefund);
+        setSales(result.data.data.total.sales);
+        setStockTake(result.data.data.total.stockTake);
+        setWastage(result.data.data.total.wastage);
+        setTotal(result.data.data.total.total);
+   
+      } else {
+ 
       }
 
-     
+
     } catch (error) {
       // Handle error
     } finally {
@@ -120,6 +154,13 @@ const MSPStockTake = ({ title, icon }: any) => {
   const onSalesSubmit = (data: any) => {
     console.log("Sales Data Submitted:", data);
     // Handle sales data submission
+  };
+
+  const handleChange = (event:any) => {
+    console.log(event); // Check if the event object is defined
+    if (event && event.target) {
+      setStockTake(event.target.value);
+    } 
   };
 
   return (
@@ -152,30 +193,38 @@ const MSPStockTake = ({ title, icon }: any) => {
             </Form>
           </Card>
 
+
+
+
+
+
+
           {/* Sales Data Form */}
           <Card className="card-one mt-2">
-          <CardTitle title="Stock Take List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
+            <CardTitle title="Stock Take List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
             <Form {...salesForm}>
               <form onSubmit={handleSalesSubmit(onSalesSubmit)} className="space-y-8">
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-3 mt-4">
-                    <InputField control={salesControl} label="Delivery" type="number" name="delivery" />
-                    <InputField control={salesControl} label="Sales Before Refund" type="number" name="salesBeforeRefund" />
-                    <InputField control={salesControl} label="Refunded Quantity" type="number" name="refundedQty" />
-                    <InputField control={salesControl} label="Sales" type="number" name="sales" />
-                    <InputField control={salesControl} label="Stock Take" type="number" name="stockTake" />
-                    <InputField control={salesControl} label="Wastage" type="number" name="wastage" />
-                    <InputField control={salesControl} label="Total" type="number" name="total" />
-                    <InputField control={salesControl} label="System Book Stock" type="number" name="systemBookStock" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                    <InputField control={salesControl} label="Stock Take" type="number" name="stockTake" value={stockTake} onChange={handleChange} />
+                    <InputField control={salesControl} label="Stock Take"  type="number"  name="stockTake"  value={stockTake}  onChange={(event:any) => console.log(event.target.value)} />
+                    <InputField control={salesControl} label="Delivery" type="number" name="delivery" value={delivery} onChange={(value) => setDelivery(Number(value))} />
+                    <InputField control={salesControl} label="Sales" type="number" name="sales" value={sales} onChange={(value) => setSales(Number(value))} />
+                    <InputField control={salesControl} label="Wastage" type="number" name="wastage" value={wastage} onChange={(value) => setWastage(Number(value))} />
+                    <InputField control={salesControl} label="Total" type="number" name="total" value={total} />
+                    <InputField control={salesControl} label="System Book Stock" type="number" name="systemBookStock" value={systemBookStock} disabled />
                   </div>
 
-                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                    <InputField control={salesControl} label="Sales Before Refund" type="number" name="salesBeforeRefund" value={salesBeforeRefund} onChange={(value) => setSalesBeforeRefund(Number(value))} />
+                    <InputField control={salesControl} label="Refunded Quantity" type="number" name="refundedQty" />
+                  </div>
                 </CardContent>
               </form>
             </Form>
-          
-          
-           
+
+
+
             {isOpenGrid && (
               <CardContent>
                 <div className="w-full mt-3">

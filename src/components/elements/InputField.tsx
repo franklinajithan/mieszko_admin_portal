@@ -31,6 +31,9 @@ interface InputFieldProps<T extends FieldValues> {
     required?: boolean;
     canView?: boolean; // New prop for visibility permission
     canEdit?: boolean; // New prop for edit permission
+    minLength?: number;
+    maxLength?: number;
+    onChange?: (value: string | number) => void; // Custom onChange handler
 }
 
 const InputField = <T extends FieldValues>({
@@ -49,6 +52,9 @@ const InputField = <T extends FieldValues>({
     required = false,
     canView = true,
     canEdit = true,
+    minLength, 
+    maxLength, 
+    onChange, // Destructure the custom onChange prop
 }: InputFieldProps<T>) => {
     const [copied, setCopied] = useState(false);
     const [showPassword, setShowPassword] = useState(type === 'password');
@@ -75,6 +81,10 @@ const InputField = <T extends FieldValues>({
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = type === 'number' ? Number(e.target.value) : e.target.value;
         field.onChange(value); // Ensure the value is number if type is 'number'
+
+        if (onChange) {
+            onChange(value); // Call custom onChange if provided
+        }
     };
 
     if (!canView) {
@@ -87,7 +97,7 @@ const InputField = <T extends FieldValues>({
             name={name as FieldPath<T>}
             render={() => (
                 <div className='form-item w-full'>
-                    <LabelField label={label} htmlFor={name} required={required}/>
+                    <LabelField label={label} htmlFor={name} required={required} />
                     
                     <FormControl className='relative'>
                         <div className='relative w-full'>
@@ -102,6 +112,8 @@ const InputField = <T extends FieldValues>({
                                 value={field.value ?? (type === 'number' ? 0 : '')}
                                 onChange={handleChange} // Use custom handleChange for number inputs
                                 style={{ paddingRight: '40px' }}
+                                minLength={minLength} 
+                                maxLength={maxLength} 
                             />
                             {clipboard && (
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>

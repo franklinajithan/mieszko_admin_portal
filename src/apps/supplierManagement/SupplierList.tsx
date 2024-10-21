@@ -194,7 +194,6 @@ export default function SupplierList({ title, icon }: any) {
                   <SelectField control={form.control} label="Role" name="role" options={sample} />
                   <SelectField control={form.control} label="Type" name="type" options={sample} />
                   <SelectField control={form.control} label="Reporting" name="reporting" options={sample} />
-                  Supplier Status
                   <CheckboxField control={form.control} id="posAccess" label="Users Access to POS" name="usersAccessToPOS" />
                   <CheckboxField control={form.control} id="mobileAccess" label="User Access to Mobile" name="userAccessToMobile" />
 

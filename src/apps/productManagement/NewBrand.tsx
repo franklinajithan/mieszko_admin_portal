@@ -22,6 +22,7 @@ import { Loader2 } from 'lucide-react';
 import { sample, status } from "@/data/constants";
 import defaultProductImage from '../../assets/img/default-product-image.png';
 import { addBrand } from "@/service/brand.service";
+import ImageUploader from "@/components/elements/ImageUploader";
 
 
 const BrandNewPage = ({ title,icon}:any) => {
@@ -132,42 +133,17 @@ const BrandNewPage = ({ title,icon}:any) => {
             <Card.Body>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <div className="flex grid grid-cols-4 gap-4 mb-6">
-                    <div className="col-span-1 flex flex-col justify-center items-center h-full  bg-gradient-to-br from-white-600 via-white-600 to-white-600 p-6 rounded-lg">
-                      <div className="relative mb-4 bg-gradient-to-r from-white-600 via-white-600 to-white-600 p-2 rounded-lg shadow-2xl">
-                        <img
-                          src={imagePreview || defaultProductImage}
-                          alt="Product"
-                          onClick={handleImageClick}
-                          className="w-48 h-48 object-cover rounded-lg border-4 border-white shadow-lg transform scale-90 transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-2xl cursor-pointer"
-                          style={{ position: 'relative', zIndex: 10 }}
-                        />
-                      </div>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                          id="file-input"
-                          className="hidden" // Hide the native file input
-                        />
-                        <label
-                          htmlFor="file-input"
-                          className="btn-cyan"
-                          style={{ position: 'relative', zIndex: 5 }}
-                        >
-                          Upload Product Image
-                        </label>
-                      </div>
-                      {isPopupOpen && <ImagePopup src={selectedImage || ''} onClose={handleClosePopup} />}
-                    </div>
+                  <div className="flex grid grid-cols-5 gap-4 mb-6">
+                
 
 
-
+<></> <ImageUploader imagePreview={imagePreview} onImageChange={handleImageChange} onImageClick={handleImageClick} isPopupOpen={isPopupOpen} onClosePopup={handleClosePopup} selectedImage={selectedImage} />
+                   
                     <InputField control={form.control} label="Brand name" type="text" name="brandName" />
                     <InputField control={form.control} label="Description" type="text" name="description" />
                     <InputField control={form.control} label="website" type="text" name="website" />
                     <SelectField control={form.control} label="Status" name="status" options={status} />
+                                                   
                   </div>
                   <hr className="border-t border-zinc-300 " />
                   <div className="flex justify-end space-x-4  mt-2 pr-4">
