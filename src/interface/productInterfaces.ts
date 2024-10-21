@@ -81,8 +81,8 @@ export interface ProductDetails {
     shelfLife: number;
     shelfLifeType: string;
     countryOfOrigin: string;
-    vat: VatDetails;
-    brand: BrandDetails;
-    category: CategoryDetails;
+    vat: string;
+    brand: string;
+    category: string;
     item_details: ItemDetails;
 }

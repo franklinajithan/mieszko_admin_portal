@@ -5,9 +5,10 @@ interface ImageUploaderProps {
   imagePreview?: string | null;
   onImageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onImageClick?: () => void;
-  isPopupOpen: boolean;
+  isPopupOpen?: boolean;
   onClosePopup?: () => void;
   selectedImage?: string | null;
+  uploadButton?: boolean
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
@@ -16,7 +17,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   onImageClick,
   isPopupOpen,
   onClosePopup,
-  selectedImage
+  selectedImage,
+  uploadButton=true
 }) => {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -75,7 +77,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
 
   return (
     <div>
-      <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br p-4 rounded-lg ">
+      <div className="col-span-1 flex flex-col justify-center items-center h-full bg-gradient-to-br rounded-lg ">
         <div className="w-24 h-24 sm:w-24 sm:h-24 md:w-24 md:h-24 lg:w-48 lg:h-48 ">
           <img
             src={processedImage || imagePreview || defaultProductImage}
@@ -86,7 +88,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           />
         </div>
 
-        <div className="flex">
+        {uploadButton && <div className="flex">
           <input
             type="file"
             accept="image/*"
@@ -95,7 +97,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             className="hidden"
           />
           <label htmlFor="file-input" className="btn-cyan w-full">Upload Product Image</label>
-        </div>
+        </div>}
 
         {/* Hidden canvas for image processing */}
         <canvas ref={canvasRef} style={{ display: 'none' }} />

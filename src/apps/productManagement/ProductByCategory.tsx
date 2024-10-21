@@ -6,6 +6,7 @@ import ProductForm from "./ProductForm";
 import TreeNode from "@/components/ui/treeNode";
 import Tree from "@/components/elements/Tree";
 import { getCategory, getParentByCategory } from "@/service/category.service";
+import ProductCard from "./ProductCard";
 
 
 type CategoryLevel = 'parent' | 'child' | 'grandchild';
@@ -30,9 +31,9 @@ const ProductByCategory = ({ title, icon }: any) => {
     const [list, setList] = useState<any[]>([]);
 
 
-useEffect(() => {
-    fetchCategory();
-}, [])
+    useEffect(() => {
+        fetchCategory();
+    }, [])
 
 
     const fetchCategory = () => {
@@ -61,10 +62,11 @@ useEffect(() => {
     }
     const fetchProducts = async (categoryId: number) => {
         try {
-            const response:any = await getParentByCategory(categoryId);
-         
-            const data = await response.json();
-            setProducts(data.products);
+            const response: any = await getParentByCategory(categoryId);
+
+            const products = response.data.data;
+
+            setProducts(products);
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -72,7 +74,9 @@ useEffect(() => {
 
     const handleCategorySelect = (category: any) => {
         setSelectedCategory(category);
+
         if (!category.children || category.children.length === 0) {
+
             fetchProducts(category.category_id); // Fetch products only if it's the last-level category
         }
     };
@@ -87,25 +91,35 @@ useEffect(() => {
 
                         <Card.Body>
                             <div className="flex">
-                                <div className="w-1/4 border-r ">
-                                    <h2 className="text-xl font-bold">Categories</h2>
+                                <div className="w-1/5 border-r">
+                                    <h3 className="text-lg font-bold">Categories</h3>
                                     <Tree categories={categories} onSelect={handleCategorySelect} />
                                 </div>
 
-                                <div className="w-3/4 ml-4">
-                                    <h2 className="text-xl font-bold">Products</h2>
+                                <div className="w-4/5 ml-4">
+                                    <div className="flex justify-between items-center">
+
+                                        <h3 className="text-lg font-bold">Products</h3>
+
+
+                                        <button className="btn-cyan">
+                                            New Product
+                                        </button>
+
+
+                                    </div>
                                     {selectedCategory && (
                                         <div>
                                             <h3 className="text-lg font-bold">{selectedCategory.category_name}</h3>
                                             {products.length > 0 ? (
                                                 <ul className="space-y-2">
-                                                    {products.map((product) => (
-                                                        <li key={product.product_id} className="border p-1 rounded">
-                                                            <h4 className="font-bold">{product.product_name}</h4>
-                                                            <p>Price: ${product.price.toFixed(2)}</p>
-                                                            <p>{product.description}</p>
-                                                        </li>
-                                                    ))}
+                                                    <div className="grid grid-cols-5 gap-3">
+                                                        {products.map((product) => (
+                                                            <div>
+                                                                <ProductCard product={product} /></div>
+                                                        ))}
+                                                    </div>
+
                                                 </ul>
                                             ) : (
                                                 <p>No products available.</p>

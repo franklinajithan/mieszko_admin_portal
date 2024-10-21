@@ -24,6 +24,7 @@ interface SelectFieldProps<T extends FieldValues> {
   disabled?: boolean;
   onChange?: (value: string | number | boolean) => void;
   options: { value: string | number | boolean; label: string }[];
+  required?: boolean;
 }
 
 const SelectField = <T extends FieldValues>({
@@ -33,7 +34,8 @@ const SelectField = <T extends FieldValues>({
   control,
   disabled,
   onChange,
-  options
+  options,
+  required = false,
 }: SelectFieldProps<T>) => {
   const [internalValue, setInternalValue] = useState<string | number | boolean>(''); // Internal state for non-form usage
   const id = `select-${name}`;
@@ -72,7 +74,8 @@ const SelectField = <T extends FieldValues>({
           return (
             <div className='w-full'>
               <FormItem>
-                <LabelField label={label} htmlFor={id} />
+                <LabelField label={label} htmlFor={id} required={required}/>
+         
                 <FormControl>
                   <Select
                     value={formatValue(selectedValue)}
@@ -95,7 +98,7 @@ const SelectField = <T extends FieldValues>({
                   </Select>
                 </FormControl>
                 {fieldState.error?.message && (
-                  <FormMessage className='text-cyan-500 mt-1'>
+                  <FormMessage className='form-message mt-2'>
                     {fieldState.error.message}
                   </FormMessage>
                 )}
@@ -109,7 +112,7 @@ const SelectField = <T extends FieldValues>({
     // Standalone usage without form context
     return (
       <div className='w-full'>
-        <LabelField label={label} htmlFor={id} />
+        <LabelField label={label} htmlFor={id} required={required}/>
         <Select
           value={formatValue(internalValue)}
           onValueChange={(val) => handleChange(val)}

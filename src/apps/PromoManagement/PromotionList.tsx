@@ -165,7 +165,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
       renderCell: (params) => {
 
         // const imageUrlWithNoCache = `${imageUrl}${params.row.image}?${new Date().getTime()}`; 
-        const imageUrlWithNoCache = `${imageUrl}${params.row.image}`;
+        const imageUrlWithNoCache = `${imageUrl}label/${params.row.image}`;
         return (
           <Tooltip
             title={

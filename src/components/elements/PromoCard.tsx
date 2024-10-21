@@ -97,7 +97,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
 
 
                                         {item.barcode && (
-                                            <ImageProcessor imageUrl={imageUrl + item.barcode + '.webp'} maxHeight={420} maxWidth={550} />
+                                            <ImageProcessor imageUrl={imageUrl+ "label/" + item.barcode + '.webp'} maxHeight={420} maxWidth={550} />
 
 
                                         )}
@@ -106,7 +106,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                                 <div className="w-6/12">
                                     <div className="mt-12 relative flex flex-col items-center">
                                         <img
-                                            className="image-shadow relative w-auto h-auto max-h-[87%] max-w-[96%] mt-[-26px]"
+                                            className="relative w-auto h-auto max-h-[87%] max-w-[96%] mt-[-26px]"
                                             src={circle}
                                             alt="Circle"
                                             style={{ filter: 'drop-shadow(5px 11px 15px #222)' }}
@@ -162,7 +162,7 @@ const PromoCard = ({ data, barcode, startDate, endDate }: PromoCardProps) => {
                                         <div className="mt-0 mr-4">
                                             <div
                                                 className={`text-[#000] font-bold whitespace-nowrap text-right 
-                ${item.itemName.length < 20 ? 'text-[40px]' : item.itemName.length < 30 ? 'text-[35px]' : item.itemName.length < 40 ? 'text-[35px]' : item.itemName.length < 50 ? 'text-[30px]' : 'text-[24px]'} 
+                ${item.itemName.length < 20 ? 'text-[40px]' : item.itemName.length < 30 ? 'text-[35px]' : item.itemName.length < 40 ? 'text-[30px]' : item.itemName.length < 50 ? 'text-[20px]' : 'text-[20px]'} 
                 uppercase`}
                                             >
                                                 {(() => {

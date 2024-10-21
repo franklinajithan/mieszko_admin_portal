@@ -13,7 +13,12 @@ import InputField from '@/components/elements/InputField';
 import SelectField from '@/components/elements/SelectField';
 import { category } from '../../data/constants';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import {  Loader2 } from 'lucide-react';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
 import { Form } from '@/components/ui/form';
 import { categoryFormSchema } from '@/lib/utils';
 import CheckboxField from '@/components/elements/CheckboxField';
@@ -23,30 +28,29 @@ import { addCategory, addCategoryById, getCategory } from '@/service/category.se
 import { debug } from 'console';
 import { ThemeProvider } from '@mui/material';
 import theme from '@/components/elements/GridTheme';
-import { DataGrid, GridColDef, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridColDef, GridRowId, GridRowModes, GridRowModesModel, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { CardContent } from '@/components/ui/card';
-import { getBrand } from '@/service/brand.service';
+import { DeleteBrand, getBrand } from '@/service/brand.service';
 
 
-
-const ProductBrand = ({ title,icon}:any) => {
+const ProductBrand = ({ title, icon }: any) => {
 
     const { t } = useTranslation('global');
     const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
     const [isLoading, setIsLoading] = useState(false);
     const [rowSelectionModel, setRowSelectionModel] =
         React.useState<GridRowSelectionModel>([]);
-        const [isOpenGrid, setIsOpenGrid] = useState(true);
-        const toggleGridCardBody = () => {
-            setIsOpenGrid(!isOpenGrid);
-        };
+    const [isOpenGrid, setIsOpenGrid] = useState(true);
+    const toggleGridCardBody = () => {
+        setIsOpenGrid(!isOpenGrid);
+    };
 
     const [rows, setRows] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchData = async () => {
             try {
                 const result = await getBrand();
                 if (result.status !== 200) {
@@ -55,44 +59,128 @@ const ProductBrand = ({ title,icon}:any) => {
                 };
 
                 setRows(result.data.data);
-
-
-
             } catch (e) {
                 console.error(e);
-            } finally {
-             
-            }
+            } 
         };
 
-        fetchUser();
+        fetchData();
     }, []);
 
 
 
 
 
-    
-    const columns: GridColDef[] = [
-        { field: 'brand_name', headerName: 'Name', flex: 1 },
-        { field: 'brand_description', headerName: 'Description', flex: 1 },
-        { field: 'brand_status', headerName: 'Status', flex: 1 },
-        { field: 'brand_website', headerName: 'Website', flex: 1 },
-        { field: 'brand_image', headerName: 'Image', flex: 1 },
-      
+
+    const columns: GridColDef[] = [{
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        width: 100,
+        cellClassName: 'actions',
+        getActions: ({ id }) => {
+            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+            if (isInEditMode) {
+                return [
+                    <GridActionsCellItem
+                        icon={<SaveIcon />}
+                        label="Save"
+                        sx={{
+                            color: 'primary.main',
+                        }}
+                        onClick={handleSaveClick(id)}
+                    />,
+                    <GridActionsCellItem
+                        icon={<CancelIcon />}
+                        label="Cancel"
+                        className="textPrimary"
+                        onClick={handleCancelClick(id)}
+                        color="inherit"
+                    />,
+                ];
+            }
+
+            return [
+                <GridActionsCellItem
+                    icon={<EditIcon />}
+                    label="Edit"
+                    className="textPrimary"
+                    onClick={handleEditClick(id)}
+                    color="inherit"
+                />,
+                <GridActionsCellItem
+                    icon={<DeleteIcon />}
+                    label="Delete"
+                    onClick={handleDeleteClick(id)}
+                    color="inherit"
+                />,
+            ];
+        }
+    },
+    { field: 'brandName', headerName: 'Name', flex: 1 },
+    { field: 'description', headerName: 'Description', flex: 1 },
+    { field: 'status', headerName: 'Status', flex: 1 },
+    { field: 'website', headerName: 'Website', flex: 1 },
+    { field: 'brand_image', headerName: 'Image', flex: 1 },
+
     ];
+
+    const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
+    const handleEditClick = (id: GridRowId) => () => {
+
+        navigate(`/product/edit-brand/${id.toString()}`);
+        //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    };
+
+    const handleSaveClick = (id: GridRowId) => () => {
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    };
+
+    const handleDeleteClick = (id: GridRowId) => () => {
+        setRows(rows.filter((row: any) => row.id !== id));
+        const fetchData = async () => {
+            try {
+                const result = await DeleteBrand(id);
+                if (result.status !== 200) {
+                    console.error(result.data);
+                    return;
+                };
+
+                //setRows(result.data.data);
+            } catch (e) {
+                console.error(e);
+            } 
+        };
+
+        fetchData();
+    };
+
 
     const handleRedirect = () => {
         navigate('/product/new-brand'); // Redirect to the desired path
     };
 
 
+    const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+        });
+
+        const editedRow: any = rows.find((row: any) => row.id === id);
+        if (editedRow!.isNew) {
+            setRows(rows.filter((row: any) => row.id !== id));
+        }
+    };
+
+
     return (
         <>
-    
+
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
-                <HeaderComponents icon={icon} title={title} />
+                    <HeaderComponents icon={icon} title={title} />
                     {/* <Card className="card-one mt-2">
                         <CardTitle title="Brand Grid" />
                         <Card.Body>
@@ -127,12 +215,16 @@ const ProductBrand = ({ title,icon}:any) => {
                                                 // disableColumnFilter
                                                 // disableColumnSelector
                                                 // disableDensitySelector
-                                                checkboxSelection
+                                                // checkboxSelection
                                                 onRowSelectionModelChange={(newRowSelectionModel) => {
                                                     setRowSelectionModel(newRowSelectionModel);
                                                 }}
-                                                rowSelectionModel={rowSelectionModel}
-                                                getRowId={(row) => row.brand_id}
+
+                                                // columnVisibilityModel={columnVisibility}
+                                                // onColumnVisibilityModelChange={(newModel) =>
+                                                //     setColumnVisibility(newModel)
+                                                // }
+                                                getRowId={(row) => row.id}
                                                 rowHeight={35}
                                                 rows={rows}
                                                 columns={columns}

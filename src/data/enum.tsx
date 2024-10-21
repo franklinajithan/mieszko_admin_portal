@@ -989,4 +989,12 @@ export const visaStatuses = [
 ];
 
 
+export const reorderLevelType = [
+  { value: 'case', label: 'Case' },
+  { value: 'unit', label: 'Unit' },
+  
+];
+
+
+
 

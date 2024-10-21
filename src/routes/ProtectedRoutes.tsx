@@ -89,7 +89,8 @@ import FruitVegLabel from "@/apps/LabelManagement/FruitVegLabel";
 import ProductByCategory from "@/apps/productManagement/ProductByCategory";
 import VatOverview from "@/apps/Configuration/VatOverview";
 import VatNewEntry from "@/apps/Configuration/VatNewEntry";
-import MSPStockTake from "@/apps/orderManagement/MSPStockTake";
+import MSPStockTake from "@/apps/stockManagement/MSPStockTake";
+import NewBrand from "@/apps/productManagement/NewBrand";
 
 const protectedRoutes = [
 
@@ -121,6 +122,9 @@ const protectedRoutes = [
   { path: "product/product-category", element: <ProductCategory icon={FaFolder} title="Product Category" /> },
   { path: "product/product-by-category", element: <ProductByCategory icon={FaFolder} title="Product By Category" /> },
   { path: "product/product-brand", element: <ProductBrand icon={FaTrademark} title="Product Brand" /> },
+  { path: "product/new-brand", element: <NewBrand icon={FaUserPlus} title="New Brand" type={ModeType.Add} /> },
+  { path: "product/edit-brand/:id", element: <NewBrand icon={FaUserPlus} title="Edit Brand" type={ModeType.Edit} /> },
+
   { path: "product/edit-product/:id", element: <EditProduct icon={FiEdit} title="Edit Product" /> },
 
   { path: "supplier/supplier-list", element: <SupplierList icon={FaAddressBook} title="Supplier Directory" /> },
