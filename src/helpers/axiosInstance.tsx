@@ -3,9 +3,9 @@ import axios from 'axios';
 
 console.log(baseUrl);
 
-const apiUrl = import.meta.env.VITE_BASE_URL_DEV || 'http://192.168.128.139:5000/api';
+// const apiUrl = import.meta.env.VITE_BASE_URL_DEV || 'http://192.168.128.139:5000/api';
 const axiosInstance = axios.create({
-  baseURL: apiUrl, // Ensure the server is up and accessible
+  baseURL: baseUrl, // Ensure the server is up and accessible
 });
 
 axiosInstance.interceptors.request.use(
