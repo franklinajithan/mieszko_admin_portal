@@ -15,7 +15,7 @@ export default defineConfig({
     open: true, // Opens the browser automatically
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5005',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
@@ -23,7 +23,7 @@ export default defineConfig({
     },
   },
   preview: {
-    port: 5000, // Port for the preview server
+    port: 5005, // Port for the preview server
     open: true, // Automatically opens the browser
   },
 });
