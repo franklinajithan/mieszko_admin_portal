@@ -1,6 +1,6 @@
 // Check if we are in production or development mode
 const isProduction = import.meta.env.MODE === 'production';
-
+ 
 // Use the appropriate URLs based on the environment
 export const baseUrl = isProduction
   ? import.meta.env.VITE_BASE_URL_PROD // Production URL
