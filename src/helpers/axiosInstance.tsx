@@ -1,7 +1,7 @@
 import { baseUrl } from '@/_config';
 import axios from 'axios';
 
-console.log(baseUrl);
+console.log("baseUrl", baseUrl);
 const axiosInstance = axios.create({
   baseURL: baseUrl, // Ensure the server is up and accessible
 });
