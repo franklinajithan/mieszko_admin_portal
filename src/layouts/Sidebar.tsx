@@ -5,7 +5,7 @@ import userAvatar from "../assets/img/img1.jpg";
 import { FaTachometerAlt, FaBox, FaStore, FaBoxes, FaPeopleCarry, FaWarehouse, FaFileInvoice, FaTrashAlt, FaUserCog, FaRecycle, FaFileInvoiceDollar, FaTruckLoading, FaTags, FaUserShield, FaClipboardList, FaStoreAlt, FaChartLine, FaTruck, FaBullhorn, FaUserTie, FaRegClock, FaCalendarCheck, FaCogs, FaGrinBeamSweat, FaCog } from 'react-icons/fa';
 
 import {
-    dashboardMenu, OrderManagementMenu, storeManagementMenu,
+    dashboardMenu, orderManagementMenu, storeManagementMenu, salesManagementMenu,
     productManagementMenu, supplierManagementMenu,
     userManagementMenu, stockManagementMenu,
     invoiceManagementMenu, wasteManagementMenu,
@@ -19,7 +19,7 @@ import {
 } from "../data/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Make sure to import FontAwesomeIcon
 import { config } from "process";
-type MenuGroupKey = 'dashboard' | 'orderManagement' | 'storeManagement' | 'productManagement' | 'supplierManagement' | 'stockManagement' |
+type MenuGroupKey = 'dashboard' | 'orderManagement' | 'storeManagement' | 'productManagement' | 'supplierManagement' | 'stockManagement' | 'salesManagement' |
     'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' |'labelManagement'| 'rotaManagement' | 'leaveManagement' | 'staffManagement' | 'configuration';
 
 interface MenuItem {
@@ -72,6 +72,7 @@ const SidebarMenu: React.FC = () => {
         dashboard: false,
         orderManagement: false,
         storeManagement: false,
+        salesManagement:false,
         productManagement: false,
         supplierManagement: false,
         stockManagement: false,
@@ -103,6 +104,9 @@ const SidebarMenu: React.FC = () => {
                 '/order/purchase-planning': 'orderManagement',
                 '/order/purchase-order': 'orderManagement',
                 '/order/order-history': 'orderManagement',
+
+                // Store Management Menu
+                '/sale/reduce-to-clear': 'salesManagement',
 
                 // Store Management Menu
                 '/store/company-list': 'storeManagement',
@@ -334,8 +338,20 @@ const SidebarMenu: React.FC = () => {
                     <FaClipboardList className="nav-icon" size={20} />
                     <span>Order Management</span>
                 </div>
-                <div className="pl-2">{populateMenu(OrderManagementMenu)}</div>
+                <div className="pl-2">{populateMenu(orderManagementMenu)}</div>
             </div>
+
+            <div className={`nav-group ${menuGroups.salesManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+                <div
+                    className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
+                    onClick={() => toggleMenu('salesManagement')}
+                >
+                    <FaStoreAlt className="nav-icon" size={20} />
+                    <span>Sales Management</span>
+                </div>
+                <div className="pl-2">{populateMenu(salesManagementMenu)}</div>
+            </div>
+
 
             <div className={`nav-group ${menuGroups.storeManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div
