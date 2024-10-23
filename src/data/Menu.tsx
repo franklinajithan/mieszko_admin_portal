@@ -36,11 +36,16 @@ export const dashboardMenu:any = [
 ];
 
 
-export const OrderManagementMenu:any = [
+export const orderManagementMenu:any = [
   { label: "New Purchase Planning", link: "/order/new-purchase-planning", icon: faShoppingBag },
   { label: "Purchase Planning", link: "/order/purchase-planning", icon: faCalendarDay },
   { label: "Purchase Order", link: "/order/purchase-order", icon: faFileAlt },
   { label: "Order History", link: "/order/order-history", icon: faHistory }
+];
+
+export const salesManagementMenu:any = [
+  { label: "Reduce to Clear", link: "/sale/reduce-to-clear", icon: faRecycle },
+
 ];
 
 
