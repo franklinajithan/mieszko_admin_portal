@@ -25,7 +25,7 @@ import { addBrand } from "@/service/brand.service";
 import ImageUploader from "@/components/elements/ImageUploader";
 
 
-const BrandNewPage = ({ title,icon}:any) => {
+const BrandNewPage = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast()
@@ -84,7 +84,7 @@ const BrandNewPage = ({ title,icon}:any) => {
 
     setIsLoading(true);
     const fetchUser = async () => {
-      let result:any
+      let result: any
       setIsLoading(true);
 
       try {
@@ -97,12 +97,12 @@ const BrandNewPage = ({ title,icon}:any) => {
 
         result = await addBrand(data);
         if (result.status == 201) {
-          toast({ variant: "success",  title: result.data.status, description: result.data.message, duration: 800, })
-        }else{
-          toast({ variant: "destructive", title: result.data.status, description: result.data.message, duration: 800,})
+          toast({ variant: "success", title: result.data.status, description: result.data.message, duration: 800, })
+        } else {
+          toast({ variant: "destructive", title: result.data.status, description: result.data.message, duration: 800, })
         }
-      } catch (e:any) {
-        toast({ variant: "destructive", title: e.response.status, description:  e.response.data.message,duration: 800,})
+      } catch (e: any) {
+        toast({ variant: "destructive", title: e.response.status, description: e.response.data.message, duration: 800, })
       } finally {
         setTimeout(() => {
           setIsLoading(false);
@@ -111,7 +111,7 @@ const BrandNewPage = ({ title,icon}:any) => {
     };
 
     fetchUser();
-   
+
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,10 +123,10 @@ const BrandNewPage = ({ title,icon}:any) => {
   };
   return (
     <React.Fragment>
- 
+
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-zinc-50">
-        <HeaderComponents icon={icon} title={title} />
+          <HeaderComponents icon={icon} title={title} />
 
           <Card className="card-one mt-2">
             <CardTitle title="New Brand" />
@@ -134,21 +134,21 @@ const BrandNewPage = ({ title,icon}:any) => {
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                   <div className="flex grid grid-cols-5 gap-4 mb-6">
-                
 
 
-<></> <ImageUploader imagePreview={imagePreview} onImageChange={handleImageChange} onImageClick={handleImageClick} isPopupOpen={isPopupOpen} onClosePopup={handleClosePopup} selectedImage={selectedImage} />
-                   
+
+                    <></> <ImageUploader imagePreview={imagePreview} onImageChange={handleImageChange} onImageClick={handleImageClick} isPopupOpen={isPopupOpen} onClosePopup={handleClosePopup} selectedImage={selectedImage} />
+
                     <InputField control={form.control} label="Brand name" type="text" name="brandName" />
                     <InputField control={form.control} label="Description" type="text" name="description" />
                     <InputField control={form.control} label="website" type="text" name="website" />
                     <SelectField control={form.control} label="Status" name="status" options={status} />
-                                                   
+
                   </div>
                   <hr className="border-t border-zinc-300 " />
                   <div className="flex justify-end space-x-4  mt-2 pr-4">
                     <button className="btn-zinc">
-                    Cancel
+                      Cancel
                     </button>
                     <Button type="submit" disabled={isLoading} className='btn-cyan'>
                       {isLoading ? (

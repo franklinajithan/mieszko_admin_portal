@@ -92,6 +92,7 @@ import VatNewEntry from "@/apps/Configuration/VatNewEntry";
 import MSPStockTake from "@/apps/stockManagement/MSPStockTake";
 import NewBrand from "@/apps/productManagement/NewBrand";
 import ReduceToClear from "@/apps/SalesManagement/ReduceToClear";
+import NewReduceToClear from "@/apps/SalesManagement/NewReduceToClear";
 
 const protectedRoutes = [
 
@@ -110,7 +111,7 @@ const protectedRoutes = [
   { path: "order/order-history", element: <OrderHistory icon={FaHistory} title="Order History" /> },
 
   { path: "sale/reduce-to-clear", element: <ReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
-
+  { path: "sale/new-reduce-to-clear", element: <NewReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
 
   { path: "store/company-List", element: <CompanyList icon={FaStore} title="Company List" /> },
   { path: "store/new-company", element: <AddEditCompany icon={FaStore} title="New Company" /> },
