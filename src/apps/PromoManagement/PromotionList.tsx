@@ -231,7 +231,6 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({ title, icon }) 
 
     try {
       let getBarcode = rows.find((row: any) => row.labelId === currentRowId);
-debugger;
       const formData = new FormData();
       formData.append('id', getBarcode.barcode || '');
       formData.append('image', file || '');

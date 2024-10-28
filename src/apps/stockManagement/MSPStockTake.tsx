@@ -23,6 +23,9 @@ import { Form } from "@/components/ui/form";
 import { CalendarInput } from "@/components/elements/CalendarInput";
 import { formatDate } from "date-fns";
 import { RotatingSquaresLoader } from "@/components/elements/SquaresLoader";
+import { Input } from "@/components/ui/input";
+import LabelField from "@/components/elements/LabelField";
+import CustomInputField from "@/components/elements/CustomInputField";
 
 const MSPStockTake = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
@@ -30,8 +33,7 @@ const MSPStockTake = ({ title, icon }: any) => {
   const [delivery, setDelivery] = useState(0);
   const [wastage, setWastage] = useState(0);
   const [salesBeforeRefund, setSalesBeforeRefund] = useState(0);
-  const [refund, setRefund] = useState(0);
-  const [salesAfterRefund, setSalesAfterRefund] = useState(0);
+  const [refundedQty, setRefundedQty] = useState(0);
   const [total, setTotal] = useState(0);
   const [sales, setSales] = useState(0);
   const [systemBookStock, setSystemBookStock] = useState(0);
@@ -57,19 +59,13 @@ const MSPStockTake = ({ title, icon }: any) => {
     setIsOpenGrid(!isOpenGrid);
   };
 
-  useEffect(() => {
-    setSalesAfterRefund(salesBeforeRefund - refund);
-  }, [salesBeforeRefund, refund]);
+
+
+
+
 
   // Calculate the total whenever stockTake, delivery, salesAfterRefund, or wastage changes
-  useEffect(() => {
-    
-    console.log('stockTake '+ stockTake);
-    let total = (delivery + stockTake) - (salesAfterRefund + wastage)
-    salesForm.reset({ total: total });
-    console.log('total '+total);
-   // setTotal(total);
-  }, [stockTake, delivery, salesAfterRefund, wastage]);
+
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Title', flex: 3 },
@@ -113,6 +109,7 @@ const MSPStockTake = ({ title, icon }: any) => {
   const { control: salesControl, handleSubmit: handleSalesSubmit, formState: { errors: salesErrors } } = salesForm;
 
   const onSearchSubmit = async (data: any) => {
+
     setIsLoading(true);
     try {
 
@@ -130,6 +127,7 @@ const MSPStockTake = ({ title, icon }: any) => {
         console.log(stockUrl);
         const result = await getMSPStockTake(dataItem);
         setMSPdata(result.data.data);
+
         setRows(result.data.data.salesData);
         salesForm.reset(result.data.data.total);
         setDelivery(result.data.data.total.delivery);
@@ -137,10 +135,11 @@ const MSPStockTake = ({ title, icon }: any) => {
         setSales(result.data.data.total.sales);
         setStockTake(result.data.data.total.stockTake);
         setWastage(result.data.data.total.wastage);
+        setRefundedQty(result.data.data.total.refundedQty);
         setTotal(result.data.data.total.total);
-   
+        setSystemBookStock(result.data.data.total.systemBookStock);
       } else {
- 
+
       }
 
 
@@ -156,12 +155,41 @@ const MSPStockTake = ({ title, icon }: any) => {
     // Handle sales data submission
   };
 
-  const handleChange = (event:any) => {
-    console.log(event); // Check if the event object is defined
-    if (event && event.target) {
-      setStockTake(event.target.value);
-    } 
+  const handleTotalChange = (value: string, fieldName: string) => {
+    const newValue = Number(value); // Convert the value from string to number
+
+    // Update the respective field based on the field name
+    if (fieldName === "stockTake") setStockTake(newValue);
+    else if (fieldName === "delivery") setDelivery(newValue);
+    else if (fieldName === "sales") setSales(newValue);
+    else if (fieldName === "wastage") setWastage(newValue);
+    else if (fieldName === "salesBeforeRefund") setSalesBeforeRefund(newValue);
+    else if (fieldName === "refundedQty") setRefundedQty(newValue); // Assuming you have a setRefund function
+
+  
+
+   
   };
+
+
+
+  useEffect(() => {
+
+    const calculatedTotal = (stockTake + delivery) - (salesBeforeRefund + refundedQty + wastage);
+    console.log(`${calculatedTotal} = (${stockTake} + ${delivery}) - (${salesBeforeRefund} + ${refundedQty} + ${wastage})`);
+    setTotal(calculatedTotal);
+  }, [stockTake, delivery, salesBeforeRefund, refundedQty, wastage]);
+
+
+  useEffect(() => {
+    setSales(salesBeforeRefund - refundedQty);
+  }, [salesBeforeRefund, refundedQty]);
+
+
+  // useEffect(() => {
+  //   const calculatedTotal = stockTake + delivery + sales - wastage;
+  //   setTotal(calculatedTotal);
+  // }, [stockTake, delivery, sales, wastage]);
 
   return (
     <React.Fragment>
@@ -203,24 +231,26 @@ const MSPStockTake = ({ title, icon }: any) => {
           <Card className="card-one mt-2">
             <CardTitle title="Stock Take List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
             <Form {...salesForm}>
-              <form onSubmit={handleSalesSubmit(onSalesSubmit)} className="space-y-8">
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                    <InputField control={salesControl} label="Stock Take" type="number" name="stockTake" value={stockTake} onChange={handleChange} />
-                    <InputField control={salesControl} label="Stock Take"  type="number"  name="stockTake"  value={stockTake}  onChange={(event:any) => console.log(event.target.value)} />
-                    <InputField control={salesControl} label="Delivery" type="number" name="delivery" value={delivery} onChange={(value) => setDelivery(Number(value))} />
-                    <InputField control={salesControl} label="Sales" type="number" name="sales" value={sales} onChange={(value) => setSales(Number(value))} />
-                    <InputField control={salesControl} label="Wastage" type="number" name="wastage" value={wastage} onChange={(value) => setWastage(Number(value))} />
-                    <InputField control={salesControl} label="Total" type="number" name="total" value={total} />
-                    <InputField control={salesControl} label="System Book Stock" type="number" name="systemBookStock" value={systemBookStock} disabled />
-                  </div>
+              <Form {...salesForm}>
+                <form onSubmit={handleSalesSubmit(onSalesSubmit)} className="space-y-8">
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                      <CustomInputField id="stockTake" label="Stock Take" type="number" name="stockTake" value={stockTake} onChange={(e: any) => handleTotalChange(e, "stockTake")} />
+                      <CustomInputField id="delivery" label="Delivery" type="number" name="delivery" value={delivery} onChange={(e: any) => handleTotalChange(e, "delivery")} />
+                      <CustomInputField id="salesBeforeRefund" label="Sales Before Refund" type="number" name="salesBeforeRefund" value={salesBeforeRefund} onChange={(e: any) => handleTotalChange(e, "salesBeforeRefund")} />
+                      <CustomInputField id="refundQty" label="Refunded Quantity" type="number" name="refundedQty" value={refundedQty} onChange={(e: any) => handleTotalChange(e, "refundedQty")}  statement={sales !== 0 ? `Sales: ${sales}` : undefined} />
+                      {/* <CustomInputField id="sales" label="Sales"  type="number" name="sales"  value={sales} onChange={(e:any) => handleTotalChange(e , "sales")} /> */}
+                      <CustomInputField id="wastage" label="Wastage" type="number" name="wastage" value={wastage} onChange={(e: any) => handleTotalChange(e, "wastage")} />
+                      <CustomInputField id="total" label="Total" type="number" name="total" value={total} disabled />
+                      <CustomInputField id="systemBookStock" label="System Book Stock" type="number" name="systemBookStock" value={systemBookStock} disabled />
+                    </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                    <InputField control={salesControl} label="Sales Before Refund" type="number" name="salesBeforeRefund" value={salesBeforeRefund} onChange={(value) => setSalesBeforeRefund(Number(value))} />
-                    <InputField control={salesControl} label="Refunded Quantity" type="number" name="refundedQty" />
-                  </div>
-                </CardContent>
-              </form>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+
+                    </div>
+                  </CardContent>
+                </form>
+              </Form>
             </Form>
 
 
@@ -246,7 +276,9 @@ const MSPStockTake = ({ title, icon }: any) => {
                           onColumnVisibilityModelChange={(newModel) =>
                             setColumnVisibility(newModel)
                           }
-                          getRowId={(row) => row.index}
+                          getRowId={() => `row-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`}
+
+
                           rowHeight={35}
                           rows={rows}
                           columns={columns}

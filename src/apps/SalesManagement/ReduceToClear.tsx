@@ -12,7 +12,7 @@ import { sample, status } from "../../data/constants";
 import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
-import { companySearchFormSchema, StoreListFormSchema } from "@/lib/utils";
+import { companySearchFormSchema, reduceToClearSearchFormSchema, StoreListFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
@@ -31,304 +31,302 @@ import { getCompany } from "@/service/store.service";
 import { useNavigate } from "react-router-dom";
 import { on } from "events";
 import { countries } from "@/data/enum";
+import { getReduceToClear } from "@/service/sale.service";
 
-const ReduceToClear = ({ title,icon}:any) => {
-    const { t } = useTranslation("global");
-    const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-    const navigate = useNavigate();
-    const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
-    const [isLoading, setIsLoading] = useState(false)
-    const [isOpenGrid, setIsOpenGrid] = useState(true);
-    const [rows, setRows] = useState([]);
-    const toggleCardBody = () => {
-      setIsOpenGrid(!isOpenGrid);
+const ReduceToClear = ({ title, icon }: any) => {
+  const { t } = useTranslation("global");
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
+  const navigate = useNavigate();
+  const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
+  const [isLoading, setIsLoading] = useState(false)
+  const [isOpenGrid, setIsOpenGrid] = useState(true);
+  const [rows, setRows] = useState([]);
+  const toggleCardBody = () => {
+    setIsOpenGrid(!isOpenGrid);
+  };
+
+  useEffect(() => {
+    const fetchCompany = async () => {
+      try {
+
+        const result = await getReduceToClear();
+        if (result.status !== 200) {
+          console.error(result.data);
+          return;
+        };
+        setRows(result.data.data)
+
+
+
+
+
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
     };
-  
-    useEffect(() => {
-      const fetchCompany = async () => {
-        try {
-  
-          const company = await getCompany();
-          if (company.status !== 200) {
-            console.error(company.data);
-            return;
-          };
-          setRows(company.data.data)
-  
-  
-  
-  
-  
-        } catch (e) {
-          console.error(e);
-        } finally {
-  
-        }
-      };
-  
-      fetchCompany();
-    }, [])
-  
-    const handleEditClick = (id: GridRowId) => () => {
-  
-      navigate(`/store/edit-company/${id.toString()}`);
-      //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+
+    fetchCompany();
+  }, [])
+
+  const handleEditClick = (id: GridRowId) => () => {
+
+    navigate(`/store/edit-company/${id.toString()}`);
+    //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
-  
+
   const handleSaveClick = (id: GridRowId) => () => {
-      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
-  
+
   const handleDeleteClick = (id: GridRowId) => () => {
-      setRows(rows.filter((row: any) => row.id !== id));
+    setRows(rows.filter((row: any) => row.id !== id));
   };
-  const onClickAddCompany = () =>  {
-    navigate(`/store/new-company`);
+  const onClickReduceToClear = () => {
+    navigate(`/sale/new-reduce-to-clear`);
   };
   const handleCancelClick = (id: GridRowId) => () => {
-      setRowModesModel({
-          ...rowModesModel,
-          [id]: { mode: GridRowModes.View, ignoreModifications: true },
-      });
-  
-      const editedRow: any = rows.find((row: any) => row.id === id);
-      if (editedRow!.isNew) {
-          setRows(rows.filter((row: any) => row.id !== id));
-      }
-  };
-  
-  
-  
-    const columns: GridColDef[] = [
-      {
-        field: 'actions',
-        type: 'actions',
-        headerName: 'Actions',
-        width: 100,
-        cellClassName: 'actions',
-        getActions: ({ id }) => {
-            const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-  
-            if (isInEditMode) {
-                return [
-                    <GridActionsCellItem
-                        icon={<SaveIcon />}
-                        label="Save"
-                        sx={{
-                            color: 'primary.main',
-                        }}
-                        onClick={handleSaveClick(id)}
-                    />,
-                    <GridActionsCellItem
-                        icon={<CancelIcon />}
-                        label="Cancel"
-                        className="textPrimary"
-                        onClick={handleCancelClick(id)}
-                        color="inherit"
-                    />,
-                ];
-            }
-  
-            return [
-                <GridActionsCellItem
-                    icon={<EditIcon />}
-                    label="Edit"
-                    className="textPrimary"
-                    onClick={handleEditClick(id)}
-                    color="inherit"
-                />,
-                <GridActionsCellItem
-                    icon={<DeleteIcon />}
-                    label="Delete"
-                    onClick={handleDeleteClick(id)}
-                    color="inherit"
-                />,
-            ];
-        }
-    },
-      { field: 'store', headerName: 'Company ID',  flex: 1},
-      { field: 'department', headerName: 'Company Code',  flex: 1},
-      { field: 'barcode', headerName: 'Company Name',  flex: 1 },
-      { field: 'status', headerName: 'Owner Name',  flex: 1 },
-      { field: 'name', headerName: 'Email',  flex: 1 },
-      { field: 'count', headerName: 'Phone',  flex: 1 },
-      { field: 'expiry', headerName: 'Address',  flex: 1 },
-      { field: 'newQty', headerName: 'City',  flex: 1 },
-      { field: 'price', headerName: 'State',  flex: 1 },
-      { field: 'appPrice', headerName: 'Postcode',  flex: 1},
-      { field: 'createdDate', headerName: 'Country',  flex: 1 },
-      { field: 'priceDate', headerName: 'Status',  flex: 1 },
-      { field: 'appDate', headerName: 'Tax Number',  flex: 1 },
-      { field: 'createdAt', headerName: 'Created At',  flex: 1 },
-      { field: 'createdBy', headerName: 'Created By',  flex: 1 },
-
-    ];
-  
-  
-  
-  
-    const form = useForm<z.infer<typeof companySearchFormSchema>>({
-      resolver: zodResolver(companySearchFormSchema),
-      defaultValues: {
-        companyId: 0,
-        companyCode: '',
-        companyName: '',
-        ownerName: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        postcode: '',
-        country: '',
-        status: true,
-        taxNo: '',
-        createdAt: new Date(),
-        createdBy: 0,
-        updatedAt: new Date(),
-        updatedBy: 0,
-        website: '',
-        logo: null, // or an empty string, based on your needs
-      },
-    })
-  
-  
-    const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
-      companyId: false,
-      companyCode: true,
-      companyName: true,
-      ownerName: true,
-      email: true,
-      phone: true,
-      address: true,
-      city: true,
-      state: true,
-      postcode: true,
-      country: true,
-      status: false,
-      taxNo: true,
-      createdAt: false,
-      createdBy: false,
-      updatedAt: false,
-      updatedBy: false,
-      website: false,
-      logo: false,
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
-  
-    const onSubmit = (data: any) => {
-      // Handle form submission
-  
-    };
-  
-    const [pageSize, setPageSize] = React.useState(5); // Set default rows per page
-  
-    const handlePageSizeChange = (event: any) => {
-      setPageSize(Number(event.target.value));
-    };
-  
-   
-  
-    return (
-      <React.Fragment>
-  
-        <div className="main main-app p-lg-1">
-          <div className="min-h-screen bg-zinc-50">
-            <HeaderComponents icon={icon} title={title} />
-  
-            <Card className="card-one mt-2">
-              <CardTitle title="Search" />
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                      <SelectField control={form.control} label="Company Name" name="companyName" options={sample} />
-                      <SelectField control={form.control} label="Company Code" name="companyCode" options={sample} />
-                      <SelectField control={form.control} label="Status" name="status" options={status} />
-                      <SelectField control={form.control} label="Owner Name" name="ownerName" options={sample} />
-                      <SelectField control={form.control} label="Postcode" name="postcode" options={sample} />
-                      <SelectField control={form.control} label="City" name="city" options={sample} />
-                      <SelectField control={form.control} label="Country" name="country" options={countries} />
-                      <SelectField control={form.control} label="Tax Number" name="taxNo" options={sample} />
-                      <InputField control={form.control} label="Email" name="email" type="email" />
-                      <InputField control={form.control} label="Phone" name="phone" type="text" />
-                      <InputField control={form.control} label="Website" name="website" type="url" />
-                    </div>
-  
-  
-                    <hr className="border-t border-zinc-300" />
-  
-  
-  
-                    <div className="flex justify-end space-x-4 mt-2 pr-4">
-                      <button className="btn-zinc">
-                        Clear
-                      </button>
-                      <Button type="submit" disabled={isLoading} className='btn-cyan'>
-                        {isLoading ? (
-                          <>
-                            <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
-                          </>
-                        ) : "Search"}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </form>
-              </Form>
-            </Card>
-            <Card className="card-one mt-2">
-  
-              <CardTitle title="Company List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
-  
-  
-              {isOpenGrid && (<CardContent>
-  
-  
-                <div>
+
+    const editedRow: any = rows.find((row: any) => row.id === id);
+    if (editedRow!.isNew) {
+      setRows(rows.filter((row: any) => row.id !== id));
+    }
+  };
+
+
+
+  const columns: GridColDef[] = [
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: 'primary.main',
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      }
+    },
+    { field: 'id', headerName: 'ID', flex: 1 },
+    { field: 'barcode', headerName: 'Barcode', flex: 1 },
+    { field: 'itemName', headerName: 'Item Name', flex: 1 },
+    { field: 'verification', headerName: 'Verification Status', flex: 1 },
+    { field: 'storename', headerName: 'Store Name', flex: 1 },
+    { field: 'categoryname', headerName: 'Category', flex: 1 },
+    { field: 'qty', headerName: 'Quantity', flex: 1 },
+    { field: 'updatedQty', headerName: 'Updated Quantity', flex: 1 },
+    { field: 'count', headerName: 'Count', flex: 1 },
+    { field: 'price', headerName: 'Price', flex: 1 },
+    { field: 'approvedPrice', headerName: 'Approved Price', flex: 1 },
+    { field: 'createdAt', headerName: 'Created At', flex: 1 },
+    { field: 'priceAddedAt', headerName: 'Price Added At', flex: 1 },
+    { field: 'approvedAt', headerName: 'Approved At', flex: 1 },
+    { field: 'expiryDate', headerName: 'Expiry Date', flex: 1 },
+
+  ];
+
+
+
+
+  const form = useForm<z.infer<typeof reduceToClearSearchFormSchema>>({
+    resolver: zodResolver(reduceToClearSearchFormSchema),
+    defaultValues: {
+     
+      barcode: "",
+      itemName: "",
+      verification:undefined,
+      storename: "",
+      categoryname: "",
+      qty: "",
+      updatedQty: null,
+      count: 0,
+      price: null,
+      approvedPrice: null,
+      createdAt: "",
+      priceAddedAt: null,
+      approvedAt: null,
+      expiryDate: "",
+    },
+  });
+
+
+  const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
+    id: true,
+    barcode: true,
+    itemName: true,
+    verification: true,
+    storename: true,
+    categoryname: true,
+    qty: true,
+    updatedQty: true,
+    count: true,
+    price: true,
+    approvedPrice: true,
+    createdAt: true,
+    priceAddedAt: true,
+    approvedAt: true,
+    expiryDate: true,
+  });
+
+  const onSubmit = (data: any) => {
+    // Handle form submission
+
+  };
+
+  const [pageSize, setPageSize] = React.useState(5); // Set default rows per page
+
+  const handlePageSizeChange = (event: any) => {
+    setPageSize(Number(event.target.value));
+  };
+
+  const storeOptions = [{ label: "Hays", value: "Hays" }, /* other stores */];
+  const categoryOptions = [{ label: "Cheese", value: "Cheese" }, /* other categories */];
+  const verificationOptions = [{ label: "Pending", value: "Pending" }, /* other statuses */];
+
+  return (
+    <React.Fragment>
+
+      <div className="main main-app p-lg-1">
+        <div className="min-h-screen bg-zinc-50">
+          <HeaderComponents icon={icon} title={title} />
+
+          <Card className="card-one mt-2">
+            <CardTitle title="Search" />
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
+                    <SelectField control={form.control} label="Store Name" name="storename" options={storeOptions} />
+                    <SelectField control={form.control} label="Category" name="categoryname" options={categoryOptions} />
+                    <InputField control={form.control} label="Barcode" name="barcode" type="text" />
+                    <InputField control={form.control} label="Item Name" name="itemName" type="text" />
+                    <SelectField control={form.control} label="Verification" name="verification" options={verificationOptions} />
+                    <InputField control={form.control} label="Quantity" name="qty" type="number" />
+                    <InputField control={form.control} label="Updated Quantity" name="updatedQty" type="number" />
+                    <InputField control={form.control} label="Count" name="count" type="number" />
+                    <InputField control={form.control} label="Price" name="price" type="number" />
+                    {/* <InputField control={form.control} label="Approved Price" name="approvedPrice" type="number" />
+                    <InputField control={form.control} label="Created At" name="createdAt" type="date" />
+                    <InputField control={form.control} label="Price Added At" name="priceAddedAt" type="date" />
+                    <InputField control={form.control} label="Approved At" name="approvedAt" type="date" />
+                    <InputField control={form.control} label="Expiry Date" name="expiryDate" type="date" /> */}
+                  </div>
+
+
+                  <hr className="border-t border-zinc-300" />
+
+
+
+                  <div className="flex justify-end space-x-4 mt-2 pr-4">
+                    <button className="btn-zinc">
+                      Clear
+                    </button>
+                    <Button type="submit" disabled={isLoading} className='btn-cyan'>
+                      {isLoading ? (
+                        <>
+                          <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                        </>
+                      ) : "Search"}
+                    </Button>
+                  </div>
+                </CardContent>
+              </form>
+            </Form>
+          </Card>
+          <Card className="card-one mt-2">
+
+            <CardTitle title="Company List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
+
+
+            {isOpenGrid && (<CardContent>
+
+
+              <div>
                 <div className="flex justify-start space-x-4  mt-2 pr-4">
-                                  <Button type="submit" className='btn-cyan' onClick={onClickAddCompany}>
-                                      New Company
-                                  </Button>
-                              </div>
-                  <div className="w-full mt-3"> 
-                    <div className="h-full w-full">  
-                      <div>
-                        <ThemeProvider theme={theme}>
-                          <DataGrid
-                            style={{ height: 650, width: '100%' }}
-                            rowHeight={35}
-                            rows={rows}
-                            columns={columns}
-                            getRowId={(row) => row.companyId}
-                            columnVisibilityModel={columnVisibility}
-                            onColumnVisibilityModelChange={(newModel) =>
-                                setColumnVisibility(newModel)
-                            }
-                            initialState={{
-                              pagination: {
-                                paginationModel: { pageSize: 15, page: 0 },
-                              },
-                            }}
-                            pageSizeOptions={[15, 25, 50]}
-                            slots={{ toolbar: GridToolbar }}
-                            slotProps={{
-                              toolbar: {
-                                showQuickFilter: true,
-                              },
-                            }}
-                            pagination
-                          />
-                        </ThemeProvider>
-                      </div>
+                  <Button type="submit" className='btn-cyan' onClick={onClickReduceToClear}>
+                    New Reduce to Clear
+                  </Button>
+                </div>
+                <div className="w-full mt-3">
+                  <div className="h-full w-full">
+                    <div>
+                      <ThemeProvider theme={theme}>
+                        <DataGrid
+                          style={{ height: 650, width: '100%' }}
+                          rowHeight={35}
+                          rows={rows}
+                          columns={columns}
+                          getRowId={(row) => row.id}
+                          columnVisibilityModel={columnVisibility}
+                          onColumnVisibilityModelChange={(newModel) =>
+                            setColumnVisibility(newModel)
+                          }
+                          initialState={{
+                            pagination: {
+                              paginationModel: { pageSize: 15, page: 0 },
+                            },
+                          }}
+                          pageSizeOptions={[15, 25, 50]}
+                          slots={{ toolbar: GridToolbar }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                            },
+                          }}
+                          pagination
+                        />
+                      </ThemeProvider>
                     </div>
                   </div>
                 </div>
-              </CardContent>)}
-            </Card>
-          </div>
+              </div>
+            </CardContent>)}
+          </Card>
         </div>
-      </React.Fragment>
-    );
-  };
-  
+      </div>
+    </React.Fragment>
+  );
+};
+
 
 export default ReduceToClear

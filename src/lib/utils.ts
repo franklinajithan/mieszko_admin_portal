@@ -539,5 +539,37 @@ export const mspStockFormSchema = z.object({
 });
 
 
+export const reduceToClearSearchFormSchema = z.object({
+  id: z.number().int().optional(), // Optional ID if you’re searching by it
+  barcode: z.string().optional(),
+  itemName: z.string().optional(),
+  verification: z.enum(['Pending', 'Approved', 'Rejected']).optional(),
+  storename: z.string().optional(),
+  categoryname: z.string().optional(),
+  qty: z.string().optional(),
+  updatedQty: z.number().nullable().optional(),
+  count: z.number().int().optional(),
+  price: z.number().nullable().optional(),
+  approvedPrice: z.number().nullable().optional(),
+  createdAt: z.string().optional(),
+  priceAddedAt: z.string().nullable().optional(),
+  approvedAt: z.string().nullable().optional(),
+  expiryDate: z.string().optional(),
+});
+
+
+export const newReduceToClearFormSchema = z.object({
+  barcode: z .string() .nonempty("Barcode is required.")  .min(5, "Barcode must be at least 5 characters long."),
+  itemName: z .string() .nonempty("Item name is required.") .min(3, "Item name must be at least 3 characters long."),
+  qty: z .number() .int("Quantity must be a whole number.") .positive("Quantity must be greater than zero.") .nonnegative("Quantity is required."),
+  storeId: z  .number() .int("Store ID must be a whole number.")  .positive("Store ID must be greater than zero."),
+  categoryId: z  .number() .int("Category ID must be a whole number.") .positive("Category ID must be greater than zero."),
+  expiryDate: z .string() .nonempty("Expiry date is required.")
+    .refine((date) => !isNaN(Date.parse(date)), {
+      message: "Expiry date must be a valid date.",
+    }),
+  status: z.boolean().optional().default(true), // Optional, defaulting to true
+});
+
 
 

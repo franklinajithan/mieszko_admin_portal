@@ -112,8 +112,8 @@ const RolesAndRights= ({ title,icon}:any) => {
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [skin, setSkin] = useState(currentSkin);
   const [masterDataPermissions, setMasterDataPermissions] = useState<Permissions>({
-    "Manage Store": { add: true, view: true, edit: true, delete: false },
-    "Manage Supplier": { add: false, view: false, edit: false, delete: true },
+    "Manage Store add": { add: true, view: true, edit: true, delete: false },
+    "Manage Supplier edit": { add: false, view: false, edit: false, delete: true },
     "Manage Item": { add: true, view: true, edit: false, delete: false },
     "Manage Customer": { add: true, view: true, edit: false, delete: false },
   });
