@@ -160,7 +160,6 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
         // Attempt to upload the batch with retry logic
         const uploadedRows = await retry(uploadBatch, maxRetries);
         allUploadedRows = [...allUploadedRows, ...uploadedRows];  // Accumulate successful uploads
-        console.log(`Batch ${index + 1} uploaded successfully.`);
       }
 
       // Update the UI with all uploaded rows after all batches are processed
@@ -168,7 +167,6 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({ title, icon }
 
       // Final validation to ensure all data was uploaded
       if (allUploadedRows.length === formattedData.length) {
-        console.log('All data uploaded successfully.');
       } else {
         console.warn(`Uploaded ${allUploadedRows.length} out of ${formattedData.length} records.`);
       }

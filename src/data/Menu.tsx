@@ -63,6 +63,7 @@ export const productManagementMenu:any = [
   { label: "Product List", link: "/product/product-list", icon: faShoppingBag },
   { label: "New Product", link: "/product/new-product", icon: faPlusSquare },
   { label: "Product Category", link: "/product/product-category", icon: faFolder },
+    { label: "Product Category List", link: "/product/product-category-list", icon: faFolder },
   { label: "Product Brand", link: "/product/product-brand", icon: faTrademark },
  
  

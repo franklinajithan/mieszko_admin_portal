@@ -83,7 +83,6 @@ const FruitVegLabel = ({ title, icon }: any) => {
 
 
   const handleUploadClick = (id: any) => () => {
-    console.log("Upload clicked for ID:", id); // Check if the ID is logged
     setCurrentRowId(id);
     setUploadDialogOpen(true);
   };

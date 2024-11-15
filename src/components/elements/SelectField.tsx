@@ -37,21 +37,38 @@ const SelectField = <T extends FieldValues>({
   options,
   required = false,
 }: SelectFieldProps<T>) => {
-  const [internalValue, setInternalValue] = useState<string | number | boolean>(''); // Internal state for non-form usage
+  const [internalValue, setInternalValue] = useState<string | number | boolean>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const id = `select-${name}`;
 
   const handleChange = (val: string) => {
-    // Parse the value back to its original type
     const parsedValue = options.find(option => String(option.value) === val)?.value;
     if (onChange && parsedValue !== undefined) {
-      onChange(parsedValue); // Return the correct type (string, number, or boolean)
+      onChange(parsedValue);
     }
-    setInternalValue(parsedValue!); // Update internal state for standalone use
+    setInternalValue(parsedValue!);
   };
 
   const formatValue = (value: string | number | boolean): string => {
-    // For display, always convert to string
     return typeof value === 'boolean' || typeof value === 'number' ? String(value) : value;
+  };
+
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) setSearchTerm(''); // Clear search term when closing
+  };
+
+  const handleSearchKeyDown = (event: React.KeyboardEvent) => {
+    event.stopPropagation(); // Prevent event propagation
   };
 
   if (control) {
@@ -74,26 +91,44 @@ const SelectField = <T extends FieldValues>({
           return (
             <div className='w-full'>
               <FormItem>
-                <LabelField label={label} htmlFor={id} required={required}/>
-         
+                <LabelField label={label} htmlFor={id} required={required} />
                 <FormControl>
                   <Select
                     value={formatValue(selectedValue)}
                     onValueChange={handleFormChange}
                     disabled={disabled}
+                    onOpenChange={handleOpenChange}
                   >
                     <SelectTrigger id={id} aria-label={label} aria-disabled={disabled}>
                       <SelectValue placeholder={placeholder || "Select an option"} />
                     </SelectTrigger>
                     <SelectContent>
-                      {options.map((option) => (
-                        <SelectItem key={String(option.value)} value={String(option.value)}>
-                          {name === 'country' && (
-                            <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
-                          )}
-                          {option.label}
-                        </SelectItem>
-                      ))}
+                      {/* Search input fixed at top */}
+                      <div className="p-2 border-b border-gray-200 bg-white sticky top-0">
+                        <input
+                          type="text"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={handleSearchChange}
+                          onKeyDown={handleSearchKeyDown}
+                          className="autocomplete-input w-full px-3 py-2 border border-gray-300 rounded"
+                        />
+                      </div>
+                      {/* Scrollable area for options */}
+                      <div className="max-h-60 overflow-y-auto">
+                        {filteredOptions.length > 0 ? (
+                          filteredOptions.map((option) => (
+                            <SelectItem key={String(option.value)} value={String(option.value)}>
+                              {name === 'country' && (
+                                <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
+                              )}
+                              {option.label}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <div className="p-2 text-gray-500">No results found</div>
+                        )}
+                      </div>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -109,27 +144,45 @@ const SelectField = <T extends FieldValues>({
       />
     );
   } else {
-    // Standalone usage without form context
     return (
       <div className='w-full'>
-        <LabelField label={label} htmlFor={id} required={required}/>
+        <LabelField label={label} htmlFor={id} required={required} />
         <Select
           value={formatValue(internalValue)}
           onValueChange={(val) => handleChange(val)}
           disabled={disabled}
+          onOpenChange={handleOpenChange}
         >
           <SelectTrigger id={id} aria-label={label} aria-disabled={disabled}>
             <SelectValue placeholder={placeholder || "Select an option"} />
           </SelectTrigger>
           <SelectContent>
-            {options.map((option) => (
-              <SelectItem key={String(option.value)} value={String(option.value)}>
-                {name === 'country' && (
-                  <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
-                )}
-                {option.label}
-              </SelectItem>
-            ))}
+            {/* Search input fixed at top */}
+            <div className="p-2 border-b border-gray-200 bg-white sticky top-0">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                onKeyDown={handleSearchKeyDown}
+                className="autocomplete-input w-full px-3 py-2 border border-gray-300 rounded"
+              />
+            </div>
+            {/* Scrollable area for options */}
+            <div className="max-h-60 overflow-y-auto">
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map((option) => (
+                  <SelectItem key={String(option.value)} value={String(option.value)}>
+                    {name === 'country' && (
+                      <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
+                    )}
+                    {option.label}
+                  </SelectItem>
+                ))
+              ) : (
+                <div className="p-2 text-gray-500">No results found</div>
+              )}
+            </div>
           </SelectContent>
         </Select>
       </div>

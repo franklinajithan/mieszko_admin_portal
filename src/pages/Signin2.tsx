@@ -12,9 +12,14 @@ import { Form } from "@/components/ui/form";
 import InputField from "@/components/elements/InputField";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import { login } from "@/store/slices/authSlice";
+import { getUserById } from "@/service/user.service";
+import { addNotification } from "@/store/slices/notificationSlice";
+import { v4 as uuidv4 } from 'uuid';
 export default function Signin2() {
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Get the dispatch function
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,25 +34,48 @@ export default function Signin2() {
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
     setIsLoading(true);
     try {
+      // Example credentials
+      let LoggedUser = { email: "superadmin@mieszko.uk", password: "123456" };
+      const loginResult = await userLogin(LoggedUser);
 
-      // let user = { email: data.email, password: data.password }
-      let user = { email: "admin@mieszko.uk", password: "123456" }
-      const result = await userLogin(user);
-
-      if (result.status !== 200) {
-        console.error(result.data);
+      // Check if login was successful
+      if (loginResult.status !== 200) {
+        console.error("Login failed:", loginResult.data);
         return;
       }
 
-      const { token } = result.data.data;
-      localStorage.setItem('token', token);
-      // localStorage.setItem('refreshToken', refreshToken);
-      // localStorage.setItem('tokenLifeInSeconds', tokenLifeInSeconds);
+      const { token, user: userData } = loginResult.data.data;
 
+      // Validate user data and user_id
+      if (!userData || !userData.user_id) {
+        console.error("user_id is missing in userData");
+        return;
+      }
+      //Temporary solution
+      localStorage.setItem('user_id', userData.user_id);  
 
-      navigate('/order/new-purchase-planning');
-    } catch (e) {
-      console.error(e);
+      dispatch(login({ user: userData, token }));
+      // Fetch user details
+      const userDetails = await getUserById(userData.user_id);
+
+      // Validate userDetails response
+      if (!userDetails || userDetails.status !== 200) {
+        console.error("Failed to fetch user details:", userDetails);
+        return;
+      }
+
+      const user = userDetails.data.data;
+      dispatch(login({ user, token }));
+      dispatch(addNotification({ id: uuidv4(),  message: 'You have successfully logged in!', type: 'success',  duration: 5000, }));
+      if (user) {
+        navigate('/order/new-purchase-planning');
+
+      }
+
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Optionally handle token expiration or other errors here
+      localStorage.removeItem('token');
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +112,6 @@ export default function Signin2() {
                       showPasswordToggle={true}
                       type={"password"}
                     />
-
                   </div>
 
                   <div className="flex flex-col gap-4">
@@ -107,9 +134,7 @@ export default function Signin2() {
           </Card>
         </Col>
         <Col className="d-none d-lg-block">
-          {/* <div className="w-[1400px] h-[1000px] bg-gradient-to-r from-cyan-100 via-cyan-500 to-cyan-100 p-1">
-            <img src={bg1} className="auth-img w-full h-full object-cover" alt="Background" />
-          </div> */}
+          {/* Background image */}
         </Col>
       </Row>
     </div>

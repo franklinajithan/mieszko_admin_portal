@@ -4,11 +4,18 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import userAvatar from "../assets/img/img1.jpg";
 import notification from "../data/Notification";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { logout } from "@/store/slices/authSlice";
 
 export default function Header({ onSkin }: { onSkin: any }) {
   const { t, i18n } = useTranslation("english");
   const [selectedOption, setSelectedOption] = useState("default");
 
+
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const user:any = useSelector((state: RootState) => state.auth.user);
   const CustomToggle = React.forwardRef<HTMLAnchorElement, any>(({ children, onClick }, ref) => (
     <a
       href="#"
@@ -112,6 +119,10 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   const sidebarSkin = (e: any) => {
@@ -253,8 +264,10 @@ export default function Header({ onSkin }: { onSkin: any }) {
             <div className="avatar avatar-xl online mb-3">
               <img src={userAvatar} alt="" />
             </div>
-            <h5 className="mb-1 text-dark fw-semibold">Shaira Diaz</h5>
-            <p className="fs-sm text-secondary">Premium Member</p>
+
+         
+             {isAuthenticated && <h5 className="mb-1 text-dark fw-semibold">Hello {user?.firstName}</h5>}
+            <p className="fs-sm text-secondary">{user?.email}</p>
 
             <nav className="nav">
               <Link to="">
@@ -275,7 +288,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
               <Link to="">
                 <i className="ri-user-settings-line"></i> Account Settings
               </Link>
-              <Link to="#" onClick={handleSignOut}>
+              <Link to="#" onClick={handleLogout}>
                 <i className="ri-logout-box-r-line"></i> Log Out
               </Link>
             </nav>

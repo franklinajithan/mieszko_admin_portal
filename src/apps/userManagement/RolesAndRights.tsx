@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiShield } from "react-icons/fi";
 import { Card, Nav } from "react-bootstrap";
 import Header from "../../layouts/Header";
 import HeaderComponents from "@/components/elements/HeaderSection";
+import PermissionsCheckboxes, { PermissionData } from "./PermissionsCheckboxes";
+import { getPermission } from "@/service/user.service";
 
 type PermissionActions = {
   add: boolean;
@@ -16,33 +18,7 @@ type Permissions = {
   [key: string]: PermissionActions;
 };
 
-const PermissionSection: React.FC<{
-  title: string;
-  permissions: Permissions;
-  onChange: (key: string, action: keyof PermissionActions) => void;
-}> = ({ title, permissions, onChange }) => (
-  <div>
-    <h6 className="mb-2 mt-2 font-bold">{title}</h6>
-    {Object.entries(permissions).map(([key, value]) => (
-      <div key={key} className="flex items-center justify-between mb-2">
-        <div className="w-1/4">{key}</div>
-        <div className="flex w-3/4 space-x-4">
-          {Object.keys(value).map((action) => (
-            <label key={action} className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox text-cyan-600"
-                checked={value[action as keyof PermissionActions]}
-                onChange={() => onChange(key, action as keyof PermissionActions)}
-              />
-              <span className="ml-2 capitalize">{action}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-    ))}
-  </div>
-);
+
 
 interface PermissionsPanelProps {
   permissions: { name: string; checked: boolean }[];
@@ -90,7 +66,7 @@ const PermissionsPanel: React.FC<PermissionsPanelProps> = ({
   </div>
 );
 
-const RolesAndRights= ({ title,icon}:any) => {
+const RolesAndRights = ({ title, icon }: any) => {
   const initialPermissions = [
     { name: "Testing Mode", checked: true },
     { name: "Training Mode", checked: true },
@@ -110,51 +86,65 @@ const RolesAndRights= ({ title,icon}:any) => {
 
   const { t } = useTranslation("global");
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
-  const [skin, setSkin] = useState(currentSkin);
-  const [masterDataPermissions, setMasterDataPermissions] = useState<Permissions>({
-    "Manage Store add": { add: true, view: true, edit: true, delete: false },
-    "Manage Supplier edit": { add: false, view: false, edit: false, delete: true },
-    "Manage Item": { add: true, view: true, edit: false, delete: false },
-    "Manage Customer": { add: true, view: true, edit: false, delete: false },
-  });
-  const [supplierItemPermissions, setSupplierItemPermissions] = useState<Permissions>({
-    "Store Item Management": { add: true, view: true, edit: true, delete: false },
-    "Supplier Item Management": { add: false, view: false, edit: false, delete: true },
-    "Supplier Item Import": { add: true, view: true, edit: false, delete: false },
-  });
-  const [purchasePlanningPermissions, setPurchasePlanningPermissions] = useState<Permissions>({
-    "Purchase Planning": { add: true, view: true, edit: true, delete: false },
-    "Supplier Purchase Order": { add: false, view: false, edit: false, delete: true },
-    "Managing Purchase Return": { add: true, view: true, edit: false, delete: false },
-  });
-  const [ediInvoicePermissions, setEDIInvoicePermissions] = useState<Permissions>({
-    "Verify EDI Invoice": { add: true, view: true, edit: true, delete: false },
-    "Create Delivery Load List": { add: false, view: false, edit: false, delete: true },
-  });
-  const [storeOperationPermissions, setStoreOperationPermissions] = useState<Permissions>({
-    "Paid Out Request": { add: true, view: true, edit: true, delete: false },
-    "Stock Take": { add: false, view: false, edit: false, delete: true },
-    "Fill Scan List": { add: false, view: false, edit: false, delete: true },
-    "Gap Scan List": { add: false, view: false, edit: false, delete: true },
-    "Reduce to Clear List": { add: false, view: false, edit: false, delete: true },
-    "Wastage List": { add: false, view: false, edit: false, delete: true },
-    "Specail Order Creation": { add: false, view: false, edit: false, delete: true },
-  });
+  // const [skin, setSkin] = useState(currentSkin);
+  // const [masterDataPermissions, setMasterDataPermissions] = useState<Permissions>({
+  //   "Manage Store add": { add: true, view: true, edit: true, delete: false },
+  //   "Manage Supplier edit": { add: false, view: false, edit: false, delete: true },
+  //   "Manage Item": { add: true, view: true, edit: false, delete: false },
+  //   "Manage Customer": { add: true, view: true, edit: false, delete: false },
+  // });
+  // const [supplierItemPermissions, setSupplierItemPermissions] = useState<Permissions>({
+  //   "Store Item Management": { add: true, view: true, edit: true, delete: false },
+  //   "Supplier Item Management": { add: false, view: false, edit: false, delete: true },
+  //   "Supplier Item Import": { add: true, view: true, edit: false, delete: false },
+  // });
+  // const [purchasePlanningPermissions, setPurchasePlanningPermissions] = useState<Permissions>({
+  //   "Purchase Planning": { add: true, view: true, edit: true, delete: false },
+  //   "Supplier Purchase Order": { add: false, view: false, edit: false, delete: true },
+  //   "Managing Purchase Return": { add: true, view: true, edit: false, delete: false },
+  // });
+  // const [ediInvoicePermissions, setEDIInvoicePermissions] = useState<Permissions>({
+  //   "Verify EDI Invoice": { add: true, view: true, edit: true, delete: false },
+  //   "Create Delivery Load List": { add: false, view: false, edit: false, delete: true },
+  // });
+  // const [storeOperationPermissions, setStoreOperationPermissions] = useState<Permissions>({
+  //   "Paid Out Request": { add: true, view: true, edit: true, delete: false },
+  //   "Stock Take": { add: false, view: false, edit: false, delete: true },
+  //   "Fill Scan List": { add: false, view: false, edit: false, delete: true },
+  //   "Gap Scan List": { add: false, view: false, edit: false, delete: true },
+  //   "Reduce to Clear List": { add: false, view: false, edit: false, delete: true },
+  //   "Wastage List": { add: false, view: false, edit: false, delete: true },
+  //   "Specail Order Creation": { add: false, view: false, edit: false, delete: true },
+  // });
 
   const [permissions, setPermissions] = useState(initialPermissions);
+  const [permissionData, setPermissionData] = useState<any | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getPermission();
+        setPermissionData(result.data.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Generic handler for permission checkboxes
   const handlePermissionChange =
     (permissionsSetter: React.Dispatch<React.SetStateAction<Permissions>>) =>
-    (key: string, action: keyof PermissionActions) => {
-      permissionsSetter((prevState) => ({
-        ...prevState,
-        [key]: {
-          ...prevState[key],
-          [action]: !prevState[key][action], // Toggle the value of the checkbox
-        },
-      }));
-    };
+      (key: string, action: keyof PermissionActions) => {
+        permissionsSetter((prevState) => ({
+          ...prevState,
+          [key]: {
+            ...prevState[key],
+            [action]: !prevState[key][action], // Toggle the value of the checkbox
+          },
+        }));
+      };
 
   const handleFunctionalPermissionChange = (name: string) => {
     setPermissions((prevPermissions) =>
@@ -166,11 +156,11 @@ const RolesAndRights= ({ title,icon}:any) => {
     );
   };
 
-  const handleMasterDataChange = handlePermissionChange(setMasterDataPermissions);
-  const handleSupplierItemChange = handlePermissionChange(setSupplierItemPermissions);
-  const handlePurchasePlanningChange = handlePermissionChange(setPurchasePlanningPermissions);
-  const handleEDIInvoiceChange = handlePermissionChange(setEDIInvoicePermissions);
-  const handleStoreOperationChange = handlePermissionChange(setStoreOperationPermissions);
+  // const handleMasterDataChange = handlePermissionChange(setMasterDataPermissions);
+  // const handleSupplierItemChange = handlePermissionChange(setSupplierItemPermissions);
+  // const handlePurchasePlanningChange = handlePermissionChange(setPurchasePlanningPermissions);
+  // const handleEDIInvoiceChange = handlePermissionChange(setEDIInvoicePermissions);
+  // const handleStoreOperationChange = handlePermissionChange(setStoreOperationPermissions);
 
   const [showList, setShowList] = useState({
     title: "Roles and Rights",
@@ -183,12 +173,15 @@ const RolesAndRights= ({ title,icon}:any) => {
     filter: true,
   });
 
+
+
+
   return (
     <React.Fragment>
-    
+
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-zinc-50">
-        <HeaderComponents icon={icon} title={title} />
+          <HeaderComponents icon={icon} title={title} />
 
           <Card className="card-one mt-2">
             <Card.Header>
@@ -250,7 +243,15 @@ const RolesAndRights= ({ title,icon}:any) => {
               </Nav>
             </Card.Header>
             <Card.Body>
-              <PermissionSection
+
+              <div>
+                {permissionData ? (
+                  <PermissionsCheckboxes permissionData={permissionData} />
+                ) : (
+                  <p>Loading permissions...</p>
+                )}
+              </div>
+              {/* <PermissionSection
                 title="Master Data Management"
                 permissions={masterDataPermissions}
                 onChange={handleMasterDataChange}
@@ -274,11 +275,11 @@ const RolesAndRights= ({ title,icon}:any) => {
                 title="Store Operation"
                 permissions={storeOperationPermissions}
                 onChange={handleStoreOperationChange}
-              />
+              /> */}
             </Card.Body>
           </Card>
 
-          <Card className="card-one mt-2">
+          {/* <Card className="card-one mt-2">
             <Card.Header>
               <Card.Title as="h6">Functional Rights</Card.Title>
               <Nav className="nav-icon nav-icon-sm ms-auto">
@@ -301,7 +302,7 @@ const RolesAndRights= ({ title,icon}:any) => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </React.Fragment>

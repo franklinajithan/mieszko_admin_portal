@@ -559,15 +559,12 @@ export const reduceToClearSearchFormSchema = z.object({
 
 
 export const newReduceToClearFormSchema = z.object({
-  barcode: z .string() .nonempty("Barcode is required.")  .min(5, "Barcode must be at least 5 characters long."),
-  itemName: z .string() .nonempty("Item name is required.") .min(3, "Item name must be at least 3 characters long."),
-  qty: z .number() .int("Quantity must be a whole number.") .positive("Quantity must be greater than zero.") .nonnegative("Quantity is required."),
-  storeId: z  .number() .int("Store ID must be a whole number.")  .positive("Store ID must be greater than zero."),
-  categoryId: z  .number() .int("Category ID must be a whole number.") .positive("Category ID must be greater than zero."),
-  expiryDate: z .string() .nonempty("Expiry date is required.")
-    .refine((date) => !isNaN(Date.parse(date)), {
-      message: "Expiry date must be a valid date.",
-    }),
+  barcode: z.string().nonempty("Barcode is required.").min(5, "Barcode must be at least 5 characters long."),
+  itemName: z.string().nonempty("Item name is required.").min(3, "Item name must be at least 3 characters long."),
+  qty: z.number().int("Quantity must be a whole number.").positive("Quantity must be greater than zero.").nonnegative("Quantity is required."),
+  storeId: z.string(),
+  categoryId: z.string(),
+  expiryDate: z.date().optional(),
   status: z.boolean().optional().default(true), // Optional, defaulting to true
 });
 

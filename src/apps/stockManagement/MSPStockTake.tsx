@@ -124,7 +124,6 @@ const MSPStockTake = ({ title, icon }: any) => {
           endDate: data.endDate ? formatDate(new Date(data.endDate), 'yyyy-MM-dd') : null
         };
         let stockUrl = `http://${data.ip}/api/Product/ProductAuditTrailData?ProdID=${res.data.data.productId}&SearchStartDate=${dataItem.startDate}&SearchEndDate=${dataItem.endDate}`;
-        console.log(stockUrl);
         const result = await getMSPStockTake(dataItem);
         setMSPdata(result.data.data);
 
@@ -151,7 +150,7 @@ const MSPStockTake = ({ title, icon }: any) => {
   };
 
   const onSalesSubmit = (data: any) => {
-    console.log("Sales Data Submitted:", data);
+  //  console.log("Sales Data Submitted:", data);
     // Handle sales data submission
   };
 
@@ -176,7 +175,6 @@ const MSPStockTake = ({ title, icon }: any) => {
   useEffect(() => {
 
     const calculatedTotal = (stockTake + delivery) - (salesBeforeRefund + refundedQty + wastage);
-    console.log(`${calculatedTotal} = (${stockTake} + ${delivery}) - (${salesBeforeRefund} + ${refundedQty} + ${wastage})`);
     setTotal(calculatedTotal);
   }, [stockTake, delivery, salesBeforeRefund, refundedQty, wastage]);
 
