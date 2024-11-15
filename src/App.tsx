@@ -8,12 +8,20 @@ import protectedRoutes from "./routes/ProtectedRoutes";
 import { Toaster } from "@/components/ui/toaster"
 import "./assets/css/remixicon.css";
 import "./scss/style.scss";
+//import { subscribeUserToPush } from './pushNotifications';
+
 
 import { useTranslation } from "react-i18next";
 import Header from "./layouts/Header";
-const Login = React.lazy(() => import('./pages/Signin2'));
+import { useDispatch } from "react-redux";
+import { getUserById } from "./service/user.service";
+import { login } from "./store/slices/authSlice";
+import NotificationList from "./components/elements/NotificationList";
+
 
 export default function App() {
+  const Login = React.lazy(() => import('./pages/Signin2'));
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleSkinMode = () => {
       let skinMode = localStorage.getItem("skin-mode");
@@ -31,6 +39,57 @@ export default function App() {
       window.removeEventListener("load", handleSkinMode);
     };
   }, []);
+
+
+  const requestNotificationPermission = async () => {
+    const permission = await Notification.requestPermission();
+   // console.log(permission);
+
+    if (permission !== 'granted') {
+   //   console.log('Permission not granted');
+    }
+    else {
+    //  console.log('Permission granted');
+      // new Notification('Hello World');
+    }
+  };
+
+  useEffect(() => {
+    requestNotificationPermission();
+   // subscribeUserToPush();
+  }, []);
+
+
+
+
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Fetch user details with the token
+
+
+
+      getUserById("2")
+        .then((response) => {
+          const user = response.data.data;
+          // Dispatch login action to store user and token in Redux
+          dispatch(login({ user, token }));
+        })
+        .catch((error) => {
+          console.error('Error fetching user details:', error);
+          // Optionally handle token expiration by removing the token from localStorage
+          localStorage.removeItem('token');
+        });
+
+
+
+    }
+  }, [dispatch]);
+
+
+
   const [skin, setSkin] = useState(localStorage.getItem('skin-mode') ? 'dark' : '');
   return (
     <React.Fragment>
@@ -38,16 +97,13 @@ export default function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRoute><Toaster />
+            <Route path="/" element={<AuthRoute><Toaster /> <NotificationList />
               <Header onSkin={setSkin} />
               <Main />
             </AuthRoute>}>
+           
               {protectedRoutes.map((route, index) => (
-                <Route
-                  path={route.path}
-                  element={route.element}
-                  key={index}
-                />
+                <Route path={route.path} element={route.element} key={index} />
               ))}
             </Route>
 

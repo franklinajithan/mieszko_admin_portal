@@ -93,6 +93,7 @@ import MSPStockTake from "@/apps/stockManagement/MSPStockTake";
 import NewBrand from "@/apps/productManagement/NewBrand";
 import ReduceToClear from "@/apps/SalesManagement/ReduceToClear";
 import NewReduceToClear from "@/apps/SalesManagement/NewReduceToClear";
+import ProductGroupList from "@/apps/productManagement/ProductCategoryList";
 
 const protectedRoutes = [
 
@@ -111,7 +112,8 @@ const protectedRoutes = [
   { path: "order/order-history", element: <OrderHistory icon={FaHistory} title="Order History" /> },
 
   { path: "sale/reduce-to-clear", element: <ReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
-  { path: "sale/new-reduce-to-clear", element: <NewReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
+  { path: "sale/new-reduce-to-clear", element: <NewReduceToClear icon={FaHistory} title="New Reduce to Clear" /> },
+  { path: "sale/edit-reduce-to-clear/:id", element: <NewReduceToClear icon={FaHistory} title="Edit Reduce to Clear" /> },
 
   { path: "store/company-List", element: <CompanyList icon={FaStore} title="Company List" /> },
   { path: "store/new-company", element: <AddEditCompany icon={FaStore} title="New Company" /> },
@@ -124,6 +126,8 @@ const protectedRoutes = [
   { path: "product/product-list", element: <ProductList icon={FaShoppingBag} title="Product List" /> },
   { path: "product/new-product", element: <NewProduct icon={FaPlusSquare} title="New Product" /> },
   { path: "product/product-category", element: <ProductCategory icon={FaFolder} title="Product Category" /> },
+  { path: "product/product-category-list", element: <ProductGroupList icon={FaFolder} title="Product Category List" /> },
+
   { path: "product/product-by-category", element: <ProductByCategory icon={FaFolder} title="Product By Category" /> },
   { path: "product/product-brand", element: <ProductBrand icon={FaTrademark} title="Product Brand" /> },
   { path: "product/new-brand", element: <NewBrand icon={FaUserPlus} title="New Brand" type={ModeType.Add} /> },

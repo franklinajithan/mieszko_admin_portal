@@ -40,6 +40,11 @@ import theme from "@/components/elements/GridTheme";
 import { decryptParam } from "@/lib/cryptoUtils";
 import { encryptParam } from "@/lib/cryptoUtils";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchQuery } from "@/store/slices/filterSlice";
+import { RootState } from "@/store";
+
+
 const exampleDepartmentOptions = [
     { value: '1', label: 'HR' },
     { value: '2', label: 'Finance' },
@@ -114,7 +119,9 @@ const ProductList = ({ title, icon }: any) => {
     const [priceMarkedItemOptions, setPriceMarkedItemOptions] = useState(examplePriceMarkedItemOptions);
     const [caseSizeOptions, setCaseSizeOptions] = useState(exampleCaseSizeOptions);
     const [fastestDeliveryOptions, setFastestDeliveryOptions] = useState(exampleFastestDeliveryOptions);
-
+    const [filterValue, setFilterValue] = useState(''); // Local state for filter value
+    const searchQuery:any = useSelector((state: RootState) => state.filter.searchQuery);
+console.log(searchQuery);
     const form = useForm<z.infer<typeof productSearchFormSchema>>({
         resolver: zodResolver(productSearchFormSchema),
         defaultValues: {
@@ -141,6 +148,7 @@ const ProductList = ({ title, icon }: any) => {
     const toggleSearchCardBody = () => { setIsOpenSearch(!isOpenSearch); };
     const [rowSelectionModel, setRowSelectionModel] = React.useState<GridRowSelectionModel>([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -167,13 +175,13 @@ const ProductList = ({ title, icon }: any) => {
                     console.error(result.data);
                     return;
                 };
-                if(result.data.data.length > 0){
+                if (result.data.data.length > 0) {
                     setBrandList(result.data.data.map((item: any) => ({
                         value: item.brand_id.toString(),
                         label: item.brand_name,
                     })));
                 }
-          
+
 
                 // const ItemId: any = await getItemCode();
 
@@ -409,11 +417,17 @@ const ProductList = ({ title, icon }: any) => {
         navigate('/product/product-by-category'); // Redirect to the desired path
     };
 
+    const handleFilterChange = (filterModel:any) => {
+        const quickFilterValue = filterModel.quickFilterValues?.[0] || '';
+debugger;
+        dispatch(setSearchQuery(quickFilterValue));
+      };
+
 
 
     return (
         <>
-    
+
             <div className="main main-app p-lg-1">
                 <div className="min-h-screen bg-zinc-50">
                     <HeaderComponents icon={icon} title={title} />
@@ -456,7 +470,7 @@ const ProductList = ({ title, icon }: any) => {
                             </Form>
                         </Card.Body>)}
                     </Card>
-             
+
                     <Card className="card-one mt-2">
                         <CardTitle title="Product List" onToggle={toggleGridCardBody} isOpen={isOpenGrid} />
                         {isOpenGrid && (<CardContent>
@@ -465,26 +479,20 @@ const ProductList = ({ title, icon }: any) => {
                                     New Product
                                 </Button>
                                 <Button type="submit" className='btn-cyan' onClick={handleProductByCategory}>
-                                   Product by Category
+                                    Product by Category
                                 </Button>
                             </div>
                             <div className="w-full mt-3"> {/* TailwindCSS classes for height and width */}
                                 <div className="h-full w-full"> {/* Container for DataGrid */}
                                     <div>
                                         <ThemeProvider theme={theme}>
-                                            <DataGrid autoHeight
-                                                // disableColumnFilter
-                                                // disableColumnSelector
-                                                // disableDensitySelector
-                                                // checkboxSelection
+                                            <DataGrid
+                                                autoHeight
                                                 onRowSelectionModelChange={(newRowSelectionModel) => {
                                                     setRowSelectionModel(newRowSelectionModel);
                                                 }}
-
                                                 columnVisibilityModel={columnVisibility}
-                                                onColumnVisibilityModelChange={(newModel) =>
-                                                    setColumnVisibility(newModel)
-                                                }
+                                                onColumnVisibilityModelChange={(newModel) => setColumnVisibility(newModel)}
                                                 getRowId={(row) => row.id}
                                                 rowHeight={35}
                                                 rows={rows}
@@ -493,16 +501,21 @@ const ProductList = ({ title, icon }: any) => {
                                                     pagination: {
                                                         paginationModel: { pageSize: 15, page: 0 },
                                                     },
+                                                    filter: {
+                                                        filterModel: {
+                                                          items: [],
+                                                          quickFilterValues: [searchQuery],
+                                                        },
+                                                      }
                                                 }}
                                                 pageSizeOptions={[15, 25, 50]}
-
                                                 slots={{ toolbar: GridToolbar }}
                                                 slotProps={{
                                                     toolbar: {
                                                         showQuickFilter: true,
                                                     },
-                                                }
-                                                }
+                                                }}
+                                                onFilterModelChange={handleFilterChange}
                                             />
                                         </ThemeProvider>
                                     </div>

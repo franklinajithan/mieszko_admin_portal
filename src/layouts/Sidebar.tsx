@@ -118,6 +118,7 @@ const SidebarMenu: React.FC = () => {
                 '/product/product-list': 'productManagement',
                 '/product/new-product': 'productManagement',
                 '/product/product-category': 'productManagement',
+                '/product/product-category-list': 'productManagement',
                 '/product/product-brand': 'productManagement',
 
                 // Supplier Management Menu

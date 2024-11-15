@@ -10,6 +10,7 @@ export const imageUrl = isProduction
   ? import.meta.env.VITE_IMAGE_PROD // Production Image URL
   : import.meta.env.VITE_IMAGE_DEV;  // Development Image URL
 
+  export const notificationToken = import.meta.env.VITE_NOTIFICATION_TOKEN;
 
 // console.log('Base URL:', baseUrl);
 // console.log('Image URL:', imageUrl);

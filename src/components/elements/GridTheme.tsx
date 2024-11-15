@@ -1,22 +1,27 @@
 import { createTheme } from '@mui/material/styles';
-import type { } from '@mui/x-data-grid/themeAugmentation';
+import type {} from '@mui/x-data-grid/themeAugmentation';
 
-// Define your custom theme
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#00bcd4', // Cyan color for primary
+      main: '#00bcd4',
     },
     secondary: {
-      main: '#ff5722', // Deep orange color for secondary
+      main: '#ff5722',
     },
     background: {
-      default: '#fafafa', // Very light zinc background
-      paper: '#ffffff',  // White paper background
+      default: '#fafafa',
+      paper: '#ffffff',
     },
     text: {
-      primary: '#212121', // Very dark zinc text
-      secondary: '#757575', // Medium zinc text
+      primary: '#212121',
+      secondary: '#757575',
+    },
+    action: {
+      active: '#757575', // Default action color
+      hover: '#e0f7fa',  // Light cyan on hover
+      selected: '#b2ebf2', // Slightly darker cyan for selected elements
+      disabled: '#e0e0e0',
     },
   },
   typography: {
@@ -37,6 +42,10 @@ const theme = createTheme({
       fontSize: '0.875rem',
       fontWeight: 400,
     },
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
+    },
   },
   components: {
     MuiDataGrid: {
@@ -44,42 +53,40 @@ const theme = createTheme({
         root: {
           border: '1px solid #e0e0e0',
           borderRadius: 5,
-          backgroundColor: '#ffffff', // White background for the grid
-        },
-        columnHeaders: {
-          fontFamily: 'Open Sans',
-          fontSize: '14px',
-          color: '#666564',
-          fontWeight: 'bolder',
-        },
-        cell: {
-          fontFamily: 'Open Sans',
-          color: '#47505f',
-          fontSize: '14px',
-          borderRight: '1px solid #e0e0e0', // Light zinc border between cells
-        },
-        row: {
-          '&:nth-of-type(odd)': {
-            backgroundColor: '#f9fafb', // Light zinc for odd rows
+          backgroundColor: '#ffffff',
+          '& .MuiDataGrid-cell': {
+            color: '#47505f',
+            fontSize: '14px',
+            borderRight: '1px solid #e0e0e0',
           },
-          '&:nth-of-type(even)': {
-            backgroundColor: '#ffffff', // White for even rows
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#f5f5f5',
+            fontSize: '14px',
+            color: '#666564',
+            fontWeight: 'bold',
           },
-          '&.Mui-selected': {
-            backgroundColor: '#e0f7fa', // Light cyan color for selected row
-            '&:hover': {
-              backgroundColor: '#b2ebf2', // Slightly darker cyan on hover
+          '& .MuiDataGrid-columnSeparator': {
+            color: '#e0e0e0',
+          },
+          '& .MuiDataGrid-row': {
+            '&:nth-of-type(odd)': {
+              backgroundColor: '#f9fafb',
+            },
+            '&:nth-of-type(even)': {
+              backgroundColor: '#ffffff',
+            },
+            '&.Mui-selected': {
+              backgroundColor: '#e0f7fa',
+              '&:hover': {
+                backgroundColor: '#b2ebf2',
+              },
             },
           },
         },
-        footerContainer: {
-          // Optional: Add styles for footer if needed
-        },
-        columnSeparator: {
-          display: 'none', // This will remove the column separators, which often act as filler columns
-        },
-        filler: {
-          display: 'none', // This will remove the filler columns
+        toolbarContainer: {
+          padding: '0.5rem',
+          backgroundColor: '#fafafa',
+          borderBottom: '1px solid #e0e0e0',
         },
       },
     },
@@ -89,19 +96,101 @@ const theme = createTheme({
           borderRadius: 6,
           textTransform: 'none',
           boxShadow: 'none',
-          background: 'linear-gradient(180deg, #22d3ee, #0891b2)', // Gradient background
-          color: '#ffffff', // Text color
-          fontWeight: 600, // Bold text
-          //padding: '5px 5px', // Padding for button
-          //transition: 'all 0.3s ease', // Smooth transition
+          background: 'linear-gradient(180deg, #22d3ee, #0891b2)',
+          color: '#ffffff',
+          fontWeight: 600,
           '&:hover': {
-            background: 'linear-gradient(180deg, #0891b2, #22d3ee)', // Maintain gradient on hover
-           // boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)', // Enhanced shadow
-            //transform: 'scale(1.05)', // Slightly enlarge button on hover
+            background: 'linear-gradient(180deg, #0891b2, #22d3ee)',
           },
           '&:focus': {
             outline: 'none',
-            boxShadow: '0 0 0 3px rgba(0, 0, 0, 0.2)', // Focus state with shadow
+            boxShadow: '0 0 0 3px rgba(0, 0, 0, 0.2)',
+          },
+        },
+        contained: {
+          backgroundColor: '#00bcd4',
+          '&:hover': {
+            backgroundColor: '#0097a7',
+          },
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#fafafa',
+          fontSize: '0.875rem',
+        },
+        toolbar: {
+          paddingLeft: '0.5rem',
+          paddingRight: '0.5rem',
+        },
+        select: {
+          fontSize: '0.875rem',
+        },
+        selectIcon: {
+          color: '#757575',
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#00bcd4',
+          color: '#ffffff',
+          fontSize: '0.875rem',
+          borderRadius: 4,
+          padding: '8px 12px',
+        },
+        arrow: {
+          color: '#00bcd4',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          backgroundColor: '#ffffff',
+          '&:hover': {
+            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
+          },
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: '8px',
+          padding: '1rem',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 8,
+            '& fieldset': {
+              borderColor: '#e0e0e0',
+            },
+            '&:hover fieldset': {
+              borderColor: '#00bcd4',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#00bcd4',
+            },
+          },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: '#757575',
+          '&:hover': {
+            color: '#00bcd4',
           },
         },
       },

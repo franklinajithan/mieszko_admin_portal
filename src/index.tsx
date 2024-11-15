@@ -1,17 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
-import './index.css'
+import './index.css';
 import App from './App';
+import { PersistGate } from 'redux-persist/integration/react';
 import i18n from "./i18n";
 import { I18nextProvider } from 'react-i18next';
 import { createGlobalStyle } from 'styled-components';
+import store, { persistor } from './store';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        // console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        // console.error('Service Worker registration failed:', error);
+      });
+  });
+}
 
+// Check if browser supports notifications
+if (!('Notification' in window)) {
+  // console.log('This browser does not support desktop notification');
+} else {
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      // console.log('Notification permission granted.');
+    } else if (permission === 'denied') {
+      // console.log('Notification permission denied.');
+    }
+  });
+}
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=IBM+Plex+Serif:wght@400;700&display=swap');
-
   body {
     font-family: 'Inter', sans-serif;
   }
@@ -20,22 +44,28 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'IBM Plex Serif', serif;
   }
 `;
+
 const rootElement = document.getElementById('root');
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
-    <I18nextProvider i18n={i18n}>
-      {/* <GlobalStyle /> */}
-      <App />
-    </I18nextProvider>
-  </React.StrictMode>
+      <Provider store={store}> 
+      <PersistGate loading={null} persistor={persistor}>
+        <I18nextProvider i18n={i18n}>
+          <GlobalStyle />
+          <App />
+        </I18nextProvider>
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>
   );
 } else {
   console.error("Unable to find root element with id 'root'");
 }
 
-function logWebVitals(metric: any) {
+function logWebVitals(metric:any) {
+  // console.log(metric);
 }
 
 // If you want to start measuring performance in your app, pass a function
