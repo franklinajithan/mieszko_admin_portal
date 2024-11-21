@@ -200,7 +200,7 @@ export default function UserList({ title, icon }: any) {
     const handleEditClick = (id: GridRowId) => () => {
 
         navigate(`/user/edit-user/${(id.toString())}`);
-        //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+
     };
 
     const handleSaveClick = (id: GridRowId) => () => {

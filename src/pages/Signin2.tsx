@@ -23,20 +23,15 @@ const Signin2 = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-
   const form = useForm<z.infer<typeof authFormSchema>>({
     resolver: zodResolver(authFormSchema),
-    //defaultValues: { email: "", password: "" },
-    defaultValues: { email: "superadmin@mieszko.uk", password: "123456" },
+     defaultValues: { email: "superadmin@mieszko.uk", password: "123456" },
+   // defaultValues: { email: "", password: "" },
   });
-  //console.log(form.formState.errors);
+
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
     setIsLoading(true);
     try {
-      
-      let LoggedUser = { email: "superadmin@mieszko.uk", password: "123456" };
       const loginResult = await userLogin(data);
 
       if (loginResult.status !== 200) {
@@ -83,11 +78,11 @@ const Signin2 = () => {
 
   return (
     <div className="page-sign d-block py-0">
-      <Row className="g-0">
+      <Row className="g-0" role="main">
         <Col md="7" lg="5" xl="4" className="col-wrapper">
           <Card className="card-sign">
             <Card.Header>
-              <Link to="/" className="header-logo mb-5">Mieszko</Link>
+              <Link to="/" className="header-logo mb-5" aria-label="Mieszko Home Page">Mieszko</Link>
               <Card.Title>Sign In</Card.Title>
               <Card.Text>
                 <span data-testid="signIn-text">Welcome back! Please sign in to continue.</span>
@@ -96,12 +91,29 @@ const Signin2 = () => {
             <Card.Body>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <InputField control={form.control} name="email"  label="Email"  placeholder="Enter your email" type="email" errorId="email-error"/>
-                  <InputField control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" showPasswordToggle errorId="password-error"/>
-                  <Button type="submit" disabled={isLoading} className="btn-cyan">
+                  <InputField
+                    control={form.control}
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    type="email"
+                    errorId="email-error"
+                    aria-required="true"
+                  />
+                  <InputField
+                    control={form.control}
+                    name="password"
+                    label="Password"
+                    placeholder="Enter your password"
+                    type="password"
+                    showPasswordToggle
+                    errorId="password-error"
+                    aria-required="true"
+                  />
+                  <Button type="submit" disabled={isLoading} className="btn-cyan" aria-busy={isLoading}>
                     {isLoading ? (
                       <>
-                        <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                        <Loader2 size={20} className="animate-spin" aria-hidden="true" /> &nbsp; Loading...
                       </>
                     ) : (
                       "Sign In"
@@ -111,11 +123,11 @@ const Signin2 = () => {
               </Form>
             </Card.Body>
             <Card.Footer>
-              Don't have an account? <Link to="/pages/signup2">Create an Account</Link>
+              Don't have an account? <Link to="/pages/signup2">Create an Account to Join Mieszko</Link>
             </Card.Footer>
           </Card>
         </Col>
-        <Col className="d-none d-lg-block">
+        <Col className="d-none d-lg-block" aria-hidden="true">
           {/* Background image */}
         </Col>
       </Row>

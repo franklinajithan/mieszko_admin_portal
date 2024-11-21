@@ -11,7 +11,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-// Define a type for dynamic field paths
 type FieldPathWithDynamicKey<T extends FieldValues> = FieldPath<T> | `${FieldPath<T>}[${number}].${string}`;
 
 interface InputFieldProps<T extends FieldValues> {
@@ -61,7 +60,7 @@ const InputField = <T extends FieldValues>({
     const [copied, setCopied] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const { field } = useController({
+    const { field, fieldState } = useController({
         name: name as FieldPath<T>,
         control,
     });
@@ -90,7 +89,7 @@ const InputField = <T extends FieldValues>({
     };
 
     if (!canView) {
-        return null; // If the user doesn't have view permission, hide the field
+        return null; // Hide the field if the user doesn't have view permission
     }
 
     return (
@@ -99,8 +98,8 @@ const InputField = <T extends FieldValues>({
             name={name as FieldPath<T>}
             render={() => (
                 <div className="form-item w-full">
-                    <LabelField label={label} htmlFor={name} required={required} />
-
+                    <LabelField label={label} htmlFor={name} required={required} aria-label={label}
+                    />
                     <FormControl className="relative">
                         <div className="relative w-full">
                             <Input
@@ -108,7 +107,9 @@ const InputField = <T extends FieldValues>({
                                 name={name}
                                 placeholder={placeholder}
                                 autoComplete="off"
-                                className="input-class pr-24 form-control"
+                                className={`input-class pr-24 form-control ${
+                                    fieldState.invalid ? 'input-error' : ''
+                                }`}
                                 disabled={disabled || !canEdit}
                                 readOnly={readonly || !canEdit}
                                 type={showPassword && type === 'password' ? 'text' : type}
@@ -116,6 +117,9 @@ const InputField = <T extends FieldValues>({
                                 onChange={handleChange}
                                 minLength={minLength}
                                 maxLength={maxLength}
+                                aria-required={required}
+                                aria-invalid={fieldState.invalid}
+                                aria-describedby={errorId}
                             />
                             {clipboard && (
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
@@ -171,7 +175,15 @@ const InputField = <T extends FieldValues>({
                             )}
                         </div>
                     </FormControl>
-                    <FormMessage className="form-message mt-2" data-testid={errorId}/>
+                    {fieldState.invalid && (
+                        <FormMessage
+                            className="form-message mt-2"
+                            data-testid={errorId}
+                            id={errorId}
+                        >
+                            {fieldState.error?.message || 'Invalid input'}
+                        </FormMessage>
+                    )}
                 </div>
             )}
         />
