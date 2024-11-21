@@ -419,7 +419,7 @@ console.log(searchQuery);
 
     const handleFilterChange = (filterModel:any) => {
         const quickFilterValue = filterModel.quickFilterValues?.[0] || '';
-debugger;
+
         dispatch(setSearchQuery(quickFilterValue));
       };
 

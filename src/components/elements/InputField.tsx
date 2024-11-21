@@ -24,16 +24,17 @@ interface InputFieldProps<T extends FieldValues> {
     disabled?: boolean;
     readonly?: boolean;
     id?: string;
-    clipboard?: boolean; 
-    verify?: boolean; 
-    showPasswordToggle?: boolean; 
+    clipboard?: boolean;
+    verify?: boolean;
+    showPasswordToggle?: boolean;
     clearInput?: boolean;
     required?: boolean;
-    canView?: boolean; // New prop for visibility permission
-    canEdit?: boolean; // New prop for edit permission
+    canView?: boolean;
+    canEdit?: boolean;
     minLength?: number;
     maxLength?: number;
-    onChange?: (value: string | number) => void; // Custom onChange handler
+    onChange?: (value: string | number) => void;
+    errorId?: string;
 }
 
 const InputField = <T extends FieldValues>({
@@ -52,12 +53,13 @@ const InputField = <T extends FieldValues>({
     required = false,
     canView = true,
     canEdit = true,
-    minLength, 
-    maxLength, 
-    onChange, // Destructure the custom onChange prop
+    minLength,
+    maxLength,
+    onChange,
+    errorId,
 }: InputFieldProps<T>) => {
     const [copied, setCopied] = useState(false);
-    const [showPassword, setShowPassword] = useState(type === 'password');
+    const [showPassword, setShowPassword] = useState(false);
 
     const { field } = useController({
         name: name as FieldPath<T>,
@@ -75,15 +77,15 @@ const InputField = <T extends FieldValues>({
     };
 
     const handleClear = () => {
-        field.onChange(type === 'number' ? 0 : ''); // Clear based on type
+        field.onChange(type === 'number' ? 0 : '');
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = type === 'number' ? Number(e.target.value) : e.target.value;
-        field.onChange(value); // Ensure the value is number if type is 'number'
+        field.onChange(value);
 
         if (onChange) {
-            onChange(value); // Call custom onChange if provided
+            onChange(value);
         }
     };
 
@@ -96,35 +98,35 @@ const InputField = <T extends FieldValues>({
             control={control}
             name={name as FieldPath<T>}
             render={() => (
-                <div className='form-item w-full'>
+                <div className="form-item w-full">
                     <LabelField label={label} htmlFor={name} required={required} />
-                    
-                    <FormControl className='relative'>
-                        <div className='relative w-full'>
+
+                    <FormControl className="relative">
+                        <div className="relative w-full">
                             <Input
                                 id={id}
+                                name={name}
                                 placeholder={placeholder}
-                                autoComplete='off'
-                                className='input-class pr-24 form-control'
+                                autoComplete="off"
+                                className="input-class pr-24 form-control"
                                 disabled={disabled || !canEdit}
                                 readOnly={readonly || !canEdit}
-                                type={showPassword ? 'text' : type}
+                                type={showPassword && type === 'password' ? 'text' : type}
                                 value={field.value ?? (type === 'number' ? 0 : '')}
-                                onChange={handleChange} // Use custom handleChange for number inputs
-                                style={{ paddingRight: '40px' }}
-                                minLength={minLength} 
-                                maxLength={maxLength} 
+                                onChange={handleChange}
+                                minLength={minLength}
+                                maxLength={maxLength}
                             />
                             {clipboard && (
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                     <IconButton
                                         onClick={() => handleCopy(field.value ?? '')}
-                                        className='absolute right-12 top-0 h-full'
+                                        className="absolute right-12 top-0 h-full"
                                         style={{
                                             position: 'absolute',
-                                            right: '10px',
+                                            right: '40px',
                                             top: '50%',
-                                            transform: 'translateY(0%)',
+                                            transform: 'translateY(-50%)',
                                             padding: '0',
                                         }}
                                     >
@@ -132,32 +134,16 @@ const InputField = <T extends FieldValues>({
                                     </IconButton>
                                 </Tooltip>
                             )}
-                            {verify && (
-                                <Tooltip title='Verified'>
-                                    <IconButton
-                                        className='absolute right-0 top-0 h-full'
-                                        style={{
-                                            position: 'absolute',
-                                            right: '10px',
-                                            top: '50%',
-                                            transform: 'translateY(0%)',
-                                            padding: '0',
-                                            color: 'green',
-                                        }}
-                                    >
-                                        <CheckCircleIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            )}
                             {showPasswordToggle && type === 'password' && (
                                 <Tooltip title={showPassword ? 'Hide Password' : 'Show Password'}>
                                     <IconButton
+                                        id="toggle-password"
                                         onClick={togglePasswordVisibility}
-                                        className='absolute right-16 top-0 h-full'
+                                        className="absolute right-8 top-0 h-full"
                                         style={{
                                             position: 'absolute',
                                             right: '10px',
-                                            top: '50%',
+                                            top: '80%',
                                             transform: 'translateY(0%)',
                                             padding: '0',
                                         }}
@@ -167,15 +153,15 @@ const InputField = <T extends FieldValues>({
                                 </Tooltip>
                             )}
                             {clearInput && (
-                                <Tooltip title='Clear'>
+                                <Tooltip title="Clear">
                                     <IconButton
                                         onClick={handleClear}
-                                        className='absolute right-24 top-0 h-full'
+                                        className="absolute right-24 top-0 h-full"
                                         style={{
                                             position: 'absolute',
-                                            right: '10px',
+                                            right: '70px',
                                             top: '50%',
-                                            transform: 'translateY(0%)',
+                                            transform: 'translateY(-50%)',
                                             padding: '0',
                                         }}
                                     >
@@ -185,7 +171,7 @@ const InputField = <T extends FieldValues>({
                             )}
                         </div>
                     </FormControl>
-                    <FormMessage className='form-message mt-2' />
+                    <FormMessage className="form-message mt-2" data-testid={errorId}/>
                 </div>
             )}
         />

@@ -309,7 +309,6 @@ const ReduceToClear = ({ title, icon }: any) => {
 
 
   const handleRTCUpdate = async (status: any) => {
-    debugger;
     const payload = selectedRows.map(id => ({ id, status }));
     try {
       // await updateRTCStatus(payload); // Send selected data to your service
@@ -465,7 +464,7 @@ const ReduceToClear = ({ title, icon }: any) => {
                           onFilterModelChange={(newModel: any) => setFilterModel(newModel)}
                           processRowUpdate={async (newRow: any) => {
                             const updatedRow = { ...newRow };
-                            debugger;
+                
                             // Check if `approvedPrice` has changed
                             const existingRow: any = rows.find((row: any) => row.id === newRow.id);
 
@@ -480,9 +479,9 @@ const ReduceToClear = ({ title, icon }: any) => {
                               try {
                                 // Send the updated row data to the backend
                                 await updateRowData(updatedRow);
-                                console.log("Row data updated successfully");
+                              //  console.log("Row data updated successfully");
                               } catch (error) {
-                                console.error("Failed to update row data:", error);
+                              //  console.error("Failed to update row data:", error);
                                 // Handle error (e.g., revert the row change or show an error message)
                                 throw error;
                               }
@@ -499,9 +498,9 @@ const ReduceToClear = ({ title, icon }: any) => {
                                 try {
                                   // Send the updated row data to the backend
                                   await updateRowData(updatedRow);
-                                  console.log("Row data updated successfully");
+                               //   console.log("Row data updated successfully");
                                 } catch (error) {
-                                  console.error("Failed to update row data:", error);
+                               //   console.error("Failed to update row data:", error);
                                   // Handle error (e.g., revert the row change or show an error message)
                                   throw error;
                                 }

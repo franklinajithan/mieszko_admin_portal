@@ -134,12 +134,18 @@ export const categoryFormSchema = z.object({
     }
   });
 
-export const authFormSchema = z.object({
-  email: z.string().nullable().optional(),
-  password: z.string().nullable().optional(),
-});
-
-
+  export const authFormSchema = z.object({
+    email: z
+      .string()
+      .min(1, { message: "Email is required" }) // Check if value exists
+      .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+        message: "Invalid email address",
+      }), // Validate email format only if not empty
+    password: z
+      .string()
+      .min(1, { message: "Password is required" }) // Check if value exists
+      .min(6, { message: "Password must be at least 6 characters long" }), // Check minimum length
+  });
 export const userSearchSchema = z.object({
   role: z.string().nullable().optional(), // Assuming these are optional fields
   type: z.string().nullable().optional(),
@@ -566,6 +572,15 @@ export const newReduceToClearFormSchema = z.object({
   categoryId: z.string(),
   expiryDate: z.date().optional(),
   status: z.boolean().optional().default(true), // Optional, defaulting to true
+});
+
+
+export const rolesAndRightsFormSchema = z.object({
+  roleName: z.string().nonempty("Role name is required"),
+  description: z.string().optional(),
+  reportingToRole: z.string().optional(), // Assuming it's a string, modify if needed
+  reportingToUser: z.string().optional(), // Assuming it's a string, modify if needed
+  status: z.boolean(), // Status should be a boolean
 });
 
 

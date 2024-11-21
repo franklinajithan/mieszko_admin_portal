@@ -46,7 +46,7 @@ export default function HeaderComponents({
     const [isUserActive, setIsUserActive] = useState(true);
 
     const handleSearch = useCallback(() => {
-        console.log("Searching for:", searchQuery);
+      //  console.log("Searching for:", searchQuery);
     }, [searchQuery]);
 
     const clearSearch = () => {

@@ -4,8 +4,19 @@ import { FiShield } from "react-icons/fi";
 import { Card, Nav } from "react-bootstrap";
 import Header from "../../layouts/Header";
 import HeaderComponents from "@/components/elements/HeaderSection";
-import PermissionsCheckboxes, { PermissionData } from "./PermissionsCheckboxes";
-import { getPermission } from "@/service/user.service";
+import PermissionsCheckboxes from "./PermissionsCheckboxes";
+import { getPermission, getPermissionById } from "@/service/user.service";
+
+import { Form } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { rolesAndRightsFormSchema } from "@/lib/utils";
+import { z } from "zod";
+import InputField from "@/components/elements/InputField";
+import SelectField from "@/components/elements/SelectField";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import CardTitle from "@/components/elements/CardTitle";
 
 type PermissionActions = {
   add: boolean;
@@ -25,106 +36,31 @@ interface PermissionsPanelProps {
   onPermissionChange: (name: string) => void;
 }
 
-const PermissionsPanel: React.FC<PermissionsPanelProps> = ({
-  permissions,
-  onPermissionChange,
-}) => (
-  <div>
-    <h6 className="mb-2 mt-2 font-bold">TILL - General</h6>
-    <div className="grid grid-cols-2 gap-1 mt-1">
-      {permissions.slice(0, 8).map((permission) => (
-        <div key={permission.name}>
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={permission.checked}
-              onChange={() => onPermissionChange(permission.name)}
-              className="mr-2"
-            />
-            {permission.name}
-          </label>
-        </div>
-      ))}
-    </div>
 
-    <h6 className="mb-2 mt-2 font-bold">Price Override</h6>
-    <div className="grid grid-cols-2 gap-1 mt-1">
-      {permissions.slice(8).map((permission) => (
-        <div key={permission.name}>
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={permission.checked}
-              onChange={() => onPermissionChange(permission.name)}
-              className="mr-2"
-            />
-            {permission.name}
-          </label>
-        </div>
-      ))}
-    </div>
-  </div>
-);
 
 const RolesAndRights = ({ title, icon }: any) => {
-  const initialPermissions = [
-    { name: "Testing Mode", checked: true },
-    { name: "Training Mode", checked: true },
-    { name: "Exit", checked: true },
-    { name: "Shutdown", checked: false },
-    { name: "Restart", checked: false },
-    { name: "Restriction", checked: false },
-    { name: "Quantity Restriction", checked: true },
-    { name: "Override Auto Lock", checked: false },
-    { name: "Void Tobacco Item", checked: false },
-    { name: "Add Max Item", checked: false },
-    { name: "Add Max Line Percentage", checked: false },
-    { name: "Add Max Percentage", checked: false },
-    { name: "Add Max Line Amount", checked: false },
-    { name: "Add Max Amount", checked: false },
-  ];
-
   const { t } = useTranslation("global");
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
-  // const [skin, setSkin] = useState(currentSkin);
-  // const [masterDataPermissions, setMasterDataPermissions] = useState<Permissions>({
-  //   "Manage Store add": { add: true, view: true, edit: true, delete: false },
-  //   "Manage Supplier edit": { add: false, view: false, edit: false, delete: true },
-  //   "Manage Item": { add: true, view: true, edit: false, delete: false },
-  //   "Manage Customer": { add: true, view: true, edit: false, delete: false },
-  // });
-  // const [supplierItemPermissions, setSupplierItemPermissions] = useState<Permissions>({
-  //   "Store Item Management": { add: true, view: true, edit: true, delete: false },
-  //   "Supplier Item Management": { add: false, view: false, edit: false, delete: true },
-  //   "Supplier Item Import": { add: true, view: true, edit: false, delete: false },
-  // });
-  // const [purchasePlanningPermissions, setPurchasePlanningPermissions] = useState<Permissions>({
-  //   "Purchase Planning": { add: true, view: true, edit: true, delete: false },
-  //   "Supplier Purchase Order": { add: false, view: false, edit: false, delete: true },
-  //   "Managing Purchase Return": { add: true, view: true, edit: false, delete: false },
-  // });
-  // const [ediInvoicePermissions, setEDIInvoicePermissions] = useState<Permissions>({
-  //   "Verify EDI Invoice": { add: true, view: true, edit: true, delete: false },
-  //   "Create Delivery Load List": { add: false, view: false, edit: false, delete: true },
-  // });
-  // const [storeOperationPermissions, setStoreOperationPermissions] = useState<Permissions>({
-  //   "Paid Out Request": { add: true, view: true, edit: true, delete: false },
-  //   "Stock Take": { add: false, view: false, edit: false, delete: true },
-  //   "Fill Scan List": { add: false, view: false, edit: false, delete: true },
-  //   "Gap Scan List": { add: false, view: false, edit: false, delete: true },
-  //   "Reduce to Clear List": { add: false, view: false, edit: false, delete: true },
-  //   "Wastage List": { add: false, view: false, edit: false, delete: true },
-  //   "Specail Order Creation": { add: false, view: false, edit: false, delete: true },
-  // });
+  const [permissionData, setPermissionData] = useState<any | null>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [permissions, setPermissions] = useState(initialPermissions);
-  const [permissionData, setPermissionData] = useState<any | null>(null);
+
+  const form = useForm<z.infer<typeof rolesAndRightsFormSchema>>({
+    resolver: zodResolver(rolesAndRightsFormSchema),
+    defaultValues: {
+      roleName: "",
+      description: "",
+      reportingToRole: "", // Provide a default value if required
+      reportingToUser: "", // Provide a default value if required
+      status: true,
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getPermission();
-        setPermissionData(result.data.data);
+        const result = await getPermissionById(2);
+        setPermissionData(result.data.data.permission_details);
       } catch (e) {
         console.error(e);
       }
@@ -146,21 +82,7 @@ const RolesAndRights = ({ title, icon }: any) => {
         }));
       };
 
-  const handleFunctionalPermissionChange = (name: string) => {
-    setPermissions((prevPermissions) =>
-      prevPermissions.map((permission) =>
-        permission.name === name
-          ? { ...permission, checked: !permission.checked }
-          : permission
-      )
-    );
-  };
 
-  // const handleMasterDataChange = handlePermissionChange(setMasterDataPermissions);
-  // const handleSupplierItemChange = handlePermissionChange(setSupplierItemPermissions);
-  // const handlePurchasePlanningChange = handlePermissionChange(setPurchasePlanningPermissions);
-  // const handleEDIInvoiceChange = handlePermissionChange(setEDIInvoicePermissions);
-  // const handleStoreOperationChange = handlePermissionChange(setStoreOperationPermissions);
 
   const [showList, setShowList] = useState({
     title: "Roles and Rights",
@@ -174,138 +96,120 @@ const RolesAndRights = ({ title, icon }: any) => {
   });
 
 
+  function onSubmit(values: z.infer<typeof rolesAndRightsFormSchema>) {
+
+    setIsLoading(true);
+    const fetchData = async () => {
+      let result: any
+      setIsLoading(true);
+
+      try {
+        let data = {
+          roleName: values.roleName,
+          description: values.description,
+          reportingToRole: values.reportingToRole,
+          reportingToUser: values.reportingToUser,
+          status: values.status,
+          permissionDetails:[]
+        };
+
+       // result = await addBrand(data);
+     //   if (result.status == 201) {
+          //  toast({ variant: "success", title: result.data.status, description: result.data.message, duration: 800, })
+      //  } else {
+          //    toast({ variant: "destructive", title: result.data.status, description: result.data.message, duration: 800, })
+     //   }
+      } catch (e: any) {
+        //  toast({ variant: "destructive", title: e.response.status, description: e.response.data.message, duration: 800, })
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }
+    };
+
+    fetchData();
+
+  }
+
+  const handleUpdatePermissions = async (permissions: any[]) => {
+    try {
+      console.log("Updated permissions:", permissions);
+      // Call your API here
+    } catch (error) {
+      console.error("Failed to update permissions:", error);
+    }
+  };
 
 
   return (
-    <React.Fragment>
+    <>
 
       <div className="main main-app p-lg-1">
         <div className="min-h-screen bg-zinc-50">
           <HeaderComponents icon={icon} title={title} />
+         
+              <Card className="card-one mt-2">
+                <CardTitle title="New Role" />
+                <Card.Body className="">
 
-          <Card className="card-one mt-2">
-            <Card.Header>
-              <Card.Title as="h6">Add New Roles</Card.Title>
-              <Nav className="nav-icon nav-icon-sm ms-auto">
-                <Nav.Link href="">
-                  <i className="ri-refresh-line"></i>
-                </Nav.Link>
-                <Nav.Link href="">
-                  <i className="ri-more-2-fill"></i>
-                </Nav.Link>
-              </Nav>
-            </Card.Header>
-            <Card.Body className="pb-4">
-              <div className="grid grid-cols-4 gap-4 mb-4">
-                {[
-                  "Role Name",
-                  "Role Type",
-                  "Reporting to Hierarchy",
-                  "Module",
-                  "Created Date",
-                  "Active",
-                  "Last Updated",
-                  "User Name",
-                  "Reporting Person",
-                ].map((label, index) => (
-                  <div key={index}>
-                    <label className="block text-sm font-medium text-zinc-700">{label}</label>
-                    <select className="w-full p-2 border border-zinc-300 rounded-md">
-                      <option>Select</option>
-                    </select>
+                <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                  <div className="grid grid-cols-5 gap-4 mb-6">
+                 
+                    <InputField control={form.control} label="Role Name" type="text" name="roleName"/>
+                    <InputField control={form.control} label="Description" type="text" name="description"/>
+                    <InputField control={form.control} label="Reporting To Role" type="text" name="reportingToRole" />
+                    <InputField control={form.control} label="Reporting To User" type="text" name="reportingToUser"/>
+                    <SelectField control={form.control} label="Status" name="status"  options={[{ value: true, label: "Active" },{ value: false, label: "Inactive" },]} />
                   </div>
-                ))}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700">User Name</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border border-zinc-300 rounded-md"
-                    placeholder="Enter User Name"
-                  />
+
+                  </form>
+                  </Form>
+               
+                </Card.Body>
+              </Card>
+
+              <Card className="card-one mt-2">
+              
+                <CardTitle title='Role and Rights' />
+                  
+                <Card.Body>
+
+                  <div>
+                    {permissionData ? (
+                   <PermissionsCheckboxes
+                   permissionData={permissionData}
+                   onSubmit={handleUpdatePermissions}
+                 />
+                    ) : (
+                      <p>Loading permissions...</p>
+                    )}
+                  </div>
+
+                </Card.Body>
+
+                {/* Footer Buttons */}
+                <div className="flex justify-end space-x-4 mt-2 pr-4 mb-4">
+                  <button className="btn-zinc">Cancel</button>
+                  <Button type="submit" disabled={isLoading} className="btn-cyan">
+                    {isLoading ? (
+                      <>
+                        <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
                 </div>
-              </div>
-            </Card.Body>
-          </Card>
+              </Card>
 
-          <Card className="card-one mt-2">
-            <Card.Header>
-              <Card.Title as="h6">Role Rights</Card.Title>
-              <Nav className="nav-icon nav-icon-sm ms-auto">
-                <Nav.Link href="#">
-                  <i className="ri-refresh-line text-black text-6xl"></i>
-                </Nav.Link>
-                <Nav.Link href="#">
-                  <i className="ri-more-2-fill text-black text-6xl"></i>
-                </Nav.Link>
-                <Nav.Link href="#">
-                  <i className="ri-arrow-down-s-line text-black text-6xl"></i>
-                </Nav.Link>
-              </Nav>
-            </Card.Header>
-            <Card.Body>
 
-              <div>
-                {permissionData ? (
-                  <PermissionsCheckboxes permissionData={permissionData} />
-                ) : (
-                  <p>Loading permissions...</p>
-                )}
-              </div>
-              {/* <PermissionSection
-                title="Master Data Management"
-                permissions={masterDataPermissions}
-                onChange={handleMasterDataChange}
-              />
-              <PermissionSection
-                title="Supplier Item Management"
-                permissions={supplierItemPermissions}
-                onChange={handleSupplierItemChange}
-              />
-              <PermissionSection
-                title="Purchase Planning"
-                permissions={purchasePlanningPermissions}
-                onChange={handlePurchasePlanningChange}
-              />
-              <PermissionSection
-                title="EDI Invoice"
-                permissions={ediInvoicePermissions}
-                onChange={handleEDIInvoiceChange}
-              />
-              <PermissionSection
-                title="Store Operation"
-                permissions={storeOperationPermissions}
-                onChange={handleStoreOperationChange}
-              /> */}
-            </Card.Body>
-          </Card>
+         
 
-          {/* <Card className="card-one mt-2">
-            <Card.Header>
-              <Card.Title as="h6">Functional Rights</Card.Title>
-              <Nav className="nav-icon nav-icon-sm ms-auto">
-                <Nav.Link href="#">
-                  <i className="ri-refresh-line text-black text-6xl"></i>
-                </Nav.Link>
-                <Nav.Link href="#">
-                  <i className="ri-more-2-fill text-black text-6xl"></i>
-                </Nav.Link>
-                <Nav.Link href="#">
-                  <i className="ri-arrow-down-s-line text-black text-6xl"></i>
-                </Nav.Link>
-              </Nav>
-            </Card.Header>
-            <Card.Body>
-              <div>
-                <PermissionsPanel
-                  permissions={permissions}
-                  onPermissionChange={handleFunctionalPermissionChange}
-                />
-              </div>
-            </Card.Body>
-          </Card> */}
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

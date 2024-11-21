@@ -1,44 +1,44 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, Col, Row } from "react-bootstrap";
-import bg1 from "../assets/img/bg1.jpg";
-import { userLogin } from "@/service/auth.service";
-import { Button } from "@/components/ui/button";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing icons from FontAwesome
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "@/components/ui/form";
-import InputField from "@/components/elements/InputField";
-import { authFormSchema } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
-import { login } from "@/store/slices/authSlice";
+import { v4 as uuidv4 } from "uuid";
+
+import { userLogin } from "@/service/auth.service";
 import { getUserById } from "@/service/user.service";
+import { login } from "@/store/slices/authSlice";
 import { addNotification } from "@/store/slices/notificationSlice";
-import { v4 as uuidv4 } from 'uuid';
-export default function Signin2() {
+import { authFormSchema } from "@/lib/utils";
+
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import InputField from "@/components/elements/InputField";
+import { Loader2 } from "lucide-react";
+
+const Signin2 = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+
+
+
 
   const form = useForm<z.infer<typeof authFormSchema>>({
     resolver: zodResolver(authFormSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    //defaultValues: { email: "", password: "" },
+    defaultValues: { email: "superadmin@mieszko.uk", password: "123456" },
   });
-
+  //console.log(form.formState.errors);
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
     setIsLoading(true);
     try {
-      // Example credentials
+      
       let LoggedUser = { email: "superadmin@mieszko.uk", password: "123456" };
-      const loginResult = await userLogin(LoggedUser);
+      const loginResult = await userLogin(data);
 
-      // Check if login was successful
       if (loginResult.status !== 200) {
         console.error("Login failed:", loginResult.data);
         return;
@@ -46,41 +46,40 @@ export default function Signin2() {
 
       const { token, user: userData } = loginResult.data.data;
 
-      // Validate user data and user_id
-      if (!userData || !userData.user_id) {
-        console.error("user_id is missing in userData");
+      if (!userData?.user_id) {
+        console.error("User ID is missing in user data");
         return;
       }
-      //Temporary solution
-      localStorage.setItem('user_id', userData.user_id);  
 
+      localStorage.setItem("user_id", userData.user_id);
       dispatch(login({ user: userData, token }));
-      // Fetch user details
+
       const userDetails = await getUserById(userData.user_id);
 
-      // Validate userDetails response
-      if (!userDetails || userDetails.status !== 200) {
+      if (userDetails.status !== 200) {
         console.error("Failed to fetch user details:", userDetails);
         return;
       }
 
       const user = userDetails.data.data;
       dispatch(login({ user, token }));
-      dispatch(addNotification({ id: uuidv4(),  message: 'You have successfully logged in!', type: 'success',  duration: 5000, }));
-      if (user) {
-        navigate('/order/new-purchase-planning');
+      dispatch(
+        addNotification({
+          id: uuidv4(),
+          message: "You have successfully logged in!",
+          type: "success",
+          duration: 5000,
+        })
+      );
 
-      }
-
+      navigate("/order/new-purchase-planning");
     } catch (error) {
       console.error("An error occurred:", error);
-      // Optionally handle token expiration or other errors here
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     } finally {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div className="page-sign d-block py-0">
@@ -90,41 +89,24 @@ export default function Signin2() {
             <Card.Header>
               <Link to="/" className="header-logo mb-5">Mieszko</Link>
               <Card.Title>Sign In</Card.Title>
-              <Card.Text>Welcome back! Please sign in to continue.</Card.Text>
+              <Card.Text>
+                <span data-testid="signIn-text">Welcome back! Please sign in to continue.</span>
+              </Card.Text>
             </Card.Header>
             <Card.Body>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <InputField
-                    control={form.control}
-                    name="email"
-                    label="Username"
-                    placeholder="Enter your email"
-                    type={"email"}
-                  />
-
-                  <div className="relative">
-                    <InputField
-                      control={form.control}
-                      name="password"
-                      label="Password"
-                      placeholder="Enter your password"
-                      showPasswordToggle={true}
-                      type={"password"}
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-4">
-                    <Button type="submit" disabled={isLoading} className='btn-cyan'>
-                      {isLoading ? (
-                        <>
-                          <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
-                        </>
-                      ) : (
-                        'Sign In'
-                      )}
-                    </Button>
-                  </div>
+                  <InputField control={form.control} name="email"  label="Email"  placeholder="Enter your email" type="email" errorId="email-error"/>
+                  <InputField control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" showPasswordToggle errorId="password-error"/>
+                  <Button type="submit" disabled={isLoading} className="btn-cyan">
+                    {isLoading ? (
+                      <>
+                        <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
+                      </>
+                    ) : (
+                      "Sign In"
+                    )}
+                  </Button>
                 </form>
               </Form>
             </Card.Body>
@@ -139,4 +121,6 @@ export default function Signin2() {
       </Row>
     </div>
   );
-}
+};
+
+export default Signin2;
