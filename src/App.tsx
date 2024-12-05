@@ -41,23 +41,23 @@ export default function App() {
   }, []);
 
 
-  const requestNotificationPermission = async () => {
-    const permission = await Notification.requestPermission();
-   // console.log(permission);
+  // const requestNotificationPermission = async () => {
+  //   const permission = await Notification.requestPermission();
+  //  // console.log(permission);
 
-    if (permission !== 'granted') {
-   //   console.log('Permission not granted');
-    }
-    else {
-    //  console.log('Permission granted');
-      // new Notification('Hello World');
-    }
-  };
+  //   if (permission !== 'granted') {
+  //  //   console.log('Permission not granted');
+  //   }
+  //   else {
+  //   //  console.log('Permission granted');
+  //     // new Notification('Hello World');
+  //   }
+  // };
 
-  useEffect(() => {
-    requestNotificationPermission();
-   // subscribeUserToPush();
-  }, []);
+  // useEffect(() => {
+  //   requestNotificationPermission();
+  //  // subscribeUserToPush();
+  // }, []);
 
 
 

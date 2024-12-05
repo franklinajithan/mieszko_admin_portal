@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Nav, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import pageSvg from "../assets/svg/server_down.svg"
+
 
 export default function NotFound() {
   
@@ -29,9 +29,7 @@ export default function NotFound() {
               <p className="error-text">Oopps. The page you were looking for doesn't exist. You may have mistyped the address or the page may have moved.</p>
               <Link to="/dashboard/sales" className="btn btn-primary btn-error">Back to Dashboard</Link>
             </Col>
-            <Col xs="8" lg="6" className="mb-5 mb-lg-0">
-              <object type="image/svg+xml" data={pageSvg} className="w-100" aria-label="svg image"></object>
-            </Col>
+           
           </Row>
         </Container>
       </div>

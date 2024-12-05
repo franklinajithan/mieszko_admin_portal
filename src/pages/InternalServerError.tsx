@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Container, Nav, Row } from "react-bootstrap";
-import pageSvg from "../assets/svg/pair_programming.svg";
+
 
 export default function InternalServerError() {
 
@@ -29,7 +29,7 @@ export default function InternalServerError() {
               <Button variant="primary" className="btn-error">Back to Dashboard</Button>
             </Col>
             <Col xs="8" lg="6" className="mb-5 mb-lg-0">
-              <object type="image/svg+xml" data={pageSvg} className="w-100" aria-label="svg image"></object>
+           
             </Col>
           </Row>
         </Container>

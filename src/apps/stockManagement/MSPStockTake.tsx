@@ -12,10 +12,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Loader2 } from 'lucide-react';
-import { DataGrid, GridColDef, GridColumnVisibilityModel, GridRowSelectionModel, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '@/components/elements/GridTheme';
+import { Loader2 } from "lucide-react";
+import {
+  DataGrid,
+  GridColDef,
+  GridColumnVisibilityModel,
+  GridSelectionModel,
+  GridToolbar,
+} from "@mui/x-data-grid";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "@/components/elements/GridTheme";
 import { getMSPStockTake, getProductId } from "@/service/stock.service"; // Assuming this service is available
 import { useNavigate } from "react-router-dom";
 import { mspStockFormSchema } from "@/lib/utils";
@@ -42,40 +48,35 @@ const MSPStockTake = ({ title, icon }: any) => {
   const [isOpenGrid, setIsOpenGrid] = useState(true);
   const [rows, setRows] = useState([]);
   const [MSPdata, setMSPdata] = useState([]);
-  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
+  const [rowSelectionModel, setRowSelectionModel] =
+    useState<GridSelectionModel>([]);
 
-  const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
-    title: true,
-    sales: true,
-    addedOn: true,
-    submittedOn: true,
-    submittedBy: true,
-    retail: true,
-    cost: true
-
-  });
+  const [columnVisibility, setColumnVisibility] =
+    useState<GridColumnVisibilityModel>({
+      title: true,
+      sales: true,
+      addedOn: true,
+      submittedOn: true,
+      submittedBy: true,
+      retail: true,
+      cost: true,
+    });
 
   const toggleCardBody = () => {
     setIsOpenGrid(!isOpenGrid);
   };
 
-
-
-
-
-
   // Calculate the total whenever stockTake, delivery, salesAfterRefund, or wastage changes
 
-
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Title', flex: 3 },
-    { field: 'moduleData', headerName: 'Module Data', flex: 1 },
-    { field: 'sales', headerName: 'Sales', flex: 1 },
-    { field: 'addedOn', headerName: 'Added On', flex: 1 },
-    { field: 'submittedOn', headerName: 'Submitted On', flex: 1 },
-    { field: 'submittedBy', headerName: 'Submitted By', flex: 1 },
-    { field: 'retail', headerName: 'Retail Price', flex: 1 },
-    { field: 'cost', headerName: 'Cost', flex: 1 }
+    { field: "title", headerName: "Title", flex: 3 },
+    { field: "moduleData", headerName: "Module Data", flex: 1 },
+    { field: "sales", headerName: "Sales", flex: 1 },
+    { field: "addedOn", headerName: "Added On", flex: 1 },
+    { field: "submittedOn", headerName: "Submitted On", flex: 1 },
+    { field: "submittedBy", headerName: "Submitted By", flex: 1 },
+    { field: "retail", headerName: "Retail Price", flex: 1 },
+    { field: "cost", headerName: "Cost", flex: 1 },
   ];
 
   // First Form - Search Form
@@ -90,7 +91,11 @@ const MSPStockTake = ({ title, icon }: any) => {
     },
   });
 
-  const { control: searchControl, handleSubmit: handleSearchSubmit, formState: { errors: searchErrors } } = searchForm;
+  const {
+    control: searchControl,
+    handleSubmit: handleSearchSubmit,
+    formState: { errors: searchErrors },
+  } = searchForm;
 
   // Second Form - Sales Data Form
   const salesForm = useForm({
@@ -106,13 +111,15 @@ const MSPStockTake = ({ title, icon }: any) => {
     },
   });
 
-  const { control: salesControl, handleSubmit: handleSalesSubmit, formState: { errors: salesErrors } } = salesForm;
+  const {
+    control: salesControl,
+    handleSubmit: handleSalesSubmit,
+    formState: { errors: salesErrors },
+  } = salesForm;
 
   const onSearchSubmit = async (data: any) => {
-
     setIsLoading(true);
     try {
-
       const res = await getProductId({ itemCode: data.itemCode, ip: data.ip });
 
       if (res.status == 200) {
@@ -120,8 +127,12 @@ const MSPStockTake = ({ title, icon }: any) => {
           ...data,
           productId: res.data.data.productId,
           productStock: res.data.data.productStock.toString(),
-          startDate: data.startDate ? formatDate(new Date(data.startDate), 'yyyy-MM-dd') : null,
-          endDate: data.endDate ? formatDate(new Date(data.endDate), 'yyyy-MM-dd') : null
+          startDate: data.startDate
+            ? formatDate(new Date(data.startDate), "yyyy-MM-dd")
+            : null,
+          endDate: data.endDate
+            ? formatDate(new Date(data.endDate), "yyyy-MM-dd")
+            : null,
         };
         let stockUrl = `http://${data.ip}/api/Product/ProductAuditTrailData?ProdID=${res.data.data.productId}&SearchStartDate=${dataItem.startDate}&SearchEndDate=${dataItem.endDate}`;
         const result = await getMSPStockTake(dataItem);
@@ -138,10 +149,7 @@ const MSPStockTake = ({ title, icon }: any) => {
         setTotal(result.data.data.total.total);
         setSystemBookStock(result.data.data.total.systemBookStock);
       } else {
-
       }
-
-
     } catch (error) {
       // Handle error
     } finally {
@@ -150,7 +158,7 @@ const MSPStockTake = ({ title, icon }: any) => {
   };
 
   const onSalesSubmit = (data: any) => {
-  //  console.log("Sales Data Submitted:", data);
+    //  console.log("Sales Data Submitted:", data);
     // Handle sales data submission
   };
 
@@ -164,25 +172,17 @@ const MSPStockTake = ({ title, icon }: any) => {
     else if (fieldName === "wastage") setWastage(newValue);
     else if (fieldName === "salesBeforeRefund") setSalesBeforeRefund(newValue);
     else if (fieldName === "refundedQty") setRefundedQty(newValue); // Assuming you have a setRefund function
-
-  
-
-   
   };
 
-
-
   useEffect(() => {
-
-    const calculatedTotal = (stockTake + delivery) - (salesBeforeRefund + refundedQty + wastage);
+    const calculatedTotal =
+      stockTake + delivery - (salesBeforeRefund + refundedQty + wastage);
     setTotal(calculatedTotal);
   }, [stockTake, delivery, salesBeforeRefund, refundedQty, wastage]);
-
 
   useEffect(() => {
     setSales(salesBeforeRefund - refundedQty);
   }, [salesBeforeRefund, refundedQty]);
-
 
   // useEffect(() => {
   //   const calculatedTotal = stockTake + delivery + sales - wastage;
@@ -197,21 +197,56 @@ const MSPStockTake = ({ title, icon }: any) => {
           <Card className="card-one mt-2">
             <CardTitle title="Search" />
             <Form {...searchForm}>
-              <form onSubmit={handleSearchSubmit(onSearchSubmit)} className="space-y-8">
+              <form
+                onSubmit={handleSearchSubmit(onSearchSubmit)}
+                className="space-y-8"
+              >
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                    <InputField control={searchControl} label="Item Code" name="itemCode" type="text" />
-                    <InputField control={searchControl} label="IP" name="ip" type="text" />
-                    <SelectField control={searchControl} label="Module" name="module" options={MSPModule} />
-                    <CalendarInput control={searchControl} label="Start Date" name="startDate" />
-                    <CalendarInput control={searchControl} label="End Date" name="endDate" />
+                    <InputField
+                      control={searchControl}
+                      label="Item Code"
+                      name="itemCode"
+                      type="text"
+                    />
+                    <InputField
+                      control={searchControl}
+                      label="IP"
+                      name="ip"
+                      type="text"
+                    />
+                    <SelectField
+                      control={searchControl}
+                      label="Module"
+                      name="module"
+                      options={MSPModule}
+                    />
+                    <CalendarInput
+                      control={searchControl}
+                      label="Start Date"
+                      name="startDate"
+                    />
+                    <CalendarInput
+                      control={searchControl}
+                      label="End Date"
+                      name="endDate"
+                    />
                   </div>
 
                   <div className="flex justify-end space-x-4 mt-2 pr-4">
-                    <Button type="submit" disabled={isLoading} className="btn-cyan">
+                    <Button
+                      type="submit"
+                      disabled={isLoading}
+                      className="btn-cyan"
+                    >
                       {isLoading ? (
-                        <><Loader2 size={20} className="animate-spin" /> &nbsp; Loading...</>
-                      ) : "Search"}
+                        <>
+                          <Loader2 size={20} className="animate-spin" /> &nbsp;
+                          Loading...
+                        </>
+                      ) : (
+                        "Search"
+                      )}
                     </Button>
                   </div>
                 </CardContent>
@@ -219,39 +254,90 @@ const MSPStockTake = ({ title, icon }: any) => {
             </Form>
           </Card>
 
-
-
-
-
-
-
           {/* Sales Data Form */}
           <Card className="card-one mt-2">
-            <CardTitle title="Stock Take List" onToggle={toggleCardBody} isOpen={isOpenGrid} />
+            <CardTitle
+              title="Stock Take List"
+              onToggle={toggleCardBody}
+              isOpen={isOpenGrid}
+            />
             <Form {...salesForm}>
               <Form {...salesForm}>
-                <form onSubmit={handleSalesSubmit(onSalesSubmit)} className="space-y-8">
+                <form
+                  onSubmit={handleSalesSubmit(onSalesSubmit)}
+                  className="space-y-8"
+                >
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                      <CustomInputField id="stockTake" label="Stock Take" type="number" name="stockTake" value={stockTake} onChange={(e: any) => handleTotalChange(e, "stockTake")} />
-                      <CustomInputField id="delivery" label="Delivery" type="number" name="delivery" value={delivery} onChange={(e: any) => handleTotalChange(e, "delivery")} />
-                      <CustomInputField id="salesBeforeRefund" label="Sales Before Refund" type="number" name="salesBeforeRefund" value={salesBeforeRefund} onChange={(e: any) => handleTotalChange(e, "salesBeforeRefund")} />
-                      <CustomInputField id="refundQty" label="Refunded Quantity" type="number" name="refundedQty" value={refundedQty} onChange={(e: any) => handleTotalChange(e, "refundedQty")}  statement={sales !== 0 ? `Sales: ${sales}` : undefined} />
+                      <CustomInputField
+                        id="stockTake"
+                        label="Stock Take"
+                        type="number"
+                        name="stockTake"
+                        value={stockTake}
+                        onChange={(e: any) => handleTotalChange(e, "stockTake")}
+                      />
+                      <CustomInputField
+                        id="delivery"
+                        label="Delivery"
+                        type="number"
+                        name="delivery"
+                        value={delivery}
+                        onChange={(e: any) => handleTotalChange(e, "delivery")}
+                      />
+                      <CustomInputField
+                        id="salesBeforeRefund"
+                        label="Sales Before Refund"
+                        type="number"
+                        name="salesBeforeRefund"
+                        value={salesBeforeRefund}
+                        onChange={(e: any) =>
+                          handleTotalChange(e, "salesBeforeRefund")
+                        }
+                      />
+                      <CustomInputField
+                        id="refundQty"
+                        label="Refunded Quantity"
+                        type="number"
+                        name="refundedQty"
+                        value={refundedQty}
+                        onChange={(e: any) =>
+                          handleTotalChange(e, "refundedQty")
+                        }
+                        statement={sales !== 0 ? `Sales: ${sales}` : undefined}
+                      />
                       {/* <CustomInputField id="sales" label="Sales"  type="number" name="sales"  value={sales} onChange={(e:any) => handleTotalChange(e , "sales")} /> */}
-                      <CustomInputField id="wastage" label="Wastage" type="number" name="wastage" value={wastage} onChange={(e: any) => handleTotalChange(e, "wastage")} />
-                      <CustomInputField id="total" label="Total" type="number" name="total" value={total} disabled />
-                      <CustomInputField id="systemBookStock" label="System Book Stock" type="number" name="systemBookStock" value={systemBookStock} disabled />
+                      <CustomInputField
+                        id="wastage"
+                        label="Wastage"
+                        type="number"
+                        name="wastage"
+                        value={wastage}
+                        onChange={(e: any) => handleTotalChange(e, "wastage")}
+                      />
+                      <CustomInputField
+                        id="total"
+                        label="Total"
+                        type="number"
+                        name="total"
+                        value={total}
+                        disabled
+                      />
+                      <CustomInputField
+                        id="systemBookStock"
+                        label="System Book Stock"
+                        type="number"
+                        name="systemBookStock"
+                        value={systemBookStock}
+                        disabled
+                      />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4"></div>
                   </CardContent>
                 </form>
               </Form>
             </Form>
-
-
 
             {isOpenGrid && (
               <CardContent>
@@ -261,7 +347,8 @@ const MSPStockTake = ({ title, icon }: any) => {
                       <RotatingSquaresLoader />
                     ) : (
                       <ThemeProvider theme={theme}>
-                        <DataGrid autoHeight
+                        <DataGrid
+                          autoHeight
                           // disableColumnFilter
                           // disableColumnSelector
                           // disableDensitySelector
@@ -269,14 +356,15 @@ const MSPStockTake = ({ title, icon }: any) => {
                           onRowSelectionModelChange={(newRowSelectionModel) => {
                             setRowSelectionModel(newRowSelectionModel);
                           }}
-
                           columnVisibilityModel={columnVisibility}
                           onColumnVisibilityModelChange={(newModel) =>
                             setColumnVisibility(newModel)
                           }
-                          getRowId={() => `row-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`}
-
-
+                          getRowId={() =>
+                            `row-${Date.now()}-${Math.random()
+                              .toString(36)
+                              .substr(2, 9)}`
+                          }
                           rowHeight={35}
                           rows={rows}
                           columns={columns}
@@ -286,14 +374,12 @@ const MSPStockTake = ({ title, icon }: any) => {
                             },
                           }}
                           pageSizeOptions={[15, 25, 50, 200]}
-
                           slots={{ toolbar: GridToolbar }}
                           slotProps={{
                             toolbar: {
                               showQuickFilter: true,
                             },
-                          }
-                          }
+                          }}
                         />
                       </ThemeProvider>
                     )}
