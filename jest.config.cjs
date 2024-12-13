@@ -1,6 +1,6 @@
 module.exports = {
   preset: "ts-jest", // Use ts-jest for TypeScript testing
-  testEnvironment: "jest-environment-jsdom", // Use jsdom for DOM testing
+  testEnvironment: "jsdom",// Use jsdom for DOM testing
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"], // Setup test environment
   transform: {
     "^.+\\.(ts|tsx|js|jsx)$": "babel-jest", // Use babel-jest for transformation (supports ESM)
@@ -27,6 +27,8 @@ module.exports = {
     "^@mui/material/Tooltip$": "<rootDir>/__mocks__/muiMaterialMock.js",
     "^@mui/material/styles$": "<rootDir>/__mocks__/muiThemeMock.js",
     "^@mui/material$": "<rootDir>/__mocks__/muiMaterialMock.js",
+    '^@mui/material/styles$': '<rootDir>/__mocks__/@mui/material/styles.js',
+
   },
   globals: {
     "ts-jest": {

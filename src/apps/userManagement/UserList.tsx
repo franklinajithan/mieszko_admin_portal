@@ -31,7 +31,7 @@ import {
   GridRowId,
   GridRowModes,
   GridRowModesModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridToolbar,
 } from "@mui/x-data-grid";
 import theme from "@/components/elements/GridTheme";
@@ -60,7 +60,7 @@ export default function UserList({ title, icon }: any) {
   const { t } = useTranslation("global");
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [skin, setSkin] = useState(currentSkin);
   const [rows, setRows] = useState([]);

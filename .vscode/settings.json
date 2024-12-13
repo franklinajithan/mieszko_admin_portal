@@ -1,15 +1,19 @@
 {
-    "cSpell.words": [
-        "eastham",
-        "fontawesome",
-        "fortawesome",
-        "hookform",
-        "jsbarcode",
-        "lucide",
-        "prismjs",
-        "qrcode",
-        "sulphites",
-        "tailwindcss",
-        "webp"
-    ]
+  "cSpell.words": [
+    "cmdk",
+    "eastham",
+    "fontawesome",
+    "fortawesome",
+    "gridjs",
+    "hookform",
+    "jsbarcode",
+    "lucide",
+    "prismjs",
+    "qrcode",
+    "shadcn",
+    "sulphites",
+    "tailwindcss",
+    "uuidv",
+    "webp"
+  ]
 }

@@ -39,7 +39,7 @@ import {
   GridRowId,
   GridRowModes,
   GridRowModesModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridToolbar,
 } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -53,7 +53,7 @@ const ProductBrand = ({ title, icon }: any) => {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [isOpenGrid, setIsOpenGrid] = useState(true);
   const toggleGridCardBody = () => {
     setIsOpenGrid(!isOpenGrid);

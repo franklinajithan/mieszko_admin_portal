@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import theme from "@/components/elements/GridTheme"; // Ensure this path is correct
 import { ThemeProvider } from "@mui/material";
-import { DataGrid, GridSelectionModel, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 export default function PurchasePlanning({ title, icon }: any) {
   const { t } = useTranslation("global");
   const [skin, setSkin] = useState(
@@ -40,7 +40,7 @@ export default function PurchasePlanning({ title, icon }: any) {
     setSelectedOption(e.target.value);
   };
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
 
   // Define the columns based on your structure

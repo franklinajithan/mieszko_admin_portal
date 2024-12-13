@@ -24,7 +24,7 @@ import { Loader2 } from "lucide-react";
 import { FiPackage } from "react-icons/fi";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/components/elements/GridTheme";
-import { DataGrid, GridSelectionModel, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 
 const NewPurchasePlanning = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
@@ -36,7 +36,7 @@ const NewPurchasePlanning = ({ title, icon }: any) => {
   const [deliveryType, setDeliveryType] = useState("fastest");
   const [selectedOption, setSelectedOption] = useState("Select");
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
 
   // Define the columns based on your structure

@@ -11,8 +11,8 @@ import {
   GridRowModes,
   GridRowModesModel,
   GridToolbar,
-  GridSelectionModel,
   GridColumnVisibilityModel,
+  GridRowSelectionModel,
 } from "@mui/x-data-grid";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/components/elements/GridTheme";
@@ -55,7 +55,7 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState<any[]>([]);
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] =
     useState<GridColumnVisibilityModel>({});
   const [currentRowId, setCurrentRowId] = useState(null);

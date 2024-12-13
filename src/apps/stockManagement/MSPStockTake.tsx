@@ -17,7 +17,7 @@ import {
   DataGrid,
   GridColDef,
   GridColumnVisibilityModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridToolbar,
 } from "@mui/x-data-grid";
 import { ThemeProvider } from "@mui/material/styles";
@@ -49,7 +49,7 @@ const MSPStockTake = ({ title, icon }: any) => {
   const [rows, setRows] = useState([]);
   const [MSPdata, setMSPdata] = useState([]);
   const [rowSelectionModel, setRowSelectionModel] =
-    useState<GridSelectionModel>([]);
+    useState<GridRowSelectionModel>([]);
 
   const [columnVisibility, setColumnVisibility] =
     useState<GridColumnVisibilityModel>({

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import LabelField from './LabelField';
+import React, { useState } from "react";
+import LabelField from "./LabelField";
 import {
   Select,
   SelectContent,
@@ -7,19 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Control, FieldValues, FieldPath } from 'react-hook-form';
+import { Control, FieldValues, FieldPath } from "react-hook-form";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import 'flag-icons/css/flag-icons.min.css';
+import "flag-icons/css/flag-icons.min.css";
 
 interface SelectFieldProps<T extends FieldValues> {
   name: string;
   control?: Control<T>;
-  label: string;
+  label?: string;
   placeholder?: string;
   disabled?: boolean;
   onChange?: (value: string | number | boolean) => void;
@@ -37,13 +37,17 @@ const SelectField = <T extends FieldValues>({
   options,
   required = false,
 }: SelectFieldProps<T>) => {
-  const [internalValue, setInternalValue] = useState<string | number | boolean>('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [internalValue, setInternalValue] = useState<string | number | boolean>(
+    ""
+  );
+  const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const id = `select-${name}`;
 
   const handleChange = (val: string) => {
-    const parsedValue = options.find(option => String(option.value) === val)?.value;
+    const parsedValue = options.find(
+      (option) => String(option.value) === val
+    )?.value;
     if (onChange && parsedValue !== undefined) {
       onChange(parsedValue);
     }
@@ -51,10 +55,12 @@ const SelectField = <T extends FieldValues>({
   };
 
   const formatValue = (value: string | number | boolean): string => {
-    return typeof value === 'boolean' || typeof value === 'number' ? String(value) : value;
+    return typeof value === "boolean" || typeof value === "number"
+      ? String(value)
+      : value;
   };
 
-  const filteredOptions = options.filter(option =>
+  const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -64,7 +70,7 @@ const SelectField = <T extends FieldValues>({
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
-    if (!open) setSearchTerm(''); // Clear search term when closing
+    if (!open) setSearchTerm(""); // Clear search term when closing
   };
 
   const handleSearchKeyDown = (event: React.KeyboardEvent) => {
@@ -78,10 +84,17 @@ const SelectField = <T extends FieldValues>({
         name={name as FieldPath<T>}
         render={({ field, fieldState }) => {
           const { onChange: formOnChange, value } = field;
-          const selectedValue = typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' ? value : '';
+          const selectedValue =
+            typeof value === "string" ||
+            typeof value === "number" ||
+            typeof value === "boolean"
+              ? value
+              : "";
 
           const handleFormChange = (val: string) => {
-            const parsedValue = options.find(option => String(option.value) === val)?.value;
+            const parsedValue = options.find(
+              (option) => String(option.value) === val
+            )?.value;
             if (parsedValue !== undefined) {
               formOnChange(parsedValue);
               if (onChange) onChange(parsedValue);
@@ -89,7 +102,7 @@ const SelectField = <T extends FieldValues>({
           };
 
           return (
-            <div className='w-full'>
+            <div className="w-full">
               <FormItem>
                 <LabelField label={label} htmlFor={id} required={required} />
                 <FormControl>
@@ -99,8 +112,14 @@ const SelectField = <T extends FieldValues>({
                     disabled={disabled}
                     onOpenChange={handleOpenChange}
                   >
-                    <SelectTrigger id={id} aria-label={label} aria-disabled={disabled}>
-                      <SelectValue placeholder={placeholder || "Select an option"} />
+                    <SelectTrigger
+                      id={id}
+                      aria-label={label}
+                      aria-disabled={disabled}
+                    >
+                      <SelectValue
+                        placeholder={placeholder || "Select an option"}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {/* Search input fixed at top */}
@@ -118,22 +137,31 @@ const SelectField = <T extends FieldValues>({
                       <div className="max-h-60 overflow-y-auto">
                         {filteredOptions.length > 0 ? (
                           filteredOptions.map((option) => (
-                            <SelectItem key={String(option.value)} value={String(option.value)}>
-                              {name === 'country' && (
-                                <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
+                            <SelectItem
+                              key={String(option.value)}
+                              value={String(option.value)}
+                            >
+                              {name === "country" && (
+                                <span
+                                  className={`fi fi-${String(
+                                    option.value
+                                  ).toLowerCase()} mr-2 w-4 h-4`}
+                                ></span>
                               )}
                               {option.label}
                             </SelectItem>
                           ))
                         ) : (
-                          <div className="p-2 text-gray-500">No results found</div>
+                          <div className="p-2 text-gray-500">
+                            No results found
+                          </div>
                         )}
                       </div>
                     </SelectContent>
                   </Select>
                 </FormControl>
                 {fieldState.error?.message && (
-                  <FormMessage className='form-message mt-2'>
+                  <FormMessage className="form-message mt-2">
                     {fieldState.error.message}
                   </FormMessage>
                 )}
@@ -145,7 +173,7 @@ const SelectField = <T extends FieldValues>({
     );
   } else {
     return (
-      <div className='w-full'>
+      <div className="w-full">
         <LabelField label={label} htmlFor={id} required={required} />
         <Select
           value={formatValue(internalValue)}
@@ -172,9 +200,16 @@ const SelectField = <T extends FieldValues>({
             <div className="max-h-60 overflow-y-auto">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => (
-                  <SelectItem key={String(option.value)} value={String(option.value)}>
-                    {name === 'country' && (
-                      <span className={`fi fi-${String(option.value).toLowerCase()} mr-2 w-4 h-4`}></span>
+                  <SelectItem
+                    key={String(option.value)}
+                    value={String(option.value)}
+                  >
+                    {name === "country" && (
+                      <span
+                        className={`fi fi-${String(
+                          option.value
+                        ).toLowerCase()} mr-2 w-4 h-4`}
+                      ></span>
                     )}
                     {option.label}
                   </SelectItem>

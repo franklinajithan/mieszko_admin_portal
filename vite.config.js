@@ -8,6 +8,10 @@ export default defineConfig({
     reactPlugin(),
     EnvironmentPlugin('all') // Ensure environment variables are loaded
   ],
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts", // Ensure this points to your setup file
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'), // Setup alias for @

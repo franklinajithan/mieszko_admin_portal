@@ -8,7 +8,7 @@ import {
   GridRowId,
   GridRowModes,
   GridRowModesModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridToolbar,
 } from "@mui/x-data-grid";
 import { ThemeProvider } from "@mui/material";
@@ -44,7 +44,7 @@ export default function SupplierList({ title, icon }: any) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [rowSelectionModel, setRowSelectionModel] =
-    useState<GridSelectionModel>([]);
+    useState<GridRowSelectionModel>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteSupplierId, setDeleteSupplierId] = useState(null);

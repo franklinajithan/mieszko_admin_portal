@@ -1,11 +1,11 @@
 import theme from "@/components/elements/GridTheme"; // Ensure this path is correct
 import { ThemeProvider } from "@mui/material";
-import { DataGrid, GridSelectionModel, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridRowSelectionModel, GridToolbar } from "@mui/x-data-grid";
 import React from "react";
 
 const SupplierGrid = () => {
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
 
   const columns = [

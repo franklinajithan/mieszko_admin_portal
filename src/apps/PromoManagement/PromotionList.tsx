@@ -11,7 +11,7 @@ import {
   GridRowModesModel,
   GridToolbar,
   GridColumnVisibilityModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridEventListener,
   GridRowEditStopReasons,
   useGridApiRef,
@@ -67,7 +67,7 @@ const PromotionList: React.FC<{ title: string; icon: any }> = ({
   const imgUrl: any = imageUrl;
   const timestamp = new Date().getTime();
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const [columnVisibility, setColumnVisibility] =
     useState<GridColumnVisibilityModel>({});
 

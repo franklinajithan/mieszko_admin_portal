@@ -1,3 +1,3 @@
 export const DataGrid = () => "DataGrid";
-export const GridSelectionModel = () => "GridSelectionModel";
+export const GridRowSelectionModel = () => "GridRowSelectionModel";
 export const GridToolbar = () => "GridToolbar";

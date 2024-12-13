@@ -43,7 +43,7 @@ import {
   GridRowId,
   GridRowModes,
   GridRowModesModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridToolbar,
 } from "@mui/x-data-grid";
 import theme from "@/components/elements/GridTheme";
@@ -177,7 +177,7 @@ const ProductList = ({ title, icon }: any) => {
     setIsOpenSearch(!isOpenSearch);
   };
   const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridSelectionModel>([]);
+    React.useState<GridRowSelectionModel>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {

@@ -34,7 +34,7 @@ import {
   GridRowId,
   GridRowModes,
   GridRowModesModel,
-  GridSelectionModel,
+  GridRowSelectionModel,
   GridRowsProp,
   GridToolbar,
   GridToolbarExport,
@@ -684,7 +684,7 @@ const ReduceToClear = ({ title, icon }: any) => {
                               console.error("Row update error:", error)
                             }
                             onRowSelectionModelChange={(
-                              rowSelectionModel: GridSelectionModel
+                              rowSelectionModel: GridRowSelectionModel
                             ) =>
                               setSelectedRows([
                                 ...rowSelectionModel,
