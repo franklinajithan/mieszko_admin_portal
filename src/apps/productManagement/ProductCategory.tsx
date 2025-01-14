@@ -19,12 +19,7 @@ import { categoryFormSchema } from "@/lib/utils";
 import CheckboxField from "@/components/elements/CheckboxField";
 import LabelField from "@/components/elements/LabelField";
 import TreeView from "@/components/ui/treeView";
-import {
-  addCategory,
-  addCategoryById,
-  getCategory,
-  updateCategoryById,
-} from "@/service/category.service";
+import { addCategory, addCategoryById, getCategory, updateCategoryById } from "@/service/category.service";
 import { debug } from "console";
 
 type CategoryLevel = "parent" | "child" | "grandchild";
@@ -45,9 +40,7 @@ interface ParentCategory {
 
 const ProductCategory = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
-  const [skin, setSkin] = useState(
-    localStorage.getItem("skin-mode") ? "dark" : ""
-  );
+  const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
   const [isLoading, setIsLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("Category Name");
   const [categoryLevel, setCategoryLevel] = useState<CategoryLevel>("parent");
@@ -77,19 +70,14 @@ const ProductCategory = ({ title, icon }: any) => {
   const { handleSubmit, formState, reset, setValue } = form;
   const { isValid, isDirty, errors } = formState;
 
-  function extractLevelCategories(
-    categories: Category[],
-    level: number
-  ): Category[] {
+  function extractLevelCategories(categories: Category[], level: number): Category[] {
     const levelCategories: Category[] = [];
 
     for (const category of categories) {
       if (category.level === level) {
         levelCategories.push(category);
       } else if (category.children.length > 0) {
-        levelCategories.push(
-          ...extractLevelCategories(category.children, level)
-        );
+        levelCategories.push(...extractLevelCategories(category.children, level));
       }
     }
 
@@ -202,9 +190,7 @@ const ProductCategory = ({ title, icon }: any) => {
   };
 
   const onChangeParent = (e: string) => {
-    const selectedParent = parentCategories.find(
-      (element) => element.value === e
-    );
+    const selectedParent = parentCategories.find((element) => element.value === e);
 
     if (selectedParent) {
       setChildCategories(
@@ -271,9 +257,7 @@ const ProductCategory = ({ title, icon }: any) => {
       } else if (editCategory.category_level == 2) {
         parentId = editCategory.parent_id.toString();
       } else if (editCategory.category_level == 3) {
-        let childList: any = categories.find(
-          (element: any) => element.category_id == editCategory.grandparent_id
-        );
+        let childList: any = categories.find((element: any) => element.category_id == editCategory.grandparent_id);
 
         setChildCategories(
           childList.children.map((category: any) => ({
@@ -354,39 +338,15 @@ const ProductCategory = ({ title, icon }: any) => {
               <div className="grid grid-cols-1 gap-4 mb-6">
                 <div>
                   <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-8"
-                    >
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                       <div className="grid grid-cols-5 gap-4   border border-zinc-200 p-4 rounded-lg shadow-md w-full">
                         <div>
-                          <SelectField
-                            control={form.control}
-                            label="Category Level"
-                            name="categoryLevel"
-                            options={category}
-                            onChange={handleSelectChange}
-                          />
-                          <div className="mt-2">
-                            {categoryLevel === "child" && (
-                              <CheckboxField
-                                control={form.control}
-                                id="isAssignItem"
-                                label="Can assign item"
-                                name="isAssignItem"
-                                onChange={handleAssignCheckbox}
-                              />
-                            )}
-                          </div>
+                          <SelectField control={form.control} label="Category Level" name="categoryLevel" options={category} onChange={handleSelectChange} />
+                          <div className="mt-2">{categoryLevel === "child" && <CheckboxField control={form.control} id="isAssignItem" label="Can assign item" name="isAssignItem" onChange={handleAssignCheckbox} />}</div>
                         </div>
                         <div>
-                          <InputField
-                            control={form.control}
-                            label={categoryName}
-                            type="text"
-                            name="categoryName"
-                          />
-                          <div className="mt-2">
+                          <InputField control={form.control} label={categoryName} type="text" name="categoryName" />
+                          {/* <div className="mt-2">
                             <CheckboxField
                               control={form.control}
                               id="isPlu"
@@ -394,7 +354,7 @@ const ProductCategory = ({ title, icon }: any) => {
                               name="isPlu"
                               onChange={handlePluCheckbox}
                             />
-                          </div>
+                          </div> */}
                         </div>
                         {categoryLevel === "child" && (
                           <SelectField
@@ -414,238 +374,73 @@ const ProductCategory = ({ title, icon }: any) => {
                               options={parentCategories}
                               // onChange={onChangeParent}
                             />
-                            <SelectField
-                              control={form.control}
-                              label="Child Category"
-                              name="childCategory"
-                              options={childCategories}
-                            />
+                            <SelectField control={form.control} label="Child Category" name="childCategory" options={childCategories} />
                           </>
                         )}
-                        {isPLUProduct && (
-                          <InputField
-                            control={form.control}
-                            label="Enter first 2 digits of PLU"
-                            type="text"
-                            name="pluCode"
-                          />
-                        )}
+                        {isPLUProduct && <InputField control={form.control} label="Enter first 2 digits of PLU" type="text" name="pluCode" />}
 
-                        <InputField
-                          control={form.control}
-                          label="Translation"
-                          type="text"
-                          name="translation"
-                        />
+                        <InputField control={form.control} label="Translation" type="text" name="translation" />
                       </div>
                       <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
-                        <LabelField label={"VAT"}  required={true}/>
-                        <InputField
-                          control={form.control}
-                          placeholder="VAT"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <LabelField label={"VAT"} required={true} />
+                        <InputField control={form.control} placeholder="VAT" name="retailUom" type="text" required={true} />
                         <LabelField label={"Commission based"} />
-                        <SelectField
-                          control={form.control}
-                          name="commission based"
-                          options={YesOrNO}
-                         
-                        />
+                        <SelectField control={form.control} name="commission based" options={YesOrNO} />
                         <LabelField label={"Fix Margin"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Fix Margin"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Fix Margin" name="retailUom" type="text" required={true} />
                         <LabelField label={"Target Margin"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Target Margin"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Target Margin" name="retailUom" type="text" required={true} />
                         <LabelField label={"Trading Consent"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Trading Consent"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Trading Consent" name="retailUom" type="text" required={true} />
                         <LabelField label={"Pricing & Rounding Strategy"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Pricing & Rounding Strategy"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Pricing & Rounding Strategy" name="retailUom" type="text" required={true} />
                         <LabelField label={"Label Required"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Label Required"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Label Required" name="retailUom" type="text" required={true} />
                         <LabelField label={"Label Qty"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Label Qty"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Label Qty" name="retailUom" type="text" required={true} />
                         <LabelField label={"Label Format"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Label Format"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Label Format" name="retailUom" type="text" required={true} />
                         <LabelField label={"Stock Control"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Stock Control"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Stock Control" name="retailUom" type="text" required={true} />
                         <LabelField label={"Minimum Stock"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Minimum Stock"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Minimum Stock" name="retailUom" type="text" required={true} />
                         <LabelField label={"Maximum Stock"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Maximum Stock"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Maximum Stock" name="retailUom" type="text" required={true} />
 
                         <LabelField label={"Minimum Order Quantity"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Minimum Order Quantity"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Minimum Order Quantity" name="retailUom" type="text" required={true} />
                         <LabelField label={"Maximum Order Quantity"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Maximum Order Quantity"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Maximum Order Quantity" name="retailUom" type="text" required={true} />
                         <LabelField label={"Shelf Life"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Maximum Order Quantity"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Maximum Order Quantity" name="retailUom" type="text" required={true} />
                         <LabelField label={"Till Message"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Till Message"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Till Message" name="retailUom" type="text" required={true} />
                         <LabelField label={"Price Override"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Price Override"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Price Override" name="retailUom" type="text" required={true} />
                         <LabelField label={"Return"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Return"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Return" name="retailUom" type="text" required={true} />
                         <LabelField label={"Void"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Void"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Void" name="retailUom" type="text" required={true} />
                         <LabelField label={"Hold"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Hold"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Hold" name="retailUom" type="text" required={true} />
                         <LabelField label={"Quantity Change"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="Quantity Change"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="Quantity Change" name="retailUom" type="text" required={true} />
                         <LabelField label={"General Discount"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="General Discount"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="General Discount" name="retailUom" type="text" required={true} />
                         <LabelField label={"Staff Discount"} />
-                        <InputField
-                          control={form.control}
-                          placeholder="General Discount"
-                          name="retailUom"
-                          type="text"
-                          required={true}
-                        />
+                        <InputField control={form.control} placeholder="General Discount" name="retailUom" type="text" required={true} />
                       </div>
                       <hr className="border-t border-zinc-300" />
                       <div className="flex justify-between mt-2 pr-4">
                         <div className="flex items-center space-x-4">
-                          <CheckboxField
-                            control={form.control}
-                            id="clearForm"
-                            label="Reset form after submission"
-                            name="clearForm"
-                            onChange={handleFormClearCheckbox}
-                          />
+                          <CheckboxField control={form.control} id="clearForm" label="Reset form after submission" name="clearForm" onChange={handleFormClearCheckbox} />
                         </div>
 
                         <div className="flex items-center space-x-4">
-                          <Button
-                            type="submit"
-                            disabled={isLoading}
-                            className="btn-cyan"
-                          >
+                          <Button type="submit" disabled={isLoading} className="btn-cyan">
                             {isLoading ? (
                               <>
-                                <Loader2 size={20} className="animate-spin" />{" "}
-                                &nbsp; Loading...
+                                <Loader2 size={20} className="animate-spin" /> &nbsp; Loading...
                               </>
                             ) : editMode ? (
                               "Update"
@@ -672,15 +467,7 @@ const ProductCategory = ({ title, icon }: any) => {
             </Card.Body>
           </Card>
           <Card className="card-one mt-2">
-            <Card.Body>
-              {!isLoading && (
-                <TreeView
-                  category={categories}
-                  onEditTree={onEditTree}
-                  topEditButton={topEditButton}
-                />
-              )}
-            </Card.Body>
+            <Card.Body>{!isLoading && <TreeView category={categories} onEditTree={onEditTree} topEditButton={topEditButton} />}</Card.Body>
           </Card>
         </div>
       </div>

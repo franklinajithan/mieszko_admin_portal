@@ -27,6 +27,7 @@ import { uploadLabelImage } from "@/service/promotion.service";
 import { imageUrl } from "@/_config";
 import { getBrand } from "@/service/brand.service";
 import LabelField from "@/components/elements/LabelField";
+import RadioField from "@/components/elements/RadioField";
 
 const ProductForm = ({ id, type }: any) => {
   const [activeItem, setActiveItem] = useState("Product");
@@ -404,6 +405,22 @@ const ProductForm = ({ id, type }: any) => {
       }))
     );
   };
+
+  const rewardsOptions = [
+    { value: "fixedRetail", label: "Fixed Retail" },
+    { value: "multiBuy", label: "Multi Buy" },
+    { value: "mixAndMatch", label: "Mix and Match" },
+    { value: "fixedDiscountAmount", label: "Fixed Discount by Amount" },
+    { value: "comeback Voucher", label: "comeback Voucher" },
+    { value: "comebackRedeem", label: "Comeback Redeem" },
+  ];
+
+  const triggerSettingOptions = [
+    { value: "byQuantity ", label: "By Quantity" },
+    { value: "byValue", label: "By Value" },
+  ];
+
+
   return (
     <div>
       <Card className="card-one mt-2">
@@ -553,67 +570,28 @@ const ProductForm = ({ id, type }: any) => {
                         <div className="col-span-1">
                           <InputField control={form.control} label="Trigger Qty" placeholder="1" name="triggerQuantity" type="number" required />
                         </div>
-
                         <div className="col-span-1">
-                          <div>
-                          <LabelField label={"Reward Setting"} />
-                 
-                            <div className="mt-2 space-y-2">
-                              <div className="flex items-center">
-                                <input type="radio" id="fixedRetail" name="rewardSetting" value="fixedRetail" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="fixedRetail" className="ml-2 block text-sm text-gray-900">
-                                  Fixed Retail Comeback Voucher
-                                </label>
-                              </div>
-                              <div className="flex items-center">
-                                <input type="radio" id="multibuy" name="rewardSetting" value="multibuy" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="multibuy" className="ml-2 block text-sm text-gray-900">
-                                  Multibuy Comeback Redeem
-                                </label>
-                              </div>
-                              <div className="flex items-center">
-                                <input type="radio" id="fixedDiscountAmount" name="rewardSetting" value="fixedDiscountAmount" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="fixedDiscountAmount" className="ml-2 block text-sm text-gray-900">
-                                  Fixed Discount by Amount
-                                </label>
-                              </div>
-                              <div className="flex items-center">
-                                <input type="radio" id="fixedDiscountPercentage" name="rewardSetting" value="fixedDiscountPercentage" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="fixedDiscountPercentage" className="ml-2 block text-sm text-gray-900">
-                                  Fixed Discount by %
-                                </label>
-                              </div>
-                              <div className="flex items-center">
-                                <input type="radio" id="mixAndMatch" name="rewardSetting" value="mixAndMatch" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="mixAndMatch" className="ml-2 block text-sm text-gray-900">
-                                  Mix and Match
-                                </label>
-                              </div>
-                              <div className="flex items-center">
-                                <input type="radio" id="ladderDeal" name="rewardSetting" value="ladderDeal" {...form.register("rewardSetting", { required: true })} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                <label htmlFor="ladderDeal" className="ml-2 block text-sm text-gray-900">
-                                  Ladder Deal
-                                </label>
-                              </div>
-                            </div>
-                          </div>
+                          <InputField control={form.control} label="Discount Value" placeholder="1" name="triggerQuantity" type="number" required />
+                        </div>
+                        <div className="col-span-2">
+                          <RadioField name="TriggerSetting" control={form.control} label="	Trigger Setting" options={triggerSettingOptions} required={true} linePerRow={2} />
                         </div>
 
-                        <div className="col-span-1">
-                          <InputField control={form.control} label="Trigger Qty" placeholder="1" name="triggerQuantity" type="number" required />
+                        <div className="col-span-5">
+                          <RadioField name="rewardSetting" control={form.control} label="Reward Setting" options={rewardsOptions} required={true} linePerRow={4}/>
                         </div>
 
                         <div className="col-span-1">
                           <InputField control={form.control} label="Price" placeholder="0.39" name="price" type="number" step="0.01" required />
                         </div>
 
-                        <div className="col-span-5">
+                        <div className="col-span-2">
                           <InputField control={form.control} label="Description" placeholder="OBLATY VISA BELL ORZECHOWE 30G" name="description" type="text" />
                         </div>
 
                         <div className="col-span-5">
                           <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1 gap-4">
-                            <div className="col-span-1">
+                            <div className="col-span-1 mt-4">
                               <CheckboxField control={form.control} label="Activation On/Off" name="activationStatus" />
                             </div>
 

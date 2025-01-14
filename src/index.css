@@ -66,6 +66,8 @@
 
   body {
     @apply bg-background text-foreground;
+    overscroll-behavior: none; /* Prevent scroll chaining */
+  scrollbar-width: none; /* Hide scrollbar (Firefox) */
   }
 }
 
@@ -202,6 +204,8 @@
   -webkit-line-clamp: 3; /* Limit to 3 lines */
   max-height: 4.5em; /* Adjust according to line height */
 }
+
+
 
 
 /* src/index.css */

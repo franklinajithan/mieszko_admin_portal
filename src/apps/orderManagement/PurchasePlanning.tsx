@@ -242,7 +242,7 @@ export default function PurchasePlanning({ title, icon }: any) {
                       type="date"
                       name="expectedDeliveryDate"
                     />
-                    {/* <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} /> */}
+                    <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} />
                     <SelectField
                       control={form.control}
                       label="Order Quantity"
