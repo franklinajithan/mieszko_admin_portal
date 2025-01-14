@@ -7,7 +7,7 @@ import HeaderComponents from "@/components/elements/HeaderSection";
 import SelectField from "@/components/elements/SelectField";
 import InputField from "@/components/elements/InputField";
 import MultiDateField from "@/components/elements/MultiDateField";
-import { sample, status } from "../../data/constants";
+import { groceryDepartments, sample, status } from "../../data/constants";
 import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
@@ -26,7 +26,7 @@ import { Filter, Loader2 } from 'lucide-react';
 import { DataGrid, GridActionsCellItem, GridColDef, GridColumnVisibilityModel, GridRowId, GridRowModes, GridRowModesModel, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/components/elements/GridTheme';
-import { getCompany } from "@/service/store.service";
+import { getCompany, getStore } from "@/service/store.service";
 import { useNavigate } from "react-router-dom";
 import { on } from "events";
 import { countries } from "@/data/enum";
@@ -34,6 +34,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material
 import IOSSwitch from "@/components/elements/toggleTheme";
 import CommonSwitch from "@/components/ui/CommonSwitch";
 import CheckboxLabel from "@/components/elements/CheckboxLabel";
+import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
 
 
 interface FieldOption {
@@ -54,27 +55,27 @@ const InvoiceList = ({ title, icon }: any) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isOpenGrid, setIsOpenGrid] = useState(true);
   const [rows, setRows] = useState([]);
-
+const [storeList, setStoreList] = useState([]);
 
   const [showPopup, setShowPopup] = useState(false);
 
   const fieldOptions: FieldOption[] = [
     { label: 'Supplier', name: 'supplier', checked: true },
     { label: 'Status', name: 'status', checked: true },
-    { label: 'Delivery Date', name: 'deliveryDate', checked: false },
+    { label: 'Delivery Date', name: 'deliveryDate', checked: true },
     { label: 'Store', name: 'store', checked: true },
     { label: 'Invoice Type', name: 'invoiceType', checked: true },
     { label: 'Department', name: 'department', checked: true },
-    { label: 'Barcode', name: 'barcode', checked: false },
-    { label: 'Item Name', name: 'itemName', checked: false },
-    { label: 'Supplier Code', name: 'supplierCode', checked: false },
-    { label: 'Item Code', name: 'itemCode', checked: false },
-    { label: 'Return Id', name: 'returnId', checked: false },
-    { label: 'Load List Id', name: 'loadListId', checked: false },
-    { label: 'Order No', name: 'orderNo', checked: false },
+    { label: 'Barcode', name: 'barcode', checked: true },
+    { label: 'Item Name', name: 'itemName', checked: true },
+    { label: 'Supplier Code', name: 'supplierCode', checked: true },
+    { label: 'Item Code', name: 'itemCode', checked: true },
+    { label: 'Return Id', name: 'returnId', checked: true },
+    { label: 'Load List Id', name: 'loadListId', checked: true },
+    { label: 'Order No', name: 'orderNo', checked: true },
     { label: 'Invoice No', name: 'invoiceNo', checked: true },
-    { label: 'Supplier Ref', name: 'supplierRef', checked: false },
-    { label: 'Delivery Node Id', name: 'deliveryNodeId', checked: false },
+    { label: 'Supplier Ref', name: 'supplierRef', checked: true },
+    { label: 'Delivery Node Id', name: 'deliveryNodeId', checked: true },
   ];
 
   const toggleCardBody = () => {
@@ -90,8 +91,8 @@ const InvoiceList = ({ title, icon }: any) => {
           console.error(company.data);
           return;
         };
-        setRows(company.data.data)
-
+       // setRows(company.data.data)
+       setRows([])
 
 
 
@@ -103,8 +104,29 @@ const InvoiceList = ({ title, icon }: any) => {
       }
     };
 
+    const fetchStore = async () => {
+      try {
+
+        const store = await getStore();
+        if (store.status !== 200) {
+          console.error(store.data);
+          return;
+        };
+        setStoreList(store.data.data)
+
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
+    };
+
     fetchCompany();
+    fetchStore();
   }, [])
+
+
+
 
   const handleEditClick = (id: GridRowId) => () => {
 
@@ -119,7 +141,7 @@ const InvoiceList = ({ title, icon }: any) => {
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row: any) => row.id !== id));
   };
-  const onClickAddCompany = () => {
+  const onClickAddInvoice = () => {
     navigate(`/store/new-company`);
   };
   const handleCancelClick = (id: GridRowId) => () => {
@@ -183,25 +205,27 @@ const InvoiceList = ({ title, icon }: any) => {
         ];
       }
     },
-    { field: 'companyId', headerName: 'Company ID', flex: 1 },
-    { field: 'companyCode', headerName: 'Company Code', flex: 1 },
-    { field: 'companyName', headerName: 'Company Name', flex: 1 },
-    { field: 'ownerName', headerName: 'Owner Name', flex: 1 },
-    { field: 'email', headerName: 'Email', flex: 1 },
-    { field: 'phone', headerName: 'Phone', flex: 1 },
-    { field: 'address', headerName: 'Address', flex: 1 },
-    { field: 'city', headerName: 'City', flex: 1 },
-    { field: 'state', headerName: 'State', flex: 1 },
-    { field: 'postcode', headerName: 'Postcode', flex: 1 },
-    { field: 'country', headerName: 'Country', flex: 1 },
+    { field: 'No', headerName: 'No', flex: 1 },
+    { field: 'invoiceId', headerName: 'Invoice ID', flex: 1 },
+    { field: 'orderId',  headerName: 'Order ID', flex: 1 },
+    { field: 'loadListId', headerName: 'Load List ID  ', flex: 1 },
+    { field: 'returnId', headerName: 'Return ID', flex: 1 },
+    { field: 'deliveryDate', headerName: 'Delivery Date', flex: 1 },
+    { field: 'supplier', headerName: 'Supplier', flex: 1 },
+    { field: 'totalPrice', headerName: 'Total Price', flex: 1 },
+    { field: 'priceDifference', headerName: 'Price Difference', flex: 1 },
+    { field: 'totalRetailPrice', headerName: 'Total Retail Price', flex: 1 },
+    { field: 'retailPriceDifference', headerName: 'Retail Price Difference', flex: 1 },
+    { field: 'totalQty', headerName: 'Total Quantity', flex: 1 },
+    { field: 'qtyDifference', headerName: 'Qty Difference', flex: 1 },
+    { field: 'totalCase', headerName: 'Total Case', flex: 1 },
+    { field: 'caseDifference', headerName: 'Case Difference', flex: 1 },
+    { field: 'newItems', headerName: 'New Items', flex: 1 },
+    { field: 'newBarCodes', headerName: 'New BarCodes', flex: 1 },
+    { field: 'missingItems', headerName: 'Missing Items', flex: 1 },
+    { field: 'invoiceType', headerName: 'Invoice Type', flex: 1 },
+    { field: 'store', headerName: 'store', flex: 1 },
     { field: 'status', headerName: 'Status', flex: 1 },
-    { field: 'taxNo', headerName: 'Tax Number', flex: 1 },
-    { field: 'createdAt', headerName: 'Created At', flex: 1 },
-    { field: 'createdBy', headerName: 'Created By', flex: 1 },
-    { field: 'updatedAt', headerName: 'Updated At', flex: 1 },
-    { field: 'updatedBy', headerName: 'Updated By', flex: 1 },
-    { field: 'website', headerName: 'Website', flex: 1 },
-    { field: 'logo', headerName: 'Logo', flex: 1 },
   ];
 
 
@@ -328,7 +352,7 @@ const InvoiceList = ({ title, icon }: any) => {
 
               <div className="p-3 border rounded shadow bg-white">
                 <input type="text" placeholder="Search" value={searchTerm}  onChange={e => setSearchTerm(e.target.value)} className="w-full p-2 mb-3 border border-gray-300 rounded focus:outline-none"/>
-                <div className="overflow-y-auto max-h-48">
+                <div className=" max-h-48">
 
 
 
@@ -359,11 +383,11 @@ const InvoiceList = ({ title, icon }: any) => {
 
 
                     {getCheckValue('supplier') && <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />}
-                    {getCheckValue('status') && <SelectField control={form.control} label="Status" name="status" options={sample} />}
-                    {getCheckValue('deliveryDate') && <SelectField control={form.control} label="Delivery Date" name="deliveryDate" options={status} />}
+                    {getCheckValue('status') && <SelectField control={form.control} label="Status" name="status" options={status} />}
+                    {getCheckValue('deliveryDate') && <InputField  control={form.control} label="Delivery Date" type="date" name="deliveryDate"/>}
                     {getCheckValue('store') && <SelectField control={form.control} label="Store" name="store" options={sample} />}
                     {getCheckValue('invoiceType') && <SelectField control={form.control} label="Invoice Type" name="invoiceType" options={sample} />}
-                    {getCheckValue('department') && <SelectField control={form.control} label="Department" name="department" options={sample} />}
+                    {getCheckValue('department') &&   <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} />}
                     {getCheckValue('barcode') && <SelectField control={form.control} label="Barcode" name="barcode" options={countries} />}
                     {getCheckValue('itemName') && <SelectField control={form.control} label="Item Name" name="itemName" options={sample} />}
                     {getCheckValue('supplierCode') && <SelectField control={form.control} label="Supplier Code" name="supplierCode" options={sample} />}
@@ -414,8 +438,8 @@ const InvoiceList = ({ title, icon }: any) => {
 
               <div>
                 <div className="flex justify-start space-x-4  mt-2 pr-4">
-                  <Button type="submit" className='btn-cyan' onClick={onClickAddCompany}>
-                    New Company
+                  <Button type="submit" className='btn-cyan' onClick={onClickAddInvoice}>
+                    New Invoice
                   </Button>
                 </div>
                 <div className="w-full mt-3">

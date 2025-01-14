@@ -1,40 +1,43 @@
-import React from 'react';
+import React from "react";
+import { Control, FieldPath, FieldValues, useController } from "react-hook-form";
+import LabelField from "./LabelField";
 
-interface RadioFieldProps {
-    id: string;
-    name: string;
-    value?: string; // Optional, as it might not be required in some cases
-    checked?: boolean; // Optional, as it might not always be needed
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Optional, as not all radios need an onChange handler
-    label: string;
-    defaultChecked?: boolean; // Optional, as it might not always be provided
+interface RadioOption {
+  value: string | number;
+  label: string;
 }
 
-// Define the RadioWithLabel component with typed props
-const RadioField: React.FC<RadioFieldProps> = ({
-    id,
+interface RadioFieldProps<T extends FieldValues> {
+  name: FieldPath<T>;
+  control: Control<T>;
+  label?: string;
+  options: RadioOption[];
+  required?: boolean;
+  linePerRow?: number;
+}
+
+const RadioField = <T extends FieldValues>({ name, control, label, options, required = false, linePerRow=5 }: RadioFieldProps<T>) => {
+  const { field, fieldState } = useController({
     name,
-    value,
-    checked,
-    onChange,
-    label,
-    defaultChecked
-}) => {
-    return (
-        <div className="flex items-center mr-4">
-            <input
-                type="radio"
-                id={id}
-                name={name}
-                value={value}
-                checked={checked}
-                onChange={onChange}
-                defaultChecked={defaultChecked}
-                className="mr-2"
-            />
-            <label htmlFor={id}>{label}</label>
-        </div>
-    );
+    control,
+    rules: { required },
+  });
+
+  return (
+    <div className="w-full">
+      {label && <LabelField label={label} htmlFor={`${label}`} aria-label={label} />}
+      <div className={`grid grid-cols-${linePerRow} gap-2`}>
+        {options.map((option) => (
+          <div key={option.value} className="flex items-center space-x-2 p-2 border border-gray-300 rounded-lg hover:border-blue-500 cursor-pointer" onClick={() => field.onChange(option.value)}>
+            <input type="radio" id={`${name}-${option.value}`} value={option.value} checked={field.value === option.value} onChange={() => field.onChange(option.value)} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+
+          <span className="mt-2"> <LabelField label={option.label} htmlFor={`${name}-${option.value}`} aria-label={label} /></span> 
+          </div>
+        ))}
+      </div>
+      {fieldState.error && <p className="text-red-500 text-sm mt-1">{fieldState.error.message || "This field is required"}</p>}
+    </div>
+  );
 };
 
 export default RadioField;

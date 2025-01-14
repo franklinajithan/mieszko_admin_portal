@@ -7,3 +7,6 @@ export const deleteUser = (id:any) => axiosInstance.delete(`/user/delete/${id}`)
 export const getUserById = (id:any) => axiosInstance.get(`/user/${id}`);
 
 export const getPermission= () => axiosInstance.get(`/permission`);
+export const getPermissionById= (id:any) => axiosInstance.get(`/role/${id}`);
+export const updatePermissionById= (id:any, permission:any) => axiosInstance.put(`/role/${id}`, permission);
+

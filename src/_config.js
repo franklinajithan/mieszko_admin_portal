@@ -1,17 +1,17 @@
 // Check if we are in production or development mode
-const isProduction = import.meta.env.MODE === 'production';
- console.log(isProduction);
- console.log(import.meta.env.VITE_BASE_URL_DEV);
+const isProduction = process.env.NODE_ENV === 'production';  // Use process.env for Jest compatibility
+
 // Use the appropriate URLs based on the environment
-export const baseUrl = isProduction
-  ? import.meta.env.VITE_BASE_URL_PROD // Production URL
-  : import.meta.env.VITE_BASE_URL_DEV;  // Development URL
+export const baseUrl = isProduction 
+  ? process.env.VITE_BASE_URL_PROD  // Production URL
+  : process.env.VITE_BASE_URL_DEV;  // Development URL
 
-export const imageUrl = isProduction
-  ? import.meta.env.VITE_IMAGE_PROD // Production Image URL
-  : import.meta.env.VITE_IMAGE_DEV;  // Development Image URL
+export const imageUrl = isProduction 
+  ? process.env.VITE_IMAGE_PROD  // Production Image URL
+  : process.env.VITE_IMAGE_DEV;  // Development Image URL
 
-  export const notificationToken = import.meta.env.VITE_NOTIFICATION_TOKEN;
+export const notificationToken = process.env.VITE_NOTIFICATION_TOKEN;
 
+// Optional: console.log for debugging
 // console.log('Base URL:', baseUrl);
 // console.log('Image URL:', imageUrl);

@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
-    "types": ["vite/client"],
-    "target": "es5",
+    "module": "esnext",
+    "types": ["node", "vite/client", "jest", "@testing-library/jest-dom"],
+    "target": "es6",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "@/*": ["src/*"],
+  
+     },
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,14 +16,12 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react",
+    "removeComments": false,
   },
-  "include": [
-    "src"
-  ]
+  "include": ["cypress", "src", "src/setupTests.ts"]
 }

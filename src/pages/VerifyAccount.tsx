@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import pageSvg from "../assets/svg/mailbox.svg";
+
 
 export default function VerifyAccount() {
 
@@ -26,7 +26,7 @@ export default function VerifyAccount() {
           <Card className="card-auth">
             <Card.Body className="text-center">
               <div className="mb-5">
-                <object type="image/svg+xml" data={pageSvg} className="w-50" aria-label="svg image"></object>
+             
               </div>
               <Card.Title>Verify your email address</Card.Title>
               <Card.Text className="mb-5">Please check your email and click the verify button or link to verify your account.</Card.Text>

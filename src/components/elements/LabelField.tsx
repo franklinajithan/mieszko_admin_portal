@@ -3,17 +3,20 @@ import React from 'react';
 
 interface LabelFieldProps {
   label?: string;
-  htmlFor? : any;
+  htmlFor?: string; // Specify as string for consistency with `htmlFor`
   required?: boolean;
 }
 
-const LabelField: React.FC<LabelFieldProps> = ({ label,htmlFor, required = false, }) => {
+const LabelField: React.FC<LabelFieldProps> = ({ label, htmlFor, required = false }) => {
   return (
-   
-      <Label htmlFor={htmlFor} className='form-label text-zinc-500 flex items-center'>{label}  {required && <span className="text-red-500 ml-1">*</span>}</Label>
-
-  
-  
+    <Label
+      htmlFor={htmlFor}
+      aria-label={label} // Add aria-label for accessibility
+      className="form-label text-zinc-500 flex items-center"
+    >
+      {label}
+      {required && <span className="text-red-500 ml-1">*</span>}
+    </Label>
   );
 };
 

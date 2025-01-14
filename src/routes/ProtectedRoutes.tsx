@@ -1,7 +1,50 @@
 import React from "react";
-import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag, } from 'react-icons/fi';
+import { FiList, FiShoppingCart, FiBox, FiUsers, FiUserPlus, FiEdit, FiPackage, FiArchive, FiShield, FiShoppingBag } from "react-icons/fi";
 import { BsFillBagPlusFill } from "react-icons/bs";
-import { FaFileAlt, FaHistory, FaStore, FaCube, FaArrowsAltH, FaFolder, FaTrademark, FaShoppingBag, FaAddressBook, FaUserPlus, FaUsers, FaUser, FaShieldAlt, FaUserCog, FaWarehouse, FaTools, FaExchangeAlt, FaBell, FaTrashAlt, FaFileInvoice, FaMoneyBillWave, FaTruck, FaBoxes, FaRecycle, FaFileInvoiceDollar, FaPlus, FaFire, FaCalendarAlt, FaPlusCircle, FaClock, FaClipboardList, FaPaperPlane, FaCalendarCheck, FaUserTag, FaFileSignature, FaPlusSquare, FaTags, FaChartPie, FaBitcoin, FaHeadphones, FaDatabase, FaPercentage } from 'react-icons/fa';
+import {
+  FaFileAlt,
+  FaHistory,
+  FaStore,
+  FaCube,
+  FaArrowsAltH,
+  FaFolder,
+  FaTrademark,
+  FaShoppingBag,
+  FaAddressBook,
+  FaUserPlus,
+  FaUsers,
+  FaUser,
+  FaShieldAlt,
+  FaUserCog,
+  FaWarehouse,
+  FaTools,
+  FaExchangeAlt,
+  FaBell,
+  FaTrashAlt,
+  FaFileInvoice,
+  FaMoneyBillWave,
+  FaTruck,
+  FaBoxes,
+  FaRecycle,
+  FaFileInvoiceDollar,
+  FaPlus,
+  FaFire,
+  FaCalendarAlt,
+  FaPlusCircle,
+  FaClock,
+  FaClipboardList,
+  FaPaperPlane,
+  FaCalendarCheck,
+  FaUserTag,
+  FaFileSignature,
+  FaPlusSquare,
+  FaTags,
+  FaChartPie,
+  FaBitcoin,
+  FaHeadphones,
+  FaDatabase,
+  FaPercentage,
+} from "react-icons/fa";
 
 // Dashboard
 import EventManagement from "../dashboard/EventManagement";
@@ -13,34 +56,18 @@ import HelpdeskService from "../dashboard/HelpdeskService";
 import StorageManagement from "../dashboard/StorageManagement";
 import ProductManagement from "../dashboard/ProductManagement";
 
-
-
-
-
-
-
 import PurchaseOrder from "../apps/orderManagement/PurchaseOrder";
 import OrderHistory from "../apps/orderManagement/OrderHistory";
-;
-
 import PurchasePlanning from "../apps/orderManagement/PurchasePlanning";
 import NewPurchasePlanning from "../apps/orderManagement/NewPurchasePlanning";
 
-
 import RolesAndRights from "../apps/userManagement/RolesAndRights";
-
-
-
-
-
-
 
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { FaBox, FaCalendarDay, FaChartBar, FaChartLine, FaFileContract } from "react-icons/fa";
 
 import StoreInventory from "@/apps/storeManagement/StoreInventory";
 import StoreTransfers from "@/apps/storeManagement/StoreTransfers";
-
 
 import SupplierContracts from "@/apps/supplierManagement/SupplierContracts";
 import SupplierPerformance from "@/apps/supplierManagement/SupplierPerformance";
@@ -94,9 +121,13 @@ import NewBrand from "@/apps/productManagement/NewBrand";
 import ReduceToClear from "@/apps/SalesManagement/ReduceToClear";
 import NewReduceToClear from "@/apps/SalesManagement/NewReduceToClear";
 import ProductGroupList from "@/apps/productManagement/ProductCategoryList";
+import ChatPage from "@/pages/ChatPage";
+import SupplierItemImport from "@/apps/supplierManagement/SupplierItemImport";
+import EditSupplierItemImport from "@/apps/supplierManagement/EditSupplierItemImport";
+import SingleInvoice from "@/apps/InvoiceManagement/SingleInvoice";
+
 
 const protectedRoutes = [
-
   { path: "dashboard/finance", element: <FinanceMonitoring icon={FaBox} title="Finance Monitoring" /> },
   { path: "dashboard/events", element: <EventManagement icon={FaCalendarDay} title="Events Management" /> },
   { path: "dashboard/sales", element: <SalesMonitoring icon={FaChartBar} title="Sales Monitoring" /> },
@@ -138,8 +169,10 @@ const protectedRoutes = [
   { path: "supplier/supplier-list", element: <SupplierList icon={FaAddressBook} title="Supplier Directory" /> },
   { path: "supplier/new-supplier", element: <NewSupplier icon={FaUserPlus} title="Add Supplier" /> },
   { path: "supplier/edit-supplier/:id", element: <EditSupplier icon={FaUserPlus} title="Edit Supplier" /> },
-  { path: "supplier/contracts", element: <SupplierContracts icon={FaFileContract} title="Supplier Contracts" /> },
-  { path: "supplier/performance", element: <SupplierPerformance icon={FaChartLine} title="Supplier Performance" /> },
+  { path: "supplier/supplier-item-import", element: <SupplierItemImport icon={FaUserPlus} title="Supplier Item Import" /> },
+  { path: "supplier/supplier-item-import/:id", element: <EditSupplierItemImport icon={FaUserPlus} title="Edit Supplier Item Import" /> },
+  // { path: "supplier/contracts", element: <SupplierContracts icon={FaFileContract} title="Supplier Contracts" /> },
+  // { path: "supplier/performance", element: <SupplierPerformance icon={FaChartLine} title="Supplier Performance" /> },
 
   { path: "user/user-list", element: <UserList icon={FaUsers} title="User List" /> },
   { path: "user/new-user", element: <NewUser icon={FaUserPlus} title="New User" type={ModeType.Add} /> },
@@ -161,6 +194,7 @@ const protectedRoutes = [
 
   { path: "invoice/list", element: <InvoiceList icon={FaFileAlt} title="Invoice List" /> },
   { path: "invoice/new", element: <CreateInvoice icon={FaFileInvoice} title="Create Invoice" /> },
+  { path: "invoice/single", element: <SingleInvoice icon={FaFileInvoice} title="Single Invoice" /> },
   { path: "invoice/payment-status", element: <PaymentStatus icon={FaMoneyBillWave} title="Payment Status" /> },
   { path: "invoice/reports", element: <InvoiceReports icon={FaChartBar} title="Invoice Reports" /> },
 
@@ -187,9 +221,7 @@ const protectedRoutes = [
   { path: "vat/vat-overview", element: <VatOverview icon={FaPercentage} title="VAT Overview" /> },
   { path: "vat/new-vat", element: <VatNewEntry icon={FaFileInvoice} title="New VAT Entry" /> },
 
-
-
-
-]
+  { path: "chat", element: <ChatPage /> },
+];
 
 export default protectedRoutes;

@@ -54,10 +54,6 @@ const StoreList = ({ title, icon }: any) => {
         };
         setRows(store.data.data)
 
-
-
-
-
       } catch (e) {
         console.error(e);
       } finally {

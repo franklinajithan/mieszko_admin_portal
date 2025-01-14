@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from "react-bootstrap/Dropdown";
 import userAvatar from "../assets/img/img1.jpg";
 import notification from "../data/Notification";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { logout } from "@/store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ onSkin }: { onSkin: any }) {
   const { t, i18n } = useTranslation("english");
   const [selectedOption, setSelectedOption] = useState("default");
-
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const user:any = useSelector((state: RootState) => state.auth.user);
+  const user: any = useSelector((state: RootState) => state.auth.user);
   const CustomToggle = React.forwardRef<HTMLAnchorElement, any>(({ children, onClick }, ref) => (
     <a
       href="#"
@@ -66,11 +66,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
       </li>
     ));
 
-    return (
-      <ul className="list-group">
-        {notiList}
-      </ul>
-    );
+    return <ul className="list-group">{notiList}</ul>;
   }
 
   const skinMode = (e: any) => {
@@ -79,8 +75,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
     let node = e.target.parentNode.firstChild;
     while (node) {
-      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE)
-        node.classList.remove("active");
+      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE) node.classList.remove("active");
       node = node.nextElementSibling || node.nextSibling;
     }
 
@@ -89,15 +84,14 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
     if (skin === "dark") {
       HTMLTag?.setAttribute("data-skin", skin);
-      localStorage.setItem('skin-mode', skin);
+      localStorage.setItem("skin-mode", skin);
 
       onSkin(skin);
-
     } else {
       HTMLTag?.removeAttribute("data-skin");
-      localStorage.removeItem('skin-mode');
+      localStorage.removeItem("skin-mode");
 
-      onSkin('');
+      onSkin("");
     }
   };
 
@@ -108,8 +102,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
     let node = e.target.parentNode.firstChild;
     while (node) {
-      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE)
-        node.classList.remove("active");
+      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE) node.classList.remove("active");
       node = node.nextElementSibling || node.nextSibling;
     }
 
@@ -131,8 +124,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
 
     let node = e.target.parentNode.firstChild;
     while (node) {
-      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE)
-        node.classList.remove("active");
+      if (node !== e.target && node.nodeType === Node.ELEMENT_NODE) node.classList.remove("active");
       node = node.nextElementSibling || node.nextSibling;
     }
 
@@ -166,12 +158,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
         </div>
         <div className="col-10">
           <form className="mx-auto">
-            <select
-              id="small"
-              value={selectedOption}
-              onChange={handleChange}
-              className="w-64 p-2 text-sm text-zinc-900 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
+            <select id="small" value={selectedOption} onChange={handleChange} className="w-64 p-2 text-sm text-zinc-900 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
               {selectedOption === "default" && (
                 <option value="default" hidden>
                   Choose the Store
@@ -192,7 +179,6 @@ export default function Header({ onSkin }: { onSkin: any }) {
         </div>
       </div>
 
-
       <Dropdown className="ml-3 dropdown-skin" align="end">
         <Dropdown.Toggle as={CustomToggle}>
           <i className="ri-settings-3-line"></i>
@@ -200,13 +186,13 @@ export default function Header({ onSkin }: { onSkin: any }) {
         <Dropdown.Menu className="mt-10-f">
           <label>Language</label>
           <nav className="nav nav-skin">
-            <a href="#" id="langEn" onClick={(e) => handleChangeLanguge(e, "en")} className={(localStorage.getItem("Language") === "english") ? "nav-link" : "nav-link active"}>
+            <a href="#" id="langEn" onClick={(e) => handleChangeLanguge(e, "en")} className={localStorage.getItem("Language") === "english" ? "nav-link" : "nav-link active"}>
               English
             </a>
-            <a href="#" id="langPl" onClick={(e) => handleChangeLanguge(e, "pl")} className={(localStorage.getItem("Language") === "polish") ? "nav-link active" : "nav-link"}>
+            <a href="#" id="langPl" onClick={(e) => handleChangeLanguge(e, "pl")} className={localStorage.getItem("Language") === "polish" ? "nav-link active" : "nav-link"}>
               Polish
             </a>
-            <a href="#" id="langTa" onClick={(e) => handleChangeLanguge(e, "ta")} className={(localStorage.getItem("Language") === "tamil") ? "nav-link active" : "nav-link"}>
+            <a href="#" id="langTa" onClick={(e) => handleChangeLanguge(e, "ta")} className={localStorage.getItem("Language") === "tamil" ? "nav-link active" : "nav-link"}>
               Tamil
             </a>
           </nav>
@@ -224,17 +210,26 @@ export default function Header({ onSkin }: { onSkin: any }) {
           <hr />
           <label>Sidebar Skin</label>
           <nav id="sidebarSkin" className="nav nav-skin">
-            <a href="#" onClick={sidebarSkin} className={!(localStorage.getItem("sidebar-skin")) ? "nav-link active" : "nav-link"}>
+            <a href="#" onClick={sidebarSkin} className={!localStorage.getItem("sidebar-skin") ? "nav-link active" : "nav-link"}>
               Default
             </a>
-            <a href="#" onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "prime") ? "nav-link active" : "nav-link"}>
+            <a href="#" onClick={sidebarSkin} className={localStorage.getItem("sidebar-skin") === "prime" ? "nav-link active" : "nav-link"}>
               Prime
             </a>
-            <a href="#" onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "dark") ? "nav-link active" : "nav-link"}>
+            <a href="#" onClick={sidebarSkin} className={localStorage.getItem("sidebar-skin") === "dark" ? "nav-link active" : "nav-link"}>
               Dark
             </a>
           </nav>
         </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown className="dropdown-notification ms-3 ms-xl-4" align="end">
+        <span
+          onClick={() => navigate("/messages")} // Redirects to the messages page
+          style={{ cursor: "pointer" }}
+        >
+          <i className="ri-chat-3-line"></i>
+        </span>
       </Dropdown>
 
       <Dropdown className="dropdown-notification ms-3 ms-xl-4" align="end">
@@ -265,8 +260,7 @@ export default function Header({ onSkin }: { onSkin: any }) {
               <img src={userAvatar} alt="" />
             </div>
 
-         
-             {isAuthenticated && <h5 className="mb-1 text-dark fw-semibold">Hello {user?.firstName}</h5>}
+            {isAuthenticated && <h5 className="mb-1 text-dark fw-semibold">Hello {user?.firstName}</h5>}
             <p className="fs-sm text-secondary">{user?.email}</p>
 
             <nav className="nav">
