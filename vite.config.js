@@ -3,10 +3,17 @@ import reactPlugin from '@vitejs/plugin-react'; // Renamed to avoid conflict
 import { defineConfig } from 'vite';
 import EnvironmentPlugin from 'vite-plugin-environment'; // Import for environment variables
 
+// Filter out invalid environment variables
+const filteredEnv = Object.fromEntries(
+  Object.entries(process.env).filter(([key]) => 
+    !/ProgramFiles|CommonProgramFiles/.test(key) // Exclude problematic environment variables
+  )
+);
+
 export default defineConfig({
   plugins: [
     reactPlugin(),
-    EnvironmentPlugin('all') // Ensure environment variables are loaded
+    EnvironmentPlugin({ all: true }) // Ensure environment variables are loaded
   ],
   test: {
     environment: "jsdom",
@@ -34,6 +41,8 @@ export default defineConfig({
     open: true, // Automatically opens the browser
   },
   define: {
+    // Use the filtered environment variables instead of the global ones
+    'process.env': JSON.stringify(filteredEnv),
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'), // Define process.env.NODE_ENV for compatibility
   },
 });
