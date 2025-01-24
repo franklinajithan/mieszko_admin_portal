@@ -9,7 +9,6 @@ interface DeliCardProps {
 }
 
 export const DeliCard = ({ data, barcode, startDate, endDate }: DeliCardProps) => {
-  debugger;
   const [row, setRow] = useState<Array<any>>([]); // Define the type for newRow
   const weightRegex = /(?!(\(\d*[,\.]?\d*X\d+\)))\bOK\s?\d*[,\.]?\d*\s?KG\b|\bOK\s?\d+\s?X\s?\d*[,\.]?\d+\s?KG\b|\d*[,\.]?\d+\s?KG\b|\bKG\b|\bPM\b(?!\/)/gi;
 

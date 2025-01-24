@@ -15,6 +15,16 @@ export interface City {
   label: string;
 }
 
+
+export type Promotion = {
+  id: number;           // Unique identifier for the promotion
+  name: string;         // Name of the promotion (e.g., "Buy One Get One Free")
+  description: string;  // Description of the promotion
+  active: boolean;      // Whether the promotion is currently active
+  startDate?: string;   // Optional start date (if available)
+  endDate?: string;     // Optional end date (if available)
+};
+
 export interface Country {
   value: string;
   label: string;

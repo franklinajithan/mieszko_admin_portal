@@ -83,13 +83,12 @@ import WasteReduction from "@/apps/wasteManagement/WasteReduction";
 import NewWasteEntry from "@/apps/wasteManagement/NewWasteEntry";
 import WasteReports from "@/apps/wasteManagement/WasteReports";
 import InvoiceList from "@/apps/InvoiceManagement/InvoiceList";
-import CreateInvoice from "@/apps/InvoiceManagement/CreateInvoice";
 import PaymentStatus from "@/apps/InvoiceManagement/PaymentStatus";
 import InvoiceReports from "@/apps/InvoiceManagement/InvoiceReports";
 import DeliveryReports from "@/apps/DeliveryManagement/DeliveryReports";
-import CreateDelivery from "@/apps/DeliveryManagement/CreateDelivery";
+
 import DeliveryStatus from "@/apps/DeliveryManagement/DeliveryStatus";
-import DeliveryList from "@/apps/DeliveryManagement/DeliveryList";
+import DeliveryList from "@/apps/DeliveryManagement/DeliveryLoadList";
 import PromotionList from "@/apps/PromoManagement/PromotionList";
 import CreatePromotion from "@/apps/PromoManagement/CreatePromotion";
 import RotaReports from "@/apps/RotaManagement/RotaReports";
@@ -125,17 +124,22 @@ import ChatPage from "@/pages/ChatPage";
 import SupplierItemImport from "@/apps/supplierManagement/SupplierItemImport";
 import EditSupplierItemImport from "@/apps/supplierManagement/EditSupplierItemImport";
 import SingleInvoice from "@/apps/InvoiceManagement/SingleInvoice";
-
+import CreateDelivery from "@/apps/DeliveryManagement/DeliveryManagement";
+import DeliveryNote from "@/apps/DeliveryManagement/DeliveryNote";
+import DeliveryManagement from "@/apps/DeliveryManagement/DeliveryManagement";
+import EDIInvoice from "@/apps/InvoiceManagement/EDIInvoice";
+import PurchaseReturn from "@/apps/DeliveryManagement/PurchaseReturn";
+import StockTake from "@/apps/stockManagement/StockTake";
 
 const protectedRoutes = [
-  { path: "dashboard/finance", element: <FinanceMonitoring icon={FaBox} title="Finance Monitoring" /> },
-  { path: "dashboard/events", element: <EventManagement icon={FaCalendarDay} title="Events Management" /> },
-  { path: "dashboard/sales", element: <SalesMonitoring icon={FaChartBar} title="Sales Monitoring" /> },
-  { path: "dashboard/analytics", element: <WebsiteAnalytics icon={FaChartPie} title="Website Analytics" /> },
-  { path: "dashboard/crypto", element: <Cryptocurrency icon={FaBitcoin} title="Cryptocurrency" /> },
-  { path: "dashboard/helpdesk", element: <HelpdeskService icon={FaHeadphones} title="Helpdesk Service" /> },
-  { path: "dashboard/storage", element: <StorageManagement icon={FaDatabase} title="Storage Management" /> },
-  { path: "dashboard/product", element: <ProductManagement icon={FaBox} title="Product Management" /> },
+  // { path: "dashboard/finance", element: <FinanceMonitoring icon={FaBox} title="Finance Monitoring" /> },
+  // { path: "dashboard/events", element: <EventManagement icon={FaCalendarDay} title="Events Management" /> },
+  // { path: "dashboard/sales", element: <SalesMonitoring icon={FaChartBar} title="Sales Monitoring" /> },
+  // { path: "dashboard/analytics", element: <WebsiteAnalytics icon={FaChartPie} title="Website Analytics" /> },
+  // { path: "dashboard/crypto", element: <Cryptocurrency icon={FaBitcoin} title="Cryptocurrency" /> },
+  // { path: "dashboard/helpdesk", element: <HelpdeskService icon={FaHeadphones} title="Helpdesk Service" /> },
+  // { path: "dashboard/storage", element: <StorageManagement icon={FaDatabase} title="Storage Management" /> },
+  // { path: "dashboard/product", element: <ProductManagement icon={FaBox} title="Product Management" /> },
 
   { path: "order/new-purchase-planning", element: <NewPurchasePlanning icon={FaShoppingBag} title="New Purchase Planning" /> },
   { path: "order/purchase-planning", element: <PurchasePlanning icon={FaCalendarDay} title="Purchase Planning" /> },
@@ -182,6 +186,7 @@ const protectedRoutes = [
   { path: "user/logs", element: <UserActivityLogs icon={FaHistory} title="User Activity Logs" /> },
 
   { path: "stock/overview", element: <StockOverview icon={FaWarehouse} title="Stock Overview" /> },
+  { path: "stock/stock-take", element: <StockTake icon={FaWarehouse} title="Stock Take" /> },
   { path: "stock/adjustments", element: <StockAdjustments icon={FaTools} title="Stock Adjustments" /> },
   { path: "stock/transfers", element: <StoreTransfers icon={FaExchangeAlt} title="Stock Transfers" /> },
   { path: "stock/alerts", element: <StockAlerts icon={FaBell} title="Stock Alerts" /> },
@@ -192,16 +197,20 @@ const protectedRoutes = [
   { path: "waste/new", element: <NewWasteEntry icon={FaFileAlt} title="New Waste Entry" /> },
   { path: "waste/reduction", element: <WasteReduction icon={FaRecycle} title="Waste Reduction" /> },
 
+  { path: "invoice/edi-invoice", element: <EDIInvoice icon={FaFileAlt} title="EDI Invoice Management" /> },
   { path: "invoice/list", element: <InvoiceList icon={FaFileAlt} title="Invoice List" /> },
-  { path: "invoice/new", element: <CreateInvoice icon={FaFileInvoice} title="Create Invoice" /> },
   { path: "invoice/single", element: <SingleInvoice icon={FaFileInvoice} title="Single Invoice" /> },
+  { path: "invoice/single/:id", element: <SingleInvoice icon={FaFileInvoice} title="Single Invoice" /> },
   { path: "invoice/payment-status", element: <PaymentStatus icon={FaMoneyBillWave} title="Payment Status" /> },
   { path: "invoice/reports", element: <InvoiceReports icon={FaChartBar} title="Invoice Reports" /> },
 
-  { path: "delivery/list", element: <DeliveryList icon={FaBox} title="Delivery List" /> },
-  { path: "delivery/new", element: <CreateDelivery icon={FaPlusSquare} title="Create Delivery" /> },
-  { path: "delivery/status", element: <DeliveryStatus icon={FaTruck} title="Delivery Status" /> },
-  { path: "delivery/reports", element: <DeliveryReports icon={FaFileAlt} title="Delivery Reports" /> },
+  { path: "delivery/delivery-management", element: <DeliveryManagement icon={FaBox} title="Delivery Load List" /> },
+
+  { path: "delivery/load-list", element: <DeliveryList icon={FaBox} title="Delivery Load List" /> },
+  { path: "delivery/delivery-note-management", element: <DeliveryNote icon={FaPlusSquare} title="Delivery Note Management" /> },
+  { path: "delivery/purchase-return", element: <PurchaseReturn icon={FaPlusSquare} title="Claim List/ Credit Note Management" /> },
+  // { path: "delivery/status", element: <DeliveryStatus icon={FaTruck} title="Delivery Status" /> },
+  // { path: "delivery/reports", element: <DeliveryReports icon={FaFileAlt} title="Delivery Reports" /> },
 
   { path: "promotion/promotion-list", element: <PromotionList icon={FaTags} title="Promotion List" /> },
   { path: "promotion/create-promotion", element: <CreatePromotion icon={FaPlus} title="Create Promotion" /> },

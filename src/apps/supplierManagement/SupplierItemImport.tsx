@@ -156,7 +156,6 @@ const SupplierItemImport = ({ title, icon }: any) => {
           console.error(store.data);
           return;
         }
-        debugger;
         let storeList = store.data.data.map((st: any) => ({
           value: st.storeId.toString(),
           label: st.storeCode,

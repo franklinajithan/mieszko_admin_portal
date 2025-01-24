@@ -34,7 +34,6 @@ import IOSSwitch from "@/components/elements/toggleTheme";
 import CommonSwitch from "@/components/ui/CommonSwitch";
 import CheckboxLabel from "@/components/elements/CheckboxLabel";
 import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
-import { invoiceList } from "@/data/SampleData";
 
 interface FieldOption {
   name: string;
@@ -42,7 +41,8 @@ interface FieldOption {
   checked: boolean;
 }
 
-const InvoiceList = ({ title, icon }: any) => {
+const DeliveryLoadList = ({ title, icon }: any) => {
+  
   const { t } = useTranslation("global");
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
   const navigate = useNavigate();
@@ -85,9 +85,8 @@ const InvoiceList = ({ title, icon }: any) => {
           console.error(company.data);
           return;
         }
-        let data: any = invoiceList;
         // setRows(company.data.data)
-        setRows(data);
+        setRows([]);
       } catch (e) {
         console.error(e);
       } finally {
@@ -113,7 +112,7 @@ const InvoiceList = ({ title, icon }: any) => {
   }, []);
 
   const handleEditClick = (id: GridRowId) => () => {
-    navigate(`/invoice/single/${id.toString()}`);
+    navigate(`/store/edit-company/${id.toString()}`);
     //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -125,7 +124,7 @@ const InvoiceList = ({ title, icon }: any) => {
     setRows(rows.filter((row: any) => row.id !== id));
   };
   const onClickAddInvoice = () => {
-    navigate(`/invoice/single`);
+    navigate(`/store/new-company`);
   };
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -215,27 +214,25 @@ const InvoiceList = ({ title, icon }: any) => {
   });
 
   const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
-    No: true,
-    invoiceId: true,
-    orderId: true,
-    loadListId: true,
-    returnId: true,
-    deliveryDate: true,
-    supplier: true,
-    totalPrice: true,
-    priceDifference: false,
-    totalRetailPrice: false,
-    retailPriceDifference: false,
-    totalQty: false,
-    qtyDifference: false,
-    totalCase: false,
-    caseDifference: false,
-    newItems: false,
-    newBarCodes: false,
-    missingItems: false,
-    invoiceType: false,
-    store: false,
+    companyId: false,
+    companyCode: true,
+    companyName: true,
+    ownerName: true,
+    email: true,
+    phone: true,
+    address: true,
+    city: true,
+    state: true,
+    postcode: true,
+    country: true,
     status: false,
+    taxNo: true,
+    createdAt: false,
+    createdBy: false,
+    updatedAt: false,
+    updatedBy: false,
+    website: false,
+    logo: false,
   });
 
   const onSubmit = (data: any) => {
@@ -405,4 +402,4 @@ const InvoiceList = ({ title, icon }: any) => {
   );
 };
 
-export default InvoiceList;
+export default DeliveryLoadList

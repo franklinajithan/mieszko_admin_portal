@@ -337,14 +337,14 @@ export default function PurchasePlanning({ title, icon }: any) {
           </Card>
 
           <Card className="card-one mt-2">
-            <CardTitle title="Purchase Plan List" />
+            <CardTitle title=" List" />
             <CardContent>
               <ThemeProvider theme={theme}>
                 <DataGrid
                   autoHeight
-                  disableColumnFilter
-                  disableColumnSelector
-                  disableDensitySelector
+                //  disableColumnFilter
+                //  disableColumnSelector
+                //  disableDensitySelector
                   checkboxSelection
                   rowSelectionModel={rowSelectionModel}
                   onRowSelectionModelChange={(newRowSelectionModel) => {

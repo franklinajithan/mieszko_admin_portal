@@ -35,7 +35,7 @@ const MultiInputField: FC<MultiInputFieldProps> = ({
     };
 
     return (
-        <div className="flex items-center space-x-4 border border-zinc-300 rounded-md p-2">
+        <div className="flex items-center space-x-4 p-2">
 
             <div className="flex space-x-4 items-start w-1/4 ">
             {label && <LabelField label={label} />}

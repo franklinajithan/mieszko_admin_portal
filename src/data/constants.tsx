@@ -41,6 +41,16 @@ export const status = [
 
 ];
 
+export const OrderWay = [
+  { value: 'edi', label: 'EDI' },
+  { value: 'manual', label: 'Manual' },
+  { value: 'api', label: 'API' },
+  { value: 'mobile', label: 'Mobile' },
+  { value: 'in-store', label: 'In-Store' },
+  { value: 'email', label: 'Email' },
+  { value: 'phone', label: 'Phone' },
+];
+
 export const Week = [
   { value: 'Monday', label: 'Monday' },
   { value: 'Tuesday', label: 'Tuesday' },
