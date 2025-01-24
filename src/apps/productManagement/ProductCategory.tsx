@@ -381,7 +381,7 @@ const ProductCategory = ({ title, icon }: any) => {
 
                         <InputField control={form.control} label="Translation" type="text" name="translation" />
                       </div>
-                      <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
+                      <div className="grid lg:grid-cols-6 md:grid-cols-6 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
                         <LabelField label={"VAT"} required={true} />
                         <InputField control={form.control} placeholder="VAT" name="retailUom" type="text" required={true} />
                         <LabelField label={"Commission based"} />

@@ -504,7 +504,7 @@ const ProductForm = ({ id, type }: any) => {
                     )}
 
                     {activeItem === "Specification" && (
-                      <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
+                      <div className="grid lg:grid-cols-6 md:grid-cols-6 sm:grid-cols-1 gap-4 border border-zinc-200 p-4 rounded-lg shadow-md w-full">
                         <LabelField label={"VAT"} />
                         <InputField control={form.control} placeholder="VAT" name="vat" type="text" required={true} />
                         <LabelField label={"Commission based"} required={true} />

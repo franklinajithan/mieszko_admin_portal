@@ -105,7 +105,6 @@ const DeliLabel = ({ title, icon }: any) => {
         .filter((row) => row !== null); // Remove null entries
 
       UpdateLabels(formattedData);
-      debugger;
       setRows(formattedData); // Update rows with the formatted data
     };
     reader.readAsBinaryString(file);
@@ -122,7 +121,6 @@ const DeliLabel = ({ title, icon }: any) => {
       };
       const result = await UpdateLabelList(data);
       if (result.status === 200 || result.status === 201) {
-        debugger;
        // setRows(result.data.data.updated_label_details);
       } else {
         console.error(result.data);

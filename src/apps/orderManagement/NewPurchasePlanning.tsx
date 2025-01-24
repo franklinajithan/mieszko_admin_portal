@@ -463,10 +463,10 @@ const NewPurchasePlanning = ({ title, icon }: any) => {
             <CardContent>
               <ThemeProvider theme={theme}>
                 <DataGrid
-                  autoHeight
-                  disableColumnFilter
-                  disableColumnSelector
-                  disableDensitySelector
+                 // autoHeight
+                 // disableColumnFilter
+                  //disableColumnSelector
+                //  disableDensitySelector
                   checkboxSelection
                   rowSelectionModel={rowSelectionModel}
                   onRowSelectionModelChange={(newRowSelectionModel: any) => {

@@ -6,7 +6,7 @@ import HeaderComponents from "@/components/elements/HeaderSection";
 import SelectField from "@/components/elements/SelectField";
 import InputField from "@/components/elements/InputField";
 import MultiDateField from "@/components/elements/MultiDateField";
-import { groceryDepartments, sample, status } from "../../data/constants";
+import { groceryDepartments, sample, status, YesOrNO } from "../../data/constants";
 import CardTitle from "@/components/elements/CardTitle";
 import { Card, Nav } from "react-bootstrap";
 import { CardContent, CardHeader } from "@/components/ui/card";
@@ -28,21 +28,18 @@ import theme from "@/components/elements/GridTheme";
 import { getCompany, getStore } from "@/service/store.service";
 import { useNavigate } from "react-router-dom";
 import { on } from "events";
-import { countries } from "@/data/enum";
+import { countries, Promotion } from "@/data/enum";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import IOSSwitch from "@/components/elements/toggleTheme";
 import CommonSwitch from "@/components/ui/CommonSwitch";
 import CheckboxLabel from "@/components/elements/CheckboxLabel";
 import MultiSelectDropdown from "@/components/elements/MultiSelectDropdown";
-import { invoiceList } from "@/data/SampleData";
-
-interface FieldOption {
-  name: string;
-  label: string;
-  checked: boolean;
-}
-
-const InvoiceList = ({ title, icon }: any) => {
+import { getSuppliers } from "@/service/supplier.service";
+import { Supplier } from "@/types/types";
+import { getPromotionList } from "@/service/promotion.service";
+import { getOrderUOMTypeList, paymentStatus } from "@/service/common.service";
+import { CalendarInput } from "@/components/elements/CalendarInput";
+const DeliveryNote = ({ title, icon }: any) => {
   const { t } = useTranslation("global");
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
   const navigate = useNavigate();
@@ -52,9 +49,15 @@ const InvoiceList = ({ title, icon }: any) => {
   const [rows, setRows] = useState([]);
   const [storeList, setStoreList] = useState([]);
 
+  const [orderUOMType, setOrderUOMType] = useState([]);
+
+  const [supplierList, setSupplierList] = useState([]);
+
+  const [promo, setPromo] = useState([]);
+  const [paymentStatusDropDown, SetPaymentStatusDropDown] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
 
-  const fieldOptions: FieldOption[] = [
+  const fieldOptions: any[] = [
     { label: "Supplier", name: "supplier", checked: true },
     { label: "Status", name: "status", checked: true },
     { label: "Delivery Date", name: "deliveryDate", checked: true },
@@ -85,9 +88,8 @@ const InvoiceList = ({ title, icon }: any) => {
           console.error(company.data);
           return;
         }
-        let data: any = invoiceList;
         // setRows(company.data.data)
-        setRows(data);
+        setRows([]);
       } catch (e) {
         console.error(e);
       } finally {
@@ -101,19 +103,84 @@ const InvoiceList = ({ title, icon }: any) => {
           console.error(store.data);
           return;
         }
-        setStoreList(store.data.data);
+        const storeDropDown = store.data.data.map((st: any) => ({
+          value: st.storeId,
+          label: st.storeName,
+        }));
+        setStoreList(storeDropDown);
       } catch (e) {
         console.error(e);
       } finally {
       }
     };
 
+    const fetchSupplier = async () => {
+      try {
+        const supplier = await getSuppliers();
+        if (supplier.status != 200) {
+          console.error(supplier.data);
+          return;
+        }
+
+        let supplierDropdown = supplier.data.data.map((sup: Supplier) => ({
+          value: sup.supplierId,
+          label: sup.supplierName,
+        }));
+        supplierDropdown = supplierDropdown.sort((a: any, b: any) => a.label.localeCompare(b.label));
+        setSupplierList(supplierDropdown);
+      } catch {}
+    };
+    const fetchPromotion = async () => {
+      try {
+        const promotions = await getPromotionList();
+        const promotionDropDown = promotions.map((promo: Promotion) => ({
+          label: promo.name,
+          value: promo.id,
+        }));
+        setPromo(promotionDropDown);
+      } catch (error) {
+        console.error("Error in fetchPromotion:", error);
+      }
+    };
+
+    const fetchOrderUOMType = async () => {
+      try {
+        const orderUOMTypes: any = await getOrderUOMTypeList();
+        console.log("Fetched UOM Types:", orderUOMTypes);
+
+        const mappedUOMTypes = orderUOMTypes.map((type: any) => ({
+          label: type.label,
+          value: type.value,
+        }));
+
+        setOrderUOMType(mappedUOMTypes); // Update state with mapped data
+      } catch (error) {
+        console.error("Error fetching UOM types:", error);
+      }
+    };
+
+    const fetchPaymentStatus = async () => {
+      try {
+        const payment: any = await paymentStatus();
+        payment.map((e: any) => ({
+          label: e.label,
+          value: e.value,
+        }));
+
+        SetPaymentStatusDropDown(payment);
+      } catch {}
+    };
+
+    fetchPaymentStatus();
+    fetchOrderUOMType();
+    fetchPromotion();
     fetchCompany();
     fetchStore();
+    fetchSupplier();
   }, []);
 
   const handleEditClick = (id: GridRowId) => () => {
-    navigate(`/invoice/single/${id.toString()}`);
+    navigate(`/store/edit-company/${id.toString()}`);
     //  setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -125,7 +192,7 @@ const InvoiceList = ({ title, icon }: any) => {
     setRows(rows.filter((row: any) => row.id !== id));
   };
   const onClickAddInvoice = () => {
-    navigate(`/invoice/single`);
+    navigate(`/store/new-company`);
   };
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -166,27 +233,15 @@ const InvoiceList = ({ title, icon }: any) => {
         return [<GridActionsCellItem icon={<EditIcon />} label="Edit" className="textPrimary" onClick={handleEditClick(id)} color="inherit" />, <GridActionsCellItem icon={<DeleteIcon />} label="Delete" onClick={handleDeleteClick(id)} color="inherit" />];
       },
     },
-    { field: "No", headerName: "No", flex: 1 },
-    { field: "invoiceId", headerName: "Invoice ID", flex: 1 },
-    { field: "orderId", headerName: "Order ID", flex: 1 },
-    { field: "loadListId", headerName: "Load List ID  ", flex: 1 },
-    { field: "returnId", headerName: "Return ID", flex: 1 },
+    { field: "deliveryNote", headerName: "Delivery Note", flex: 1 },
+    { field: "deliveryId", headerName: "Delivery Id", flex: 1 },
+    { field: "store", headerName: "Store", flex: 1 },
+    { field: "deliveryLocation", headerName: "Delivery Location", flex: 1 },
+    { field: "totalLines", headerName: "Total Lines", flex: 1 },
+    { field: "totalQty", headerName: "Total Qty", flex: 1 },
     { field: "deliveryDate", headerName: "Delivery Date", flex: 1 },
-    { field: "supplier", headerName: "Supplier", flex: 1 },
-    { field: "totalPrice", headerName: "Total Price", flex: 1 },
-    { field: "priceDifference", headerName: "Price Difference", flex: 1 },
-    { field: "totalRetailPrice", headerName: "Total Retail Price", flex: 1 },
-    { field: "retailPriceDifference", headerName: "Retail Price Difference", flex: 1 },
-    { field: "totalQty", headerName: "Total Quantity", flex: 1 },
-    { field: "qtyDifference", headerName: "Qty Difference", flex: 1 },
-    { field: "totalCase", headerName: "Total Case", flex: 1 },
-    { field: "caseDifference", headerName: "Case Difference", flex: 1 },
-    { field: "newItems", headerName: "New Items", flex: 1 },
-    { field: "newBarCodes", headerName: "New BarCodes", flex: 1 },
-    { field: "missingItems", headerName: "Missing Items", flex: 1 },
-    { field: "invoiceType", headerName: "Invoice Type", flex: 1 },
-    { field: "store", headerName: "store", flex: 1 },
     { field: "status", headerName: "Status", flex: 1 },
+    { field: "supplier", headerName: "Supplier", flex: 1 },
   ];
 
   const form = useForm<z.infer<typeof companySearchFormSchema>>({
@@ -215,27 +270,25 @@ const InvoiceList = ({ title, icon }: any) => {
   });
 
   const [columnVisibility, setColumnVisibility] = useState<GridColumnVisibilityModel>({
-    No: true,
-    invoiceId: true,
-    orderId: true,
-    loadListId: true,
-    returnId: true,
-    deliveryDate: true,
-    supplier: true,
-    totalPrice: true,
-    priceDifference: false,
-    totalRetailPrice: false,
-    retailPriceDifference: false,
-    totalQty: false,
-    qtyDifference: false,
-    totalCase: false,
-    caseDifference: false,
-    newItems: false,
-    newBarCodes: false,
-    missingItems: false,
-    invoiceType: false,
-    store: false,
+    companyId: false,
+    companyCode: true,
+    companyName: true,
+    ownerName: true,
+    email: true,
+    phone: true,
+    address: true,
+    city: true,
+    state: true,
+    postcode: true,
+    country: true,
     status: false,
+    taxNo: true,
+    createdAt: false,
+    createdBy: false,
+    updatedAt: false,
+    updatedBy: false,
+    website: false,
+    logo: false,
   });
 
   const onSubmit = (data: any) => {
@@ -318,22 +371,21 @@ const InvoiceList = ({ title, icon }: any) => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mt-4">
-                    {getCheckValue("supplier") && <SelectField control={form.control} label="Supplier" name="supplier" options={sample} />}
-                    {getCheckValue("status") && <SelectField control={form.control} label="Status" name="status" options={status} />}
-                    {getCheckValue("deliveryDate") && <InputField control={form.control} label="Delivery Date" type="date" name="deliveryDate" />}
-                    {getCheckValue("store") && <SelectField control={form.control} label="Store" name="store" options={sample} />}
-                    {getCheckValue("invoiceType") && <SelectField control={form.control} label="Invoice Type" name="invoiceType" options={sample} />}
-                    {getCheckValue("department") && <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} />}
-                    {getCheckValue("barcode") && <SelectField control={form.control} label="Barcode" name="barcode" options={countries} />}
-                    {getCheckValue("itemName") && <SelectField control={form.control} label="Item Name" name="itemName" options={sample} />}
-                    {getCheckValue("supplierCode") && <SelectField control={form.control} label="Supplier Code" name="supplierCode" options={sample} />}
-                    {getCheckValue("itemCode") && <SelectField control={form.control} label="Item Code" name="itemCode" options={sample} />}
-                    {getCheckValue("returnId") && <SelectField control={form.control} label="Return Id" name="returnId" options={sample} />}
-                    {getCheckValue("loadListId") && <SelectField control={form.control} label="Load List Id" name="loadListId" options={sample} />}
-                    {getCheckValue("orderNo") && <SelectField control={form.control} label="Order No" name="orderNo" options={sample} />}
-                    {getCheckValue("invoiceNo") && <SelectField control={form.control} label="Invoice No" name="invoiceNo" options={sample} />}
-                    {getCheckValue("supplierRef") && <SelectField control={form.control} label="Supplier Ref" name="supplierRef" options={sample} />}
-                    {getCheckValue("deliveryNodeId") && <SelectField control={form.control} label="Delivery Node Id" name="deliveryNodeId" options={sample} />}
+                    <SelectField control={form.control} label="Supplier" name="supplier" options={supplierList} />
+                    <SelectField control={form.control} label="Status" name="status" options={status} />
+                    <CalendarInput control={form.control} label="Delivery Date" name="deliveryDate" />
+                    <SelectField control={form.control} label="Store" name="store" options={storeList} />
+                    <InputField control={form.control} label="Order Number" name="orderNumber" type="text" placeholder="Enter the order number" />
+                    <MultiSelectDropdown control={form.control} label="Department" name="department" options={groceryDepartments} />
+                    <InputField control={form.control} label="Barcode" name="barcode" type="text" placeholder="Enter the barcode" />
+                    <InputField control={form.control} label="Item Name" name="itemName" type="text" placeholder="Enter the Item Name" />
+                    <InputField control={form.control} label="Supplier Code" name="supplierCode" type="text" placeholder="Enter the Item Name" />
+                    <InputField control={form.control} label="Item Code" name="itemCode" type="text" placeholder="Enter the GRN number" />
+                    <InputField control={form.control} label="Delivery Note Id" name="deliveryNoteId" placeholder="Enter the delivery id" />
+                    <InputField control={form.control} label="Invoice No" name="invoiceNo" placeholder="Enter the invoice no" />
+                    <InputField control={form.control} label="Delivery Note Id" name="deliveryNoteId" placeholder="Enter the delivery id" />
+                    <SelectField control={form.control} label="Delivery Note Type" name="Delivery Note Type" options={[]} />
+                    <SelectField control={form.control} label="Delivery Location" name="deliveryLocation" options={storeList} />
                   </div>
 
                   <hr className="border-t border-zinc-300" />
@@ -405,4 +457,4 @@ const InvoiceList = ({ title, icon }: any) => {
   );
 };
 
-export default InvoiceList;
+export default DeliveryNote;

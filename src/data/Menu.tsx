@@ -66,7 +66,7 @@ export const orderManagementMenu: any = [
   { label: "New Purchase Planning", link: "/order/new-purchase-planning", icon: faShoppingBag },
   { label: "Purchase Planning", link: "/order/purchase-planning", icon: faCalendarDay },
   { label: "Purchase Order", link: "/order/purchase-order", icon: faFileAlt },
-  { label: "Order History", link: "/order/order-history", icon: faHistory },
+  // { label: "Order History", link: "/order/order-history", icon: faHistory },
 ];
 
 export const salesManagementMenu: any = [{ label: "Reduce to Clear", link: "/sale/reduce-to-clear", icon: faRecycle }];
@@ -105,10 +105,11 @@ export const userManagementMenu: any = [
 ];
 
 export const stockManagementMenu: any = [
-  { label: "Stock Overview", link: "/stock/overview", icon: faWarehouse },
-  { label: "Stock Adjustments", link: "/stock/adjustments", icon: faTools },
-  { label: "Stock Transfers", link: "/stock/transfers", icon: faExchangeAlt },
-  { label: "Stock Alerts", link: "/stock/alerts", icon: faBell },
+  { label: "Stock Take", link: "/stock/stock-take", icon: faWarehouse },
+  // { label: "Stock Overview", link: "/stock/overview", icon: faWarehouse },
+  // { label: "Stock Adjustments", link: "/stock/adjustments", icon: faTools },
+  // { label: "Stock Transfers", link: "/stock/transfers", icon: faExchangeAlt },
+  // { label: "Stock Alerts", link: "/stock/alerts", icon: faBell },
   { label: "MSP Stock Take", link: "/stock/MSP-Stock-Take", icon: faBell },
 ];
 
@@ -120,17 +121,20 @@ export const wasteManagementMenu: any = [
 ];
 
 export const invoiceManagementMenu: any = [
+  { label: "EDI Invoice Management", link: "/invoice/edi-invoice", icon: faChartBar },
   { label: "Invoice List", link: "/invoice/list", icon: faFileAlt },
-  { label: "Create Invoice", link: "/invoice/new", icon: faFileInvoice },
+  { label: "Create Invoice", link: "/invoice/single", icon: faFileInvoice },
   { label: "Payment Status", link: "/invoice/payment-status", icon: faMoneyBillWave },
   { label: "Invoice Reports", link: "/invoice/reports", icon: faChartBar },
 ];
 
 export const deliveryManagementMenu: any = [
-  { label: "Delivery List", link: "/delivery/list", icon: faBox },
-  { label: "Create Delivery", link: "/delivery/new", icon: faPlusSquare },
-  { label: "Delivery Status", link: "/delivery/status", icon: faTruck },
-  { label: "Delivery Reports", link: "/delivery/reports", icon: faFileAlt },
+  { label: "Delivery Management", link: "/delivery/delivery-management", icon: faPlusSquare },
+  { label: "Delivery Load List", link: "/delivery/load-list", icon: faBox },
+  { label: "Delivery Note", link: "/delivery/delivery-note-management", icon: faBox },
+  { label: "Purchase Return", link: "/delivery/purchase-return", icon: faBox },
+  // { label: "Delivery Status", link: "/delivery/status", icon: faTruck },
+  // { label: "Delivery Reports", link: "/delivery/reports", icon: faFileAlt },
 ];
 
 export const promotionManagementMenu: any = [
