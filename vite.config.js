@@ -1,48 +1,40 @@
 import path from "path";
-import reactPlugin from "@vitejs/plugin-react"; // Renamed to avoid conflict
-import { defineConfig } from "vite";
-import EnvironmentPlugin from "vite-plugin-environment"; // Import for environment variables
+import reactPlugin from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from "vite";
 
-// Filter out invalid environment variables
-const filteredEnv = Object.fromEntries(
-  Object.entries(process.env).filter(
-    ([key]) => !/ProgramFiles|CommonProgramFiles/.test(key) // Exclude problematic environment variables
-  )
-);
+export default defineConfig(({ mode }) => {
+  // Load environment variables based on the current mode
+  const env = loadEnv(mode, process.cwd(), "");
 
-export default defineConfig({
-  plugins: [
-    reactPlugin(),
-    EnvironmentPlugin({ all: true }), // Ensure environment variables are loaded
-  ],
-  test: {
-    environment: "jsdom",
-    setupFiles: "./src/setupTests.ts", // Ensure this points to your setup file
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"), // Setup alias for @
+  return {
+    plugins: [reactPlugin()],
+    test: {
+      environment: "jsdom",
+      setupFiles: "./src/setupTests.ts",
     },
-  },
-  server: {
-    port: 5173, // Custom port for development server
-    open: true, // Opens the browser automatically
-    proxy: {
-      "/api": {
-        target: "http://localhost:5000",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ""), // Rewrite API paths
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
-  },
-  preview: {
-    port: 5000, // Port for the preview server
-    open: true, // Automatically opens the browser
-  },
-  define: {
-    // Use the filtered environment variables instead of the global ones
-    "process.env": JSON.stringify(filteredEnv),
-    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"), // Define process.env.NODE_ENV for compatibility
-  },
+    server: {
+      port: 5173,
+      open: true,
+      proxy: {
+        "/api": {
+          target: env.VITE_BASE_URL_DEV, // Use environment variable dynamically
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
+    preview: {
+      port: 5000,
+      open: true,
+    },
+    define: {
+      "process.env": JSON.stringify(env), // Define all environment variables
+    },
+  };
 });
