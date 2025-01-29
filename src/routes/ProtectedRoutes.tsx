@@ -118,6 +118,7 @@ import VatNewEntry from "@/apps/Configuration/VatNewEntry";
 import MSPStockTake from "@/apps/stockManagement/MSPStockTake";
 import NewBrand from "@/apps/productManagement/NewBrand";
 import ReduceToClear from "@/apps/SalesManagement/ReduceToClear";
+
 import NewReduceToClear from "@/apps/SalesManagement/NewReduceToClear";
 import ProductGroupList from "@/apps/productManagement/ProductCategoryList";
 import ChatPage from "@/pages/ChatPage";
@@ -130,6 +131,7 @@ import DeliveryManagement from "@/apps/DeliveryManagement/DeliveryManagement";
 import EDIInvoice from "@/apps/InvoiceManagement/EDIInvoice";
 import PurchaseReturn from "@/apps/DeliveryManagement/PurchaseReturn";
 import StockTake from "@/apps/stockManagement/StockTake";
+import ReduceToClearList from "@/apps/SalesManagement/ReduceToClearList";
 
 const protectedRoutes = [
   // { path: "dashboard/finance", element: <FinanceMonitoring icon={FaBox} title="Finance Monitoring" /> },
@@ -147,6 +149,7 @@ const protectedRoutes = [
   { path: "order/order-history", element: <OrderHistory icon={FaHistory} title="Order History" /> },
 
   { path: "sale/reduce-to-clear", element: <ReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
+  { path: "sale/reduce-to-clear-list", element: <ReduceToClearList icon={FaHistory} title="Reduce to Clear List" /> },
   { path: "sale/new-reduce-to-clear", element: <NewReduceToClear icon={FaHistory} title="New Reduce to Clear" /> },
   { path: "sale/edit-reduce-to-clear/:id", element: <NewReduceToClear icon={FaHistory} title="Edit Reduce to Clear" /> },
 
@@ -190,6 +193,7 @@ const protectedRoutes = [
   { path: "stock/adjustments", element: <StockAdjustments icon={FaTools} title="Stock Adjustments" /> },
   { path: "stock/transfers", element: <StoreTransfers icon={FaExchangeAlt} title="Stock Transfers" /> },
   { path: "stock/alerts", element: <StockAlerts icon={FaBell} title="Stock Alerts" /> },
+  { path: "stock/MSP-Stock-Take", element: <MSPStockTake icon={FaBell} title="Stock Alerts" /> },
   { path: "stock/MSP-Stock-Take", element: <MSPStockTake icon={FaBell} title="Stock Alerts" /> },
 
   { path: "waste/tracking", element: <WasteTracking icon={FaTrashAlt} title="Waste Tracking" /> },
