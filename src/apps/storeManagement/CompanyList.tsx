@@ -78,7 +78,8 @@ const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
 };
 
-const handleDeleteClick = (id: GridRowId) => () => {
+const handleDeleteClick = (
+  id: GridRowId) => () => {
     setRows(rows.filter((row: any) => row.id !== id));
 };
 const onClickAddCompany = () =>  {

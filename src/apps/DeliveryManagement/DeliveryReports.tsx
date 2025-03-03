@@ -12,7 +12,7 @@ const DeliveryReports = ({ title, icon }: any) => {
         <HeaderComponents icon={icon} title={title} />
 
         <Card className="card-one mt-2">
-
+          
           <Card.Body>
 
           </Card.Body>

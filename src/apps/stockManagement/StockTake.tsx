@@ -47,7 +47,7 @@ const StockTake = ({ title, icon }: any) => {
   const [skin, setSkin] = useState(localStorage.getItem("skin-mode") ? "dark" : "");
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenGrid, setIsOpenGrid] = useState(true);
-  const [rows,  ] = useState([]);
+  const [rows, setRows ] = useState([]);
   const [storeList, setStoreList] = useState([]);
 
   const [orderUOMType, setOrderUOMType] = useState([]);
@@ -165,7 +165,7 @@ const StockTake = ({ title, icon }: any) => {
       } catch {}
     };
 
-    fetchPaymentStatus();
+    fetchPaymentStatus(); 
     fetchOrderUOMType();
     fetchPromotion();
     fetchCompany();
@@ -186,7 +186,7 @@ const StockTake = ({ title, icon }: any) => {
     setRows(rows.filter((row: any) => row.id !== id));
   };
   const onClickAddInvoice = () => {
-    navigate(`/store/new-company`);
+    navigate(`/stock/new-stock-take`);
   };
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
