@@ -138,6 +138,8 @@ import FillScanListDetail from "@/apps/stockManagement/FillScanListDetail";
 import BasicDashboard from "@/apps/DashboardManagement/BasicDashboard";
 import SpecialOrder from "@/apps/orderManagement/SpecialOrder";
 import NewSpecialOrder from "@/apps/orderManagement/NewSpecialOrder";
+import StockTakeDetails from "@/apps/stockManagement/StockTakeDetails";
+import AddEditStockTake from "@/apps/stockManagement/AddEditStockTake";
 
 const protectedRoutes = [
   { path: "dashboard/basic", element: <BasicDashboard /> },
@@ -209,6 +211,7 @@ const protectedRoutes = [
   { path: "stock/alerts", element: <StockAlerts icon={FaBell} title="Stock Alerts" /> },
   { path: "stock/MSP-Stock-Take", element: <MSPStockTake icon={FaBell} title="Stock Alerts" /> },
   { path: "stock/MSP-Stock-Take", element: <MSPStockTake icon={FaBell} title="Stock Alerts" /> },
+  { path: "stock/new-stock-take", element: <AddEditStockTake icon={FaBell} title="Add Stock Take" /> },
 
   { path: "waste/tracking", element: <WasteTracking icon={FaTrashAlt} title="Waste Tracking" /> },
   { path: "waste/reports", element: <WasteReports icon={FaFileAlt} title="Waste Reports" /> },

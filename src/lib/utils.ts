@@ -562,6 +562,8 @@ export const storeFormSchema = z.object({
 });
 
 
+
+
 export const storeSearchFormSchema = z.object({
   storeId: z.number().optional(),
   storeCode: z.string().optional(),
@@ -604,7 +606,7 @@ export const mspStockFormSchema = z.object({
 
 
 export const reduceToClearSearchFormSchema = z.object({
-  id: z.number().int().optional(), // Optional ID if you’re searching by it
+  id: z.number().int().optional(), // Optional ID if you're searching by it
   barcode: z.string().optional(),
   itemName: z.string().optional(),
   verification: z.enum(['Pending', 'Approved', 'Rejected']).optional(),
@@ -641,5 +643,20 @@ export const rolesAndRightsFormSchema = z.object({
   status: z.boolean(), // Status should be a boolean
 });
 
-
-
+export const stockTakeFormSchema = z.object({
+  itemCode: z.string().optional(),
+  barcode: z.string().optional(),
+  itemName: z.string().optional(),
+  supplier: z.string().optional(),
+  notes: z.string().optional(),
+  status: z.boolean().default(true),
+}).refine(
+  (data) => {
+    // Ensure at least one of the main fields is filled
+    return !!(data.itemCode || data.barcode || data.itemName || data.supplier);
+  },
+  {
+    message: "At least one of: Item Code, Barcode, Item Name, or Supplier Code is required",
+    path: ["itemCode"], // This will show the error on the itemCode field, but applies to all fields
+  }
+);

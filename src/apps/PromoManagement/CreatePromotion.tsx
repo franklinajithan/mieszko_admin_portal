@@ -120,7 +120,9 @@ const CreatePromotion: React.FC<{ title: string; icon: any }> = ({
 
       formattedData.forEach((element: any) => {
         element.image = element.barcode + ".webp";
+        console.log("element.image", element.image)
       });
+
       updatePromotions(formattedData);
       setRows(formattedData);
     };
