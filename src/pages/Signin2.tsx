@@ -25,8 +25,8 @@ const Signin2 = () => {
 
   const form = useForm<z.infer<typeof authFormSchema>>({
     resolver: zodResolver(authFormSchema),
-     defaultValues: { email: "superadmin@mieszko.uk", password: "123456" },
-   // defaultValues: { email: "", password: "" },
+    defaultValues: { email: "superadmin@mieszko.uk", password: "123456" },
+    // defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: z.infer<typeof authFormSchema>) => {
@@ -67,7 +67,7 @@ const Signin2 = () => {
         })
       );
 
-      navigate("/order/new-purchase-planning");
+      navigate("/dashboard/basic");
     } catch (error) {
       console.error("An error occurred:", error);
       localStorage.removeItem("token");
@@ -82,7 +82,9 @@ const Signin2 = () => {
         <Col md="7" lg="5" xl="4" className="col-wrapper">
           <Card className="card-sign">
             <Card.Header>
-              <Link to="/" className="header-logo mb-5" aria-label="Mieszko Home Page">Mieszko</Link>
+              <Link to="/" className="header-logo mb-5" aria-label="Mieszko Home Page">
+                Mieszko
+              </Link>
               <Card.Title>Sign In</Card.Title>
               <Card.Text>
                 <span data-testid="signIn-text">Welcome back! Please sign in to continue.</span>
@@ -91,25 +93,8 @@ const Signin2 = () => {
             <Card.Body>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  <InputField
-                    control={form.control}
-                    name="email"
-                    label="Email"
-                    placeholder="Enter your email"
-                    type="email"
-                    errorId="email-error"
-                    aria-required="true"
-                  />
-                  <InputField
-                    control={form.control}
-                    name="password"
-                    label="Password"
-                    placeholder="Enter your password"
-                    type="password"
-                    showPasswordToggle
-                    errorId="password-error"
-                    aria-required="true"
-                  />
+                  <InputField control={form.control} name="email" label="Email" placeholder="Enter your email" type="email" errorId="email-error" aria-required="true" />
+                  <InputField control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" showPasswordToggle errorId="password-error" aria-required="true" />
                   <Button type="submit" disabled={isLoading} className="btn-cyan" aria-busy={isLoading}>
                     {isLoading ? (
                       <>

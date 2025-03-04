@@ -132,8 +132,15 @@ import EDIInvoice from "@/apps/InvoiceManagement/EDIInvoice";
 import PurchaseReturn from "@/apps/DeliveryManagement/PurchaseReturn";
 import StockTake from "@/apps/stockManagement/StockTake";
 import ReduceToClearList from "@/apps/SalesManagement/ReduceToClearList";
+import FillScanList from "@/apps/stockManagement/FillScanList";
+import GapScanList from "@/apps/stockManagement/GapScanList";
+import FillScanListDetail from "@/apps/stockManagement/FillScanListDetail";
+import BasicDashboard from "@/apps/DashboardManagement/BasicDashboard";
+import SpecialOrder from "@/apps/orderManagement/SpecialOrder";
+import NewSpecialOrder from "@/apps/orderManagement/NewSpecialOrder";
 
 const protectedRoutes = [
+  { path: "dashboard/basic", element: <BasicDashboard /> },
   // { path: "dashboard/finance", element: <FinanceMonitoring icon={FaBox} title="Finance Monitoring" /> },
   // { path: "dashboard/events", element: <EventManagement icon={FaCalendarDay} title="Events Management" /> },
   // { path: "dashboard/sales", element: <SalesMonitoring icon={FaChartBar} title="Sales Monitoring" /> },
@@ -147,11 +154,18 @@ const protectedRoutes = [
   { path: "order/purchase-planning", element: <PurchasePlanning icon={FaCalendarDay} title="Purchase Planning" /> },
   { path: "order/purchase-order", element: <PurchaseOrder icon={FaFileAlt} title="Purchase Order" /> },
   { path: "order/order-history", element: <OrderHistory icon={FaHistory} title="Order History" /> },
+  { path: "order/special-order", element: <SpecialOrder icon={FaHistory} title="Special Order" /> },
+  { path: "order/new-special-order", element: <NewSpecialOrder icon={FaHistory} title="New Special Order" /> },
 
   { path: "sale/reduce-to-clear", element: <ReduceToClear icon={FaHistory} title="Reduce to Clear" /> },
   { path: "sale/reduce-to-clear-list", element: <ReduceToClearList icon={FaHistory} title="Reduce to Clear List" /> },
   { path: "sale/new-reduce-to-clear", element: <NewReduceToClear icon={FaHistory} title="New Reduce to Clear" /> },
   { path: "sale/edit-reduce-to-clear/:id", element: <NewReduceToClear icon={FaHistory} title="Edit Reduce to Clear" /> },
+
+  { path: "sale/fill-scan-list", element: <FillScanList icon={FaHistory} title="Fill Scan List" /> },
+  { path: "sale/fill-scan-list-details", element: <FillScanListDetail icon={FaHistory} title="Fill Scan List Detail" /> },
+
+  { path: "sale/gap-scan-list", element: <GapScanList icon={FaHistory} title="Gap Scan list" /> },
 
   { path: "store/company-List", element: <CompanyList icon={FaStore} title="Company List" /> },
   { path: "store/new-company", element: <AddEditCompany icon={FaStore} title="New Company" /> },

@@ -56,7 +56,7 @@ import {
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 
 export const dashboardMenu: any = [
-  { label: "Finance Monitoring", link: "/dashboard/finance", icon: faChartLine },
+  { label: "Basic Dashboard", link: "/dashboard/basic", icon: faChartLine },
   { label: "Sales Monitoring", link: "/dashboard/sales", icon: faChartBar },
   { label: "Website Analytics", link: "/dashboard/analytics", icon: faChartPie },
   { label: "Product Management", link: "/dashboard/product", icon: faBox },
@@ -66,10 +66,15 @@ export const orderManagementMenu: any = [
   { label: "New Purchase Planning", link: "/order/new-purchase-planning", icon: faShoppingBag },
   { label: "Purchase Planning", link: "/order/purchase-planning", icon: faCalendarDay },
   { label: "Purchase Order", link: "/order/purchase-order", icon: faFileAlt },
-  // { label: "Order History", link: "/order/order-history", icon: faHistory },
+  { label: "Special Order", link: "/order/special-order", icon: faHistory },
 ];
 
-export const salesManagementMenu: any = [{ label: "Reduce to Clear", link: "/sale/reduce-to-clear", icon: faRecycle }];
+export const salesManagementMenu: any = [
+  // { label: "Reduce to Clear", link: "/sale/reduce-to-clear", icon: faRecycle },
+  { label: "Reduce to Clear List", link: "/sale/reduce-to-clear-list", icon: faRecycle },
+  { label: "Fill Scan", link: "/sale/fill-scan-list", icon: faBell },
+  { label: "Gap Scan", link: "/sale/gap-scan-list", icon: faBell },
+];
 
 export const storeManagementMenu: any = [
   { label: "Company List", link: "/store/company-list", icon: faBuilding },
