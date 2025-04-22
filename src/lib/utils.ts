@@ -134,18 +134,18 @@ export const categoryFormSchema = z.object({
     }
   });
 
-  export const authFormSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: "Email is required" }) // Check if value exists
-      .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
-        message: "Invalid email address",
-      }), // Validate email format only if not empty
-    password: z
-      .string()
-      .min(1, { message: "Password is required" }) // Check if value exists
-      .min(6, { message: "Password must be at least 6 characters long" }), // Check minimum length
-  });
+export const authFormSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" }) // Check if value exists
+    .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+      message: "Invalid email address",
+    }), // Validate email format only if not empty
+  password: z
+    .string()
+    .min(1, { message: "Password is required" }) // Check if value exists
+    .min(6, { message: "Password must be at least 6 characters long" }), // Check minimum length
+});
 export const userSearchSchema = z.object({
   role: z.string().nullable().optional(), // Assuming these are optional fields
   type: z.string().nullable().optional(),
@@ -485,6 +485,64 @@ export const companySearchFormSchema = z.object({
   logo: z.string().nullable().optional(),
 });
 
+export const specialOrderFormSchema = z.object({
+  id: z.string().min(1, "ID is required"),
+  status: z.string().min(1, "Status is required"),
+  orderDate: z.string().min(1, "Order Date is required"),
+  deliveryDate: z.string().min(1, "Delivery Date is required"),
+  itemCode: z.string().min(1, "Item Code is required"),
+  itemName: z.string().min(1, "Item Name is required"),
+  customerName: z.string().min(1, "Customer Name is required"),
+  mobile: z.string().min(10, "Mobile number must be at least 10 digits"),
+  email: z.string().email("Invalid email format"),
+  storeOrdered: z.string().min(1, "Store Ordered is required"),
+  storeDelivered: z.string().min(1, "Store Delivered is required"),
+  depositAmount: z.string().min(1, "Deposit Amount is required"),
+  receiptBarcode: z.string().min(1, "Receipt Barcode is required"),
+});
+
+export const newSpecialOrderFormSchema = z.object({
+  id: z.string().nonempty("ID is required"),
+  customerId: z.string().nonempty("Customer ID is required"),
+  customerName: z.string().nonempty("Customer Name is required"),
+  mobile: z.string().nonempty("Mobile number is required"),
+  email: z.string().email("Invalid email format"),
+  itemCode: z.string().nonempty("Item Code is required"),
+  productName: z.string().nonempty("Product Name is required"),
+  quantity: z.number().min(1, "Quantity must be at least 1"),
+  department: z.string().nonempty("Department is required"),
+  depositAmount: z.number().min(0, "Deposit amount cannot be negative"),
+  totalAmount: z.number().min(0, "Total amount cannot be negative"),
+  dueAmount: z.number().min(0, "Due amount cannot be negative"),
+  orderDate: z.string().nonempty("Order Date is required"),
+  deliveryDate: z.string().nonempty("Delivery Date is required"),
+  paidOn: z.string().optional(),
+  collectedOn: z.string().optional(),
+  cashTransferredOn: z.string().optional(),
+  orderStatus: z.enum(["Pending", "Completed", "Cancelled"]),
+  loyaltyStatus: z.enum(["Gold Member", "Silver Member", "Bronze Member"]),
+  processingLocation: z.string().nonempty("Processing location is required"),
+  receiptDetails: z.string().optional(),
+  receiptBarcode: z.string().optional(),
+  communicationLog: z.string().optional(),
+  tillNo: z.string().optional(),
+  storeOrdered: z.string().nonempty("Store ordered is required"),
+  storeDelivered: z.string().nonempty("Store delivered is required"),
+  creditNoteId: z.string().optional(),
+  transferredBy: z.string().optional(),
+  isWeighted: z.boolean(),
+  uom: z.string().nonempty("Unit of Measure is required"),
+  retailUom: z.string().optional(),
+  weight: z.string().optional(),
+  costPrice: z.number().min(0, "Cost price cannot be negative"),
+  margin: z.number().min(0, "Margin cannot be negative"),
+  vat: z.number().min(0, "VAT cannot be negative"),
+  retailPrice: z.number().min(0, "Retail price cannot be negative"),
+  depositBy: z.string().optional(),
+  comments: z.string().optional(),
+  alertEmail: z.boolean(),
+  alertMobile: z.boolean(),
+});
 
 export const storeFormSchema = z.object({
   ownerName: z.string().min(1, 'Owner Name is required'),
@@ -502,6 +560,38 @@ export const storeFormSchema = z.object({
   logo: z.string().nullable().optional(),
   status: z.boolean().default(true),
 });
+
+export const productFromSupplierSchema = z.object({
+  eanDeliScale: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "EAN (Deli Scale) cannot be empty",
+  }),
+  description: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Description cannot be empty",
+  }),
+  supplier: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Supplier cannot be empty",
+  }),
+  supplierCode: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Supplier Code cannot be empty",
+  }),
+});
+
+
+
+export const newLicenseFormSchema = z.object({
+  id: z.string().min(1, "Id is required"),
+  company: z.string().min(1, "Company name is required"),
+  licenseId: z.string().min(1, "License Id is required"),
+  serverIp: z.string().min(1, "Server IP is required").ip("Invalid IP address"),
+  noOfTillsLeft: z.string().min(1, "No of Tills Left is required").regex(/^\d+$/, "Must be a number"),
+  licensePeriod: z.string().min(1, "License Period is required"),
+  licenseType: z.string().min(1, "License Type is required"),
+  expireDate: z.string().min(1, "Expire Date is required").regex(/^\d{4}-\d{2}-\d{2}$/, "Date format should be YYYY-MM-DD"),
+  tillsWorking: z.string().min(1, "Tills Working is required").regex(/^\d+$/, "Must be a number"),
+  licenseGroup: z.string().min(1, "License Group is required"),
+  active: z.string().min(1, "Active status is required").regex(/^(true|false)$/, "Must be true or false"),
+});
+
 
 
 

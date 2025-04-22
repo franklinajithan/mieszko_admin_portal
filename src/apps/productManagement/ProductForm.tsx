@@ -29,6 +29,11 @@ import { getBrand } from "@/service/brand.service";
 import LabelField from "@/components/elements/LabelField";
 import RadioField from "@/components/elements/RadioField";
 
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import AddProductFromSupplier from "./AddProductFromSupplier";
+
 const ProductForm = ({ id, type }: any) => {
   const [activeItem, setActiveItem] = useState("Product");
   const [parentCategories, setParentCategories] = useState<any[]>([]);
@@ -420,6 +425,10 @@ const ProductForm = ({ id, type }: any) => {
     { value: "byValue", label: "By Value" },
   ];
 
+  const handleRowSelection = (rowData:any) => {
+    console.log("Selected Row Data:", rowData);
+    //setSelectedRow(rowData);
+  };
 
   return (
     <div>
@@ -427,7 +436,7 @@ const ProductForm = ({ id, type }: any) => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-              <div className=" mt-2">
+              <div className="">
                 <div className="md:flex">
                   <ul className="flex-column space-y space-y-4 text-sm font-medium text-zinc-500 dark:text-zinc-400 md:me-4 mb-4 md:mb-0">
                     <MenuItem href="#" text="Product" isActive={activeItem === "Product"} onClick={() => handleMenuItemClick("Product")} />
@@ -441,9 +450,30 @@ const ProductForm = ({ id, type }: any) => {
 
                     {/* <MenuItem href="#" text="Disabled" isActive={activeItem === "disabled"} onClick={() => handleMenuItemClick("disabled")} /> */}
                   </ul>
-                  <div className="p-3 bg-zinc-50 text-medium text-zinc-500 dark:text-zinc-400 dark:bg-zinc-800 rounded-lg w-full">
+
+                  <div className="pl-3 pr-3 pb-3 pt-1 bg-zinc-50 text-medium text-zinc-500 dark:text-zinc-400 dark:bg-zinc-800 rounded-lg w-full">
                     {activeItem === "Product" && (
                       <>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button className="btn-cyan mb-3">Add Product from Supplier</Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[1200px]">
+                            <DialogHeader>
+                              <DialogTitle>Add product from Supplier</DialogTitle>
+                              <DialogDescription>Add the product from the supplier plof and search if it's already exist in the system</DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4  ">
+                              {/* <div className="grid grid-cols-4 items-center gap-4"> */}
+                              <AddProductFromSupplier  onSelectRow={handleRowSelection} />
+                              {/* </div> */}
+                            </div>
+                            {/* <DialogFooter>
+                              <Button type="submit">Save changes</Button>
+                            </DialogFooter> */}
+                          </DialogContent>
+                        </Dialog>
+
                         <div className="flex w-full gap-4">
                           <div className="grid w-5/6 grid-cols-1 gap-6">
                             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-4 border border-zinc-200 p-6 rounded-lg shadow-md w-full">
@@ -578,7 +608,7 @@ const ProductForm = ({ id, type }: any) => {
                         </div>
 
                         <div className="col-span-5">
-                          <RadioField name="rewardSetting" control={form.control} label="Reward Setting" options={rewardsOptions} required={true} linePerRow={4}/>
+                          <RadioField name="rewardSetting" control={form.control} label="Reward Setting" options={rewardsOptions} required={true} linePerRow={4} />
                         </div>
 
                         <div className="col-span-1">
