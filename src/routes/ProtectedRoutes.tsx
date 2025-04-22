@@ -121,7 +121,7 @@ import ReduceToClear from "@/apps/SalesManagement/ReduceToClear";
 
 import NewReduceToClear from "@/apps/SalesManagement/NewReduceToClear";
 import ProductGroupList from "@/apps/productManagement/ProductCategoryList";
-import ChatPage from "@/pages/ChatPage";
+// import ChatPage from "@/pages/ChatPage";
 import SupplierItemImport from "@/apps/supplierManagement/SupplierItemImport";
 import EditSupplierItemImport from "@/apps/supplierManagement/EditSupplierItemImport";
 import SingleInvoice from "@/apps/InvoiceManagement/SingleInvoice";
@@ -256,7 +256,7 @@ const protectedRoutes = [
   { path: "configure/manage-licenses", element: <ManageLicenses icon={FaFileInvoice} title="Manage Licenses" /> },
   { path: "configure/new-license", element: <NewLicense icon={FaFileInvoice} title="New License" /> },
 
-  { path: "chat", element: <ChatPage /> },
+  // { path: "chat", element: <ChatPage /> },
 ];
 
 export default protectedRoutes;
