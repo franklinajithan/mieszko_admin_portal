@@ -95,8 +95,11 @@ const VatForm = ({ type, id }: any) => {
                     <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
                             <InputField control={form.control} label="VAT Code" name="vatCode" type="text" placeholder='Enter VAT code' />
+                            <InputField control={form.control} label="Name" name="vatName" type="text" placeholder='Enter name' />
                             <InputField control={form.control} label="VAT Rate (%)" name="vatRate" type="number" placeholder='Enter VAT rate' />
                             <InputField control={form.control} label="Description" name="description" type="text" placeholder='Enter description' />
+                            <InputField control={form.control} label="Default" name="default" type="text" placeholder='Enter default' />
+                            <InputField control={form.control} label="Default VAT" name="defaultVat" type="text" placeholder='Enter default vat' />
                             <CalendarInput control={form.control} label="Effective From" name="effectiveFrom" />
                             <CalendarInput control={form.control} label="Effective To" name="effectiveTo" />
                             <SelectField control={form.control} label="Country" name="country" options={countries} />

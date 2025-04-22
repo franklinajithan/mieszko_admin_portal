@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, Container, Form, Nav, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import pageSvg from "../assets/svg/forgot_password.svg";
+
 
 export default function ForgotPassword() {
 
@@ -26,7 +26,7 @@ export default function ForgotPassword() {
           <Card className="card-auth">
             <Card.Body className="text-center">
               <div className="mb-5">
-                <object type="image/svg+xml" data={pageSvg} className="w-50" aria-label="svg image"></object>
+               
               </div>
               <Card.Title>Reset your password</Card.Title>
               <Card.Text className="mb-5">Enter your username or email address and we will send you a link to reset your password.</Card.Text>

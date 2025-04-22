@@ -17,17 +17,19 @@ import {
     staffManagementMenu,
     configurationMenu
 } from "../data/Menu";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Make sure to import FontAwesomeIcon
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { config } from "process";
 type MenuGroupKey = 'dashboard' | 'orderManagement' | 'storeManagement' | 'productManagement' | 'supplierManagement' | 'stockManagement' | 'salesManagement' |
     'invoiceManagement' | 'wasteManagement' | 'userManagement' | 'deliveryManagement' | 'promotionManagement' |'labelManagement'| 'rotaManagement' | 'leaveManagement' | 'staffManagement' | 'configuration';
 
-interface MenuItem {
-    label: string;
-    link?: string;
-    icon?: string;
-    submenu?: MenuItem[];
-}
+    interface MenuItem {
+        label: string;
+        link?: string;
+        icon?: IconProp; 
+        submenu?: MenuItem[];
+      }
+      
 
 interface SidebarMenuState {
     menuGroups: Record<MenuGroupKey, boolean>;
@@ -118,6 +120,7 @@ const SidebarMenu: React.FC = () => {
                 '/product/product-list': 'productManagement',
                 '/product/new-product': 'productManagement',
                 '/product/product-category': 'productManagement',
+                '/product/product-category-list': 'productManagement',
                 '/product/product-brand': 'productManagement',
 
                 // Supplier Management Menu
@@ -267,7 +270,7 @@ const SidebarMenu: React.FC = () => {
                             }
                             key={subIndex}
                         >
-                            <FontAwesomeIcon icon={subItem.icon || ['fas', 'circle']} className="mr-2" />
+                            {/* <FontAwesomeIcon icon={subItem.icon || ['fas', 'circle']} className="mr-2" /> */}
                             {subItem.label}
                         </NavLink>
                     )) : null;
@@ -287,7 +290,7 @@ const SidebarMenu: React.FC = () => {
                                         }`
                                     }
                                 >
-                                    <FontAwesomeIcon icon={item.icon || ['fas', 'circle']} className="mr-2" />
+                                    {/* <FontAwesomeIcon icon={item.icon || ['fas', 'circle']} className="mr-2" /> */}
                                     <span>{item.label}</span>
                                 </NavLink>
                             ) : (
@@ -296,10 +299,10 @@ const SidebarMenu: React.FC = () => {
                                     className="nav-link flex items-center justify-between text-zinc-300 hover:text-white hover:bg-zinc-700 rounded-md cursor-pointer transition duration-300"
                                 >
                                     <div className="flex items-center">
-                                        <FontAwesomeIcon icon={item.icon || ['fas', 'circle']} className="mr-2" />
+                                        {/* <FontAwesomeIcon icon={item.icon || ['fas', 'circle']} className="mr-2" /> */}
                                         <span>{item.label}</span>
                                     </div>
-                                    <FontAwesomeIcon icon="chevron-down" className="transform group-hover:rotate-180 transition duration-300" />
+                                    {/* <FontAwesomeIcon icon="chevron-down" className="transform group-hover:rotate-180 transition duration-300" /> */}
                                 </div>
                             )}
                             {submenu && (
