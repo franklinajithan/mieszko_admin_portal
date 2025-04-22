@@ -140,6 +140,8 @@ import SpecialOrder from "@/apps/orderManagement/SpecialOrder";
 import NewSpecialOrder from "@/apps/orderManagement/NewSpecialOrder";
 import StockTakeDetails from "@/apps/stockManagement/StockTakeDetails";
 import AddEditStockTake from "@/apps/stockManagement/AddEditStockTake";
+import ManageLicenses from "@/apps/Configuration/ManageLicenses";
+import NewLicense from "@/apps/Configuration/NewLicense";
 
 const protectedRoutes = [
   { path: "dashboard/basic", element: <BasicDashboard /> },
@@ -250,6 +252,9 @@ const protectedRoutes = [
 
   { path: "vat/vat-overview", element: <VatOverview icon={FaPercentage} title="VAT Overview" /> },
   { path: "vat/new-vat", element: <VatNewEntry icon={FaFileInvoice} title="New VAT Entry" /> },
+
+  { path: "configure/manage-licenses", element: <ManageLicenses icon={FaFileInvoice} title="Manage Licenses" /> },
+  { path: "configure/new-license", element: <NewLicense icon={FaFileInvoice} title="New License" /> },
 
   { path: "chat", element: <ChatPage /> },
 ];

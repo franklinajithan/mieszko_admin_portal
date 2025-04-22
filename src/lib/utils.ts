@@ -134,18 +134,18 @@ export const categoryFormSchema = z.object({
     }
   });
 
-  export const authFormSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: "Email is required" }) // Check if value exists
-      .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
-        message: "Invalid email address",
-      }), // Validate email format only if not empty
-    password: z
-      .string()
-      .min(1, { message: "Password is required" }) // Check if value exists
-      .min(6, { message: "Password must be at least 6 characters long" }), // Check minimum length
-  });
+export const authFormSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" }) // Check if value exists
+    .refine((value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), {
+      message: "Invalid email address",
+    }), // Validate email format only if not empty
+  password: z
+    .string()
+    .min(1, { message: "Password is required" }) // Check if value exists
+    .min(6, { message: "Password must be at least 6 characters long" }), // Check minimum length
+});
 export const userSearchSchema = z.object({
   role: z.string().nullable().optional(), // Assuming these are optional fields
   type: z.string().nullable().optional(),
@@ -560,6 +560,38 @@ export const storeFormSchema = z.object({
   logo: z.string().nullable().optional(),
   status: z.boolean().default(true),
 });
+
+export const productFromSupplierSchema = z.object({
+  eanDeliScale: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "EAN (Deli Scale) cannot be empty",
+  }),
+  description: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Description cannot be empty",
+  }),
+  supplier: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Supplier cannot be empty",
+  }),
+  supplierCode: z.string().optional().refine((val) => !val || val.length > 0, {
+    message: "Supplier Code cannot be empty",
+  }),
+});
+
+
+
+export const newLicenseFormSchema = z.object({
+  id: z.string().min(1, "Id is required"),
+  company: z.string().min(1, "Company name is required"),
+  licenseId: z.string().min(1, "License Id is required"),
+  serverIp: z.string().min(1, "Server IP is required").ip("Invalid IP address"),
+  noOfTillsLeft: z.string().min(1, "No of Tills Left is required").regex(/^\d+$/, "Must be a number"),
+  licensePeriod: z.string().min(1, "License Period is required"),
+  licenseType: z.string().min(1, "License Type is required"),
+  expireDate: z.string().min(1, "Expire Date is required").regex(/^\d{4}-\d{2}-\d{2}$/, "Date format should be YYYY-MM-DD"),
+  tillsWorking: z.string().min(1, "Tills Working is required").regex(/^\d+$/, "Must be a number"),
+  licenseGroup: z.string().min(1, "License Group is required"),
+  active: z.string().min(1, "Active status is required").regex(/^(true|false)$/, "Must be true or false"),
+});
+
 
 
 

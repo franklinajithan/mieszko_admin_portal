@@ -106,7 +106,7 @@ export const DeliCard = ({ data, barcode, startDate, endDate }: DeliCardProps) =
                       {/* Center the logo vertically and horizontally */}
                       {item?.itemName.toString().length !== 0 && <img className="mt-2 ml-1 w-85" src={logo} alt="logo" />}
                     </div>
-                    <div className={`w-5/6 text-center font-bold flex items-center justify-center ${item?.itemName.toString().length > 40 ? "text-[14px]" : "text-[18px]"}`}>{item?.itemName.replace(weightRegex, "").trim().toUpperCase()}</div>
+                    <div className={`w-5/6 text-center font-bold flex items-center justify-center ${item?.itemName.toString().length > 40 ? "text-[18px]" : "text-[20px]"}`}>{item?.itemName.replace(weightRegex, "").trim().toUpperCase()}</div>
                   </div>
 
                   {item?.itemName.length !== 0 && (

@@ -179,6 +179,7 @@ export const staffManagementMenu: any = [
 export const configurationMenu: any = [
   { label: "VAT Overview", link: "/vat/vat-overview", icon: faMoneyBillWave },
   { label: "New VAT Entry", link: "/vat/new-vat", icon: faFileInvoice },
+  { label: "Manage Licenses", link: "/configure/manage-licenses", icon: faFileInvoice },
 ];
 
 export const ManagementMenu: any = [
