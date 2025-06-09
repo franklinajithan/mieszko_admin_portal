@@ -466,7 +466,7 @@ const SidebarMenu: React.FC = () => {
                 <div className="pl-2">{populateMenu(userManagementMenu)}</div>
             </div>
 
-            {/* <div className={`nav-group ${menuGroups.rotaManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
+           <div className={`nav-group ${menuGroups.rotaManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div
                     className="nav-label flex items-center gap-3 p-3 cursor-pointer text-white hover:bg-cyan-300 transition-colors duration-300 rounded-lg"
                     onClick={() => toggleMenu('rotaManagement')}
@@ -475,7 +475,7 @@ const SidebarMenu: React.FC = () => {
                     <span>Rota Management</span>
                 </div>
                 <div className="pl-2">{populateMenu(rotaManagementMenu)}</div>
-            </div> */}
+            </div> 
 
             {/* <div className={`nav-group ${menuGroups.leaveManagement ? 'show' : ''} bg-zinc-50 rounded-lg my-2`}>
                 <div

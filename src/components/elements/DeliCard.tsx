@@ -114,16 +114,22 @@ export const DeliCard = ({ data, barcode, startDate, endDate }: DeliCardProps) =
                       {" "}
                       {item?.itemName.toString().length !== 0 && (
                         <div className="flex">
-                          <div className="w-1/2 pl-1">
-                            <div className="bg-[#FFFF00] p-4 relative h-24 w-44 border-4 border-red-600 rounded-lg flex flex-col items-center justify-center">
-                              <div className="text-5xl font-bold text-center">{new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(retailPriceFor100g)}</div>
-                              <div className="text-lg font-bold  mt-2">
-                                {" "}
-                                {/* Adjust margin for spacing */}
-                                100G
+                          {retailPriceFor100g >= 2 && (
+                            <div className="w-1/2 pl-1">
+                              <div className="bg-[#ffff24] p-4 relative h-24 w-44 border-4 border-red-600 rounded-lg flex flex-col items-center justify-center">
+                                <div className="text-5xl text-black font-bold text-center">{new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(retailPriceFor100g)}</div>
+                                <div className="text-lg font-bold  mt-2  text-black"> 100G</div>
                               </div>
                             </div>
-                          </div>
+                          )}
+                          {retailPriceFor100g < 2 && (
+                            <div className="w-1/2 pl-1">
+                              <div className="bg-[#ffff24] p-4 relative h-24 w-44 border-4 border-red-600 rounded-lg flex flex-col items-center justify-center">
+                                <div className="text-5xl text-black font-bold text-center">{new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(retailPriceFor100g)}</div>
+                                <div className="text-lg font-bold  mt-2  text-black"> 100G</div>
+                              </div>
+                            </div>
+                          )}
                           <div className="w-1/2">
                             <div className="relative float-right pr-1">
                               <div className="flex flex-col items-end">

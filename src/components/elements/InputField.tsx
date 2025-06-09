@@ -106,7 +106,7 @@ const InputField = <T extends FieldValues>({
                 name={name}
                 placeholder={placeholder}
                 autoComplete="off"
-                className={`input-class pr-24 form-control ${fieldState.invalid ? "input-error" : ""}`}
+                className={`input-class pr-24 h-7 form-control ${fieldState.invalid ? "input-error" : ""}`}
                 disabled={disabled || !canEdit}
                 readOnly={readonly || !canEdit}
                 type={showPassword && type === "password" ? "text" : type}
@@ -117,7 +117,6 @@ const InputField = <T extends FieldValues>({
                 aria-required={required}
                 aria-invalid={fieldState.invalid}
                 aria-describedby={errorId}
-                
               />
               {clipboard && (
                 <Tooltip title={copied ? "Copied!" : "Copy"}>
